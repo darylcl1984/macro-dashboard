@@ -8,7 +8,8 @@ Output schema:
 Sources:
   - CoinGecko (no key): BTC (includes 24h change)
   - Stooq (no key):     WTI (CL.F), XAUUSD
-  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, NOW, GEV, MSTR), VIX
+  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, NOW, GEV, MSTR)
+  - Yahoo Finance:      VIX
 """
 
 import json
@@ -124,10 +125,18 @@ def fetch_finnhub_prices():
 
 
 def fetch_vix():
-    if not FINNHUB_API_KEY:
-        return {}
     try:
-        return {"VIX": fetch_finnhub_quote("^VIX")}
+        resp = SESSION.get(
+            "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
+            headers={"User-Agent": "Mozilla/5.0"},
+            params={"interval": "1d", "range": "1d"},
+            timeout=10,
+        )
+        resp.raise_for_status()
+        meta = resp.json()["chart"]["result"][0]["meta"]
+        price = meta["regularMarketPrice"]
+        prev  = meta["chartPreviousClose"]
+        return {"VIX": {"price": price, "change_pct": round((price - prev) / prev * 100, 2)}}
     except Exception as e:
         print(f"  [WARN] VIX: {e}")
         return {}
@@ -157,7 +166,7 @@ def main():
     prices.update(equity_prices)
     fx.update(fx_rates)
 
-    print("  Finnhub: VIX")
+    print("  Yahoo Finance: VIX")
     prices.update(fetch_vix())
 
     results = {
