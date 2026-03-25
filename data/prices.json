@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-03-25T13:07:07.344587+00:00",
+  "updated_at": "2026-03-25T13:40:56.035543+00:00",
   "prices": {
     "BTC": {
-      "price": 71703,
-      "change_pct": 1.3
+      "price": 71847,
+      "change_pct": 1.74
     },
     "NVDA": {
-      "price": 175.2,
-      "change_pct": -0.25
+      "price": 179.56,
+      "change_pct": 2.49
     },
     "TSLA": {
-      "price": 383.03,
-      "change_pct": 0.57
+      "price": 393.84,
+      "change_pct": 2.82
     },
     "PLTR": {
-      "price": 154.78,
-      "change_pct": -3.77
+      "price": 158.98,
+      "change_pct": 2.71
     },
     "TSM": {
-      "price": 343.25,
-      "change_pct": 1.42
+      "price": 347.45,
+      "change_pct": 1.22
     },
     "GOOGL": {
-      "price": 290.44,
-      "change_pct": -3.85
+      "price": 294.79,
+      "change_pct": 1.5
     },
     "META": {
-      "price": 592.92,
-      "change_pct": -1.84
+      "price": 601.07,
+      "change_pct": 1.37
     },
     "NOW": {
-      "price": 104.65,
-      "change_pct": -5.68
+      "price": 105.89,
+      "change_pct": 1.18
     },
     "GEV": {
-      "price": 909.41,
-      "change_pct": 3.03
+      "price": 935.17,
+      "change_pct": 2.83
     },
     "MSTR": {
-      "price": 136.25,
-      "change_pct": -1.41
+      "price": 141.97,
+      "change_pct": 4.2
     },
     "GLD": {
-      "price": 404.13,
-      "change_pct": 0.02
+      "price": 418.78,
+      "change_pct": 3.63
     },
     "XAUUSD_GLD": {
-      "price": 4392.72,
-      "change_pct": 0.02
+      "price": 4551.96,
+      "change_pct": 3.63
     }
   },
   "fx": {}
