@@ -18,8 +18,8 @@
   "global_m2": {
     "value": 103.97,
     "unit": "trillions_usd",
-    "yoy_pct": null,
-    "period": null,
+    "yoy_pct": 9.52,
+    "period": "2026-03-26",
     "updated": "2026-03-26"
   },
   "china_m2": {
