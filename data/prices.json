@@ -1,5 +1,54 @@
 {
-  "updated_at": null,
-  "prices": {},
+  "updated_at": "2026-03-25T13:07:07.344587+00:00",
+  "prices": {
+    "BTC": {
+      "price": 71703,
+      "change_pct": 1.3
+    },
+    "NVDA": {
+      "price": 175.2,
+      "change_pct": -0.25
+    },
+    "TSLA": {
+      "price": 383.03,
+      "change_pct": 0.57
+    },
+    "PLTR": {
+      "price": 154.78,
+      "change_pct": -3.77
+    },
+    "TSM": {
+      "price": 343.25,
+      "change_pct": 1.42
+    },
+    "GOOGL": {
+      "price": 290.44,
+      "change_pct": -3.85
+    },
+    "META": {
+      "price": 592.92,
+      "change_pct": -1.84
+    },
+    "NOW": {
+      "price": 104.65,
+      "change_pct": -5.68
+    },
+    "GEV": {
+      "price": 909.41,
+      "change_pct": 3.03
+    },
+    "MSTR": {
+      "price": 136.25,
+      "change_pct": -1.41
+    },
+    "GLD": {
+      "price": 404.13,
+      "change_pct": 0.02
+    },
+    "XAUUSD_GLD": {
+      "price": 4392.72,
+      "change_pct": 0.02
+    }
+  },
   "fx": {}
 }
