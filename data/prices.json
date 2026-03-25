@@ -1,9 +1,17 @@
 {
-  "updated_at": "2026-03-25T21:30:41.858256+00:00",
+  "updated_at": "2026-03-25T22:54:47.658378+00:00",
   "prices": {
     "BTC": {
-      "price": 70950,
-      "change_pct": 1.37
+      "price": 71324,
+      "change_pct": 1.43
+    },
+    "WTI": {
+      "price": 91.04,
+      "change_pct": null
+    },
+    "XAUUSD": {
+      "price": 4515.91,
+      "change_pct": null
     },
     "NVDA": {
       "price": 178.68,
@@ -40,14 +48,6 @@
     "MSTR": {
       "price": 139.13,
       "change_pct": 2.11
-    },
-    "GLD": {
-      "price": 416.29,
-      "change_pct": 3.01
-    },
-    "XAUUSD_GLD": {
-      "price": 4524.89,
-      "change_pct": 3.01
     }
   },
   "fx": {}
