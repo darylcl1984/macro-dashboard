@@ -1,0 +1,422 @@
+/* ─── Reset & Base ─────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #080808;
+  --surface:    #101010;
+  --surface-2:  #161616;
+  --border:     #1e1e1e;
+  --border-2:   #2a2a2a;
+
+  --text:       #e0e0e0;
+  --text-dim:   #888;
+  --text-muted: #444;
+
+  --green:      #22c55e;
+  --green-dim:  #15803d;
+  --amber:      #f59e0b;
+  --amber-dim:  #92400e;
+  --red:        #ef4444;
+  --red-dim:    #991b1b;
+  --blue:       #3b82f6;
+  --blue-dim:   #1d4ed8;
+
+  --mono: 'Roboto Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  --status-bar-h: 56px;
+}
+
+html { font-size: 14px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.5;
+  padding-top: var(--status-bar-h);
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ─── Status Bar ───────────────────────────────────────────────────────── */
+
+#status-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--status-bar-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
+
+#status-bar-inner {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.status-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  border-right: 1px solid var(--border);
+  min-width: 0;
+}
+.status-cell:last-child { border-right: none; }
+
+.status-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.status-value {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.status-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* Scenario colour variants */
+#s-scenario.bull  { border-left: 3px solid var(--green); }
+#s-scenario.base  { border-left: 3px solid var(--blue); }
+#s-scenario.bear  { border-left: 3px solid var(--amber); }
+#s-scenario.tail  { border-left: 3px solid var(--red); }
+
+.scenario-bull  { color: var(--green); }
+.scenario-base  { color: var(--blue); }
+.scenario-bear  { color: var(--amber); }
+.scenario-tail  { color: var(--red); }
+
+/* Fear & Greed colours */
+.fg-extreme-fear  { color: var(--red); }
+.fg-fear          { color: var(--amber); }
+.fg-neutral       { color: var(--text-dim); }
+.fg-greed         { color: #84cc16; }
+.fg-extreme-greed { color: var(--green); }
+
+/* ─── Staleness Badges ─────────────────────────────────────────────────── */
+
+.stale-badge {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.stale-badge:empty { display: none; }
+.stale-amber { background: var(--amber-dim); color: var(--amber); }
+.stale-red   { background: var(--red-dim);   color: var(--red);   }
+
+.value-stale-amber { opacity: 0.6; }
+.value-stale-red   { opacity: 0.35; }
+
+/* ─── Layout ───────────────────────────────────────────────────────────── */
+
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.loading { color: var(--text-muted); font-style: italic; padding: 12px 16px; }
+
+/* ─── Tables (shared) ──────────────────────────────────────────────────── */
+
+table { width: 100%; border-collapse: collapse; }
+
+th {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface-2); }
+
+.num { font-family: var(--mono); text-align: right; white-space: nowrap; }
+th.num { text-align: right; }
+
+/* ─── Colour helpers ───────────────────────────────────────────────────── */
+
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+.neu { color: var(--text-dim); }
+
+.dot-green { color: var(--green); }
+.dot-amber { color: var(--amber); }
+.dot-red   { color: var(--red); }
+
+/* ─── Invalidation Triggers ────────────────────────────────────────────── */
+
+#panel-triggers .trigger-table { }
+
+.trigger-status {
+  font-size: 16px;
+  text-align: center;
+}
+
+/* ─── Positions ────────────────────────────────────────────────────────── */
+
+.positions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.position-group {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.position-group:nth-child(2n) { border-right: none; }
+.position-group:nth-last-child(-n+2) { border-bottom: none; }
+
+.group-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  padding: 8px 12px 6px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.price-table td.asset-name { font-weight: 500; }
+.price-table td.note-cell  { color: var(--text-dim); font-size: 11px; }
+
+/* Watchlist — emphasise distance */
+.distance-cell {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+}
+.distance-above { color: var(--text-dim); }
+.distance-near  { color: var(--amber); }
+.distance-entry { color: var(--green); }
+
+/* ─── Macro Indicators Grid ────────────────────────────────────────────── */
+
+.macro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0;
+}
+
+.macro-card {
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.macro-card:last-child { border-right: none; }
+
+.macro-card-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.macro-card-value {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.macro-card-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 3px;
+}
+
+.highlight-warn  { color: var(--amber); }
+.highlight-alert { color: var(--red); }
+
+/* Fear & Greed gauge bar */
+.fg-bar-track {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  margin-top: 8px;
+  position: relative;
+  overflow: visible;
+}
+.fg-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.fg-bar-marker {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 10px;
+  background: var(--text);
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
+
+/* ─── Thesis Section ───────────────────────────────────────────────────── */
+
+#panel-thesis details { }
+
+.thesis-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  user-select: none;
+  list-style: none;
+}
+.thesis-summary::-webkit-details-marker { display: none; }
+.thesis-summary:hover { color: var(--text); background: var(--surface-2); }
+
+.summary-hint {
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+details[open] .summary-hint::before { content: 'collapse'; }
+details:not([open]) .summary-hint::before { content: 'expand'; }
+.summary-hint { font-size: 0; }  /* hide original text, show ::before */
+.summary-hint::before { font-size: 10px; }
+
+.thesis-body {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  max-width: 800px;
+}
+
+.thesis-body h1, .thesis-body h2, .thesis-body h3 {
+  color: var(--text);
+  margin: 1.5em 0 0.5em;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.thesis-body h1 { font-size: 14px; }
+.thesis-body p  { margin-bottom: 1em; }
+.thesis-body ul { margin: 0.5em 0 1em 1.5em; }
+.thesis-body li { margin-bottom: 0.3em; }
+.thesis-body strong { color: var(--text); }
+.thesis-body em { font-style: italic; }
+.thesis-body blockquote {
+  border-left: 2px solid var(--border-2);
+  padding-left: 16px;
+  color: var(--text-muted);
+  margin: 1em 0;
+}
+
+/* ─── Footer ───────────────────────────────────────────────────────────── */
+
+#site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 14px 0;
+}
+
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-refresh { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+.footer-sources { font-size: 11px; color: var(--text-muted); }
+.footer-links   { font-size: 11px; color: var(--text-muted); }
+.footer-label   { color: var(--text-muted); }
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .positions-grid { grid-template-columns: 1fr; }
+  .position-group { border-right: none; }
+  .position-group:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .position-group:last-child { border-bottom: none; }
+}
+
+@media (max-width: 700px) {
+  :root { --status-bar-h: 96px; }
+  #status-bar-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 4px 0;
+  }
+  .status-cell {
+    flex: 1 1 50%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 6px 12px;
+  }
+  .status-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+  .status-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .macro-grid { grid-template-columns: 1fr 1fr; }
+  td.note-cell { display: none; }
+}
+
+@media (max-width: 480px) {
+  .macro-grid { grid-template-columns: 1fr; }
+}

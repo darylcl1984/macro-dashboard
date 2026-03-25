@@ -1,0 +1,515 @@
+'use strict';
+
+// ─── Config ──────────────────────────────────────────────────────────────────
+
+const DATA = {
+  prices: '../data/prices.json',
+  macro:  '../data/macro.json',
+  manual: '../data/manual.json',
+  thesis: '../docs/thesis.md',
+};
+
+// Watchlist: hardcoded target entry ranges [low, high] in USD
+const WATCHLIST_TARGETS = {
+  NOW: [80,  90],
+  GEV: [230, 260],
+};
+
+// Invalidation trigger thresholds (price-based, auto-evaluated)
+const PRICE_TRIGGERS = [
+  {
+    key:       'btc_weekly_close',
+    label:     'BTC weekly close',
+    priceKey:  'BTC',
+    prefix:    '$',
+    decimals:  0,
+    threshold: 52000,
+    thresholdLabel: '< $52,000',
+    // amber: within 15% above threshold
+    amberFn: (price) => price < 52000 * 1.15,
+    redFn:   (price) => price < 52000,
+  },
+  {
+    key:       'gold_monthly_close',
+    label:     'Gold monthly close',
+    priceKey:  'XAUUSD',
+    prefix:    '$',
+    decimals:  0,
+    threshold: 4000,
+    thresholdLabel: '< $4,000',
+    amberFn: (price) => price < 4000 * 1.10,
+    redFn:   (price) => price < 4000,
+  },
+  {
+    key:       'oil_sustained',
+    label:     'Oil sustained > $120',
+    priceKey:  'WTI',
+    prefix:    '$',
+    decimals:  2,
+    threshold: 120,
+    thresholdLabel: '> $120',
+    amberFn: (price) => price > 100,
+    redFn:   (price) => price > 120,
+  },
+];
+
+// Manual triggers: key → display label
+const MANUAL_TRIGGER_LABELS = {
+  googl_ad_revenue_decline: { label: 'GOOGL ad revenue',     threshold: 'Decline 2 consecutive Qs' },
+  nvda_gross_margin:        { label: 'NVDA gross margin',    threshold: '< 60%' },
+  taiwan_crisis:            { label: 'Taiwan military crisis', threshold: 'Binary escalation' },
+  tsla_optimus_musk:        { label: 'TSLA Optimus / Musk',  threshold: 'Binary reversal' },
+};
+
+// ─── Utilities ────────────────────────────────────────────────────────────────
+
+function fmt(n, decimals = 2, prefix = '', suffix = '') {
+  if (n == null || isNaN(n)) return '—';
+  const s = Number(n).toLocaleString('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+  return prefix + s + suffix;
+}
+
+function fmtPct(n) {
+  if (n == null || isNaN(n)) return '<span class="neu">—</span>';
+  const sign = n >= 0 ? '+' : '';
+  const cls  = n >= 0 ? 'pos' : 'neg';
+  return `<span class="${cls}">${sign}${n.toFixed(2)}%</span>`;
+}
+
+function fmtDate(dateStr) {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function fmtTs(isoStr) {
+  if (!isoStr) return '—';
+  const d = new Date(isoStr);
+  if (isNaN(d)) return isoStr;
+  return d.toLocaleString('en-AU', {
+    day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+  });
+}
+
+function daysAgo(ms) {
+  const d = Math.floor(ms / 86400000);
+  if (d === 0) return 'today';
+  if (d === 1) return '1 day ago';
+  return `${d} days ago`;
+}
+
+/**
+ * Returns staleness level and badge label for a given date.
+ * @param {string|null} dateStr - ISO date/datetime string
+ * @param {number} amberDays
+ * @param {number} redDays
+ * @returns {{ level: 'fresh'|'amber'|'red', label: string }}
+ */
+function staleness(dateStr, amberDays, redDays) {
+  if (!dateStr) return { level: 'red', label: 'No date' };
+  const age = Date.now() - new Date(dateStr).getTime();
+  const d = age / 86400000;
+  if (d > redDays)   return { level: 'red',   label: daysAgo(age) };
+  if (d > amberDays) return { level: 'amber', label: daysAgo(age) };
+  return { level: 'fresh', label: '' };
+}
+
+function staleBadge(level, label) {
+  if (level === 'fresh' || !label) return '';
+  return `<span class="stale-badge stale-${level}">${label}</span>`;
+}
+
+function priceOf(prices, key) {
+  const entry = prices?.[key];
+  if (!entry) return null;
+  return entry.price ?? null;
+}
+
+function changePctOf(prices, key) {
+  return prices?.[key]?.change_pct ?? null;
+}
+
+// ─── Section 1: Status Bar ────────────────────────────────────────────────────
+
+function renderStatusBar(manual, macro) {
+  // Scenario
+  const scenario = manual?.scenario;
+  const current  = scenario?.current || '—';
+  const prob     = scenario?.probability || '';
+  const scenarioEl = document.getElementById('scenario-value');
+  const scenarioCell = document.getElementById('s-scenario');
+  const clsMap = { Bull: 'bull', Base: 'base', Bear: 'bear', 'Tail Risk': 'tail' };
+  const cls = clsMap[current] || 'base';
+  scenarioEl.textContent = current;
+  scenarioEl.className = `status-value scenario-${cls}`;
+  scenarioCell.classList.add(cls);
+  document.getElementById('s-scenario').querySelector('.status-sub').textContent = prob;
+
+  // Last assessed
+  const assessedDate = scenario?.updated;
+  document.getElementById('assessed-date').textContent = fmtDate(assessedDate);
+  const as = staleness(assessedDate, 30, 60);
+  document.getElementById('assessed-stale').innerHTML = staleBadge(as.level, as.label);
+  document.getElementById('assessed-stale').className = `stale-badge ${as.level !== 'fresh' ? 'stale-' + as.level : ''}`;
+
+  // Global M2 YoY
+  const gm2 = manual?.global_m2;
+  const yoy = gm2?.yoy_pct;
+  const m2yoyEl = document.getElementById('m2-yoy');
+  if (yoy != null) {
+    const sign = yoy >= 0 ? '+' : '';
+    const cls2 = yoy > 0 ? 'pos' : 'neg';
+    m2yoyEl.innerHTML = `<span class="${cls2}">${sign}${yoy.toFixed(1)}%</span>`;
+  } else {
+    m2yoyEl.textContent = '—';
+  }
+  const m2s = staleness(gm2?.updated, 90, 180);
+  document.getElementById('m2-stale').innerHTML = staleBadge(m2s.level, m2s.label);
+
+  // Fear & Greed
+  const fg = macro?.indicators?.FEAR_GREED;
+  const fgVal = fg?.value;
+  const fgClass = fg?.classification || '';
+  const fgEl = document.getElementById('fg-value');
+  fgEl.textContent = fgVal != null ? fgVal : '—';
+  fgEl.className = `status-value ${fgColorClass(fgVal)}`;
+  document.getElementById('fg-class').textContent = fgClass;
+}
+
+function fgColorClass(val) {
+  if (val == null) return '';
+  if (val <= 25) return 'fg-extreme-fear';
+  if (val <= 45) return 'fg-fear';
+  if (val <= 55) return 'fg-neutral';
+  if (val <= 75) return 'fg-greed';
+  return 'fg-extreme-greed';
+}
+
+// ─── Section 2: Invalidation Triggers ─────────────────────────────────────────
+
+function renderTriggers(prices, manual) {
+  const tbody = document.getElementById('trigger-rows');
+  const rows = [];
+
+  // Price-based triggers
+  for (const t of PRICE_TRIGGERS) {
+    const price = priceOf(prices?.prices, t.priceKey);
+    const current = price != null ? fmt(price, t.decimals, t.prefix) : '—';
+    let status, dotClass;
+    if (price == null) {
+      status = '○'; dotClass = 'neu';
+    } else if (t.redFn(price)) {
+      status = '●'; dotClass = 'dot-red';
+    } else if (t.amberFn(price)) {
+      status = '●'; dotClass = 'dot-amber';
+    } else {
+      status = '●'; dotClass = 'dot-green';
+    }
+    rows.push(`
+      <tr>
+        <td>${t.label}</td>
+        <td class="num">${current}</td>
+        <td class="num">${t.thresholdLabel}</td>
+        <td class="trigger-status"><span class="${dotClass}">${status}</span></td>
+      </tr>`);
+  }
+
+  // Global M2 YoY trigger
+  const gm2 = manual?.global_m2;
+  const yoy = gm2?.yoy_pct;
+  let m2Status, m2Dot;
+  if (yoy == null) {
+    m2Status = '○'; m2Dot = 'neu';
+  } else if (yoy < 0) {
+    m2Status = '●'; m2Dot = 'dot-red';
+  } else if (yoy < 3) {
+    m2Status = '●'; m2Dot = 'dot-amber';
+  } else {
+    m2Status = '●'; m2Dot = 'dot-green';
+  }
+  const m2Stale = staleness(gm2?.updated, 90, 180);
+  rows.push(`
+    <tr>
+      <td>Global M2 YoY</td>
+      <td class="num">${yoy != null ? (yoy >= 0 ? '+' : '') + yoy.toFixed(1) + '%' : '—'} ${staleBadge(m2Stale.level, m2Stale.label)}</td>
+      <td class="num">&lt; 0%</td>
+      <td class="trigger-status"><span class="${m2Dot}">${m2Status}</span></td>
+    </tr>`);
+
+  // Manual / binary triggers
+  const manualTriggers = manual?.invalidation_triggers || {};
+  for (const [key, meta] of Object.entries(MANUAL_TRIGGER_LABELS)) {
+    const t = manualTriggers[key];
+    const status = t?.status || 'green';
+    const notes  = t?.notes  || '—';
+    const upd    = t?.updated;
+    const dotClass = status === 'red' ? 'dot-red' : status === 'amber' ? 'dot-amber' : 'dot-green';
+    const stale  = staleness(upd, 30, 60);
+    rows.push(`
+      <tr>
+        <td>${meta.label}</td>
+        <td>${notes} ${staleBadge(stale.level, stale.label)}</td>
+        <td>${meta.threshold}</td>
+        <td class="trigger-status"><span class="${dotClass}">●</span></td>
+      </tr>`);
+  }
+
+  tbody.innerHTML = rows.join('');
+}
+
+// ─── Section 3: Positions ─────────────────────────────────────────────────────
+
+function priceRow(prices, sym, label, prefix, decimals, note) {
+  const price = priceOf(prices?.prices, sym);
+  const chg   = changePctOf(prices?.prices, sym);
+  return `<tr>
+    <td class="asset-name">${label}</td>
+    <td class="num">${fmt(price, decimals, prefix)}</td>
+    <td class="num">${fmtPct(chg)}</td>
+    <td class="note-cell">${note}</td>
+  </tr>`;
+}
+
+function renderPositions(prices) {
+  const goldUsd = priceOf(prices?.prices, 'XAUUSD');
+  const usdAud  = prices?.fx?.USDAUD;
+  const goldAud = goldUsd && usdAud ? goldUsd * usdAud : null;
+
+  // Hard Money
+  const hardMoney = [
+    priceRow(prices, 'BTC',  'BTC', '$', 0,  'M2 correlation proxy'),
+    priceRow(prices, 'XAUUSD', 'Gold (USD)', '$', 0, ''),
+    `<tr><td class="asset-name">Gold (AUD)</td><td class="num">${fmt(goldAud, 0, 'A$')}</td><td class="num"><span class="neu">—</span></td><td class="note-cell">Local purchasing power</td></tr>`,
+    priceRow(prices, 'GLD', 'GLD ETF', '$', 2, ''),
+  ].join('');
+  document.getElementById('group-hard-money').innerHTML = hardMoney;
+
+  // AI & Tech
+  const tech = [
+    priceRow(prices, 'TSLA',  'TSLA',  '$', 2, 'Physical AI deployment proxy'),
+    priceRow(prices, 'GOOGL', 'GOOGL', '$', 2, 'Watch: ad revenue trend'),
+    priceRow(prices, 'META',  'META',  '$', 2, 'Watch: ad revenue vs AI capex'),
+    priceRow(prices, 'NVDA',  'NVDA',  '$', 2, 'Watch: gross margin'),
+    priceRow(prices, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
+    priceRow(prices, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
+    priceRow(prices, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
+  ].join('');
+  document.getElementById('group-tech').innerHTML = tech;
+
+  // Watchlist
+  const watchlistRows = Object.entries(WATCHLIST_TARGETS).map(([sym, [lo, hi]]) => {
+    const price  = priceOf(prices?.prices, sym);
+    const chg    = changePctOf(prices?.prices, sym);
+    const mid    = (lo + hi) / 2;
+    const targetLabel = `$${lo}–${hi}`;
+    let distHtml = '—';
+    if (price != null) {
+      if (price <= hi) {
+        const pct = ((price - hi) / hi * 100).toFixed(1);
+        distHtml = `<span class="distance-entry">In range (${pct > 0 ? '+' : ''}${pct}%)</span>`;
+      } else {
+        const pct = ((price - hi) / hi * 100).toFixed(1);
+        const nearTarget = price < hi * 1.20;
+        distHtml = `<span class="${nearTarget ? 'distance-near' : 'distance-above'}">+${pct}% above</span>`;
+      }
+    }
+    return `<tr>
+      <td class="asset-name">${sym}</td>
+      <td class="num">${fmt(price, 2, '$')}</td>
+      <td class="num">${fmtPct(chg)}</td>
+      <td class="num">${targetLabel}</td>
+      <td class="num distance-cell">${distHtml}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('group-watchlist').innerHTML = watchlistRows;
+
+  // Macro Signals
+  const wti  = priceOf(prices?.prices, 'WTI');
+  const vix  = priceOf(prices?.prices, 'VIX');
+
+  const wtiCls  = wti  > 120 ? 'highlight-alert' : wti  > 100 ? 'highlight-warn' : '';
+  const vixCls  = vix  > 30  ? 'highlight-alert' : vix  > 20  ? 'highlight-warn' : '';
+
+  const macroSignals = [
+    `<tr>
+      <td class="asset-name">WTI Crude</td>
+      <td class="num ${wtiCls}">${fmt(wti, 2, '$')}</td>
+      <td class="num">${fmtPct(changePctOf(prices?.prices, 'WTI'))}</td>
+      <td class="note-cell">&gt;$100 equity headwind; &lt;$85 resolution</td>
+    </tr>`,
+    `<tr>
+      <td class="asset-name">VIX</td>
+      <td class="num ${vixCls}">${fmt(vix, 1)}</td>
+      <td class="num">${fmtPct(changePctOf(prices?.prices, 'VIX'))}</td>
+      <td class="note-cell">&gt;30 elevated risk; DCA timing signal</td>
+    </tr>`,
+  ].join('');
+  document.getElementById('group-macro-signals').innerHTML = macroSignals;
+}
+
+// ─── Section 4: Macro Indicators Panel ────────────────────────────────────────
+
+function macroCard(label, valueHtml, subHtml = '', extraClass = '') {
+  return `<div class="macro-card ${extraClass}">
+    <div class="macro-card-label">${label}</div>
+    <div class="macro-card-value">${valueHtml}</div>
+    ${subHtml ? `<div class="macro-card-sub">${subHtml}</div>` : ''}
+  </div>`;
+}
+
+function fgBarHtml(val) {
+  if (val == null) return '';
+  const pct = Math.min(100, Math.max(0, val));
+  const color = val <= 25 ? 'var(--red)' : val <= 45 ? 'var(--amber)' : val <= 55 ? 'var(--text-dim)' : val <= 75 ? '#84cc16' : 'var(--green)';
+  return `<div class="fg-bar-track">
+    <div class="fg-bar-fill" style="width:${pct}%;background:${color}"></div>
+    <div class="fg-bar-marker" style="left:${pct}%"></div>
+  </div>`;
+}
+
+function renderMacro(macro, manual, prices) {
+  const ind = macro?.indicators || {};
+
+  const usM2   = ind.US_M2;
+  const dgy    = ind.USD_INDEX;
+  const us10y  = ind.US_10Y;
+  const eurM2  = ind.EUR_M2;
+  const jpM2   = ind.JP_M2;
+  const fg     = ind.FEAR_GREED;
+  const gm2    = manual?.global_m2;
+
+  const dxy  = priceOf(prices?.prices, 'WTI') !== undefined ? dgy?.value : dgy?.value;
+  const dxyCls  = dgy?.value < 100 ? 'highlight-warn' : '';
+  const us10yCls = us10y?.value > 4.5 ? 'highlight-warn' : '';
+
+  const staleM2  = staleness(usM2?.date,   35,  60);
+  const staleGm2 = staleness(gm2?.updated, 90, 180);
+  const stale10y = staleness(us10y?.date,   2,   5);
+  const staleDxy = staleness(dgy?.date,     2,   5);
+  const staleEu  = staleness(eurM2?.date,  35,  60);
+  const staleJp  = staleness(jpM2?.date,   35,  60);
+
+  const cards = [
+    macroCard(
+      'US M2 Money Supply',
+      `${fmt(usM2?.value, 0, '$')}B`,
+      `Period: ${usM2?.date || '—'} ${staleBadge(staleM2.level, staleM2.label)}`,
+    ),
+    macroCard(
+      'Global M2 Composite',
+      gm2?.value != null ? `$${gm2.value.toFixed(1)}T` : '—',
+      `YoY: ${gm2?.yoy_pct != null ? (gm2.yoy_pct >= 0 ? '+' : '') + gm2.yoy_pct.toFixed(1) + '%' : '—'} ${staleBadge(staleGm2.level, staleGm2.label)}`,
+      staleGm2.level !== 'fresh' ? `value-stale-${staleGm2.level}` : '',
+    ),
+    macroCard(
+      'Eurozone M2',
+      `€${fmt(eurM2?.value, 0)}B`,
+      `Period: ${eurM2?.date || '—'} ${staleBadge(staleEu.level, staleEu.label)}`,
+    ),
+    macroCard(
+      'Japan M2',
+      `¥${fmt(jpM2?.value, 0)}T`,
+      `Period: ${jpM2?.date || '—'} ${staleBadge(staleJp.level, staleJp.label)}`,
+    ),
+    macroCard(
+      'US 10Y Treasury',
+      `<span class="${us10yCls}">${fmt(us10y?.value, 2)}%</span>`,
+      `${us10y?.date || '—'} ${staleBadge(stale10y.level, stale10y.label)}`,
+    ),
+    macroCard(
+      'US Dollar Index (DXY)',
+      `<span class="${dxyCls}">${fmt(dgy?.value, 2)}</span>`,
+      `${dgy?.date || '—'} ${staleBadge(staleDxy.level, staleDxy.label)} ${dgy?.value < 100 ? '<span class="highlight-warn">Below 100 — thesis signal</span>' : ''}`,
+    ),
+    macroCard(
+      'Fear &amp; Greed',
+      `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span>`,
+      `${fg?.classification || ''} · ${fg?.date || '—'}${fgBarHtml(fg?.value)}`,
+    ),
+  ].join('');
+
+  document.getElementById('macro-grid').innerHTML = cards;
+}
+
+// ─── Section 5: Thesis ────────────────────────────────────────────────────────
+
+async function renderThesis() {
+  const el = document.getElementById('thesis-content');
+  try {
+    const resp = await fetch(DATA.thesis);
+    if (!resp.ok) throw new Error(`${resp.status}`);
+    const text = await resp.text();
+    // Very basic Markdown→HTML: headings, bold, italic, paragraphs, lists
+    el.innerHTML = mdToHtml(text);
+  } catch {
+    el.innerHTML = '<p class="neu">Thesis document not yet written. Check back soon.</p>';
+  }
+}
+
+function mdToHtml(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm,   '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,    '<em>$1</em>')
+    .replace(/^> (.+)$/gm,   '<blockquote>$1</blockquote>')
+    .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, s => `<ul>${s}</ul>`)
+    .replace(/\n\n+/g, '</p><p>')
+    .replace(/^(?!<[hbuol])(.+)/, '<p>$1')
+    .replace(/(.+)(?!>)$/, '$1</p>');
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+function renderFooter(prices, macro) {
+  document.getElementById('footer-prices-ts').textContent = fmtTs(prices?.updated_at);
+  document.getElementById('footer-macro-ts').textContent  = fmtTs(macro?.updated_at);
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+
+async function fetchJson(url) {
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Failed to fetch ${url}: ${resp.status}`);
+  return resp.json();
+}
+
+async function init() {
+  let prices = {}, macro = {}, manual = {};
+
+  // Fetch all data in parallel; fail gracefully per source
+  const [pricesResult, macroResult, manualResult] = await Promise.allSettled([
+    fetchJson(DATA.prices),
+    fetchJson(DATA.macro),
+    fetchJson(DATA.manual),
+  ]);
+
+  if (pricesResult.status === 'fulfilled') prices = pricesResult.value;
+  else console.warn('prices.json failed:', pricesResult.reason);
+
+  if (macroResult.status === 'fulfilled') macro = macroResult.value;
+  else console.warn('macro.json failed:', macroResult.reason);
+
+  if (manualResult.status === 'fulfilled') manual = manualResult.value;
+  else console.warn('manual.json failed:', manualResult.reason);
+
+  renderStatusBar(manual, macro);
+  renderTriggers(prices, manual);
+  renderPositions(prices);
+  renderMacro(macro, manual, prices);
+  renderFooter(prices, macro);
+  renderThesis();
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(console.warn);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);

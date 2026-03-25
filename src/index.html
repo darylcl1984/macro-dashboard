@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Great Transition — Macro Dashboard</title>
+  <meta name="description" content="Thesis-driven macro dashboard tracking The Great Transition." />
+  <meta name="theme-color" content="#080808" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── Section 1: Thesis Status Bar ──────────────────────────────────── -->
+  <header id="status-bar">
+    <div id="status-bar-inner">
+      <div class="status-cell" id="s-scenario">
+        <span class="status-label">Scenario</span>
+        <span class="status-value" id="scenario-value">—</span>
+        <span class="status-sub" id="scenario-prob"></span>
+      </div>
+      <div class="status-cell" id="s-assessed">
+        <span class="status-label">Last assessed</span>
+        <span class="status-value" id="assessed-date">—</span>
+        <span class="stale-badge" id="assessed-stale"></span>
+      </div>
+      <div class="status-cell" id="s-m2">
+        <span class="status-label">Global M2 YoY</span>
+        <span class="status-value" id="m2-yoy">—</span>
+        <span class="stale-badge" id="m2-stale"></span>
+      </div>
+      <div class="status-cell" id="s-fg">
+        <span class="status-label">Fear &amp; Greed</span>
+        <span class="status-value" id="fg-value">—</span>
+        <span class="status-sub" id="fg-class"></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Section 2: Thesis Invalidation Triggers ───────────────────── -->
+    <section class="panel" id="panel-triggers">
+      <h2 class="panel-title">Thesis Invalidation Triggers</h2>
+      <table class="trigger-table">
+        <thead>
+          <tr>
+            <th>Trigger</th>
+            <th>Current</th>
+            <th>Threshold</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="trigger-rows">
+          <tr><td colspan="4" class="loading">Loading…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Section 3: Positions by Category ─────────────────────────── -->
+    <section class="panel" id="panel-positions">
+      <h2 class="panel-title">Positions &amp; Watchlist</h2>
+
+      <div class="positions-grid">
+
+        <div class="position-group">
+          <h3 class="group-title">Hard Money</h3>
+          <table class="price-table">
+            <thead><tr><th>Asset</th><th>Price</th><th>24h</th><th>Note</th></tr></thead>
+            <tbody id="group-hard-money"></tbody>
+          </table>
+        </div>
+
+        <div class="position-group">
+          <h3 class="group-title">AI &amp; Tech Equities</h3>
+          <table class="price-table">
+            <thead><tr><th>Asset</th><th>Price</th><th>Day Δ</th><th>Note</th></tr></thead>
+          <tbody id="group-tech"></tbody>
+          </table>
+        </div>
+
+        <div class="position-group">
+          <h3 class="group-title">Watchlist — Deploy on Drawdown</h3>
+          <table class="price-table watchlist-table">
+            <thead><tr><th>Asset</th><th>Price</th><th>Day Δ</th><th>Target Entry</th><th>Distance</th></tr></thead>
+            <tbody id="group-watchlist"></tbody>
+          </table>
+        </div>
+
+        <div class="position-group">
+          <h3 class="group-title">Macro Signals</h3>
+          <table class="price-table">
+            <thead><tr><th>Signal</th><th>Value</th><th>Δ</th><th>Thesis Meaning</th></tr></thead>
+            <tbody id="group-macro-signals"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Section 4: Macro Indicators Panel ─────────────────────────── -->
+    <section class="panel" id="panel-macro">
+      <h2 class="panel-title">Macro Indicators</h2>
+      <div class="macro-grid" id="macro-grid">
+        <div class="loading">Loading…</div>
+      </div>
+    </section>
+
+    <!-- ── Section 5: Thesis Narrative (collapsible) ─────────────────── -->
+    <section class="panel" id="panel-thesis">
+      <details id="thesis-details">
+        <summary class="thesis-summary">
+          The Great Transition — Thesis &amp; Framework
+          <span class="summary-hint">click to expand</span>
+        </summary>
+        <div id="thesis-content" class="thesis-body">
+          <p class="loading">Loading thesis…</p>
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────── -->
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-refresh">
+        <span class="footer-label">Prices updated:</span>
+        <span id="footer-prices-ts">—</span>
+        &nbsp;|&nbsp;
+        <span class="footer-label">Macro updated:</span>
+        <span id="footer-macro-ts">—</span>
+      </div>
+      <div class="footer-sources">
+        Data: FRED · ECB · BOJ · CoinGecko · Finnhub · Stooq · Alternative.me
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/darylcl1984/macro-dashboard" target="_blank" rel="noopener">GitHub</a>
+        &nbsp;·&nbsp;
+        Not financial advice — analytical framework for educational purposes.
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

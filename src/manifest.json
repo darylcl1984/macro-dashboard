@@ -1,0 +1,10 @@
+{
+  "name": "The Great Transition — Macro Dashboard",
+  "short_name": "Macro Dashboard",
+  "description": "Thesis-driven macro dashboard tracking The Great Transition.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "icons": []
+}
