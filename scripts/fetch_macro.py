@@ -3,9 +3,9 @@ fetch_macro.py
 Fetches macro indicators and writes to data/macro.json.
 
 Sources:
-  - FRED (API key):    US M2 (M2SL), US 10Y Treasury (DGS10), US Dollar Index (DTWEXBGS)
-  - ECB Data Portal:   Eurozone M2 (no key)
-  - BOJ REST API:      Japan M2 (no key)
+  - FRED (API key):    US M2 (M2SL), US 10Y Treasury (DGS10), US Dollar Index (DTWEXBGS),
+                       Eurozone M2 (MABMM301EAM189S, millions EUR → billions)
+  - BOJ REST API:      Japan M2 (MD02/MAM1NAM2M2MO, 100M JPY monthly avg → trillions)
   - Alternative.me:    Crypto Fear & Greed Index (no key)
 
 Manual data (quarterly updates by hand in data/manual.json):
@@ -14,7 +14,7 @@ Manual data (quarterly updates by hand in data/manual.json):
 
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from utils import DATA_DIR, SESSION, fetch_json, fetch_text, now_utc, write_json
 
@@ -50,14 +50,19 @@ def fred_latest(series_id):
 def fetch_fred():
     results = {}
     series = {
-        "US_M2": "M2SL",          # billions USD, monthly
-        "US_10Y": "DGS10",        # percent, daily
-        "USD_INDEX": "DTWEXBGS",  # index, daily
+        "US_M2":    "M2SL",            # billions USD, monthly
+        "US_10Y":   "DGS10",           # percent, daily
+        "USD_INDEX":"DTWEXBGS",        # index, daily
+        "EUR_M2":   "MABMM301EAM189S", # millions EUR, monthly → convert to billions
     }
     for label, sid in series.items():
         try:
             value, date = fred_latest(sid)
-            results[label] = {"value": value, "date": date}
+            if label == "EUR_M2":
+                value = round(value / 1000, 2)  # millions → billions
+                results[label] = {"value": value, "date": date, "unit": "billions EUR"}
+            else:
+                results[label] = {"value": value, "date": date}
             print(f"    {label}: {value} ({date})")
         except Exception as e:
             print(f"  [WARN] FRED {label} ({sid}): {e}")
@@ -65,116 +70,40 @@ def fetch_fred():
 
 
 # ---------------------------------------------------------------------------
-# ECB — Eurozone M2
-# ECB Statistical Data Warehouse REST API
-# Series: BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E
-# ---------------------------------------------------------------------------
-
-def fetch_ecb_m2():
-    """Returns latest Eurozone M2 in billions EUR."""
-    series_key = "BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E"
-    url = f"https://data-api.ecb.europa.eu/service/data/BSI/{series_key}"
-    data = fetch_json(
-        url,
-        params={"lastNObservations": 3, "format": "jsondata"},
-        headers={"Accept": "application/json"},
-        timeout=20,
-    )
-
-    # Navigate ECB SDMX-JSON structure
-    structure = data["structure"]
-    obs_dim = structure["dimensions"]["observation"][0]  # time dimension
-    periods = [p["id"] for p in obs_dim["values"]]
-
-    dataset = data["dataSets"][0]
-    series_data = dataset["series"]["0:0:0:0:0:0:0:0:0:0:0:0"]
-    observations = series_data["observations"]
-
-    # Find latest non-null
-    for idx in sorted(observations.keys(), key=int, reverse=True):
-        val = observations[idx][0]
-        if val is not None:
-            date = periods[int(idx)]
-            # ECB reports in millions EUR — convert to billions
-            return round(val / 1000, 2), date
-
-    raise ValueError("No valid ECB M2 observations")
-
-
-def fetch_ecb():
-    results = {}
-    try:
-        value, date = fetch_ecb_m2()
-        results["EUR_M2"] = {"value": value, "date": date, "unit": "billions EUR"}
-        print(f"    EUR_M2: {value}B EUR ({date})")
-    except Exception as e:
-        print(f"  [WARN] ECB M2: {e}")
-    return results
-
-
-# ---------------------------------------------------------------------------
 # BOJ — Japan M2
-# BOJ REST API: https://www.stat-search.boj.or.jp/info/dload.html
-# Series: MD01 (M2, end of month, 100 million yen)
+# API: https://www.stat-search.boj.or.jp/api/v1/getDataCode
+# DB: MD02, Series: MAM1NAM2M2MO (M2, monthly average, 100 million JPY)
 # ---------------------------------------------------------------------------
 
 def fetch_boj_m2():
     """Returns latest Japan M2 in trillions JPY."""
-    # BOJ's time-series search API
-    url = "https://www.stat-search.boj.or.jp/ssi/mtshtml/md01_m_1.html"
-    # BOJ provides a REST-like CSV/JSON endpoint via their SDMX service
-    # Use the compact JSON endpoint; if unavailable, caller falls back to CSV
+    start_date = (datetime.now() - timedelta(days=180)).strftime("%Y%m")
     data = fetch_json(
-        "https://www.stat-search.boj.or.jp/ssi/api/v1/dataflow/stat/MD01",
+        "https://www.stat-search.boj.or.jp/api/v1/getDataCode",
+        params={
+            "format": "json",
+            "lang": "en",
+            "db": "MD02",
+            "code": "MAM1NAM2M2MO",
+            "startDate": start_date,
+        },
         timeout=20,
     )
-
-    observations = data.get("observations", [])
-    if not observations:
-        raise ValueError("Empty BOJ response")
-
-    # Sort descending by date and take first non-null
-    for obs in sorted(observations, key=lambda x: x.get("date", ""), reverse=True):
-        val = obs.get("value")
-        if val is not None:
-            # BOJ M2 is in 100 million JPY; convert to trillions
-            return round(float(val) / 10000, 2), obs["date"]
-
+    rows = data.get("data", [])
+    if not rows:
+        raise ValueError("Empty BOJ getDataCode response")
+    for row in sorted(rows, key=lambda x: x.get("date", ""), reverse=True):
+        val = row.get("value")
+        if val is not None and val != "":
+            # Units: 100 million JPY (monthly average) → trillions
+            return round(float(val) / 10000, 2), row["date"]
     raise ValueError("No valid BOJ M2 observations")
-
-
-def fetch_boj_m2_csv():
-    """Fallback: fetch BOJ M2 via their e-Stat/CSV download."""
-    # BOJ publishes M2 at a stable URL as a flat CSV
-    url = "https://www.stat-search.boj.or.jp/ssi/mtshtml/md01_m_1_en.csv"
-    lines = fetch_text(url, timeout=20).splitlines()
-    # Find data rows: format is YYYY/MM,value,...
-    for line in reversed(lines):
-        parts = line.split(",")
-        if len(parts) >= 2 and "/" in parts[0]:
-            date_str = parts[0].strip().strip('"')
-            val_str = parts[1].strip().strip('"').replace(",", "")
-            if val_str and val_str not in ("", "ND"):
-                try:
-                    # Values are in 100 million JPY → trillions
-                    val = round(float(val_str) / 10000, 2)
-                    # Normalise date to YYYY-MM
-                    date = date_str.replace("/", "-")
-                    return val, date
-                except ValueError:
-                    continue
-
-    raise ValueError("Could not parse BOJ CSV")
 
 
 def fetch_boj():
     results = {}
     try:
-        try:
-            value, date = fetch_boj_m2()
-        except Exception:
-            print("    BOJ primary API failed, trying CSV fallback...")
-            value, date = fetch_boj_m2_csv()
+        value, date = fetch_boj_m2()
         results["JP_M2"] = {"value": value, "date": date, "unit": "trillions JPY"}
         print(f"    JP_M2: {value}T JPY ({date})")
     except Exception as e:
@@ -225,11 +154,8 @@ def main():
     }
     indicators = results["indicators"]
 
-    print("  FRED: US M2, 10Y, USD Index")
+    print("  FRED: US M2, 10Y, USD Index, EUR M2")
     indicators.update(fetch_fred())
-
-    print("  ECB: Eurozone M2")
-    indicators.update(fetch_ecb())
 
     print("  BOJ: Japan M2")
     indicators.update(fetch_boj())

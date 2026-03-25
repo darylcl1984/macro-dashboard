@@ -17,9 +17,10 @@ Sources:
 
 import json
 import os
+import re
 import time
 
-from utils import DATA_DIR, fetch_json, now_utc, write_json
+from utils import DATA_DIR, SESSION, fetch_json, now_utc, write_json
 
 FINNHUB_API_KEY = os.environ.get("FINNHUB_API_KEY", "")
 OUTPUT_FILE = DATA_DIR / "prices.json"
@@ -63,7 +64,11 @@ def fetch_coingecko():
 
 def fetch_stooq(symbol):
     url = f"https://stooq.com/q/l/?s={symbol.lower()}&f=sd2t2ohlcv&h&e=json"
-    data = fetch_json(url)
+    resp = SESSION.get(url, timeout=10)
+    resp.raise_for_status()
+    # Stooq sometimes emits malformed JSON (e.g. "volume":} with no value) — patch before parsing
+    text = re.sub(r'"volume":\s*([,}])', r'"volume": null\1', resp.text)
+    data = json.loads(text)
     symbols = data.get("symbols", [])
     if not symbols:
         raise ValueError(f"No data for {symbol} from Stooq")

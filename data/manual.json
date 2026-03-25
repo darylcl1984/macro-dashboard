@@ -16,11 +16,11 @@
     "notes": ""
   },
   "global_m2": {
-    "value": null,
+    "value": 103.97,
     "unit": "trillions_usd",
     "yoy_pct": null,
     "period": null,
-    "updated": null
+    "updated": "2026-03-26"
   },
   "china_m2": {
     "value": null,
