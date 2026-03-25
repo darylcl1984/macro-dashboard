@@ -1,4 +1,81 @@
 {
-  "updated_at": null,
-  "indicators": {}
+  "updated_at": "2026-03-25T07:50:53.374635+00:00",
+  "indicators": {
+    "US_M2": {
+      "value": 22667.3,
+      "date": "2026-02-01"
+    },
+    "US_10Y": {
+      "value": 4.34,
+      "date": "2026-03-23"
+    },
+    "USD_INDEX": {
+      "value": 120.2757,
+      "date": "2026-03-20"
+    },
+    "FEAR_GREED": {
+      "value": 14,
+      "classification": "Extreme Fear",
+      "date": "2026-03-25"
+    },
+    "MANUAL": {
+      "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
+      "_format": {
+        "dates": "ISO 8601: full datetime '2026-03-25T00:00:00Z' or date-only '2026-03-25'",
+        "scenario.current": "One of: Bull | Base | Bear | Tail Risk",
+        "invalidation_triggers.*.status": "One of: green | amber | red",
+        "china_m2.value": "Trillions CNY. Source: PBOC Money Supply table. Raw figure is in 100M CNY \u2014 divide by 10000.",
+        "uk_m2.value": "Billions GBP. Source: BOE series LPMVWYX. Raw figure is in millions GBP \u2014 divide by 1000.",
+        "global_m2.value": "Trillions USD. Your composite: sum of US+EU+JP+CN+UK M2 converted to USD.",
+        "global_m2.yoy_pct": "Year-over-year % change. Calculate vs same period prior year."
+      },
+      "scenario": {
+        "current": "Base",
+        "probability": "",
+        "updated": null,
+        "notes": ""
+      },
+      "global_m2": {
+        "value": null,
+        "unit": "trillions_usd",
+        "yoy_pct": null,
+        "period": null,
+        "updated": null
+      },
+      "china_m2": {
+        "value": null,
+        "unit": "trillions_cny",
+        "period": null,
+        "updated": null
+      },
+      "uk_m2": {
+        "value": null,
+        "unit": "billions_gbp",
+        "period": null,
+        "updated": null
+      },
+      "invalidation_triggers": {
+        "googl_ad_revenue_decline": {
+          "status": "green",
+          "notes": "",
+          "updated": null
+        },
+        "nvda_gross_margin": {
+          "status": "green",
+          "notes": "",
+          "updated": null
+        },
+        "taiwan_crisis": {
+          "status": "green",
+          "notes": "",
+          "updated": null
+        },
+        "tsla_optimus_musk": {
+          "status": "green",
+          "notes": "",
+          "updated": null
+        }
+      }
+    }
+  }
 }
