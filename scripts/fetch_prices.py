@@ -10,7 +10,6 @@ Sources:
   - CoinGecko (no key): BTC (includes 24h change)
   - Stooq (no key):     WTI (CL.F), XAUUSD
   - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, NOW, GEV, MSTR)
-                        GLD ETF: stored raw as GLD + derived spot as XAUUSD_GLD (÷0.092)
                         VIX
                         FX rates (CNYUSD, EURUSD, JPYUSD, GBPUSD, USDAUD)
   Derived:              GOLD_AUD = XAUUSD * USDAUD
@@ -68,10 +67,14 @@ def fetch_stooq(symbol):
     symbols = data.get("symbols", [])
     if not symbols:
         raise ValueError(f"No data for {symbol} from Stooq")
-    close = symbols[0].get("close")
-    if close is None or close == "N/D":
-        raise ValueError(f"Missing close price for {symbol} from Stooq")
-    return {"price": float(close), "change_pct": None}
+    row = symbols[0]
+    # Futures (e.g. CL.F) may return N/D for close during off-hours; fall back to open
+    price = row.get("close")
+    if price is None or price == "N/D":
+        price = row.get("open")
+    if price is None or price == "N/D":
+        raise ValueError(f"Missing price for {symbol} from Stooq")
+    return {"price": float(price), "change_pct": None}
 
 
 def fetch_stooq_prices():
@@ -109,19 +112,10 @@ def fetch_finnhub_prices():
         return {}, {}
 
     equity_prices = {}
-    equities = ["NVDA", "TSLA", "PLTR", "TSM", "GOOGL", "META", "NOW", "GEV", "MSTR", "GLD"]
+    equities = ["NVDA", "TSLA", "PLTR", "TSM", "GOOGL", "META", "NOW", "GEV", "MSTR"]
     for sym in equities:
         try:
-            quote = fetch_finnhub_quote(sym)
-            if sym == "GLD":
-                # Store raw ETF price (for display) and derived spot price (for reference)
-                equity_prices["GLD"] = quote
-                equity_prices["XAUUSD_GLD"] = {
-                    "price": round(quote["price"] / 0.092, 2),
-                    "change_pct": quote["change_pct"],
-                }
-            else:
-                equity_prices[sym] = quote
+            equity_prices[sym] = fetch_finnhub_quote(sym)
         except Exception as e:
             print(f"  [WARN] Finnhub equity {sym}: {e}")
 

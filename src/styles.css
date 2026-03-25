@@ -230,6 +230,8 @@ th.num { text-align: right; }
   border-bottom: 1px solid var(--border);
 }
 
+.group-title-sub { margin-top: 16px; }
+
 .price-table td.asset-name { font-weight: 500; }
 .price-table td.note-cell  { color: var(--text-dim); font-size: 11px; }
 

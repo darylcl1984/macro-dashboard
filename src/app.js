@@ -9,12 +9,6 @@ const DATA = {
   thesis: '../docs/thesis.md',
 };
 
-// Watchlist: hardcoded target entry ranges [low, high] in USD
-const WATCHLIST_TARGETS = {
-  NOW: [80,  90],
-  GEV: [230, 260],
-};
-
 // Invalidation trigger thresholds (price-based, auto-evaluated)
 const PRICE_TRIGGERS = [
   {
@@ -281,53 +275,13 @@ function renderPositions(prices) {
 
   // Hard Money
   const hardMoney = [
-    priceRow(prices, 'BTC',  'BTC', '$', 0,  'M2 correlation proxy'),
-    priceRow(prices, 'XAUUSD', 'Gold (USD)', '$', 0, ''),
+    priceRow(prices, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
+    priceRow(prices, 'XAUUSD', 'Gold (USD)','$', 0, ''),
     `<tr><td class="asset-name">Gold (AUD)</td><td class="num">${fmt(goldAud, 0, 'A$')}</td><td class="num"><span class="neu">—</span></td><td class="note-cell">Local purchasing power</td></tr>`,
-    priceRow(prices, 'GLD', 'GLD ETF', '$', 2, ''),
   ].join('');
   document.getElementById('group-hard-money').innerHTML = hardMoney;
 
-  // AI & Tech
-  const tech = [
-    priceRow(prices, 'TSLA',  'TSLA',  '$', 2, 'Physical AI deployment proxy'),
-    priceRow(prices, 'GOOGL', 'GOOGL', '$', 2, 'Watch: ad revenue trend'),
-    priceRow(prices, 'META',  'META',  '$', 2, 'Watch: ad revenue vs AI capex'),
-    priceRow(prices, 'NVDA',  'NVDA',  '$', 2, 'Watch: gross margin'),
-    priceRow(prices, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
-    priceRow(prices, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
-    priceRow(prices, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
-  ].join('');
-  document.getElementById('group-tech').innerHTML = tech;
-
-  // Watchlist
-  const watchlistRows = Object.entries(WATCHLIST_TARGETS).map(([sym, [lo, hi]]) => {
-    const price  = priceOf(prices?.prices, sym);
-    const chg    = changePctOf(prices?.prices, sym);
-    const mid    = (lo + hi) / 2;
-    const targetLabel = `$${lo}–${hi}`;
-    let distHtml = '—';
-    if (price != null) {
-      if (price <= hi) {
-        const pct = ((price - hi) / hi * 100).toFixed(1);
-        distHtml = `<span class="distance-entry">In range (${pct > 0 ? '+' : ''}${pct}%)</span>`;
-      } else {
-        const pct = ((price - hi) / hi * 100).toFixed(1);
-        const nearTarget = price < hi * 1.20;
-        distHtml = `<span class="${nearTarget ? 'distance-near' : 'distance-above'}">+${pct}% above</span>`;
-      }
-    }
-    return `<tr>
-      <td class="asset-name">${sym}</td>
-      <td class="num">${fmt(price, 2, '$')}</td>
-      <td class="num">${fmtPct(chg)}</td>
-      <td class="num">${targetLabel}</td>
-      <td class="num distance-cell">${distHtml}</td>
-    </tr>`;
-  }).join('');
-  document.getElementById('group-watchlist').innerHTML = watchlistRows;
-
-  // Macro Signals
+  // Macro Signals (placed under Hard Money)
   const wti  = priceOf(prices?.prices, 'WTI');
   const vix  = priceOf(prices?.prices, 'VIX');
 
@@ -349,6 +303,20 @@ function renderPositions(prices) {
     </tr>`,
   ].join('');
   document.getElementById('group-macro-signals').innerHTML = macroSignals;
+
+  // AI & Tech
+  const tech = [
+    priceRow(prices, 'NVDA',  'NVDA',  '$', 2, 'Watch: gross margin'),
+    priceRow(prices, 'TSLA',  'TSLA',  '$', 2, 'Physical AI deployment proxy'),
+    priceRow(prices, 'GOOGL', 'GOOGL', '$', 2, 'Watch: ad revenue trend'),
+    priceRow(prices, 'META',  'META',  '$', 2, 'Watch: ad revenue vs AI capex'),
+    priceRow(prices, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
+    priceRow(prices, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
+    priceRow(prices, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
+    priceRow(prices, 'NOW',   'NOW',   '$', 2, 'Watch: deploy on drawdown'),
+    priceRow(prices, 'GEV',   'GEV',   '$', 2, 'Power infrastructure play'),
+  ].join('');
+  document.getElementById('group-tech').innerHTML = tech;
 }
 
 // ─── Section 4: Macro Indicators Panel ────────────────────────────────────────
