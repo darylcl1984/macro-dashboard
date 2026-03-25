@@ -33,6 +33,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase
           git add data/macro.json
           git diff --cached --quiet || git commit -m "chore: update macro indicators [skip ci]"
           git push
