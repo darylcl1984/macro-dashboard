@@ -38,4 +38,5 @@ jobs:
           git add data/prices.json
           # Only commit if there are changes
           git diff --cached --quiet || git commit -m "chore: update prices [skip ci]"
+          git pull --rebase
           git push
