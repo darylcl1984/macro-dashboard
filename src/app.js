@@ -269,15 +269,10 @@ function priceRow(prices, sym, label, prefix, decimals, note) {
 }
 
 function renderPositions(prices) {
-  const goldUsd = priceOf(prices?.prices, 'XAUUSD');
-  const usdAud  = prices?.fx?.USDAUD;
-  const goldAud = goldUsd && usdAud ? goldUsd * usdAud : null;
-
   // Hard Money
   const hardMoney = [
     priceRow(prices, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
     priceRow(prices, 'XAUUSD', 'Gold (USD)','$', 0, ''),
-    `<tr><td class="asset-name">Gold (AUD)</td><td class="num">${fmt(goldAud, 0, 'A$')}</td><td class="num"><span class="neu">—</span></td><td class="note-cell">Local purchasing power</td></tr>`,
   ].join('');
   document.getElementById('group-hard-money').innerHTML = hardMoney;
 

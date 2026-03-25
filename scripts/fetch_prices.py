@@ -4,15 +4,11 @@ Fetches latest price data and writes to data/prices.json.
 
 Output schema:
   prices.<SYMBOL> = { "price": float, "change_pct": float | null }
-  fx.<PAIR>       = float  (raw rate)
 
 Sources:
   - CoinGecko (no key): BTC (includes 24h change)
   - Stooq (no key):     WTI (CL.F), XAUUSD
-  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, NOW, GEV, MSTR)
-                        VIX
-                        FX rates (CNYUSD, EURUSD, JPYUSD, GBPUSD, USDAUD)
-  Derived:              GOLD_AUD = XAUUSD * USDAUD
+  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, NOW, GEV, MSTR), VIX
 """
 
 import json
@@ -124,20 +120,7 @@ def fetch_finnhub_prices():
         except Exception as e:
             print(f"  [WARN] Finnhub equity {sym}: {e}")
 
-    # FX: fetch once as base=USD, then invert where needed
-    fx_rates = {}
-    try:
-        usd_rates = finnhub_get("/forex/rates", {"base": "USD"})["quote"]
-        fx_rates["USDAUD"] = round(float(usd_rates["AUD"]), 6) if usd_rates.get("AUD") else None
-        # Conventional display: foreign currency per 1 USD (inverted)
-        fx_rates["CNYUSD"] = round(1 / float(usd_rates["CNY"]), 6) if usd_rates.get("CNY") else None
-        fx_rates["EURUSD"] = round(1 / float(usd_rates["EUR"]), 6) if usd_rates.get("EUR") else None
-        fx_rates["JPYUSD"] = round(1 / float(usd_rates["JPY"]), 6) if usd_rates.get("JPY") else None
-        fx_rates["GBPUSD"] = round(1 / float(usd_rates["GBP"]), 6) if usd_rates.get("GBP") else None
-    except Exception as e:
-        print(f"  [WARN] Finnhub FX rates: {e}")
-
-    return equity_prices, fx_rates
+    return equity_prices, {}
 
 
 def fetch_vix():
@@ -177,16 +160,9 @@ def main():
     print("  Finnhub: VIX")
     prices.update(fetch_vix())
 
-    # Derived: gold in AUD
-    xauusd = prices.get("XAUUSD", {}).get("price")
-    usdaud = fx.get("USDAUD")
-    if xauusd and usdaud:
-        prices["GOLD_AUD"] = {"price": round(xauusd * usdaud, 2), "change_pct": None}
-
     results = {
         "updated_at": now_utc(),
         "prices": prices,
-        "fx": fx,
     }
 
     write_json(OUTPUT_FILE, results)
