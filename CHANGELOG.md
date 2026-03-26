@@ -8,6 +8,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-26 (session 3)
+
+#### Changed
+- [docs] thesis.md: full content — thesis narrative, portfolio table, indicators guide, invalidation triggers, scenario analysis
+- [docs] thesis.md: multiple review passes — sourced M2/BTC correlation claims, added lag risk caveat, grounded gold price target, genericised conflict references, fixed scenario probabilities to fixed points (35/40/20/5), added 2030 horizon statement, moved Bear trigger note to separate italic line
+
 ### 2026-03-26 (session 2)
 
 #### Added
