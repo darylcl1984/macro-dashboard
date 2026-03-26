@@ -452,6 +452,16 @@ async function renderThesis() {
 }
 
 function mdToHtml(md) {
+  // Process tables before general paragraph handling
+  md = md.replace(/^(\|.+\|)\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/gm, (_, header, body) => {
+    const parseRow = (row, tag) =>
+      '<tr>' + row.trim().replace(/^\||\|$/g, '').split('|')
+        .map(cell => `<${tag}>${cell.trim()}</${tag}>`).join('') + '</tr>';
+    const headerHtml = parseRow(header, 'th');
+    const bodyHtml = body.trim().split('\n').map(r => parseRow(r, 'td')).join('');
+    return `<table class="thesis-table"><thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody></table>`;
+  });
+
   return md
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm,  '<h2>$1</h2>')

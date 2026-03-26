@@ -391,6 +391,33 @@ details:not([open]) .summary-hint::before { content: 'expand'; }
   margin: 1em 0;
 }
 
+.thesis-body .thesis-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0 1.5em;
+  font-size: 12px;
+}
+.thesis-body .thesis-table th {
+  text-align: left;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-2);
+  padding: 5px 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.thesis-body .thesis-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.thesis-body .thesis-table tr:last-child td { border-bottom: none; }
+.thesis-body .thesis-table td:first-child,
+.thesis-body .thesis-table th:first-child { padding-left: 0; }
+
 /* ─── Footer ───────────────────────────────────────────────────────────── */
 
 #site-footer {
