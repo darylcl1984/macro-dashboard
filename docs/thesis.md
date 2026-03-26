@@ -2,7 +2,7 @@
 
 ## Macro Thesis & Portfolio Framework
 
-v4.0 · March 2026
+v5.0 · March 2026
 
 > **NOT FINANCIAL ADVICE — For educational and analytical reference only.**
 
@@ -18,7 +18,7 @@ This is a structural positioning framework with a 2030 horizon. The 2026 scenari
 
 ### 1.1 AI Technological Deflation
 
-The cost of intelligence and labour is collapsing exponentially — and the rate of collapse is accelerating. Token per $ are going parabolic on logarithmic charts.
+The cost of intelligence and labour is collapsing exponentially — and the rate of collapse is accelerating. Token per dollar are going parabolic on logarithmic charts.
 
 This is driven by two recursive loops:
 
