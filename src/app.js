@@ -340,10 +340,12 @@ function renderMacro(macro, manual, prices) {
   const usM2   = ind.US_M2;
   const dgy    = ind.USD_INDEX;
   const us10y  = ind.US_10Y;
-  const eurM2  = ind.EUR_M2;
   const jpM2   = ind.JP_M2;
   const fg     = ind.FEAR_GREED;
   const gm2    = manual?.global_m2;
+  const eurM2  = manual?.eur_m2;
+  const cnM2   = manual?.china_m2;
+  const ukM2   = manual?.uk_m2;
 
   const dxy  = priceOf(prices?.prices, 'WTI') !== undefined ? dgy?.value : dgy?.value;
   const dxyCls  = dgy?.value < 100 ? 'highlight-warn' : '';
@@ -353,15 +355,16 @@ function renderMacro(macro, manual, prices) {
   const staleGm2 = staleness(gm2?.updated, 90, 180);
   const stale10y = staleness(us10y?.date,   2,   5);
   const staleDxy = staleness(dgy?.date,     2,   5);
-  const staleEu  = staleness(eurM2?.date,  35,  60);
+  const staleEu  = staleness(eurM2?.updated, 90, 180);
   const staleJp  = staleness(jpM2?.date,   35,  60);
+  const staleCn  = staleness(cnM2?.updated, 90, 180);
+  const staleUk  = staleness(ukM2?.updated, 90, 180);
+
+  // JP M2 from BOJ is in trillions JPY — convert to USD using live USDJPY from Stooq
+  const usdjpy = prices?.fx?.USDJPY;
+  const jpM2Usd = (jpM2?.value != null && usdjpy) ? jpM2.value / usdjpy : null;
 
   const cards = [
-    macroCard(
-      'US M2 Money Supply',
-      `${fmt(usM2?.value, 0, '$')}B`,
-      `Period: ${usM2?.date || '—'} ${staleBadge(staleM2.level, staleM2.label)}`,
-    ),
     macroCard(
       'Global M2 Composite',
       gm2?.value != null ? `$${gm2.value.toFixed(1)}T` : '—',
@@ -369,14 +372,29 @@ function renderMacro(macro, manual, prices) {
       staleGm2.level !== 'fresh' ? `value-stale-${staleGm2.level}` : '',
     ),
     macroCard(
+      'US M2',
+      `${fmt(usM2?.value, 0, '$')}B`,
+      `Period: ${usM2?.date || '—'} ${staleBadge(staleM2.level, staleM2.label)}`,
+    ),
+    macroCard(
       'Eurozone M2',
-      `€${fmt(eurM2?.value, 0)}B`,
-      `Period: ${eurM2?.date || '—'} ${staleBadge(staleEu.level, staleEu.label)}`,
+      eurM2?.value != null ? `$${eurM2.value.toFixed(2)}T` : '—',
+      `Period: ${eurM2?.period || '—'} ${staleBadge(staleEu.level, staleEu.label)}`,
     ),
     macroCard(
       'Japan M2',
-      `¥${fmt(jpM2?.value, 0)}T`,
+      jpM2Usd != null ? `$${jpM2Usd.toFixed(1)}T` : '—',
       `Period: ${jpM2?.date || '—'} ${staleBadge(staleJp.level, staleJp.label)}`,
+    ),
+    macroCard(
+      'China M2',
+      cnM2?.value != null ? `$${cnM2.value.toFixed(2)}T` : '—',
+      `Period: ${cnM2?.period || '—'} ${staleBadge(staleCn.level, staleCn.label)}`,
+    ),
+    macroCard(
+      'UK M2',
+      ukM2?.value != null ? `$${ukM2.value.toFixed(2)}T` : '—',
+      `Period: ${ukM2?.period || '—'} ${staleBadge(staleUk.level, staleUk.label)}`,
     ),
     macroCard(
       'US 10Y Treasury',

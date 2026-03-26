@@ -4,7 +4,6 @@ Fetches macro indicators and writes to data/macro.json.
 
 Sources:
   - FRED (API key):    US M2 (M2SL), US 10Y Treasury (DGS10), US Dollar Index (DTWEXBGS)
-  - ECB Data Portal:   Eurozone M2 (BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E, millions EUR → billions)
   - BOJ REST API:      Japan M2 (MD02/MAM1NAM2M2MO, 100M JPY monthly avg → trillions)
   - Alternative.me:    Crypto Fear & Greed Index (no key)
 
@@ -95,40 +94,6 @@ def fetch_boj_m2():
             # Units: 100 million JPY → trillions
             return round(float(val) / 10000, 2), str(date)
     raise ValueError("No valid BOJ M2 observations")
-
-
-# ---------------------------------------------------------------------------
-# ECB — Eurozone M2
-# Series: BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E (millions EUR, monthly)
-# ---------------------------------------------------------------------------
-
-def fetch_ecb_m2():
-    """Returns latest Eurozone M2 in billions EUR."""
-    data = fetch_json(
-        "https://data-api.ecb.europa.eu/service/data/BSI/BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
-        params={"lastNObservations": 5, "format": "jsondata"},
-        headers={"Accept": "application/json"},
-        timeout=20,
-    )
-    dates = [p["id"] for p in data["structure"]["dimensions"]["observation"][0]["values"]]
-    obs = data["dataSets"][0]["series"]["0:0:0:0:0:0:0:0:0:0:0:0"]["observations"]
-    latest_idx = str(max(int(k) for k in obs))
-    val = obs[latest_idx][0]
-    date = dates[int(latest_idx)]
-    if val is None:
-        raise ValueError("No valid ECB M2 observation")
-    return round(val / 1000, 2), date  # millions → billions
-
-
-def fetch_ecb():
-    results = {}
-    try:
-        value, date = fetch_ecb_m2()
-        results["EUR_M2"] = {"value": value, "date": date, "unit": "billions EUR"}
-        print(f"    EUR_M2: {value}B EUR ({date})")
-    except Exception as e:
-        print(f"  [WARN] ECB M2: {e}")
-    return results
 
 
 def fetch_boj():

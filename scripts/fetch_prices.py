@@ -82,8 +82,9 @@ def fetch_stooq(symbol):
 def fetch_stooq_prices():
     results = {}
     symbols = {
-        "WTI": "cl.f",
+        "WTI":    "cl.f",
         "XAUUSD": "xauusd",
+        "USDJPY": "usdjpy",
     }
     for label, sym in symbols.items():
         try:
@@ -158,8 +159,13 @@ def main():
     except Exception as e:
         print(f"  [ERROR] CoinGecko: {e}")
 
-    print("  Stooq: WTI, XAUUSD")
-    prices.update(fetch_stooq_prices())
+    print("  Stooq: WTI, XAUUSD, USDJPY")
+    stooq = fetch_stooq_prices()
+    # Separate FX rates from asset prices
+    for key in ("USDJPY",):
+        if key in stooq:
+            fx[key] = stooq.pop(key)["price"]
+    prices.update(stooq)
 
     print("  Finnhub: equities + FX")
     equity_prices, fx_rates = fetch_finnhub_prices()
@@ -172,6 +178,7 @@ def main():
     results = {
         "updated_at": now_utc(),
         "prices": prices,
+        "fx": fx,
     }
 
     write_json(OUTPUT_FILE, results)
