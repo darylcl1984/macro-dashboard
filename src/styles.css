@@ -199,6 +199,7 @@ th.num { text-align: right; }
 
 .trigger-table { table-layout: fixed; }
 .trigger-table td:nth-child(2) { overflow: hidden; text-overflow: ellipsis; }
+.trigger-table th:nth-child(4) { text-align: center; }
 
 .trigger-table td.trigger-status {
   font-size: 16px;
