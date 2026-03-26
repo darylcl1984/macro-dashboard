@@ -197,7 +197,8 @@ th.num { text-align: right; }
 
 /* ─── Invalidation Triggers ────────────────────────────────────────────── */
 
-#panel-triggers .trigger-table { }
+.trigger-table { table-layout: fixed; }
+.trigger-table td:nth-child(2) { overflow: hidden; text-overflow: ellipsis; }
 
 .trigger-status {
   font-size: 16px;
@@ -232,6 +233,11 @@ th.num { text-align: right; }
 
 .group-title-sub { margin-top: 16px; }
 
+.price-table { table-layout: fixed; width: 100%; }
+.price-table th:nth-child(1) { width: 25%; }
+.price-table th:nth-child(2) { width: 25%; }
+.price-table th:nth-child(3) { width: 15%; }
+.price-table th:nth-child(4) { width: 35%; }
 .price-table td.asset-name { font-weight: 500; }
 .price-table td.note-cell  { color: var(--text-dim); font-size: 11px; }
 
