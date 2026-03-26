@@ -18,11 +18,11 @@ This is a structural positioning framework with a 2030 horizon. The 2026 scenari
 
 ### 1.1 AI Technological Deflation
 
-The cost of intelligence and labour is collapsing exponentially — and the rate of collapse is accelerating. Token per dollar are going parabolic on logarithmic charts.
+The cost of intelligence and labour is collapsing exponentially — and the rate of collapse is accelerating. Tokens per dollar are going parabolic on logarithmic charts.
 
 This is driven by two recursive loops:
 
-**Recursive self-learning.** Models training models. Synthetic data refining synthetic data. DeepSeek—a hedge fund—replicated frontier AI capabilities. Kimi matched GPT-5 reasoning on two MacBooks. Each generation bootstraps the next: faster, cheaper. Fewer humans per training cycle. The loop is already running. Deflation accelerates as the human-to-model recursive cycle trends to zero.
+**Recursive self-learning.** Models training models. Synthetic data refining synthetic data. DeepSeek—a hedge fund—replicated frontier AI capabilities. Kimi matched GPT-5 reasoning on two MacBooks. Each generation bootstraps the next: faster, cheaper. Fewer humans per training cycle. The loop is already running. Deflation accelerates as the human-to-model recursive improvement cycle trends to zero.
 
 **Recursive self-building.** Machines building machines. Tesla’s Terafab—announced March 21, 2026 as a Tesla/SpaceX/xAI joint venture in Austin—targets 1 Terawatt of compute per year and 100-200 billion chips annually, surpassing total global output by 50x. This is the clearest signal the loop is being engineered deliberately. Once robots build robots and factories build factories, the same exponential dynamic shifts from bits to atoms. The question is now when, not if.
 
