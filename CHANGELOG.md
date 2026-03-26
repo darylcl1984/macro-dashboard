@@ -8,6 +8,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-26 (session 4)
+
+#### Added
+- [docs] add `docs/m2_note.md` — Notes on Global M2, covering global liquidity weighting by bloc with estimated globally active M2 and leakage rates
+- [frontend] add second collapsible section in thesis panel — "Notes on Global M2" renders m2_note.md
+- [frontend] refactor `renderThesis()` into shared `renderMarkdownDoc()` helper to support multiple markdown docs
+
+#### Fixed
+- [frontend] add border separator between collapsible sections in thesis panel
+
 ### 2026-03-26 (session 3)
 
 #### Changed
