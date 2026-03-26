@@ -307,31 +307,15 @@ function alertRow(prices, alerts, sym, label, prefix, decimals, note) {
 function renderPositions(prices, alerts) {
   // Hard Money
   const hardMoney = [
-    priceRow(prices, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
-    priceRow(prices, 'XAUUSD', 'Gold (USD)','$', 0, ''),
+    alertRow(prices, alerts, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
+    alertRow(prices, alerts, 'XAUUSD', 'Gold (USD)','$', 0, ''),
   ].join('');
   document.getElementById('group-hard-money').innerHTML = hardMoney;
 
   // Macro Signals (placed under Hard Money)
-  const wti  = priceOf(prices?.prices, 'WTI');
-  const vix  = priceOf(prices?.prices, 'VIX');
-
-  const wtiCls  = wti  > 120 ? 'highlight-alert' : wti  > 100 ? 'highlight-warn' : '';
-  const vixCls  = vix  > 30  ? 'highlight-alert' : vix  > 20  ? 'highlight-warn' : '';
-
   const macroSignals = [
-    `<tr>
-      <td class="asset-name">WTI Crude</td>
-      <td class="num ${wtiCls}">${fmt(wti, 2, '$')}</td>
-      <td class="num">${fmtPct(changePctOf(prices?.prices, 'WTI'))}</td>
-      <td class="note-cell">&gt;$100 equity headwind; &lt;$85 resolution</td>
-    </tr>`,
-    `<tr>
-      <td class="asset-name">VIX</td>
-      <td class="num ${vixCls}">${fmt(vix, 1)}</td>
-      <td class="num">${fmtPct(changePctOf(prices?.prices, 'VIX'))}</td>
-      <td class="note-cell">&gt;30 elevated risk; DCA timing signal</td>
-    </tr>`,
+    alertRow(prices, alerts, 'WTI', 'WTI Crude', '$', 2, '&gt;$100 equity headwind; &lt;$85 resolution'),
+    alertRow(prices, alerts, 'VIX', 'VIX',       '',  1, '&gt;30 elevated risk; DCA timing signal'),
   ].join('');
   document.getElementById('group-macro-signals').innerHTML = macroSignals;
 

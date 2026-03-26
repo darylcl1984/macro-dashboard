@@ -1,5 +1,9 @@
 {
-  "_note": "Price alerts for AI & Tech Equities. Set 'below' and/or 'above' thresholds in USD. Set to null to disable. Red dot if price < below, green dot if price > above, grey dot if between.",
+  "_note": "Price alerts for all Watchlist assets. Set 'below' and/or 'above' thresholds in USD. Set to null to disable. Red dot if price < below, green dot if price > above, grey dot if between.",
+  "BTC":   { "below": null,   "above": null },
+  "XAUUSD":{ "below": null,   "above": null },
+  "WTI":   { "below": null,   "above": null },
+  "VIX":   { "below": null,   "above": null },
   "NVDA":  { "below": null,   "above": null },
   "TSLA":  { "below": null,   "above": null },
   "GOOGL": { "below": null,   "above": null },
