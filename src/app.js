@@ -275,7 +275,7 @@ function renderTriggers(prices, manual) {
     rows.push(`
       <tr>
         <td>${meta.label}</td>
-        <td>${notes} ${staleBadge(stale.level, stale.label)}<div class="trigger-threshold-sub">${meta.threshold}</div></td>
+        <td>${notes} ${staleBadge(stale.level, stale.label)} <span class="trigger-sep">—</span> <span class="trigger-threshold-inline">Trigger: ${meta.threshold}</span></td>
         <td class="trigger-status ${dotClass}">●</td>
       </tr>`);
   }
@@ -285,8 +285,7 @@ function renderTriggers(prices, manual) {
 
 // ─── Section 3: Positions ─────────────────────────────────────────────────────
 
-const RANGE_REVERSED     = new Set(['NOW', 'GEV', 'WTI', 'VIX']);
-const WATCHLIST_REVERSED = new Set(['NOW', 'GEV']);
+const RANGE_REVERSED = new Set(['NOW', 'GEV', 'WTI', 'VIX']);
 
 function fmtRangeVal(v) {
   if (v == null) return '—';
@@ -295,21 +294,31 @@ function fmtRangeVal(v) {
   return '$' + v.toFixed(2);
 }
 
-function rangeBarHtml(sym, price, low, high) {
+function rangeBarHtml(sym, price, low, high, below, above) {
   if (price == null || low == null || high == null || high <= low)
     return '<span class="neu">—</span>';
-  const pct      = Math.min(1, Math.max(0, (price - low) / (high - low)));
+  const span     = high - low;
+  const pct      = Math.min(1, Math.max(0, (price - low) / span));
   const reversed = RANGE_REVERSED.has(sym);
   const color    = reversed
     ? (pct <= 0.25 ? 'var(--green)' : pct <= 0.40 ? 'var(--amber)' : pct <= 0.75 ? 'var(--text-muted)' : 'var(--red)')
     : (pct <= 0.25 ? 'var(--red)'   : pct <= 0.40 ? 'var(--amber)' : pct <= 0.75 ? 'var(--text-muted)' : 'var(--green)');
-  const desc = WATCHLIST_REVERSED.has(sym) && pct <= 0.25
-    ? '<span class="pos">Approaching entry</span>'
-    : pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
-    : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
-    : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
-    : 'Near 52w high';
-  return `<div class="range-track"><div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
+  const desc = pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
+             : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
+             : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
+             : 'Near 52w high';
+
+  // Alert tick marks — only render if threshold is within the 52w range
+  let ticks = '';
+  for (const threshold of [below, above]) {
+    if (threshold == null) continue;
+    const tp = (threshold - low) / span;
+    if (tp > 0 && tp < 1) {
+      ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%"></div>`;
+    }
+  }
+
+  return `<div class="range-track">${ticks}<div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
        + `<div class="range-labels"><span class="range-lo">${fmtRangeVal(low)}</span><span class="range-hi">${fmtRangeVal(high)}</span></div>`
        + `<div class="range-desc">${desc}</div>`;
 }
@@ -317,36 +326,14 @@ function rangeBarHtml(sym, price, low, high) {
 function alertRow(prices, alerts, sym, label, prefix, decimals) {
   const price = priceOf(prices?.prices, sym);
   const chg   = changePctOf(prices?.prices, sym);
-  const al    = alerts?.[sym];
-  const below = al?.below ?? null;
-  const above = al?.above ?? null;
   const entry = prices?.prices?.[sym];
-
-  // Alert text: "<$150 / >$200", "<$150", ">$200", or ""
-  const parts = [];
-  if (below != null) parts.push(`&lt;$${below.toLocaleString('en-US')}`);
-  if (above != null) parts.push(`&gt;$${above.toLocaleString('en-US')}`);
-  const alertText = parts.join(' / ');
-
-  // Status dot
-  let statusHtml = '';
-  if (below != null || above != null) {
-    if (price != null && below != null && price < below) {
-      statusHtml = '<span class="dot-red">●</span>';
-    } else if (price != null && above != null && price > above) {
-      statusHtml = '<span class="dot-green">●</span>';
-    } else {
-      statusHtml = '<span class="neu">●</span>';
-    }
-  }
+  const al    = alerts?.[sym];
 
   return `<tr>
     <td class="asset-name">${label}</td>
     <td class="num">${fmt(price, decimals, prefix)}</td>
     <td class="num">${fmtPct(chg)}</td>
-    <td class="alert-cell">${alertText}</td>
-    <td class="alert-status">${statusHtml}</td>
-    <td class="range-cell">${rangeBarHtml(sym, price, entry?.week52_low ?? null, entry?.week52_high ?? null)}</td>
+    <td class="range-cell">${rangeBarHtml(sym, price, entry?.week52_low ?? null, entry?.week52_high ?? null, al?.below ?? null, al?.above ?? null)}</td>
   </tr>`;
 }
 
@@ -413,7 +400,6 @@ function renderMacro(macro, manual, prices) {
   const cnM2   = manual?.china_m2;
   const ukM2   = manual?.uk_m2;
 
-  const dxy  = priceOf(prices?.prices, 'WTI') !== undefined ? dgy?.value : dgy?.value;
   const dxyCls  = dgy?.value < 100 ? 'highlight-warn' : '';
   const us10yCls = us10y?.value > 4.5 ? 'highlight-warn' : '';
 
@@ -434,7 +420,7 @@ function renderMacro(macro, manual, prices) {
     macroCard(
       'Global M2 Composite',
       gm2?.value != null ? `$${gm2.value.toFixed(1)}T` : '—',
-      `YoY: ${gm2?.yoy_pct != null ? (gm2.yoy_pct >= 0 ? '+' : '') + gm2.yoy_pct.toFixed(1) + '%' : '—'} ${staleBadge(staleGm2.level, staleGm2.label)}`,
+      `YoY: ${gm2?.yoy_pct != null ? `<span class="${gm2.yoy_pct >= 0 ? 'pos' : 'neg'}">${gm2.yoy_pct >= 0 ? '+' : ''}${gm2.yoy_pct.toFixed(1)}%</span>` : '—'} ${staleBadge(staleGm2.level, staleGm2.label)}`,
       `macro-card-hero${staleGm2.level !== 'fresh' ? ` value-stale-${staleGm2.level}` : ''}`,
     ),
     macroCard(

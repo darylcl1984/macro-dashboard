@@ -203,7 +203,7 @@ th.num { text-align: right; }
 .trigger-current          { font-family: var(--mono); }
 .trigger-arrow            { color: var(--text-muted); margin: 0 4px; font-size: 11px; }
 .trigger-threshold-inline { font-family: var(--mono); color: var(--text-muted); font-size: 12px; }
-.trigger-threshold-sub    { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.trigger-sep              { color: var(--text-muted); }
 
 .trigger-table td.trigger-status {
   font-size: 16px;
@@ -245,22 +245,9 @@ th.num { text-align: right; }
 .price-table { table-layout: fixed; width: 100%; }
 .price-table th:nth-child(1) { width: 18%; }
 .price-table th:nth-child(2) { width: 20%; }
-.price-table th:nth-child(3) { width: 12%; }
-.price-table th:nth-child(4) { width: 50%; }
+.price-table th:nth-child(3) { width: 14%; }
+.price-table th:nth-child(4) { width: 48%; }
 .price-table td.asset-name { font-weight: 500; }
-.price-table td.note-cell  { color: var(--text-dim); font-size: 11px; }
-
-/* Alert table (AI & Tech) — 6 columns */
-.alert-table th:nth-child(1) { width: 13%; }
-.alert-table th:nth-child(2) { width: 14%; }
-.alert-table th:nth-child(3) { width:  9%; }
-.alert-table th:nth-child(4) { width: 15%; }
-.alert-table th:nth-child(5) { width:  6%; }
-.alert-table th:nth-child(6) { width: 43%; }
-.alert-table td.alert-cell   { font-family: var(--mono); font-size: 11px; color: var(--text-muted); padding-right: 4px; }
-.alert-table td.alert-status { text-align: center; font-size: 14px; line-height: 1; vertical-align: middle; padding-left: 4px; padding-top: 0; padding-bottom: 0; }
-.alert-table th:nth-child(4) { padding-right: 4px; }
-.alert-table th:nth-child(5) { padding-left: 4px; }
 
 /* ─── 52-Week Range Bar ─────────────────────────────────────────────────── */
 
@@ -282,6 +269,15 @@ th.num { text-align: right; }
   transform: translateX(-50%);
 }
 
+.range-tick {
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 9px;
+  background: var(--text-muted);
+  opacity: 0.5;
+}
+
 .range-labels {
   display: flex;
   justify-content: space-between;
@@ -298,16 +294,6 @@ th.num { text-align: right; }
   color: var(--text-dim);
   margin-top: 2px;
 }
-
-/* Watchlist — emphasise distance */
-.distance-cell {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 13px;
-}
-.distance-above { color: var(--text-dim); }
-.distance-near  { color: var(--amber); }
-.distance-entry { color: var(--green); }
 
 /* ─── Regime Summary Bar ───────────────────────────────────────────────── */
 
@@ -685,10 +671,8 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
     white-space: nowrap;
     min-width: 52px;
   }
-  /* Hide alert, status, range columns on mobile */
+  /* Hide range column on mobile */
   .price-table td:nth-child(4),
-  .price-table td:nth-child(5),
-  .price-table td:nth-child(6),
   td.range-cell { display: none; }
 
   /* ── Macro grid ── */

@@ -8,6 +8,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 3)
+
+#### Added
+- [frontend] Range bar alert tick marks — per-ticker `below`/`above` thresholds from `alerts.json` rendered as subtle 1px vertical ticks on the range track; ticks outside the 52w range are clamped and not rendered
+
+#### Changed
+- [frontend] Alert and St columns removed from all position tables — alert thresholds now embedded in the range bar as tick marks; tables reduced from 6 to 4 columns (Asset | Price | Day Δ | 52W Range)
+- [frontend] Range bar column widths updated to 18/20/14/48% per prompt spec
+- [frontend] Qualitative invalidation trigger rows — status and threshold now on a single line (`[notes] — Trigger: [threshold]`); muted threshold sub-line removed
+- [frontend] Descriptor text neutralised — all assets use the same seven-band labels regardless of category; "Approaching entry" special case removed
+- [frontend] Global M2 YoY in hero card now coloured green (positive) / red (negative), consistent with status bar convention
+
 ### 2026-03-27 (session 2)
 
 #### Added
