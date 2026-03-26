@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 1)
+
+#### Added
+- [frontend] Global M2 hero card — full-width across macro grid, 36px value, YoY sitting inline at baseline; separate `macro-card-hero` class distinct from `macro-card-primary`
+- [frontend] `hoursAgo()` helper — sub-hour/hour/day relative time formatting with green/amber/red colouring thresholds
+
+#### Changed
+- [frontend] Status bar "Last Assessed" → "Last Updated" — primary value now shows older of prices/macro timestamps as relative time (green <12h, amber 12–24h, red >24h); sub-text shows `Scenario: [date]`
+- [frontend] Trigger table restructured from 4 to 3 columns (Trigger 25% / Detail 65% / Status 10%) — quantitative rows show `current → threshold` inline; qualitative rows show notes with threshold as a muted sub-line
+- [frontend] Accordion collapsible sections — chevron `▸` rotates on open, `surface-2` background, hover lifts to `border-2`; "Transition Thesis" rename
+- [frontend] Footer — add "Thesis last assessed: [date]" line below timestamps
+- [frontend] DXY and US 10Y staleness thresholds widened to amber 5d / red 10d (daily FRED series; previous 2d/5d triggered false alerts on weekends)
+
 ### 2026-03-26 (session 6)
 
 #### Fixed

@@ -20,9 +20,9 @@
         <span class="status-sub" id="scenario-prob"></span>
       </div>
       <div class="status-cell" id="s-assessed">
-        <span class="status-label">Last assessed</span>
-        <span class="status-value" id="assessed-date">—</span>
-        <span class="stale-badge" id="assessed-stale"></span>
+        <span class="status-label">Last Updated</span>
+        <span class="status-value" id="last-updated-value">—</span>
+        <span class="status-sub" id="last-updated-sub"></span>
       </div>
       <div class="status-cell" id="s-m2">
         <span class="status-label">Global M2 YoY</span>
@@ -48,14 +48,13 @@
       <table class="trigger-table">
         <thead>
           <tr>
-            <th style="width:20%">Trigger</th>
-            <th style="width:38%">Current</th>
-            <th style="width:30%">Threshold</th>
-            <th style="width:12%" class="num">Status</th>
+            <th style="width:25%">Trigger</th>
+            <th style="width:65%">Detail</th>
+            <th style="width:10%" class="num">Status</th>
           </tr>
         </thead>
         <tbody id="trigger-rows">
-          <tr><td colspan="4" class="loading">Loading…</td></tr>
+          <tr><td colspan="3" class="loading">Loading…</td></tr>
         </tbody>
       </table>
     </section>
@@ -103,8 +102,9 @@
     <section class="panel" id="panel-thesis">
       <details id="thesis-details">
         <summary class="thesis-summary">
-          The Great Transition — Thesis &amp; Framework
-          <span class="summary-hint">click to expand</span>
+          <span class="summary-chevron">▸</span>
+          Transition Thesis
+          <span class="summary-hint">expand</span>
         </summary>
         <div id="thesis-content" class="thesis-body">
           <p class="loading">Loading thesis…</p>
@@ -112,8 +112,9 @@
       </details>
       <details id="m2-note-details">
         <summary class="thesis-summary">
+          <span class="summary-chevron">▸</span>
           Notes on Global M2
-          <span class="summary-hint">click to expand</span>
+          <span class="summary-hint">expand</span>
         </summary>
         <div id="m2-note-content" class="thesis-body">
           <p class="loading">Loading…</p>
@@ -132,6 +133,10 @@
         &nbsp;|&nbsp;
         <span class="footer-label">Macro updated:</span>
         <span id="footer-macro-ts">—</span>
+      </div>
+      <div class="footer-refresh">
+        <span class="footer-label">Thesis last assessed:</span>
+        <span id="footer-assessed-ts">—</span>
       </div>
       <div class="footer-sources">
         Data: FRED · ECB · BOJ · CoinGecko · Finnhub · Stooq · Alternative.me

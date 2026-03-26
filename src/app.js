@@ -91,6 +91,19 @@ function fmtTs(isoStr) {
   });
 }
 
+function hoursAgo(isoStr) {
+  if (!isoStr) return { text: '—', cls: '' };
+  const ms = Date.now() - new Date(isoStr).getTime();
+  const h  = ms / 3600000;
+  const text = h < 1   ? `${Math.round(ms / 60000)}m ago`
+             : h < 24  ? `${Math.round(h)}h ago`
+             : `${Math.floor(h / 24)}d ago`;
+  const cls  = h < 12  ? 'pos'
+             : h < 24  ? 'highlight-warn'
+             : 'neg';
+  return { text, cls };
+}
+
 function daysAgo(ms) {
   const d = Math.floor(ms / 86400000);
   if (d === 0) return 'today';
@@ -131,7 +144,7 @@ function changePctOf(prices, key) {
 
 // ─── Section 1: Status Bar ────────────────────────────────────────────────────
 
-function renderStatusBar(manual, macro) {
+function renderStatusBar(manual, macro, prices) {
   // Scenario
   const scenario = manual?.scenario;
   const current  = scenario?.current || '—';
@@ -145,12 +158,18 @@ function renderStatusBar(manual, macro) {
   scenarioCell.classList.add(cls);
   document.getElementById('s-scenario').querySelector('.status-sub').textContent = prob;
 
-  // Last assessed
-  const assessedDate = scenario?.updated;
-  document.getElementById('assessed-date').textContent = fmtDate(assessedDate);
-  const as = staleness(assessedDate, 30, 60);
-  document.getElementById('assessed-stale').innerHTML = staleBadge(as.level, as.label);
-  document.getElementById('assessed-stale').className = `stale-badge ${as.level !== 'fresh' ? 'stale-' + as.level : ''}`;
+  // Last Updated — older of prices and macro timestamps
+  const pricesTs  = prices?.updated_at;
+  const macroTs   = macro?.updated_at;
+  const olderTs   = (!pricesTs || !macroTs)
+    ? (pricesTs || macroTs)
+    : (new Date(pricesTs) < new Date(macroTs) ? pricesTs : macroTs);
+  const { text: updText, cls: updCls } = hoursAgo(olderTs);
+  const updEl = document.getElementById('last-updated-value');
+  updEl.textContent = updText;
+  updEl.className   = `status-value ${updCls}`;
+  document.getElementById('last-updated-sub').textContent = scenario?.updated
+    ? `Scenario: ${fmtDate(scenario.updated)}` : '';
 
   // Global M2 YoY
   const gm2 = manual?.global_m2;
@@ -217,8 +236,7 @@ function renderTriggers(prices, manual) {
     rows.push(`
       <tr>
         <td>${t.label}</td>
-        <td>${current}</td>
-        <td>${t.thresholdLabel}</td>
+        <td><span class="trigger-current">${current}</span> <span class="trigger-arrow">→</span> <span class="trigger-threshold-inline">${t.thresholdLabel}</span></td>
         <td class="trigger-status ${dotClass}">${status}</td>
       </tr>`);
   }
@@ -237,11 +255,11 @@ function renderTriggers(prices, manual) {
     m2Status = '●'; m2Dot = 'dot-green';
   }
   const m2Stale = staleness(gm2?.updated, 90, 180);
+  const m2Str = yoy != null ? (yoy >= 0 ? '+' : '') + yoy.toFixed(1) + '%' : '—';
   rows.push(`
     <tr>
       <td>Global M2 YoY</td>
-      <td>${yoy != null ? (yoy >= 0 ? '+' : '') + yoy.toFixed(1) + '%' : '—'} ${staleBadge(m2Stale.level, m2Stale.label)}</td>
-      <td>&lt; 0%</td>
+      <td><span class="trigger-current">${m2Str}</span> ${staleBadge(m2Stale.level, m2Stale.label)} <span class="trigger-arrow">→</span> <span class="trigger-threshold-inline">&lt; 0%</span></td>
       <td class="trigger-status ${m2Dot}">${m2Status}</td>
     </tr>`);
 
@@ -257,8 +275,7 @@ function renderTriggers(prices, manual) {
     rows.push(`
       <tr>
         <td>${meta.label}</td>
-        <td>${notes} ${staleBadge(stale.level, stale.label)}</td>
-        <td>${meta.threshold}</td>
+        <td>${notes} ${staleBadge(stale.level, stale.label)}<div class="trigger-threshold-sub">${meta.threshold}</div></td>
         <td class="trigger-status ${dotClass}">●</td>
       </tr>`);
   }
@@ -383,8 +400,8 @@ function renderMacro(macro, manual, prices) {
 
   const staleM2  = staleness(usM2?.date,   35,  60);
   const staleGm2 = staleness(gm2?.updated, 90, 180);
-  const stale10y = staleness(us10y?.date,   2,   5);
-  const staleDxy = staleness(dgy?.date,     2,   5);
+  const stale10y = staleness(us10y?.date,   5,  10);
+  const staleDxy = staleness(dgy?.date,     5,  10);
   const staleEu  = staleness(eurM2?.updated, 90, 180);
   const staleJp  = staleness(jpM2?.date,   35,  60);
   const staleCn  = staleness(cnM2?.updated, 90, 180);
@@ -399,7 +416,7 @@ function renderMacro(macro, manual, prices) {
       'Global M2 Composite',
       gm2?.value != null ? `$${gm2.value.toFixed(1)}T` : '—',
       `YoY: ${gm2?.yoy_pct != null ? (gm2.yoy_pct >= 0 ? '+' : '') + gm2.yoy_pct.toFixed(1) + '%' : '—'} ${staleBadge(staleGm2.level, staleGm2.label)}`,
-      `macro-card-primary${staleGm2.level !== 'fresh' ? ` value-stale-${staleGm2.level}` : ''}`,
+      `macro-card-hero${staleGm2.level !== 'fresh' ? ` value-stale-${staleGm2.level}` : ''}`,
     ),
     macroCard(
       'US M2',
@@ -492,9 +509,10 @@ function mdToHtml(md) {
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
-function renderFooter(prices, macro) {
-  document.getElementById('footer-prices-ts').textContent = fmtTs(prices?.updated_at);
-  document.getElementById('footer-macro-ts').textContent  = fmtTs(macro?.updated_at);
+function renderFooter(prices, macro, manual) {
+  document.getElementById('footer-prices-ts').textContent   = fmtTs(prices?.updated_at);
+  document.getElementById('footer-macro-ts').textContent    = fmtTs(macro?.updated_at);
+  document.getElementById('footer-assessed-ts').textContent = fmtDate(manual?.scenario?.updated);
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -528,11 +546,11 @@ async function init() {
   if (alertsResult.status === 'fulfilled') alerts = alertsResult.value;
   else console.warn('alerts.json failed:', alertsResult.reason);
 
-  renderStatusBar(manual, macro);
+  renderStatusBar(manual, macro, prices);
   renderTriggers(prices, manual);
   renderPositions(prices, alerts);
   renderMacro(macro, manual, prices);
-  renderFooter(prices, macro);
+  renderFooter(prices, macro, manual);
   renderThesis();
 
   // Register service worker
