@@ -8,6 +8,27 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-26 (session 6)
+
+#### Fixed
+- [frontend] mobile status bar clipping — `height: auto` on mobile; `--status-bar-h` bumped to 116px
+- [frontend] trigger row text overlap — current and threshold split into separate grid rows (row 2 / row 3)
+- [infra] bump service worker to v3 to force cache invalidation on existing installs
+
+### 2026-03-26 (session 5)
+
+#### Added
+- [frontend] mobile table-to-card transform — trigger rows become 2-line cards (name + status dot / current · threshold); price tables collapse to 3-col (name | price | change)
+- [frontend] regime summary bar — one-line monospace strip showing scenario · M2 YoY · sentiment, populates from live data
+- [frontend] primary macro card tier — Global M2 and Fear & Greed elevated to 26px value, `surface-2` background, full-width on mobile at 30px
+
+#### Changed
+- [frontend] mobile section order — Macro Indicators moved above Triggers; story reads regime → signals → threats → positions → thesis
+- [frontend] mobile status bar — Scenario cell promoted to full-width hero (22px); Last Assessed hidden on mobile
+- [frontend] mobile base font lifted from 14px to 15px; increased padding throughout
+- [frontend] accordion summary — padding increased, title colour promoted to `var(--text)`, cleaner hover
+- [frontend] border contrast lifted — `--border` #1e1e1e → #242424, `--border-2` #2a2a2a → #323232
+
 ### 2026-03-26 (session 4)
 
 #### Added
