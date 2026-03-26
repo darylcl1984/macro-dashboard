@@ -203,6 +203,8 @@ th.num { text-align: right; }
 .trigger-status {
   font-size: 16px;
   text-align: center;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 /* ─── Positions ────────────────────────────────────────────────────────── */
@@ -240,6 +242,16 @@ th.num { text-align: right; }
 .price-table th:nth-child(4) { width: 50%; }
 .price-table td.asset-name { font-weight: 500; }
 .price-table td.note-cell  { color: var(--text-dim); font-size: 11px; }
+
+/* Alert table (AI & Tech) — 6 columns */
+.alert-table th:nth-child(1) { width: 15%; }
+.alert-table th:nth-child(2) { width: 16%; }
+.alert-table th:nth-child(3) { width: 10%; }
+.alert-table th:nth-child(4) { width: 18%; }
+.alert-table th:nth-child(5) { width:  7%; }
+.alert-table th:nth-child(6) { width: 34%; }
+.alert-table td.alert-cell   { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+.alert-table td.alert-status { text-align: center; font-size: 14px; line-height: 1; vertical-align: middle; }
 
 /* Watchlist — emphasise distance */
 .distance-cell {

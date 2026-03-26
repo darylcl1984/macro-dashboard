@@ -3,10 +3,11 @@
 // ─── Config ──────────────────────────────────────────────────────────────────
 
 const DATA = {
-  prices: '../data/prices.json',
-  macro:  '../data/macro.json',
-  manual: '../data/manual.json',
-  thesis: '../docs/thesis.md',
+  prices:  '../data/prices.json',
+  macro:   '../data/macro.json',
+  manual:  '../data/manual.json',
+  alerts:  '../data/alerts.json',
+  thesis:  '../docs/thesis.md',
 };
 
 // Invalidation trigger thresholds (price-based, auto-evaluated)
@@ -268,7 +269,42 @@ function priceRow(prices, sym, label, prefix, decimals, note) {
   </tr>`;
 }
 
-function renderPositions(prices) {
+function alertRow(prices, alerts, sym, label, prefix, decimals, note) {
+  const price = priceOf(prices?.prices, sym);
+  const chg   = changePctOf(prices?.prices, sym);
+  const al    = alerts?.[sym];
+  const below = al?.below ?? null;
+  const above = al?.above ?? null;
+
+  // Alert text: "<$150 / >$200", "<$150", ">$200", or ""
+  const parts = [];
+  if (below != null) parts.push(`&lt;$${below.toLocaleString('en-US')}`);
+  if (above != null) parts.push(`&gt;$${above.toLocaleString('en-US')}`);
+  const alertText = parts.join(' / ');
+
+  // Status dot
+  let statusHtml = '';
+  if (below != null || above != null) {
+    if (price != null && below != null && price < below) {
+      statusHtml = '<span class="dot-red">●</span>';
+    } else if (price != null && above != null && price > above) {
+      statusHtml = '<span class="dot-green">●</span>';
+    } else {
+      statusHtml = '<span class="neu">●</span>';
+    }
+  }
+
+  return `<tr>
+    <td class="asset-name">${label}</td>
+    <td class="num">${fmt(price, decimals, prefix)}</td>
+    <td class="num">${fmtPct(chg)}</td>
+    <td class="alert-cell">${alertText}</td>
+    <td class="alert-status">${statusHtml}</td>
+    <td class="note-cell">${note}</td>
+  </tr>`;
+}
+
+function renderPositions(prices, alerts) {
   // Hard Money
   const hardMoney = [
     priceRow(prices, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
@@ -301,15 +337,15 @@ function renderPositions(prices) {
 
   // AI & Tech
   const tech = [
-    priceRow(prices, 'NVDA',  'NVDA',  '$', 2, 'Watch: gross margin'),
-    priceRow(prices, 'TSLA',  'TSLA',  '$', 2, 'Physical AI deployment proxy'),
-    priceRow(prices, 'GOOGL', 'GOOGL', '$', 2, 'Watch: ad revenue trend'),
-    priceRow(prices, 'META',  'META',  '$', 2, 'Watch: ad revenue vs AI capex'),
-    priceRow(prices, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
-    priceRow(prices, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
-    priceRow(prices, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
-    priceRow(prices, 'NOW',   'NOW',   '$', 2, 'Enterprise workflow automation'),
-    priceRow(prices, 'GEV',   'GEV',   '$', 2, 'Power Generation'),
+    alertRow(prices, alerts, 'NVDA',  'NVDA',  '$', 2, 'Watch: gross margin'),
+    alertRow(prices, alerts, 'TSLA',  'TSLA',  '$', 2, 'Physical AI deployment proxy'),
+    alertRow(prices, alerts, 'GOOGL', 'GOOGL', '$', 2, 'Watch: ad revenue trend'),
+    alertRow(prices, alerts, 'META',  'META',  '$', 2, 'Watch: ad revenue vs AI capex'),
+    alertRow(prices, alerts, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
+    alertRow(prices, alerts, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
+    alertRow(prices, alerts, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
+    alertRow(prices, alerts, 'NOW',   'NOW',   '$', 2, 'Enterprise workflow automation'),
+    alertRow(prices, alerts, 'GEV',   'GEV',   '$', 2, 'Power Generation'),
   ].join('');
   document.getElementById('group-tech').innerHTML = tech;
 }
@@ -462,13 +498,14 @@ async function fetchJson(url) {
 }
 
 async function init() {
-  let prices = {}, macro = {}, manual = {};
+  let prices = {}, macro = {}, manual = {}, alerts = {};
 
   // Fetch all data in parallel; fail gracefully per source
-  const [pricesResult, macroResult, manualResult] = await Promise.allSettled([
+  const [pricesResult, macroResult, manualResult, alertsResult] = await Promise.allSettled([
     fetchJson(DATA.prices),
     fetchJson(DATA.macro),
     fetchJson(DATA.manual),
+    fetchJson(DATA.alerts),
   ]);
 
   if (pricesResult.status === 'fulfilled') prices = pricesResult.value;
@@ -480,9 +517,12 @@ async function init() {
   if (manualResult.status === 'fulfilled') manual = manualResult.value;
   else console.warn('manual.json failed:', manualResult.reason);
 
+  if (alertsResult.status === 'fulfilled') alerts = alertsResult.value;
+  else console.warn('alerts.json failed:', alertsResult.reason);
+
   renderStatusBar(manual, macro);
   renderTriggers(prices, manual);
-  renderPositions(prices);
+  renderPositions(prices, alerts);
   renderMacro(macro, manual, prices);
   renderFooter(prices, macro);
   renderThesis();

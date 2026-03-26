@@ -1,0 +1,12 @@
+{
+  "_note": "Price alerts for AI & Tech Equities. Set 'below' and/or 'above' thresholds in USD. Set to null to disable. Red dot if price < below, green dot if price > above, grey dot if between.",
+  "NVDA":  { "below": null,   "above": null },
+  "TSLA":  { "below": null,   "above": null },
+  "GOOGL": { "below": null,   "above": null },
+  "META":  { "below": null,   "above": null },
+  "TSM":   { "below": null,   "above": null },
+  "PLTR":  { "below": null,   "above": null },
+  "MSTR":  { "below": null,   "above": null },
+  "NOW":   { "below": null,   "above": null },
+  "GEV":   { "below": null,   "above": null }
+}
