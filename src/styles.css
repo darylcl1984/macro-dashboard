@@ -251,16 +251,53 @@ th.num { text-align: right; }
 .price-table td.note-cell  { color: var(--text-dim); font-size: 11px; }
 
 /* Alert table (AI & Tech) — 6 columns */
-.alert-table th:nth-child(1) { width: 15%; }
-.alert-table th:nth-child(2) { width: 16%; }
-.alert-table th:nth-child(3) { width: 10%; }
-.alert-table th:nth-child(4) { width: 18%; }
-.alert-table th:nth-child(5) { width:  7%; }
-.alert-table th:nth-child(6) { width: 34%; }
+.alert-table th:nth-child(1) { width: 13%; }
+.alert-table th:nth-child(2) { width: 14%; }
+.alert-table th:nth-child(3) { width:  9%; }
+.alert-table th:nth-child(4) { width: 15%; }
+.alert-table th:nth-child(5) { width:  6%; }
+.alert-table th:nth-child(6) { width: 43%; }
 .alert-table td.alert-cell   { font-family: var(--mono); font-size: 11px; color: var(--text-muted); padding-right: 4px; }
 .alert-table td.alert-status { text-align: center; font-size: 14px; line-height: 1; vertical-align: middle; padding-left: 4px; padding-top: 0; padding-bottom: 0; }
 .alert-table th:nth-child(4) { padding-right: 4px; }
 .alert-table th:nth-child(5) { padding-left: 4px; }
+
+/* ─── 52-Week Range Bar ─────────────────────────────────────────────────── */
+
+.range-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  position: relative;
+  width: 100%;
+  margin: 4px 0 2px;
+}
+
+.range-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: -1.5px;
+  transform: translateX(-50%);
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.range-lo, .range-hi {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.range-desc {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
 
 /* Watchlist — emphasise distance */
 .distance-cell {
@@ -648,11 +685,11 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
     white-space: nowrap;
     min-width: 52px;
   }
-  /* Hide alert, status, note columns on mobile */
+  /* Hide alert, status, range columns on mobile */
   .price-table td:nth-child(4),
   .price-table td:nth-child(5),
   .price-table td:nth-child(6),
-  td.note-cell { display: none; }
+  td.range-cell { display: none; }
 
   /* ── Macro grid ── */
   .macro-grid { grid-template-columns: 1fr 1fr; }

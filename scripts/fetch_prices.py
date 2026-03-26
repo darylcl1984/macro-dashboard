@@ -144,6 +144,56 @@ def fetch_vix():
 
 
 # ---------------------------------------------------------------------------
+# Yahoo Finance — 52-week high/low for all tracked assets
+# ---------------------------------------------------------------------------
+
+YAHOO_52W_SYMBOLS = {
+    "BTC":    "BTC-USD",
+    "XAUUSD": "GC%3DF",    # GC=F URL-encoded
+    "WTI":    "CL%3DF",    # CL=F URL-encoded
+    "NVDA":   "NVDA",
+    "TSLA":   "TSLA",
+    "GOOGL":  "GOOGL",
+    "META":   "META",
+    "TSM":    "TSM",
+    "PLTR":   "PLTR",
+    "MSTR":   "MSTR",
+    "NOW":    "NOW",
+    "GEV":    "GEV",
+    "VIX":    "%5EVIX",
+}
+
+_YAHOO_UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
+
+
+def fetch_yahoo_52w(ticker, yahoo_sym):
+    try:
+        resp = SESSION.get(
+            f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_sym}",
+            params={"interval": "1d", "range": "1y"},
+            headers=_YAHOO_UA,
+            timeout=15,
+        )
+        resp.raise_for_status()
+        meta = resp.json()["chart"]["result"][0]["meta"]
+        return {
+            "week52_low":  meta["fiftyTwoWeekLow"],
+            "week52_high": meta["fiftyTwoWeekHigh"],
+        }
+    except Exception as e:
+        print(f"    [WARN] Yahoo 52W {ticker}: {e}")
+        return {"week52_low": None, "week52_high": None}
+
+
+def fetch_all_52w():
+    results = {}
+    for ticker, yahoo_sym in YAHOO_52W_SYMBOLS.items():
+        results[ticker] = fetch_yahoo_52w(ticker, yahoo_sym)
+        time.sleep(0.3)
+    return results
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -174,6 +224,14 @@ def main():
 
     print("  Yahoo Finance: VIX")
     prices.update(fetch_vix())
+
+    print("  Yahoo Finance: 52-week ranges")
+    week52 = fetch_all_52w()
+    for ticker, w52 in week52.items():
+        if ticker in prices:
+            prices[ticker].update(w52)
+        else:
+            prices[ticker] = w52
 
     results = {
         "updated_at": now_utc(),

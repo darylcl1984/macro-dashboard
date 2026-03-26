@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 2)
+
+#### Added
+- [backend] 52-week high/low fetch via Yahoo Finance `v8/finance/chart` — `fetch_yahoo_52w()` and `fetch_all_52w()` in `fetch_prices.py`; `week52_low` and `week52_high` merged into each ticker entry in `prices.json`
+- [frontend] 52-week range bar column — replaces "Note" column in Hard Money, Macro Signals, and AI & Tech tables; thin track with coloured dot positioned at `(price − low) / (high − low)` percent
+- [frontend] Reversed dot colour logic for WTI, VIX, NOW, GEV (low in range = green, high = red) vs standard logic for BTC, XAUUSD, equities
+- [frontend] `rangeBarHtml()` and `fmtRangeVal()` helpers; `RANGE_REVERSED` and `WATCHLIST_REVERSED` sets for colour logic dispatch
+- [frontend] Range bar descriptor text — seven bands from "Near 52w low" to "Near 52w high"; watchlist assets (NOW, GEV) in bottom 25% show "Approaching entry" in green
+- [frontend] Range bar hidden on mobile (below 700px) — compact 3-col layout (name | price | change) preserved
+
+#### Fixed
+- [backend] `fetch_macro.py` NameError — removed orphaned `fetch_ecb()` call left over from when EUR M2 was moved to `manual.json`
+
 ### 2026-03-27 (session 1)
 
 #### Added

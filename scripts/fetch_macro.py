@@ -153,9 +153,6 @@ def main():
     print("  FRED: US M2, 10Y, USD Index")
     indicators.update(fetch_fred())
 
-    print("  ECB: Eurozone M2")
-    indicators.update(fetch_ecb())
-
     print("  BOJ: Japan M2")
     indicators.update(fetch_boj())
 

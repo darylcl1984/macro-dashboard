@@ -285,23 +285,42 @@ function renderTriggers(prices, manual) {
 
 // ─── Section 3: Positions ─────────────────────────────────────────────────────
 
-function priceRow(prices, sym, label, prefix, decimals, note) {
-  const price = priceOf(prices?.prices, sym);
-  const chg   = changePctOf(prices?.prices, sym);
-  return `<tr>
-    <td class="asset-name">${label}</td>
-    <td class="num">${fmt(price, decimals, prefix)}</td>
-    <td class="num">${fmtPct(chg)}</td>
-    <td class="note-cell">${note}</td>
-  </tr>`;
+const RANGE_REVERSED     = new Set(['NOW', 'GEV', 'WTI', 'VIX']);
+const WATCHLIST_REVERSED = new Set(['NOW', 'GEV']);
+
+function fmtRangeVal(v) {
+  if (v == null) return '—';
+  if (v >= 1000) return '$' + Math.round(v).toLocaleString('en-US');
+  if (v >= 10)   return '$' + Math.round(v);
+  return '$' + v.toFixed(2);
 }
 
-function alertRow(prices, alerts, sym, label, prefix, decimals, note) {
+function rangeBarHtml(sym, price, low, high) {
+  if (price == null || low == null || high == null || high <= low)
+    return '<span class="neu">—</span>';
+  const pct      = Math.min(1, Math.max(0, (price - low) / (high - low)));
+  const reversed = RANGE_REVERSED.has(sym);
+  const color    = reversed
+    ? (pct <= 0.25 ? 'var(--green)' : pct <= 0.40 ? 'var(--amber)' : pct <= 0.75 ? 'var(--text-muted)' : 'var(--red)')
+    : (pct <= 0.25 ? 'var(--red)'   : pct <= 0.40 ? 'var(--amber)' : pct <= 0.75 ? 'var(--text-muted)' : 'var(--green)');
+  const desc = WATCHLIST_REVERSED.has(sym) && pct <= 0.25
+    ? '<span class="pos">Approaching entry</span>'
+    : pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
+    : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
+    : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
+    : 'Near 52w high';
+  return `<div class="range-track"><div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
+       + `<div class="range-labels"><span class="range-lo">${fmtRangeVal(low)}</span><span class="range-hi">${fmtRangeVal(high)}</span></div>`
+       + `<div class="range-desc">${desc}</div>`;
+}
+
+function alertRow(prices, alerts, sym, label, prefix, decimals) {
   const price = priceOf(prices?.prices, sym);
   const chg   = changePctOf(prices?.prices, sym);
   const al    = alerts?.[sym];
   const below = al?.below ?? null;
   const above = al?.above ?? null;
+  const entry = prices?.prices?.[sym];
 
   // Alert text: "<$150 / >$200", "<$150", ">$200", or ""
   const parts = [];
@@ -327,36 +346,36 @@ function alertRow(prices, alerts, sym, label, prefix, decimals, note) {
     <td class="num">${fmtPct(chg)}</td>
     <td class="alert-cell">${alertText}</td>
     <td class="alert-status">${statusHtml}</td>
-    <td class="note-cell">${note}</td>
+    <td class="range-cell">${rangeBarHtml(sym, price, entry?.week52_low ?? null, entry?.week52_high ?? null)}</td>
   </tr>`;
 }
 
 function renderPositions(prices, alerts) {
   // Hard Money
   const hardMoney = [
-    alertRow(prices, alerts, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
-    alertRow(prices, alerts, 'XAUUSD', 'Gold (USD)','$', 0, 'CB accumulation 1k+ tonnes/y. De-dollarisation hedge. Gold share of reserves rising from 15% to 20%+ and projected to reach 25-30% by 2030.'),
+    alertRow(prices, alerts, 'BTC',    'BTC',       '$', 0),
+    alertRow(prices, alerts, 'XAUUSD', 'Gold (USD)','$', 0),
   ].join('');
   document.getElementById('group-hard-money').innerHTML = hardMoney;
 
   // Macro Signals (placed under Hard Money)
   const macroSignals = [
-    alertRow(prices, alerts, 'WTI', 'WTI Crude', '$', 2, '&gt;$100 equity headwind; &lt;$85 resolution'),
-    alertRow(prices, alerts, 'VIX', 'VIX',       '',  1, '&gt;30 elevated risk; DCA timing signal'),
+    alertRow(prices, alerts, 'WTI', 'WTI Crude', '$', 2),
+    alertRow(prices, alerts, 'VIX', 'VIX',       '',  1),
   ].join('');
   document.getElementById('group-macro-signals').innerHTML = macroSignals;
 
   // AI & Tech
   const tech = [
-    alertRow(prices, alerts, 'NVDA',  'NVDA',  '$', 2, 'Watch: gross margin'),
-    alertRow(prices, alerts, 'TSLA',  'TSLA',  '$', 2, 'Physical AI deployment proxy'),
-    alertRow(prices, alerts, 'GOOGL', 'GOOGL', '$', 2, 'Watch: ad revenue trend'),
-    alertRow(prices, alerts, 'META',  'META',  '$', 2, 'Watch: ad revenue vs AI capex'),
-    alertRow(prices, alerts, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
-    alertRow(prices, alerts, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
-    alertRow(prices, alerts, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
-    alertRow(prices, alerts, 'NOW',   'NOW',   '$', 2, 'Enterprise workflow automation'),
-    alertRow(prices, alerts, 'GEV',   'GEV',   '$', 2, 'Power Generation'),
+    alertRow(prices, alerts, 'NVDA',  'NVDA',  '$', 2),
+    alertRow(prices, alerts, 'TSLA',  'TSLA',  '$', 2),
+    alertRow(prices, alerts, 'GOOGL', 'GOOGL', '$', 2),
+    alertRow(prices, alerts, 'META',  'META',  '$', 2),
+    alertRow(prices, alerts, 'TSM',   'TSM',   '$', 2),
+    alertRow(prices, alerts, 'PLTR',  'PLTR',  '$', 2),
+    alertRow(prices, alerts, 'MSTR',  'MSTR',  '$', 2),
+    alertRow(prices, alerts, 'NOW',   'NOW',   '$', 2),
+    alertRow(prices, alerts, 'GEV',   'GEV',   '$', 2),
   ].join('');
   document.getElementById('group-tech').innerHTML = tech;
 }
