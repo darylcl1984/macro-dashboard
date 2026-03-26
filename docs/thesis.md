@@ -19,6 +19,7 @@ This is a structural positioning framework with a 2030 horizon. The 2026 scenari
 ### 1.1 AI Technological Deflation
 
 The cost of intelligence and labour is collapsing exponentially — and the rate of collapse is accelerating. Token per $ are going parabolic on logarithmic charts.
+
 This is driven by two recursive loops:
 
 **Recursive self-learning.** Models training models. Synthetic data refining synthetic data. DeepSeek—a hedge fund—replicated frontier AI capabilities. Kimi matched GPT-5 reasoning on two MacBooks. Each generation bootstraps the next: faster, cheaper. Fewer humans per training cycle. The loop is already running. Deflation accelerates as the human-to-model recursive cycle trends to zero.
@@ -27,7 +28,7 @@ This is driven by two recursive loops:
 
 The resulting deflation is civilisation-scale: orders of magnitude cost reduction across every domain intelligence and physical labour touch. AI collapses the barrier between idea and execution. Implementation friction approaches zero. Musk’s Kardashev Type 2 framing and Terafab signal where the exponential leads if both loops close.
 
-Policy consequence is mechanical: deflation cannot persist in a debt-based financial system — it makes debt unserviceable. The response is always money printing.
+Policy consequence is directionally reliable but not immediate: deflation in a debt-based financial system makes debt unserviceable and has historically been resolved through monetary expansion. However, the policy response can lag significantly — Japan experienced nearly two decades of deflation before aggressive QE. The risk is that printing arrives after substantial drawdowns.
 
 ### 1.2 Geopolitical Restructuring & De-Dollarisation
 
@@ -35,11 +36,13 @@ Nations are diversifying reserves away from the US dollar. Central banks accumul
 
 Recent conflict in the Gulf demonstrated that missiles and drones have altered the cost calculus of naval power projection at critical chokepoints — the traditional enforcer of dollar compliance in trade settlement. Lower demand for US Treasuries means the US must print more to finance its deficits.
 
+This demand shift creates a structural supply imbalance. Individual central banks whose gold holdings are still below 10% of their own reserves — including major holders like China, India, and Saudi Arabia — lifting to just 10% would require an additional 1,200–2,600 tonnes of buying — one to three years of current annual accumulation on top of existing flows. Against constrained mine supply of ~3,500 tonnes per year, this supports a probability-weighted price range of $7,000–$10,000 by 2030.
+
 ### 1.3 The Downstream Output: M2 Expansion
 
 M2 expansion is not the thesis. It is the mathematical consequence of the forces above.
 
-AI deflation forces printing. De-dollarisation forces printing. War spending forces printing. Credit crises force printing. Every road leads to the same destination.
+AI deflation forces printing. De-dollarisation forces printing. War spending forces printing. Credit crises force printing. Every road leads to the same destination — the question is timing.
 
 Global M2 stands at approximately $100 trillion, growing at over 10% year-over-year. Structural pressures point to acceleration across major central banks: US fiscal deficits, China’s domestic deflation, EU defence spending and stagnation, Japan’s debt-to-GDP above 200%, and UK stagnation. Austerity is not tenable — debt-to-GDP ratios are rising across most major economies. Deglobalisation amplifies this — each bloc must now generate its own liquidity to replace the dollar system’s former role, resulting in higher total global money creation.
 
@@ -49,12 +52,12 @@ Bitcoin has tracked global M2 with a 70–90 day lag. Correlation reached ~91% a
 
 ## 2. Portfolio
 
-Nine positions across four categories. Hard money is the core (55%). Equities are satellites (32%). Cash is ammunition (13%).
+Nine positions across four categories. **Hard money is the core (55%)**. Equities are satellites (32%). Cash is ammunition (13%).
 
-| Category | Ticker | Weight | Thesis |
-|---|---|---|---|
-| **Hard Money** | BTCUSD | **40%** | Highest-beta liquid asset correlated with global M2. Structural fiat debasement hedge. |
-| **Precious Metals** | GLD | **15%** | Central bank accumulation exceeding 1,000 tonnes annually. Primary de-dollarisation hedge. Gold’s share of global reserves rising from ~20% toward 25–30% by 2030. Probability-weighted price range by 2030: $7,000–$10,000. |
+| Category          | Ticker | Weight | Thesis |
+|-------------------|--------|--------|--------|
+| **Hard Money**    | BTCUSD | **40%** | Highest-beta liquid asset correlated with global M2. Structural fiat debasement hedge. |
+|                   | GLD    | **15%** | Central bank accumulation exceeding 1,000 tonnes annually. Primary de-dollarisation hedge. Gold’s share of global reserves rising from ~20% toward 25–30% by 2030. Probability-weighted price range by 2030: $7,000–$10,000. |
 | **AI & Tech** | TSLA | **10%** | Physical-world AI deployment at manufacturing scale. Optimus (robotics) + FSD (autonomy) + Megapack (energy) + Terafab (recursive self-building). Only company combining mass-manufacturing capability with a humanoid robotics programme. Key risk: key-man concentration. |
 | | GOOGL | **6%** | 4 billion daily users. Custom TPU silicon provides compute independence. DeepMind research edge. Risk: ~80% of revenue from search ads — vulnerable to AI-native disruption. |
 | | META | **6%** | Advertising efficiency engine. 3.5 billion daily users. AI improves ad targeting and creative generation. $10B annual run-rate from AI video tools. |
@@ -112,13 +115,13 @@ Conditions under which the thesis fails. If triggered, act immediately — data 
 
 ### Bull (35%)
 
-Iran resolves within 12 weeks. New Fed chair signals dovish pivot. M2 expansion accelerates from war spending plus easing. US-China trade deal reached. Geopolitical risk premium compresses. All catalysts stack.
+Gulf conflict resolves within 12 weeks. New Fed chair signals dovish pivot. M2 expansion accelerates from war spending plus easing. US-China trade deal reached. Geopolitical risk premium compresses. All catalysts stack.
 
 **BTC: $120-150K · Gold: $6,000+ · Equities: +30-50%**
 
 ### Base (40%)
 
-Iran becomes sustained low-intensity campaign (3-6 months). Oil oscillates $90-110. Fed holds steady, possible H2 rate cut. M2 continues expanding at 10% YoY. Consumer credit stress builds but doesn’t break. AI adoption accelerates beneath the noise.
+Gulf conflict becomes sustained low-intensity campaign (3-6 months). Oil oscillates $90-110. Fed holds steady, possible H2 rate cut. M2 continues expanding at 10% YoY. Consumer credit stress builds but doesn’t break. AI adoption accelerates beneath the noise.
 
 **BTC: $100-115K · Gold: $5,500-6,000 · Equities: flat to +15%**
 
@@ -127,6 +130,8 @@ Iran becomes sustained low-intensity campaign (3-6 months). Oil oscillates $90-1
 Strait of Hormuz disrupted. Oil above $120 sustained. Inflation reignites. Fed forced hawkish. AI-driven job displacement triggers consumer credit crisis — private credit stress cascades into banking pullback. Printing response arrives only after liquidation.
 
 **BTC: $55–70K (tests invalidation trigger) · Gold: dips on margin calls then recovers · Equities: -20–30%**
+
+*A weekly close below $52,000 would activate the BTC invalidation trigger in Section 4, converting this from a drawdown to a thesis reassessment.*
 
 ### Tail (5%)
 
