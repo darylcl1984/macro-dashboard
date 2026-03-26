@@ -3,7 +3,7 @@
   "BTC":   { "below": 66000,   "above": 77000 },
   "XAUUSD":{ "below": 4000,   "above": 4888 },
   "WTI":   { "below": 75,   "above": 100 },
-  "VIX":   { "below": 30,   "above": null },
+  "VIX":   { "below": null,   "above": 30 },
   "NVDA":  { "below": 140,   "above": null },
   "TSLA":  { "below": 320,   "above": null },
   "GOOGL": { "below": 235,   "above": null },
