@@ -308,7 +308,7 @@ function renderPositions(prices, alerts) {
   // Hard Money
   const hardMoney = [
     alertRow(prices, alerts, 'BTC',    'BTC',       '$', 0, 'M2 correlation proxy'),
-    alertRow(prices, alerts, 'XAUUSD', 'Gold (USD)','$', 0, ''),
+    alertRow(prices, alerts, 'XAUUSD', 'Gold (USD)','$', 0, 'CB accumulation 1k+ tonnes/y. De-dollarisation hedge. Gold share of reserves rising from 15% to 20%+ and projected to reach 25-30% by 2030.'),
   ].join('');
   document.getElementById('group-hard-money').innerHTML = hardMoney;
 
