@@ -308,8 +308,8 @@ function renderPositions(prices) {
     priceRow(prices, 'TSM',   'TSM',   '$', 2, 'Watch: geopolitical risk'),
     priceRow(prices, 'PLTR',  'PLTR',  '$', 2, 'Watch: AIP adoption'),
     priceRow(prices, 'MSTR',  'MSTR',  '$', 2, 'BTC proxy / leverage'),
-    priceRow(prices, 'NOW',   'NOW',   '$', 2, 'Watch: deploy on drawdown'),
-    priceRow(prices, 'GEV',   'GEV',   '$', 2, 'Power infrastructure play'),
+    priceRow(prices, 'NOW',   'NOW',   '$', 2, 'Enterprise workflow automation'),
+    priceRow(prices, 'GEV',   'GEV',   '$', 2, 'Power Generation'),
   ].join('');
   document.getElementById('group-tech').innerHTML = tech;
 }
