@@ -333,7 +333,8 @@ th.num { text-align: right; }
 
 /* ─── Thesis Section ───────────────────────────────────────────────────── */
 
-#panel-thesis details { }
+#panel-thesis details { border-top: 1px solid var(--border); }
+#panel-thesis details:first-child { border-top: none; }
 
 .thesis-summary {
   display: flex;

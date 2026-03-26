@@ -8,6 +8,7 @@ const DATA = {
   manual:  '../data/manual.json',
   alerts:  '../data/alerts.json',
   thesis:  '../docs/thesis.md',
+  m2note:  '../docs/m2_note.md',
 };
 
 // Invalidation trigger thresholds (price-based, auto-evaluated)
@@ -438,17 +439,20 @@ function renderMacro(macro, manual, prices) {
 
 // ─── Section 5: Thesis ────────────────────────────────────────────────────────
 
-async function renderThesis() {
-  const el = document.getElementById('thesis-content');
+async function renderMarkdownDoc(url, elId, fallback) {
+  const el = document.getElementById(elId);
   try {
-    const resp = await fetch(DATA.thesis);
+    const resp = await fetch(url);
     if (!resp.ok) throw new Error(`${resp.status}`);
-    const text = await resp.text();
-    // Very basic Markdown→HTML: headings, bold, italic, paragraphs, lists
-    el.innerHTML = mdToHtml(text);
+    el.innerHTML = mdToHtml(await resp.text());
   } catch {
-    el.innerHTML = '<p class="neu">Thesis document not yet written. Check back soon.</p>';
+    el.innerHTML = `<p class="neu">${fallback}</p>`;
   }
+}
+
+async function renderThesis() {
+  renderMarkdownDoc(DATA.thesis,  'thesis-content',   'Thesis document not yet written. Check back soon.');
+  renderMarkdownDoc(DATA.m2note,  'm2-note-content',  'Notes not yet written. Check back soon.');
 }
 
 function mdToHtml(md) {
