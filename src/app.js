@@ -207,7 +207,7 @@ function renderTriggers(prices, manual) {
       <tr>
         <td>${t.label}</td>
         <td>${current}</td>
-        <td class="num">${t.thresholdLabel}</td>
+        <td>${t.thresholdLabel}</td>
         <td class="trigger-status"><span class="${dotClass}">${status}</span></td>
       </tr>`);
   }
@@ -230,7 +230,7 @@ function renderTriggers(prices, manual) {
     <tr>
       <td>Global M2 YoY</td>
       <td>${yoy != null ? (yoy >= 0 ? '+' : '') + yoy.toFixed(1) + '%' : '—'} ${staleBadge(m2Stale.level, m2Stale.label)}</td>
-      <td class="num">&lt; 0%</td>
+      <td>&lt; 0%</td>
       <td class="trigger-status"><span class="${m2Dot}">${m2Status}</span></td>
     </tr>`);
 
