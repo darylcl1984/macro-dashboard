@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-26 (session 2)
+
+#### Added
+- [data] add `alerts.json` — per-ticker above/below price thresholds for all 13 watchlist assets
+- [frontend] add alerts system — Alert and St columns across Hard Money, Macro Signals, and AI & Tech tables
+- [frontend] add `alertRow()` rendering function with red/green/grey status dots
+- [docs] add `thesis.md` — full thesis narrative rendered in collapsible dashboard section
+
+#### Fixed
+- [frontend] fix trigger status dot vertical alignment — move colour class to `td`, remove `span` wrapper
+- [frontend] fix STATUS column header alignment — `text-align: center` on trigger table 4th header
+- [frontend] fix alert/St column spacing — tightened padding between columns
+
 ### 2026-03-26
 
 #### Fixed
