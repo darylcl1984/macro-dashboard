@@ -1,16 +1,16 @@
 {
-  "updated_at": "2026-03-25T23:42:56.901651+00:00",
+  "updated_at": "2026-03-26T01:03:21.496033+00:00",
   "prices": {
     "BTC": {
-      "price": 71251,
-      "change_pct": 0.82
+      "price": 71287,
+      "change_pct": 0.69
     },
     "WTI": {
-      "price": 90.97,
+      "price": 91.12,
       "change_pct": null
     },
     "XAUUSD": {
-      "price": 4495.7,
+      "price": 4541.47,
       "change_pct": null
     },
     "NVDA": {
@@ -53,5 +53,8 @@
       "price": 25.33,
       "change_pct": -6.01
     }
+  },
+  "fx": {
+    "USDJPY": 159.4245
   }
 }
