@@ -10,7 +10,7 @@ v4.0 · March 2026
 
 ## 1. Thesis
 
-AI technological deflation and geopolitical restructuring & de-dollarisation are accelerating. Both forces converge on one outcome: accelerating expansion of global money supply.
+AI technological deflation and geopolitical restructuring & de-dollarisation are accelerating. Both forces converge on one outcome: accelerating global M2 expansion.
 
 ### 1.1 AI Technological Deflation
 
