@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-03-25T23:43:01.067412+00:00",
+  "updated_at": "2026-03-26T23:27:03.245509+00:00",
   "indicators": {
     "US_M2": {
       "value": 22667.3,
       "date": "2026-02-01"
     },
     "US_10Y": {
-      "value": 4.39,
-      "date": "2026-03-24"
+      "value": 4.33,
+      "date": "2026-03-25"
     },
     "USD_INDEX": {
       "value": 120.2757,
@@ -15,13 +15,13 @@
     },
     "JP_M2": {
       "value": 1274.92,
-      "date": "2026-02",
+      "date": "202602",
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 14,
+      "value": 10,
       "classification": "Extreme Fear",
-      "date": "2026-03-25"
+      "date": "2026-03-26"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
@@ -37,48 +37,54 @@
       "scenario": {
         "current": "Base",
         "probability": "",
-        "updated": null,
+        "updated": "2026-03-26",
         "notes": ""
       },
       "global_m2": {
         "value": 103.97,
         "unit": "trillions_usd",
-        "yoy_pct": 9.52,
+        "yoy_pct": 10.43,
         "period": "2026-03-26",
         "updated": "2026-03-26"
       },
+      "eur_m2": {
+        "value": 18.74,
+        "unit": "trillions_usd",
+        "period": "2026-03",
+        "updated": "2026-03-26"
+      },
       "china_m2": {
-        "value": null,
+        "value": 50.29,
         "unit": "trillions_cny",
-        "period": null,
-        "updated": null
+        "period": "2026-03-26",
+        "updated": "2026-03-26"
       },
       "uk_m2": {
-        "value": null,
+        "value": 4.26,
         "unit": "billions_gbp",
-        "period": null,
-        "updated": null
+        "period": "2026-03-26",
+        "updated": "2026-03-26"
       },
       "invalidation_triggers": {
         "googl_ad_revenue_decline": {
           "status": "green",
-          "notes": "",
-          "updated": null
+          "notes": "Ad revenue +14% YoY in Q4 2025, accelerating",
+          "updated": "2026-03-26"
         },
         "nvda_gross_margin": {
           "status": "green",
-          "notes": "",
-          "updated": null
+          "notes": "Gross margin 75.0% (Q4 FY26). Custom silicon ~10-15% training share.",
+          "updated": "2026-03-26"
         },
         "taiwan_crisis": {
           "status": "green",
-          "notes": "",
-          "updated": null
+          "notes": "No escalation",
+          "updated": "2026-03-26"
         },
         "tsla_optimus_musk": {
           "status": "green",
-          "notes": "",
-          "updated": null
+          "notes": "Terafab started 2026-03-21",
+          "updated": "2026-03-26"
         }
       }
     }
