@@ -6,8 +6,8 @@
   --bg:         #080808;
   --surface:    #101010;
   --surface-2:  #161616;
-  --border:     #1e1e1e;
-  --border-2:   #2a2a2a;
+  --border:     #242424;
+  --border-2:   #323232;
 
   --text:       #e0e0e0;
   --text-dim:   #888;
@@ -268,6 +268,20 @@ th.num { text-align: right; }
 .distance-near  { color: var(--amber); }
 .distance-entry { color: var(--green); }
 
+/* ─── Regime Summary Bar ───────────────────────────────────────────────── */
+
+.regime-bar {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-dim);
+  padding: 7px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+.regime-bar:empty { display: none; }
+
 /* ─── Macro Indicators Grid ────────────────────────────────────────────── */
 
 .macro-grid {
@@ -302,6 +316,18 @@ th.num { text-align: right; }
   font-size: 11px;
   color: var(--text-dim);
   margin-top: 3px;
+}
+
+/* Primary macro card — elevated visual weight */
+.macro-card-primary {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border-2);
+}
+.macro-card-primary .macro-card-label {
+  color: var(--text-dim);
+}
+.macro-card-primary .macro-card-value {
+  font-size: 26px;
 }
 
 .highlight-warn  { color: var(--amber); }
@@ -340,16 +366,17 @@ th.num { text-align: right; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 14px 18px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-dim);
+  color: var(--text);
   user-select: none;
   list-style: none;
+  letter-spacing: 0.01em;
 }
 .thesis-summary::-webkit-details-marker { display: none; }
-.thesis-summary:hover { color: var(--text); background: var(--surface-2); }
+.thesis-summary:hover { background: var(--surface-2); }
 
 .summary-hint {
   font-size: 10px;
@@ -451,7 +478,7 @@ details:not([open]) .summary-hint::before { content: 'expand'; }
 }
 
 @media (max-width: 700px) {
-  :root { --status-bar-h: 96px; }
+  :root { --status-bar-h: 104px; }
   #status-bar-inner {
     flex-wrap: wrap;
     height: auto;
@@ -465,6 +492,23 @@ details:not([open]) .summary-hint::before { content: 'expand'; }
   }
   .status-cell:nth-child(odd) { border-right: 1px solid var(--border); }
   .status-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  /* Scenario hero — full width, larger, tinted */
+  #s-scenario {
+    flex: 1 1 100%;
+    border-right: none !important;
+    background: var(--surface-2);
+    padding: 10px 14px;
+  }
+  #s-scenario .status-value { font-size: 20px; }
+
+  /* Section order: macro signals first, then triggers, watchlist, thesis */
+  main { display: flex; flex-direction: column; }
+  #regime-bar      { order: 0; }
+  #panel-macro     { order: 1; }
+  #panel-triggers  { order: 2; }
+  #panel-positions { order: 3; }
+  #panel-thesis    { order: 4; }
 
   .macro-grid { grid-template-columns: 1fr 1fr; }
   td.note-cell { display: none; }

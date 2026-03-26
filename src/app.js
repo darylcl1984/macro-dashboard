@@ -174,6 +174,15 @@ function renderStatusBar(manual, macro) {
   fgEl.textContent = fgVal != null ? fgVal : '—';
   fgEl.className = `status-value ${fgColorClass(fgVal)}`;
   document.getElementById('fg-class').textContent = fgClass;
+
+  // Regime summary bar
+  const regimeBar = document.getElementById('regime-bar');
+  if (regimeBar) {
+    const yoy2   = manual?.global_m2?.yoy_pct;
+    const yoyStr = yoy2 != null ? `M2 ${yoy2 >= 0 ? '+' : ''}${yoy2.toFixed(1)}% YoY` : null;
+    const parts  = [`${current} scenario`, yoyStr, fgClass || null].filter(Boolean);
+    regimeBar.textContent = parts.join(' · ');
+  }
 }
 
 function fgColorClass(val) {
@@ -390,7 +399,7 @@ function renderMacro(macro, manual, prices) {
       'Global M2 Composite',
       gm2?.value != null ? `$${gm2.value.toFixed(1)}T` : '—',
       `YoY: ${gm2?.yoy_pct != null ? (gm2.yoy_pct >= 0 ? '+' : '') + gm2.yoy_pct.toFixed(1) + '%' : '—'} ${staleBadge(staleGm2.level, staleGm2.label)}`,
-      staleGm2.level !== 'fresh' ? `value-stale-${staleGm2.level}` : '',
+      `macro-card-primary${staleGm2.level !== 'fresh' ? ` value-stale-${staleGm2.level}` : ''}`,
     ),
     macroCard(
       'US M2',
@@ -431,6 +440,7 @@ function renderMacro(macro, manual, prices) {
       'Fear &amp; Greed',
       `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span>`,
       `${fg?.classification || ''} · ${fg?.date || '—'}${fgBarHtml(fg?.value)}`,
+      'macro-card-primary',
     ),
   ].join('');
 
