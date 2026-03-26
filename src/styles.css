@@ -200,11 +200,13 @@ th.num { text-align: right; }
 .trigger-table { table-layout: fixed; }
 .trigger-table td:nth-child(2) { overflow: hidden; text-overflow: ellipsis; }
 
-.trigger-status {
+.trigger-table td.trigger-status {
   font-size: 16px;
   text-align: center;
   line-height: 1;
   vertical-align: middle;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* ─── Positions ────────────────────────────────────────────────────────── */
@@ -250,8 +252,10 @@ th.num { text-align: right; }
 .alert-table th:nth-child(4) { width: 18%; }
 .alert-table th:nth-child(5) { width:  7%; }
 .alert-table th:nth-child(6) { width: 34%; }
-.alert-table td.alert-cell   { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
-.alert-table td.alert-status { text-align: center; font-size: 14px; line-height: 1; vertical-align: middle; }
+.alert-table td.alert-cell   { font-family: var(--mono); font-size: 11px; color: var(--text-muted); padding-right: 4px; }
+.alert-table td.alert-status { text-align: center; font-size: 14px; line-height: 1; vertical-align: middle; padding-left: 4px; padding-top: 0; padding-bottom: 0; }
+.alert-table th:nth-child(4) { padding-right: 4px; }
+.alert-table th:nth-child(5) { padding-left: 4px; }
 
 /* Watchlist — emphasise distance */
 .distance-cell {
