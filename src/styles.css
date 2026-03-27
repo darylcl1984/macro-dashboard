@@ -11,8 +11,8 @@
   --border-2:   #323232;
 
   --text:       #e0e0e0;
-  --text-dim:   #888;
-  --text-muted: #444;
+  --text-dim:   #999;
+  --text-muted: #666;
 
   --green:      #22c55e;
   --green-dim:  #15803d;
@@ -183,7 +183,7 @@ td {
   vertical-align: middle;
 }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--surface-2); }
+@media (hover: hover) { tr:hover td { background: var(--surface-2); } }
 
 .num { font-family: var(--mono); text-align: right; white-space: nowrap; }
 th.num { text-align: right; }
@@ -577,7 +577,6 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
   html { font-size: 15px; }
 
   main { padding: 12px 12px 32px; gap: 12px; }
-  .regime-bar { margin-top: 4px; }
 
   /* ── Status bar ── */
   :root { --status-bar-h: 116px; }
@@ -719,6 +718,7 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
 
   /* ── Watchlist group titles ── */
   .group-title { font-size: 10px; padding: 8px 14px 6px; }
+  .price-table tbody tr:last-child { border-bottom: none; }
 
   /* ── Thesis tables → cards ── */
   .thesis-body .thesis-table,

@@ -8,6 +8,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 8)
+
+#### Changed
+- [frontend] `--text-muted` lightened `#444` → `#666`; `--text-dim` lightened `#888` → `#999` — improves legibility of panel titles, table headers, trigger thresholds, macro card labels, and all secondary text
+- [frontend] Row hover highlight restricted to `@media (hover: hover)` — no persistent grey shade on touch devices
+- [frontend] Mobile price table last-row border removed — Gold, VIX, GEV separator lines cleaned up
+- [frontend] Regime bar top spacing aligned to match gap below — `margin-top` override removed; `main` padding-top (12px) and flex gap (12px) now equal on both sides
+
 ### 2026-03-27 (session 7)
 
 #### Added
