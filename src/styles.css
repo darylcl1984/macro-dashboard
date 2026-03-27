@@ -413,10 +413,12 @@ th.num { text-align: right; }
 
 /* Fear & Greed gauge bar */
 .fg-bar-track {
-  height: 4px;
-  background: var(--surface-2);
+  height: 3px;
+  width: 100%;
+  background: var(--border);
   border-radius: 2px;
   margin-top: 4px;
+  margin-bottom: 4px;
   position: relative;
   overflow: visible;
 }

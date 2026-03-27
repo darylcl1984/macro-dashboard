@@ -468,8 +468,8 @@ function renderMacro(macro, manual, prices) {
     ),
     macroCard(
       'Fear &amp; Greed',
-      `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span>`,
-      `${fg?.classification || ''} · ${fg?.date || '—'}${fgBarHtml(fg?.value)}`,
+      `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span>${fgBarHtml(fg?.value)}`,
+      `${fg?.classification || ''} · ${fg?.date || '—'}`,
       'macro-card-primary',
     ),
   ].join('');
