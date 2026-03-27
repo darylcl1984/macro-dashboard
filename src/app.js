@@ -69,7 +69,7 @@ function fmt(n, decimals = 2, prefix = '', suffix = '') {
 }
 
 function fmtPct(n) {
-  if (n == null || isNaN(n)) return '<span class="neu">—</span>';
+  if (n == null || isNaN(n)) return '<span class="neu">n/a</span>';
   const sign = n >= 0 ? '+' : '';
   const cls  = n >= 0 ? 'pos' : 'neg';
   return `<span class="${cls}">${sign}${n.toFixed(2)}%</span>`;
@@ -200,7 +200,9 @@ function renderStatusBar(manual, macro, prices) {
     const yoy2   = manual?.global_m2?.yoy_pct;
     const yoyStr = yoy2 != null ? `M2 ${yoy2 >= 0 ? '+' : ''}${yoy2.toFixed(1)}% YoY` : null;
     const parts  = [`${current} scenario`, yoyStr, fgClass || null].filter(Boolean);
-    regimeBar.textContent = parts.join(' · ');
+    const dotColors = { Bull: 'var(--green)', Base: 'var(--blue)', Bear: 'var(--amber)', 'Tail Risk': 'var(--red)' };
+    const dotColor  = dotColors[current] || 'var(--text-dim)';
+    regimeBar.innerHTML = `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${dotColor};margin-right:8px;vertical-align:middle"></span>${parts.join(' · ')}`;
   }
 }
 
@@ -285,6 +287,8 @@ function renderTriggers(prices, manual) {
 
 // ─── Section 3: Positions ─────────────────────────────────────────────────────
 
+const RANGE_REVERSED = new Set(['WTI', 'VIX']);
+
 function fmtRangeVal(v) {
   if (v == null) return '—';
   if (v >= 1000) return '$' + Math.round(v).toLocaleString('en-US');
@@ -292,26 +296,32 @@ function fmtRangeVal(v) {
   return '$' + v.toFixed(2);
 }
 
-function rangeBarHtml(price, low, high, below, above) {
+function rangeBarHtml(sym, price, low, high, below, above) {
   if (price == null || low == null || high == null || high <= low)
     return '<span class="neu">—</span>';
   const span = high - low;
   const pct  = Math.min(1, Math.max(0, (price - low) / span));
 
-  // Dot colour reflects alert status, not range position
+  // Dot colour reflects alert status
   let color = 'var(--text-dim)';
-  const belowBreach  = below != null && price < below;
+  const belowBreach   = below != null && price < below;
   const belowApproach = below != null && price < below * 1.05;
-  const aboveBreach  = above != null && price > above;
+  const aboveBreach   = above != null && price > above;
   const aboveApproach = above != null && price > above * 0.95;
-  if      (belowBreach)   color = 'var(--red)';
-  else if (aboveBreach)   color = 'var(--green)';
+  if      (belowBreach)                  color = 'var(--red)';
+  else if (aboveBreach)                  color = 'var(--green)';
   else if (belowApproach || aboveApproach) color = 'var(--amber)';
 
-  const desc = pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
-             : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
-             : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
-             : 'Near 52w high';
+  // Descriptor text with position-based colour (reversed for WTI/VIX)
+  const reversed = RANGE_REVERSED.has(sym);
+  const descText = pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
+                 : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
+                 : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
+                 : 'Near 52w high';
+  const descCls  = reversed
+    ? (pct <= 0.25 ? 'pos' : pct >= 0.75 ? 'highlight-warn' : '')
+    : (pct <= 0.25 ? 'highlight-warn' : pct >= 0.75 ? 'pos' : '');
+  const desc = descCls ? `<span class="${descCls}">${descText}</span>` : descText;
 
   // Alert tick marks — only render if threshold is within the 52w range
   let ticks = '';
@@ -327,7 +337,6 @@ function rangeBarHtml(price, low, high, below, above) {
   }
 
   return `<div class="range-track">${ticks}<div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
-       + `<div class="range-labels"><span class="range-lo">${fmtRangeVal(low)}</span><span class="range-hi">${fmtRangeVal(high)}</span></div>`
        + `<div class="range-desc">${desc}</div>`;
 }
 
@@ -341,7 +350,7 @@ function alertRow(prices, alerts, sym, label, prefix, decimals) {
     <td class="asset-name">${label}</td>
     <td class="num">${fmt(price, decimals, prefix)}</td>
     <td class="num">${fmtPct(chg)}</td>
-    <td class="range-cell">${rangeBarHtml(price, entry?.week52_low ?? null, entry?.week52_high ?? null, al?.below ?? null, al?.above ?? null)}</td>
+    <td class="range-cell">${rangeBarHtml(sym, price, entry?.week52_low ?? null, entry?.week52_high ?? null, al?.below ?? null, al?.above ?? null)}</td>
   </tr>`;
 }
 

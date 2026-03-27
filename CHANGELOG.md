@@ -8,6 +8,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 6)
+
+#### Added
+- [frontend] Regime bar scenario dot — coloured 6px circle before regime text matching scenario colour (green/blue/amber/red)
+
+#### Changed
+- [frontend] Range bar low/high labels removed — 9px mono labels were unreadable; dot position and descriptor text communicate range location
+- [frontend] Range bar descriptor text colour-coded — bottom 25% amber, top 25% green; reversed for WTI and VIX (low = green, high = amber)
+- [frontend] Table row padding reduced 7px → 5px — tighter rows throughout all tables
+- [frontend] Stale badge changed from solid fill to outline style — less visual weight competing with data
+- [frontend] `fmtPct` null case changed from `—` to `n/a` — Gold (USD) and WTI Crude now show `n/a` in muted text for missing 24h change data
+
 ### 2026-03-27 (session 5)
 
 #### Added
