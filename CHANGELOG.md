@@ -8,6 +8,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 4)
+
+#### Added
+- [frontend] Alert tick mark tooltips — hovering a tick shows `Alert: <$X` or `Alert: >$X` via `title` attribute
+
+#### Changed
+- [frontend] Range bar dot colour now reflects alert status (red = breached below, green = breached above, amber = within 5% of threshold, grey = clear); range-position colour logic and reversed logic for WTI/VIX/NOW/GEV removed
+- [frontend] Macro grid changed to `repeat(4, 1fr)` — hero card full-width on top, 8 remaining cards in 2 rows of 4; eliminates dead space from previous `auto-fill` layout
+- [frontend] Trigger table column widths: Detail widened to 68%, Status narrowed to 7%
+- [frontend] Alert tick marks changed from grey/0.5 to amber/0.7 for visibility on dark background
+
 ### 2026-03-27 (session 3)
 
 #### Added
