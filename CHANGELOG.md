@@ -16,6 +16,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 #### Changed
 - [frontend] Macro grid `align-items: start` — cards no longer stretch to tallest row height
 - [frontend] Fear & Greed gauge bar repositioned between value and subtitle text; track background changed from `var(--surface-2)` to `var(--border)` so full scale is visible; height 4px → 3px; `margin-bottom: 4px` added
+- [frontend] Fear & Greed classification and date moved inline with the value number (`10  Extreme Fear · 2026-03-26`); macro grid `align-items: start` removed so all cards in a row stretch to equal height
 - [frontend] Position group `align-content: start` — left column (Hard Money + Macro Signals) no longer pads to match right column height
 - [frontend] Alert tick hit area widened from 1px to 9px using gradient — visual tick unchanged, hover reliable
 

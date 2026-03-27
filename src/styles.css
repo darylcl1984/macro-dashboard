@@ -341,7 +341,6 @@ th.num { text-align: right; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  align-items: start;
 }
 
 .macro-card {
@@ -412,6 +411,13 @@ th.num { text-align: right; }
 .highlight-alert { color: var(--red); }
 
 /* Fear & Greed gauge bar */
+.fg-inline-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: var(--sans);
+  font-weight: 400;
+}
+
 .fg-bar-track {
   height: 3px;
   width: 100%;
