@@ -82,6 +82,15 @@ function fmtDate(dateStr) {
   return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+function fmtMacroDate(str) {
+  if (!str) return '—';
+  // BOJ format: "202602" → parse as YYYY-MM
+  const s = /^\d{6}$/.test(str) ? `${str.slice(0, 4)}-${str.slice(4, 6)}-01` : str;
+  const d = new Date(s);
+  if (isNaN(d)) return str;
+  return d.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
+}
+
 function fmtTs(isoStr) {
   if (!isoStr) return '—';
   const d = new Date(isoStr);
@@ -358,7 +367,7 @@ function renderPositions(prices, alerts) {
   // Hard Money
   const hardMoney = [
     alertRow(prices, alerts, 'BTC',    'BTC',       '$', 0),
-    alertRow(prices, alerts, 'XAUUSD', 'Gold (USD)','$', 0),
+    alertRow(prices, alerts, 'XAUUSD', 'Gold',       '$', 0),
   ].join('');
   document.getElementById('group-hard-money').innerHTML = hardMoney;
 
@@ -443,41 +452,41 @@ function renderMacro(macro, manual, prices) {
     macroCard(
       'US M2',
       `${fmt(usM2?.value, 0, '$')}B`,
-      `Period: ${usM2?.date || '—'} ${staleBadge(staleM2.level, staleM2.label)}`,
+      `${fmtMacroDate(usM2?.date)} ${staleBadge(staleM2.level, staleM2.label)}`,
     ),
     macroCard(
       'Eurozone M2',
       eurM2?.value != null ? `$${eurM2.value.toFixed(2)}T` : '—',
-      `Period: ${eurM2?.period || '—'} ${staleBadge(staleEu.level, staleEu.label)}`,
+      `${fmtMacroDate(eurM2?.period)} ${staleBadge(staleEu.level, staleEu.label)}`,
     ),
     macroCard(
       'Japan M2',
       jpM2Usd != null ? `$${jpM2Usd.toFixed(1)}T` : '—',
-      `Period: ${jpM2?.date || '—'} ${staleBadge(staleJp.level, staleJp.label)}`,
+      `${fmtMacroDate(jpM2?.date)} ${staleBadge(staleJp.level, staleJp.label)}`,
     ),
     macroCard(
       'China M2',
       cnM2?.value != null ? `$${cnM2.value.toFixed(2)}T` : '—',
-      `Period: ${cnM2?.period || '—'} ${staleBadge(staleCn.level, staleCn.label)}`,
+      `${fmtMacroDate(cnM2?.period)} ${staleBadge(staleCn.level, staleCn.label)}`,
     ),
     macroCard(
       'UK M2',
       ukM2?.value != null ? `$${ukM2.value.toFixed(2)}T` : '—',
-      `Period: ${ukM2?.period || '—'} ${staleBadge(staleUk.level, staleUk.label)}`,
+      `${fmtMacroDate(ukM2?.period)} ${staleBadge(staleUk.level, staleUk.label)}`,
     ),
     macroCard(
       'US 10Y Treasury',
       `<span class="${us10yCls}">${fmt(us10y?.value, 2)}%</span>`,
-      `${us10y?.date || '—'} ${staleBadge(stale10y.level, stale10y.label)}`,
+      `${fmtMacroDate(us10y?.date)} ${staleBadge(stale10y.level, stale10y.label)}`,
     ),
     macroCard(
       'US Dollar Index (DXY)',
       `<span class="${dxyCls}">${fmt(dgy?.value, 2)}</span>`,
-      `${dgy?.date || '—'} ${staleBadge(staleDxy.level, staleDxy.label)} ${dgy?.value < 100 ? '<span class="highlight-warn">Below 100 — thesis signal</span>' : ''}`,
+      `${fmtMacroDate(dgy?.date)} ${staleBadge(staleDxy.level, staleDxy.label)} ${dgy?.value < 100 ? '<span class="highlight-warn">Below 100 — thesis signal</span>' : ''}`,
     ),
     macroCard(
       'Fear &amp; Greed',
-      `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span> <span class="fg-inline-sub">${fg?.classification || ''} · ${fg?.date || '—'}</span>`,
+      `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span> <span class="fg-inline-sub">${fg?.classification || ''} · ${fmtMacroDate(fg?.date)}</span>`,
       fgBarHtml(fg?.value),
       'macro-card-primary',
     ),
@@ -507,11 +516,15 @@ async function renderThesis() {
 function mdToHtml(md) {
   // Process tables before general paragraph handling
   md = md.replace(/^(\|.+\|)\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/gm, (_, header, body) => {
-    const parseRow = (row, tag) =>
+    const headers = header.trim().replace(/^\||\|$/g, '').split('|').map(h => h.trim());
+    const parseHeaderRow = (row) =>
       '<tr>' + row.trim().replace(/^\||\|$/g, '').split('|')
-        .map(cell => `<${tag}>${cell.trim()}</${tag}>`).join('') + '</tr>';
-    const headerHtml = parseRow(header, 'th');
-    const bodyHtml = body.trim().split('\n').map(r => parseRow(r, 'td')).join('');
+        .map(cell => `<th>${cell.trim()}</th>`).join('') + '</tr>';
+    const parseBodyRow = (row) =>
+      '<tr>' + row.trim().replace(/^\||\|$/g, '').split('|')
+        .map((cell, i) => `<td data-label="${headers[i] || ''}">${cell.trim()}</td>`).join('') + '</tr>';
+    const headerHtml = parseHeaderRow(header);
+    const bodyHtml = body.trim().split('\n').map(r => parseBodyRow(r)).join('');
     return `<table class="thesis-table"><thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody></table>`;
   });
 

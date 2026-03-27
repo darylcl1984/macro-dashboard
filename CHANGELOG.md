@@ -8,6 +8,20 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 7)
+
+#### Added
+- [frontend] `fmtMacroDate()` — normalises all macro card dates to "MMM YYYY" format; handles BOJ "202602" (YYYYMM) and FRED "2026-02-01" (ISO) inputs
+- [frontend] Thesis/M2 tables transform to cards on mobile — each row becomes a bordered card; column headers hidden and re-rendered as muted uppercase `::before` labels via `data-label` attributes; generalises to any future `.md` file rendered through `renderMarkdownDoc()`
+
+#### Changed
+- [frontend] `:focus { outline: none; }` — browser focus rings removed
+- [frontend] Regime bar `margin-top: 4px` on mobile — spacing restored above bar
+- [frontend] Macro card date prefix "Period: " removed — dates now standalone "MMM YYYY" label, consistent across all cards including 10Y and DXY
+- [frontend] Gold label: "Gold (USD)" → "Gold"
+- [frontend] Mobile price table last-row rule removed — Gold and VIX bottom separator lines restored
+- [frontend] `fmtPct` null → `n/a` in muted text; covers Gold and WTI Crude missing 24h change data
+
 ### 2026-03-27 (session 6)
 
 #### Added
