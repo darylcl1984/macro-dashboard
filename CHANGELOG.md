@@ -8,6 +8,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-27 (session 5)
+
+#### Added
+- [frontend] Custom styled tooltip on alert tick marks — amber background, rounded corners, monospace text; replaces native `title` attribute with CSS `::before` + `data-tooltip`
+
+#### Changed
+- [frontend] Macro grid `align-items: start` — cards no longer stretch to tallest row height
+- [frontend] Fear & Greed gauge bar `margin-top` reduced 8px → 4px to reduce card height delta
+- [frontend] Position group `align-content: start` — left column (Hard Money + Macro Signals) no longer pads to match right column height
+- [frontend] Alert tick hit area widened from 1px to 9px using gradient — visual tick unchanged, hover reliable
+
 ### 2026-03-27 (session 4)
 
 #### Added

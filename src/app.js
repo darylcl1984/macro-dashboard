@@ -318,12 +318,12 @@ function rangeBarHtml(price, low, high, below, above) {
   if (below != null) {
     const tp = (below - low) / span;
     if (tp > 0 && tp < 1)
-      ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%" title="Alert: &lt;${fmtRangeVal(below)}"></div>`;
+      ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%" data-tooltip="Alert: <${fmtRangeVal(below)}"></div>`;
   }
   if (above != null) {
     const tp = (above - low) / span;
     if (tp > 0 && tp < 1)
-      ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%" title="Alert: &gt;${fmtRangeVal(above)}"></div>`;
+      ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%" data-tooltip="Alert: >${fmtRangeVal(above)}"></div>`;
   }
 
   return `<div class="range-track">${ticks}<div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
