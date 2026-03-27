@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-26T23:27:03.245509+00:00",
+  "updated_at": "2026-03-27T09:02:03.558525+00:00",
   "indicators": {
     "US_M2": {
       "value": 22667.3,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 10,
+      "value": 13,
       "classification": "Extreme Fear",
-      "date": "2026-03-26"
+      "date": "2026-03-27"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
@@ -50,7 +50,7 @@
       "eur_m2": {
         "value": 18.74,
         "unit": "trillions_usd",
-        "period": "2026-03",
+        "period": "2026-03-26",
         "updated": "2026-03-26"
       },
       "china_m2": {
