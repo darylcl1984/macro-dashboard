@@ -567,6 +567,64 @@ function renderFooter(prices, macro, manual) {
   document.getElementById('footer-assessed-ts').textContent = fmtDate(manual?.scenario?.updated);
 }
 
+// ─── Thesis ring hint ─────────────────────────────────────────────────────────
+
+function setupRingHint() {
+  const details = document.getElementById('thesis-details');
+  if (!details) return;
+  const summary = details.querySelector('.thesis-summary');
+  if (!summary) return;
+
+  const NS  = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  const rect = document.createElementNS(NS, 'rect');
+  const RX = 2, STROKE = 1.5, PAD = 1;
+
+  svg.appendChild(rect);
+  summary.style.position = 'relative';
+  summary.appendChild(svg);
+
+  function sizeRing() {
+    const { width, height } = summary.getBoundingClientRect();
+    if (!width || !height) return;
+    const w = width + PAD * 2, h = height + PAD * 2;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.style.cssText = [
+      'position:absolute', `top:${-PAD}px`, `left:${-PAD}px`,
+      `width:${w}px`, `height:${h}px`,
+      'pointer-events:none', 'z-index:2', 'overflow:visible',
+    ].join(';');
+    rect.setAttribute('x', PAD);
+    rect.setAttribute('y', PAD);
+    rect.setAttribute('width', width);
+    rect.setAttribute('height', height);
+    rect.setAttribute('rx', RX);
+    rect.setAttribute('fill', 'none');
+    rect.setAttribute('stroke', 'rgba(59,130,246,0.55)');
+    rect.setAttribute('stroke-width', STROKE);
+    rect.setAttribute('stroke-linecap', 'round');
+
+    const perimeter = 2 * (width - 2 * RX) + 2 * (height - 2 * RX) + 2 * Math.PI * RX;
+    const arcLen    = perimeter * 0.12;
+    rect.setAttribute('stroke-dasharray', `${arcLen.toFixed(2)} ${(perimeter - arcLen).toFixed(2)}`);
+
+    let kf = document.getElementById('ring-kf');
+    if (!kf) { kf = document.createElement('style'); kf.id = 'ring-kf'; document.head.appendChild(kf); }
+    kf.textContent = `@keyframes ring-travel { from { stroke-dashoffset: 0; } to { stroke-dashoffset: ${(-perimeter).toFixed(2)}; } }`;
+    rect.style.animation = 'ring-travel 4s linear infinite';
+  }
+
+  sizeRing();
+
+  // Show only when details is closed
+  const updateVisibility = () => { svg.style.display = details.hasAttribute('open') ? 'none' : ''; };
+  updateVisibility();
+  new MutationObserver(updateVisibility).observe(details, { attributes: true, attributeFilter: ['open'] });
+
+  // Resize on window resize
+  window.addEventListener('resize', sizeRing, { passive: true });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 async function fetchJson(url) {
@@ -604,6 +662,7 @@ async function init() {
   renderMacro(macro, manual, prices);
   renderFooter(prices, macro, manual);
   renderThesis();
+  setupRingHint();
 
   // Register service worker
   if ('serviceWorker' in navigator) {
