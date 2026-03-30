@@ -96,7 +96,9 @@ Aggregate money supply across the five major currency blocs (USD, CNY, EUR, JPY,
 
 ## 4. Thesis Invalidation Triggers
 
-Conditions under which the thesis fails. If triggered, act immediately — data over feelings.
+These are conditions under which the structural thesis — or its expression through specific positions — requires immediate reassessment. A triggered condition does not automatically mean "sell everything." It means the assumptions underpinning the thesis or a position have materially changed, and continuing to hold without review is a decision by default rather than by analysis.
+
+The appropriate response ranges from reducing a single position to a full portfolio reassessment, depending on which trigger fires and whether multiple triggers activate simultaneously. Concurrent triggers (e.g. M2 turning negative while oil sustains above $120) represent a qualitatively different situation than any single trigger — treat them as a regime change signal, not additive individual events.
 
 | Trigger | Current | Threshold | Meaning |
 |---|---|---|---|
@@ -108,6 +110,8 @@ Conditions under which the thesis fails. If triggered, act immediately — data 
 | NVDA gross margin | 75.0% (Q4 FY26) | < 60% | Chip commoditisation accelerating. Custom silicon eroding monopoly. Action: trim to 2%. |
 | Taiwan military crisis | No escalation | Major escalation | TSMC supply chain at existential risk. Action: exit TSM, reduce NVDA 50%, increase BTC + Gold. |
 | TSLA Optimus / Musk | Terafab announced | Major reversal or sustained multi-year delay | Robotics and recursive manufacturing thesis invalidated. Action: exit TSLA entirely. |
+| BTC–M2 divergence | Tracking | M2 YoY > +5% sustained 6 months while BTC 6-month return is negative (90-day lag applied) | Mechanical foundation of BTC allocation in question. Action: reduce BTC to 25%, reassess correlation framework. |
+| META ad revenue | — | Quarterly ad revenue YoY growth < 5% for 2 consecutive quarters while AI capex continues rising | Advertising efficiency thesis failing — AI investment not translating to revenue growth. Action: reduce META by 50%. |
 
 ---
 

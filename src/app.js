@@ -52,6 +52,7 @@ const PRICE_TRIGGERS = [
 // Manual triggers: key → display label
 const MANUAL_TRIGGER_LABELS = {
   googl_ad_revenue_decline: { label: 'GOOGL ad revenue',     threshold: 'Decline 2 consecutive Qs' },
+  meta_ad_revenue:          { label: 'META ad revenue',      threshold: '< 5% YoY 2 consecutive Qs while AI capex rising' },
   nvda_gross_margin:        { label: 'NVDA gross margin',    threshold: '< 60%' },
   taiwan_crisis:            { label: 'Taiwan military crisis', threshold: 'Binary escalation' },
   tsla_optimus_musk:        { label: 'TSLA Optimus / Musk',  threshold: 'Binary reversal' },
@@ -274,6 +275,18 @@ function renderTriggers(prices, manual) {
       <td class="trigger-status ${m2Dot}">${m2Status}</td>
     </tr>`);
 
+  // BTC–M2 divergence (derived: M2 YoY > +5% is the automatable condition)
+  let btcM2Dot;
+  if (yoy == null)   btcM2Dot = 'neu';
+  else if (yoy > 5)  btcM2Dot = 'dot-amber'; // M2 condition met — watch BTC 6m return
+  else               btcM2Dot = 'dot-green';
+  rows.push(`
+    <tr>
+      <td>BTC–M2 divergence</td>
+      <td><span class="trigger-current">M2 ${m2Str}</span> <span class="trigger-arrow">→</span> <span class="trigger-threshold-inline">M2 &gt; +5% sustained + BTC 6m return negative</span></td>
+      <td class="trigger-status ${btcM2Dot}">●</td>
+    </tr>`);
+
   // Manual / binary triggers
   const manualTriggers = manual?.invalidation_triggers || {};
   for (const [key, meta] of Object.entries(MANUAL_TRIGGER_LABELS)) {
@@ -332,20 +345,24 @@ function rangeBarHtml(sym, price, low, high, below, above) {
     : (pct <= 0.25 ? 'highlight-warn' : pct >= 0.75 ? 'pos' : '');
   const desc = descCls ? `<span class="${descCls}">${descText}</span>` : descText;
 
-  // Alert tick marks — only render if threshold is within the 52w range
-  let ticks = '';
+  // Alert tick marks and zone fills — only render if threshold is within the 52w range
+  let ticks = '', zones = '';
   if (below != null) {
     const tp = (below - low) / span;
-    if (tp > 0 && tp < 1)
+    if (tp > 0 && tp < 1) {
+      zones += `<div class="range-zone" style="left:0;width:${(tp * 100).toFixed(1)}%"></div>`;
       ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%" data-tooltip="Alert: <${fmtRangeVal(below)}"></div>`;
+    }
   }
   if (above != null) {
     const tp = (above - low) / span;
-    if (tp > 0 && tp < 1)
+    if (tp > 0 && tp < 1) {
+      zones += `<div class="range-zone" style="left:${(tp * 100).toFixed(1)}%;right:0"></div>`;
       ticks += `<div class="range-tick" style="left:${(tp * 100).toFixed(1)}%" data-tooltip="Alert: >${fmtRangeVal(above)}"></div>`;
+    }
   }
 
-  return `<div class="range-track">${ticks}<div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
+  return `<div class="range-track">${zones}${ticks}<div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>`
        + `<div class="range-desc">${desc}</div>`;
 }
 

@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-30 (session 1)
+
+#### Added
+- [frontend] Alert direction zone fill — faint amber overlay on range track communicates which side of a threshold tick is the alert zone; left-fill for lower-bound alerts, right-fill for upper-bound alerts; applies across all watchlist groups
+- [frontend] Collapsible section ring hint — rotating arc travels clockwise around the closed Transition Thesis summary using `conic-gradient` + mask; disappears automatically when the section is expanded
+- [frontend] Two new invalidation triggers added to the trigger table — one derived/automated from existing macro data with appropriate dot logic; one qualitative manual trigger
+- [frontend] Footer note: "Data updates Mon–Fri only. Stale badges on weekends are expected."
+
+#### Changed
+- [content] Two new rows added to the invalidation triggers table in the thesis document
+- [frontend] Section order updated for both desktop and mobile: Watchlist → Macro Indicators → Thesis Invalidation Triggers
+- [frontend] Mobile: last-row borders removed from price tables; regime bar top spacing restored; hover highlight restricted to pointer devices
+
 ### 2026-03-27 (session 8)
 
 #### Changed

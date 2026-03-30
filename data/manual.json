@@ -46,6 +46,11 @@
       "notes": "Ad revenue +14% YoY in Q4 2025, accelerating",
       "updated": "2026-03-26"
     },
+    "meta_ad_revenue": {
+      "status": "green",
+      "notes": "Ad revenue +24% YoY in Q4 2025, $58.1B",
+      "updated": "2026-03-26"
+    },
     "nvda_gross_margin": {
       "status": "green",
       "notes": "Gross margin 75.0% (Q4 FY26). Custom silicon ~10-15% training share.",

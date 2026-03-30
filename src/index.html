@@ -42,24 +42,7 @@
     <!-- ── Regime Summary Bar ─────────────────────────────────────────── -->
     <div id="regime-bar" class="regime-bar"></div>
 
-    <!-- ── Section 2: Thesis Invalidation Triggers ───────────────────── -->
-    <section class="panel" id="panel-triggers">
-      <h2 class="panel-title">Thesis Invalidation Triggers</h2>
-      <table class="trigger-table">
-        <thead>
-          <tr>
-            <th style="width:25%">Trigger</th>
-            <th style="width:68%">Detail</th>
-            <th style="width:7%" class="num">Status</th>
-          </tr>
-        </thead>
-        <tbody id="trigger-rows">
-          <tr><td colspan="3" class="loading">Loading…</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- ── Section 3: Watchlist ──────────────────────────────────────── -->
+    <!-- ── Section 2: Watchlist ──────────────────────────────────────── -->
     <section class="panel" id="panel-positions">
       <h2 class="panel-title">Watchlist</h2>
 
@@ -90,12 +73,29 @@
       </div>
     </section>
 
-    <!-- ── Section 4: Macro Indicators Panel ─────────────────────────── -->
+    <!-- ── Section 3: Macro Indicators Panel ─────────────────────────── -->
     <section class="panel" id="panel-macro">
       <h2 class="panel-title">Macro Indicators</h2>
       <div class="macro-grid" id="macro-grid">
         <div class="loading">Loading…</div>
       </div>
+    </section>
+
+    <!-- ── Section 4: Thesis Invalidation Triggers ───────────────────── -->
+    <section class="panel" id="panel-triggers">
+      <h2 class="panel-title">Thesis Invalidation Triggers</h2>
+      <table class="trigger-table">
+        <thead>
+          <tr>
+            <th style="width:25%">Trigger</th>
+            <th style="width:68%">Detail</th>
+            <th style="width:7%" class="num">Status</th>
+          </tr>
+        </thead>
+        <tbody id="trigger-rows">
+          <tr><td colspan="3" class="loading">Loading…</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- ── Section 5: Thesis Narrative (collapsible) ─────────────────── -->
@@ -140,6 +140,9 @@
       </div>
       <div class="footer-sources">
         Data: FRED · ECB · BOJ · CoinGecko · Finnhub · Stooq · Alternative.me
+      </div>
+      <div class="footer-sources">
+        Data updates Mon–Fri only. Stale badges on weekends are expected.
       </div>
       <div class="footer-links">
         <a href="https://github.com/darylcl1984/macro-dashboard" target="_blank" rel="noopener">GitHub</a>

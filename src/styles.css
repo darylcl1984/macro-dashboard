@@ -266,6 +266,15 @@ th.num { text-align: right; }
   margin: 3px 0 1px;
 }
 
+.range-zone {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: var(--amber);
+  opacity: 0.12;
+  border-radius: 2px;
+}
+
 .range-dot {
   width: 6px;
   height: 6px;
@@ -456,9 +465,45 @@ th.num { text-align: right; }
   list-style: none;
   letter-spacing: 0.01em;
   transition: background 0.15s;
+  position: relative;
+  overflow: visible;
 }
 .thesis-summary::-webkit-details-marker { display: none; }
 .thesis-summary:hover { background: var(--border-2); }
+
+/* ─── Thesis ring hint (closed state only) ──────────────────────────── */
+
+@property --ring-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes thesis-ring-spin {
+  to { --ring-angle: 360deg; }
+}
+
+#thesis-details:not([open]) > .thesis-summary::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 2px;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--ring-angle),
+    transparent 0deg,
+    rgba(59, 130, 246, 0.55) 45deg,
+    transparent 90deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: thesis-ring-spin 4s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
 
 .summary-chevron {
   font-size: 13px;
@@ -577,6 +622,7 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
   html { font-size: 15px; }
 
   main { padding: 12px 12px 32px; gap: 12px; }
+  .regime-bar { margin-top: 4px; }
 
   /* ── Status bar ── */
   :root { --status-bar-h: 116px; }
@@ -614,9 +660,9 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
   /* ── Section order ── */
   main { display: flex; flex-direction: column; }
   #regime-bar      { order: 0; }
-  #panel-macro     { order: 1; }
-  #panel-triggers  { order: 2; }
-  #panel-positions { order: 3; }
+  #panel-positions { order: 1; }
+  #panel-macro     { order: 2; }
+  #panel-triggers  { order: 3; }
   #panel-thesis    { order: 4; }
 
   /* ── Trigger table → card rows ── */
