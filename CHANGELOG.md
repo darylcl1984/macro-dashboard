@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-30 (session 5)
+
+#### Fixed
+- [frontend] SVG ring animation now completes full perimeter on all element sizes — replaced pixel perimeter calculation with `pathLength="1"` so dasharray/dashoffset are dimensionless fractions (0.12/0.88); keyframe travels exactly `-1` unit per revolution; deferred initial sizing to `requestAnimationFrame` so `getBoundingClientRect` returns real dimensions after paint
+- [frontend] WTI Crude alert tag no longer wraps on desktop — added `white-space: nowrap` to desktop `td.asset-name`; mobile retains natural wrapping behaviour
+
+#### Changed
+- [content] BTC–M2 divergence removed from Thesis Invalidation Triggers — trigger fires predictably on a 4-year post-halving cadence and would generate false signals; nuance moved to the analytical framework where it belongs
+- [content] Correlation caveat added to thesis narrative under M2-BTC section — distinguishes cycle-artefact divergence from structural failure; anchors actual invalidation to the $52K ETF aggregate cost basis
+
+#### Removed
+- [frontend] BTC–M2 divergence row removed from the trigger table on the dashboard
+
 ### 2026-03-30 (session 4)
 
 #### Fixed

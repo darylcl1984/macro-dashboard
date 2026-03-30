@@ -251,7 +251,7 @@ th.num { text-align: right; }
 .price-table th:nth-child(2) { width: 20%; }
 .price-table th:nth-child(3) { width: 14%; }
 .price-table th:nth-child(4) { width: 48%; }
-.price-table td.asset-name { font-weight: 500; }
+.price-table td.asset-name { font-weight: 500; white-space: nowrap; }
 /* Restore bottom border on last row — table may not sit at the bottom of its group */
 .price-table tr:last-child td { border-bottom: 1px solid var(--border); }
 

@@ -275,18 +275,6 @@ function renderTriggers(prices, manual) {
       <td class="trigger-status ${m2Dot}">${m2Status}</td>
     </tr>`);
 
-  // BTC–M2 divergence (derived: M2 YoY > +5% is the automatable condition)
-  let btcM2Dot;
-  if (yoy == null)   btcM2Dot = 'neu';
-  else if (yoy > 5)  btcM2Dot = 'dot-amber'; // M2 condition met — watch BTC 6m return
-  else               btcM2Dot = 'dot-green';
-  rows.push(`
-    <tr>
-      <td>BTC–M2 divergence</td>
-      <td><span class="trigger-current">M2 ${m2Str}</span> <span class="trigger-arrow">→</span> <span class="trigger-threshold-inline">M2 &gt; +5% sustained + BTC 6m return negative</span></td>
-      <td class="trigger-status ${btcM2Dot}">●</td>
-    </tr>`);
-
   // Manual / binary triggers
   const manualTriggers = manual?.invalidation_triggers || {};
   for (const [key, meta] of Object.entries(MANUAL_TRIGGER_LABELS)) {
@@ -581,13 +569,28 @@ function setupRingHint() {
   const summary = details.querySelector('.thesis-summary');
   if (!summary) return;
 
-  const NS  = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(NS, 'svg');
+  const NS   = 'http://www.w3.org/2000/svg';
+  const svg  = document.createElementNS(NS, 'svg');
   const rect = document.createElementNS(NS, 'rect');
   const RX = 2, STROKE = 1.5, PAD = 1;
 
+  // Static attributes — pathLength="1" normalises the coordinate system so
+  // dasharray/dashoffset are simple fractions; no pixel perimeter calculation needed.
+  rect.setAttribute('fill', 'none');
+  rect.setAttribute('stroke', 'rgba(59,130,246,0.55)');
+  rect.setAttribute('stroke-width', String(STROKE));
+  rect.setAttribute('stroke-linecap', 'round');
+  rect.setAttribute('pathLength', '1');
+  rect.setAttribute('stroke-dasharray', '0.12 0.88');
+  rect.setAttribute('rx', String(RX));
+
+  // Inject keyframe once — offset travels from 0 → -1 (one full revolution)
+  let kf = document.getElementById('ring-kf');
+  if (!kf) { kf = document.createElement('style'); kf.id = 'ring-kf'; document.head.appendChild(kf); }
+  kf.textContent = '@keyframes ring-travel { to { stroke-dashoffset: -1; } }';
+  rect.style.animation = 'ring-travel 4s linear infinite';
+
   svg.appendChild(rect);
-  summary.style.position = 'relative';
   summary.appendChild(svg);
 
   function sizeRing() {
@@ -595,39 +598,26 @@ function setupRingHint() {
     if (!width || !height) return;
     const w = width + PAD * 2, h = height + PAD * 2;
     svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.style.cssText = [
-      'position:absolute', `top:${-PAD}px`, `left:${-PAD}px`,
-      `width:${w}px`, `height:${h}px`,
-      'pointer-events:none', 'z-index:2', 'overflow:visible',
-    ].join(';');
-    rect.setAttribute('x', PAD);
-    rect.setAttribute('y', PAD);
-    rect.setAttribute('width', width);
-    rect.setAttribute('height', height);
-    rect.setAttribute('rx', RX);
-    rect.setAttribute('fill', 'none');
-    rect.setAttribute('stroke', 'rgba(59,130,246,0.55)');
-    rect.setAttribute('stroke-width', STROKE);
-    rect.setAttribute('stroke-linecap', 'round');
-
-    const perimeter = 2 * (width - 2 * RX) + 2 * (height - 2 * RX) + 2 * Math.PI * RX;
-    const arcLen    = perimeter * 0.12;
-    rect.setAttribute('stroke-dasharray', `${arcLen.toFixed(2)} ${(perimeter - arcLen).toFixed(2)}`);
-
-    let kf = document.getElementById('ring-kf');
-    if (!kf) { kf = document.createElement('style'); kf.id = 'ring-kf'; document.head.appendChild(kf); }
-    kf.textContent = `@keyframes ring-travel { from { stroke-dashoffset: 0; } to { stroke-dashoffset: ${(-perimeter).toFixed(2)}; } }`;
-    rect.style.animation = 'ring-travel 4s linear infinite';
+    svg.style.position     = 'absolute';
+    svg.style.top          = `${-PAD}px`;
+    svg.style.left         = `${-PAD}px`;
+    svg.style.width        = `${w}px`;
+    svg.style.height       = `${h}px`;
+    svg.style.pointerEvents = 'none';
+    svg.style.zIndex       = '2';
+    svg.style.overflow     = 'visible';
+    rect.setAttribute('x', String(PAD));
+    rect.setAttribute('y', String(PAD));
+    rect.setAttribute('width', String(width));
+    rect.setAttribute('height', String(height));
   }
 
-  sizeRing();
+  // Defer initial sizing until after paint so getBoundingClientRect is reliable
+  requestAnimationFrame(sizeRing);
 
-  // Show only when details is closed
   const updateVisibility = () => { svg.style.display = details.hasAttribute('open') ? 'none' : ''; };
   updateVisibility();
   new MutationObserver(updateVisibility).observe(details, { attributes: true, attributeFilter: ['open'] });
-
-  // Resize on window resize
   window.addEventListener('resize', sizeRing, { passive: true });
 }
 

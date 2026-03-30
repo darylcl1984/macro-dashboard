@@ -48,6 +48,8 @@ Global M2 stands at approximately $100 trillion, growing at over 10% year-over-y
 
 Bitcoin has tracked global M2 with a 70–90 day lag. Correlation reached ~91% at a 70-day offset in the current cycle (Bitcoin Magazine Pro, Sep 2025). Over any rolling 12-month period, BTC has moved in the same direction as global liquidity ~83% of the time (Lyn Alden, Sep 2024). The relationship is directionally reliable but elastic — short-term deviations are common.
 
+**Correlation caveat:** The BTC–M2 relationship is directionally reliable over rolling 12-month periods (~83% agreement) but regularly diverges for 6–12 months during crypto cycle transitions, particularly post-halving bear phases. A sustained divergence where M2 expands while BTC declines is not automatically a thesis failure — it may reflect crypto-specific deleveraging within a structurally supportive liquidity environment. The thesis is invalidated only if BTC breaks below $52K (the ETF aggregate cost basis), which represents a structural demand failure rather than a cyclical drawdown.
+
 ---
 
 ## 2. Portfolio
@@ -110,7 +112,6 @@ The appropriate response ranges from reducing a single position to a full portfo
 | NVDA gross margin | 75.0% (Q4 FY26) | < 60% | Chip commoditisation accelerating. Custom silicon eroding monopoly. Action: trim to 2%. |
 | Taiwan military crisis | No escalation | Major escalation | TSMC supply chain at existential risk. Action: exit TSM, reduce NVDA 50%, increase BTC + Gold. |
 | TSLA Optimus / Musk | Terafab announced | Major reversal or sustained multi-year delay | Robotics and recursive manufacturing thesis invalidated. Action: exit TSLA entirely. |
-| BTC–M2 divergence | Tracking | M2 YoY > +5% sustained 6 months while BTC 6-month return is negative (90-day lag applied) | Mechanical foundation of BTC allocation in question. Action: reduce BTC to 25%, reassess correlation framework. |
 | META ad revenue | — | Quarterly ad revenue YoY growth < 5% for 2 consecutive quarters while AI capex continues rising | Advertising efficiency thesis failing — AI investment not translating to revenue growth. Action: reduce META by 50%. |
 
 ---
