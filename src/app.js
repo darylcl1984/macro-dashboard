@@ -318,19 +318,24 @@ function fmtRangeVal(v) {
   return '$' + v.toFixed(2);
 }
 
+function alertTagHtml(price, al) {
+  if (price == null || al == null) return '';
+  if (al.below != null && price < al.below) return ` <span class="alert-tag">(⚠ &lt;${fmtRangeVal(al.below)})</span>`;
+  if (al.above != null && price > al.above) return ` <span class="alert-tag">(⚠ &gt;${fmtRangeVal(al.above)})</span>`;
+  return '';
+}
+
 function rangeBarHtml(sym, price, low, high, below, above) {
   if (price == null || low == null || high == null || high <= low)
     return '<span class="neu">—</span>';
   const span = high - low;
   const pct  = Math.min(1, Math.max(0, (price - low) / span));
 
-  // Dot colour — grey normally, orange when in any alert zone
-  const belowBreach   = below != null && price < below;
-  const belowApproach = below != null && price < below * 1.05;
-  const aboveBreach   = above != null && price > above;
-  const aboveApproach = above != null && price > above * 0.95;
-  const alerted = belowBreach || aboveBreach || belowApproach || aboveApproach;
-  const color   = alerted ? 'var(--amber)' : 'var(--text-dim)';
+  // Dot colour — grey normally, orange when price has breached a threshold
+  const belowBreach = below != null && price < below;
+  const aboveBreach = above != null && price > above;
+  const alerted     = belowBreach || aboveBreach;
+  const color       = alerted ? 'var(--amber)' : 'var(--text-dim)';
 
   // Descriptor text with position-based colour (reversed for WTI/VIX)
   const reversed = RANGE_REVERSED.has(sym);
@@ -374,7 +379,7 @@ function alertRow(prices, alerts, sym, label, prefix, decimals) {
   const al    = alerts?.[sym];
 
   return `<tr>
-    <td class="asset-name">${label}</td>
+    <td class="asset-name">${label}${alertTagHtml(price, al)}</td>
     <td class="num">${fmt(price, decimals, prefix)}</td>
     <td class="num">${fmtPct(chg)}</td>
     <td class="range-cell">${rangeBarHtml(sym, price, entry?.week52_low ?? null, entry?.week52_high ?? null, al?.below ?? null, al?.above ?? null)}</td>

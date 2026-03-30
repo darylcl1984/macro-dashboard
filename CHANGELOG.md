@@ -8,10 +8,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-30 (session 4)
+
+#### Fixed
+- [frontend] Alert false positives on NVDA, TSM, Gold — removed 5% approach buffer from dot/icon logic; alert now fires only on actual threshold breach (price < below or price > above)
+
+#### Added
+- [frontend] Alert tag inline with asset name on both desktop and mobile — shows `(⚠ < $164)` or `(⚠ > $77,000)` directly after the ticker when a threshold is breached; tag is amber, wraps within the name cell only if screen width requires it; price and change columns unaffected
+
 ### 2026-03-30 (session 3)
 
 #### Changed
-- [frontend] 52W range dot colour simplified to binary grey/orange — dot is grey when price is outside all alert zones; amber (orange) when price is approaching or has breached any threshold; removes previous directional red/green distinction
+- [frontend] 52W range dot colour simplified to binary grey/orange — dot is grey when price is outside all alert zones; amber (orange) when price has breached a threshold; removes previous directional red/green distinction and approach-zone logic
 - [frontend] Alert symbol `⚠` prepended to range descriptor text when dot is orange — appears inline before the position label (e.g. "⚠ Near 52w low"); styled amber to match dot
 
 ### 2026-03-30 (session 2)
