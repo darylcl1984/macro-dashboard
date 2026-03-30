@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-03-27T09:02:03.558525+00:00",
+  "updated_at": "2026-03-30T09:21:55.484941+00:00",
   "indicators": {
     "US_M2": {
       "value": 22667.3,
       "date": "2026-02-01"
     },
     "US_10Y": {
-      "value": 4.33,
-      "date": "2026-03-25"
+      "value": 4.42,
+      "date": "2026-03-26"
     },
     "USD_INDEX": {
       "value": 120.2757,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 13,
+      "value": 8,
       "classification": "Extreme Fear",
-      "date": "2026-03-27"
+      "date": "2026-03-30"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
@@ -69,6 +69,11 @@
         "googl_ad_revenue_decline": {
           "status": "green",
           "notes": "Ad revenue +14% YoY in Q4 2025, accelerating",
+          "updated": "2026-03-26"
+        },
+        "meta_ad_revenue": {
+          "status": "green",
+          "notes": "Ad revenue +24% YoY in Q4 2025, $58.1B",
           "updated": "2026-03-26"
         },
         "nvda_gross_margin": {
