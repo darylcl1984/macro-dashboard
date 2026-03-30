@@ -323,6 +323,10 @@ th.num { text-align: right; }
   color: var(--text-dim);
   margin-top: 1px;
 }
+.range-alert-icon {
+  color: var(--amber);
+  font-size: 10px;
+}
 
 /* ─── Regime Summary Bar ───────────────────────────────────────────────── */
 

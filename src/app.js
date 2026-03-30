@@ -324,15 +324,13 @@ function rangeBarHtml(sym, price, low, high, below, above) {
   const span = high - low;
   const pct  = Math.min(1, Math.max(0, (price - low) / span));
 
-  // Dot colour reflects alert status
-  let color = 'var(--text-dim)';
+  // Dot colour — grey normally, orange when in any alert zone
   const belowBreach   = below != null && price < below;
   const belowApproach = below != null && price < below * 1.05;
   const aboveBreach   = above != null && price > above;
   const aboveApproach = above != null && price > above * 0.95;
-  if      (belowBreach)                  color = 'var(--red)';
-  else if (aboveBreach)                  color = 'var(--green)';
-  else if (belowApproach || aboveApproach) color = 'var(--amber)';
+  const alerted = belowBreach || aboveBreach || belowApproach || aboveApproach;
+  const color   = alerted ? 'var(--amber)' : 'var(--text-dim)';
 
   // Descriptor text with position-based colour (reversed for WTI/VIX)
   const reversed = RANGE_REVERSED.has(sym);
@@ -343,7 +341,10 @@ function rangeBarHtml(sym, price, low, high, below, above) {
   const descCls  = reversed
     ? (pct <= 0.25 ? 'pos' : pct >= 0.75 ? 'highlight-warn' : '')
     : (pct <= 0.25 ? 'highlight-warn' : pct >= 0.75 ? 'pos' : '');
-  const desc = descCls ? `<span class="${descCls}">${descText}</span>` : descText;
+  const alertIcon = alerted ? '<span class="range-alert-icon">⚠</span> ' : '';
+  const desc = descCls
+    ? `${alertIcon}<span class="${descCls}">${descText}</span>`
+    : `${alertIcon}${descText}`;
 
   // Alert tick marks and zone fills — only render if threshold is within the 52w range
   let ticks = '', zones = '';

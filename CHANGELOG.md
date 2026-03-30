@@ -8,6 +8,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-30 (session 3)
+
+#### Changed
+- [frontend] 52W range dot colour simplified to binary grey/orange — dot is grey when price is outside all alert zones; amber (orange) when price is approaching or has breached any threshold; removes previous directional red/green distinction
+- [frontend] Alert symbol `⚠` prepended to range descriptor text when dot is orange — appears inline before the position label (e.g. "⚠ Near 52w low"); styled amber to match dot
+
 ### 2026-03-30 (session 2)
 
 #### Changed
