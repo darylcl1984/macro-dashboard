@@ -54,19 +54,19 @@ Bitcoin has tracked global M2 with a 70–90 day lag. Correlation reached ~91% a
 
 ## 2. Portfolio
 
-Nine positions across four categories. **Hard money is the core (55%)**. Equities are satellites (32%). Cash is ammunition (13%).
+Hard money is the core. Equities are satellites. Cash is ammunition.
 
-| Category          | Ticker | Weight | Thesis |
-|-------------------|--------|--------|--------|
-| **Hard Money**    | BTCUSD | **40%** | Highest-beta liquid asset correlated with global M2. Structural fiat debasement hedge. |
-|                   | GLD    | **15%** | Central bank accumulation exceeding 1,000 tonnes annually. Primary de-dollarisation hedge. Gold’s share of global reserves rising from ~20% toward 25–30% by 2030. Probability-weighted price range by 2030: $7,000–$10,000. |
-| **AI & Tech** | TSLA | **10%** | Physical-world AI deployment at manufacturing scale. Optimus (robotics) + FSD (autonomy) + Megapack (energy) + Terafab (recursive self-building). Only company combining mass-manufacturing capability with a humanoid robotics programme. Key risk: key-man concentration. |
-| | GOOGL | **6%** | 4 billion daily users. Custom TPU silicon provides compute independence. DeepMind research edge. Risk: ~80% of revenue from search ads — vulnerable to AI-native disruption. |
-| | META | **6%** | Advertising efficiency engine. 3.5 billion daily users. AI improves ad targeting and creative generation. $10B annual run-rate from AI video tools. |
-| | NVDA | **4%** | Dominant AI training compute with strong CUDA ecosystem lock-in. Near-term supercycle driven by $400B+ data-centre capex and 5× efficiency gains (Blackwell → Vera Rubin). However, collapsing per-unit compute costs and rising competition will compress margins over 3–5 years as the business shifts from monopoly pricing to volume growth. Sized at 4% to capture the current cycle while acknowledging long-term margin pressure. |
-| | TSM | **3%** | Monopoly on advanced-node chip fabrication. Every major AI chip designer depends on TSMC. Primary risk: geopolitical (Taiwan). |
-| | PLTR | **3%** | AI platform for government and enterprise. Accumulates institutional knowledge with every deployment, building a compounding data moat. Benefits from geopolitical tension and defence spending. |
-| **Cash** | USD | **13%** | Offensive optionality. Deployed into BTC on 15%+ drawdowns, gold on 10%+ drawdowns, or equities during broad market corrections. |
+| Category          | Ticker | Thesis |
+|-------------------|--------|--------|
+| **Hard Money**    | BTCUSD | Highest-beta liquid asset correlated with global M2. Structural fiat debasement hedge. |
+|                   | GLD    | Central bank accumulation exceeding 1,000 tonnes annually. Primary de-dollarisation hedge. Gold’s share of global reserves rising from ~20% toward 25–30% by 2030. Probability-weighted price range by 2030: $7,000–$10,000. |
+| **AI & Tech** | TSLA | Physical-world AI deployment at manufacturing scale. Optimus (robotics) + FSD (autonomy) + Megapack (energy) + Terafab (recursive self-building). Only company combining mass-manufacturing capability with a humanoid robotics programme. Key risk: key-man concentration. |
+| | GOOGL | 4 billion daily users. Custom TPU silicon provides compute independence. DeepMind research edge. Risk: ~80% of revenue from search ads — vulnerable to AI-native disruption. |
+| | META | Advertising efficiency engine. 3.5 billion daily users. AI improves ad targeting and creative generation. $10B annual run-rate from AI video tools. |
+| | NVDA | Dominant AI training compute with strong CUDA ecosystem lock-in. Near-term supercycle driven by $400B+ data-centre capex and 5× efficiency gains (Blackwell → Vera Rubin). However, collapsing per-unit compute costs and rising competition will compress margins over 3–5 years as the business shifts from monopoly pricing to volume growth. |
+| | TSM | Monopoly on advanced-node chip fabrication. Every major AI chip designer depends on TSMC. Primary risk: geopolitical (Taiwan). |
+| | PLTR | AI platform for government and enterprise. Accumulates institutional knowledge with every deployment, building a compounding data moat. Benefits from geopolitical tension and defence spending. |
+| **Cash** | USD | Offensive optionality. Deployed into BTC on drawdowns, gold on pullbacks, or equities during broad market corrections. |
 
 ---
 
@@ -104,14 +104,14 @@ The appropriate response ranges from reducing a single position to a full portfo
 
 | Trigger | Current | Threshold | Meaning |
 |---|---|---|---|
-| BTC weekly close | $71,287 | < $52,000 | Below ETF aggregate cost basis. M2 correlation broken or structural demand shock. Action: reduce BTC by 50%, reassess. |
+| BTC weekly close | $71,287 | < $52,000 | Below ETF aggregate cost basis. M2 correlation broken or structural demand shock. Action: reduce BTC, reassess. |
 | Gold monthly close | $4,541 | < $4,000 | Central bank accumulation thesis failed. Coordinated selling or genuine deflation without monetary response. Action: reduce gold by 50%. |
 | Oil sustained | $91.12 | > $120 (4+ weeks) | Strait disrupted. Inflation reignites. Fed forced hawkish. Action: pause equity deployment, accelerate gold. |
 | Global M2 YoY | +10.4% | < 0% | Coordinated global tightening. Liquidity expansion thesis collapses. Action: reduce all risk to 50%, move to cash. |
 | GOOGL ad revenue | +14% YoY (Q4 2025) | Decline for 2 consecutive quarters | AI transition failing. Search disruption outpacing replacement revenue. Action: reduce by 50%. |
 | NVDA gross margin | 75.0% (Q4 FY26) | < 60% | Chip commoditisation accelerating. Custom silicon eroding monopoly. Action: trim to 2%. |
 | Taiwan military crisis | No escalation | Major escalation | TSMC supply chain at existential risk. Action: exit TSM, reduce NVDA 50%, increase BTC + Gold. |
-| TSLA Optimus / Musk | Terafab announced | Major reversal or sustained multi-year delay | Robotics and recursive manufacturing thesis invalidated. Action: exit TSLA entirely. |
+| TSLA Optimus / Musk | Terafab announced | Major reversal or sustained multi-year delay | Robotics and recursive manufacturing thesis invalidated. Action: exit TSLA. |
 | META ad revenue | — | Quarterly ad revenue YoY growth < 5% for 2 consecutive quarters while AI capex continues rising | Advertising efficiency thesis failing — AI investment not translating to revenue growth. Action: reduce META by 50%. |
 
 ---

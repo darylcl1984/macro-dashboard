@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-03-30 (session 6)
+
+#### Added
+- [docs] README.md written — covers thesis summary, architecture diagram, data sources table, dashboard sections, alert system, local development instructions, and license
+
+#### Changed
+- [content] thesis.md §2 Portfolio table restructured
+- [content] thesis.md §4 Invalidation Triggers — BTC trigger action wording updated
+- [docs] README war spending sentence grounded with SIPRI $2.4T (2023) datapoint and NATO debt-financing mechanic
+- [docs] README architecture diagram — ECB removed from API list (EUR M2 is sourced from manual.json, not ECB API)
+- [docs] README Thesis Status Bar description corrected
+- [docs] README Local Development — API key setup instructions clarified
+
 ### 2026-03-30 (session 5)
 
 #### Fixed

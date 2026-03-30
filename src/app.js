@@ -571,26 +571,24 @@ function setupRingHint() {
 
   const NS   = 'http://www.w3.org/2000/svg';
   const svg  = document.createElementNS(NS, 'svg');
-  const rect = document.createElementNS(NS, 'rect');
-  const RX = 2, STROKE = 1.5, PAD = 1;
+  const path = document.createElementNS(NS, 'path');
+  const PAD  = 1, STROKE = 1.5;
 
-  // Static attributes — pathLength="1" normalises the coordinate system so
-  // dasharray/dashoffset are simple fractions; no pixel perimeter calculation needed.
-  rect.setAttribute('fill', 'none');
-  rect.setAttribute('stroke', 'rgba(59,130,246,0.55)');
-  rect.setAttribute('stroke-width', String(STROKE));
-  rect.setAttribute('stroke-linecap', 'round');
-  rect.setAttribute('pathLength', '1');
-  rect.setAttribute('stroke-dasharray', '0.12 0.88');
-  rect.setAttribute('rx', String(RX));
+  // pathLength="1" is reliable on <path> (not on <rect>).
+  // dasharray 0.12/0.88 = 12% arc, 88% gap. Keyframe drives offset 0 → -1 = one full lap.
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', 'rgba(59,130,246,0.55)');
+  path.setAttribute('stroke-width', String(STROKE));
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('pathLength', '1');
+  path.setAttribute('stroke-dasharray', '0.12 0.88');
 
-  // Inject keyframe once — offset travels from 0 → -1 (one full revolution)
   let kf = document.getElementById('ring-kf');
   if (!kf) { kf = document.createElement('style'); kf.id = 'ring-kf'; document.head.appendChild(kf); }
   kf.textContent = '@keyframes ring-travel { to { stroke-dashoffset: -1; } }';
-  rect.style.animation = 'ring-travel 4s linear infinite';
+  path.style.animation = 'ring-travel 4s linear infinite';
 
-  svg.appendChild(rect);
+  svg.appendChild(path);
   summary.appendChild(svg);
 
   function sizeRing() {
@@ -598,21 +596,22 @@ function setupRingHint() {
     if (!width || !height) return;
     const w = width + PAD * 2, h = height + PAD * 2;
     svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.style.position     = 'absolute';
-    svg.style.top          = `${-PAD}px`;
-    svg.style.left         = `${-PAD}px`;
-    svg.style.width        = `${w}px`;
-    svg.style.height       = `${h}px`;
+    svg.style.position      = 'absolute';
+    svg.style.top           = `${-PAD}px`;
+    svg.style.left          = `${-PAD}px`;
+    svg.style.width         = `${w}px`;
+    svg.style.height        = `${h}px`;
     svg.style.pointerEvents = 'none';
-    svg.style.zIndex       = '2';
-    svg.style.overflow     = 'visible';
-    rect.setAttribute('x', String(PAD));
-    rect.setAttribute('y', String(PAD));
-    rect.setAttribute('width', String(width));
-    rect.setAttribute('height', String(height));
+    svg.style.zIndex        = '2';
+    svg.style.overflow      = 'visible';
+
+    // Rectangle path starting top-left, travelling clockwise.
+    // M = move to top-left; h = right across top; v = down right side;
+    // h = left across bottom; Z = back up to start (left side).
+    const x = PAD, y = PAD;
+    path.setAttribute('d', `M ${x},${y} h ${width} v ${height} h ${-width} Z`);
   }
 
-  // Defer initial sizing until after paint so getBoundingClientRect is reliable
   requestAnimationFrame(sizeRing);
 
   const updateVisibility = () => { svg.style.display = details.hasAttribute('open') ? 'none' : ''; };
