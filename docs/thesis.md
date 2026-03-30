@@ -104,8 +104,8 @@ The appropriate response ranges from reducing a single position to a full portfo
 
 | Trigger | Current | Threshold | Meaning |
 |---|---|---|---|
-| BTC weekly close | $71,287 | < $52,000 | Below ETF aggregate cost basis. M2 correlation broken or structural demand shock. Action: reduce BTC, reassess. |
-| Gold monthly close | $4,541 | < $4,000 | Central bank accumulation thesis failed. Coordinated selling or genuine deflation without monetary response. Action: reduce gold by 50%. |
+| BTC weekly close | $71,287 | < $52,000 | Below ETF aggregate cost basis. M2 correlation broken or structural demand shock. Action: reduce BTC exposure, reassess. |
+| Gold monthly close | $4,541 | < $4,000 | Central bank accumulation thesis failed. Coordinated selling or genuine deflation without monetary response. Action: reduce gold exposure. |
 | Oil sustained | $91.12 | > $120 (4+ weeks) | Strait disrupted. Inflation reignites. Fed forced hawkish. Action: pause equity deployment, accelerate gold. |
 | Global M2 YoY | +10.4% | < 0% | Coordinated global tightening. Liquidity expansion thesis collapses. Action: reduce all risk to 50%, move to cash. |
 | GOOGL ad revenue | +14% YoY (Q4 2025) | Decline for 2 consecutive quarters | AI transition failing. Search disruption outpacing replacement revenue. Action: reduce by 50%. |
