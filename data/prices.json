@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-04-02T21:29:43.845175+00:00",
+  "updated_at": "2026-04-03T13:20:50.886379+00:00",
   "prices": {
     "BTC": {
-      "price": 66835,
-      "change_pct": -2.35,
+      "price": 66653,
+      "change_pct": 1.09,
       "week52_low": 60074.203,
       "week52_high": 126198.07
     },
     "WTI": {
-      "price": 112.06,
+      "price": 111.54,
       "change_pct": null,
       "week52_low": 54.98,
       "week52_high": 119.48
@@ -75,12 +75,12 @@
     },
     "VIX": {
       "price": 23.87,
-      "change_pct": -5.47,
+      "change_pct": 0.0,
       "week52_low": 13.38,
       "week52_high": 60.13
     }
   },
   "fx": {
-    "USDJPY": 159.5725
+    "USDJPY": 159.5595
   }
 }
