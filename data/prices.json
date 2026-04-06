@@ -1,29 +1,29 @@
 {
-  "updated_at": "2026-04-06T21:32:45.997082+00:00",
+  "updated_at": "2026-04-06T23:58:14.085419+00:00",
   "prices": {
     "BTC": {
-      "price": 69667,
-      "change_pct": 3.29,
-      "week52_low": null,
-      "week52_high": null
+      "price": 68878,
+      "change_pct": -0.16,
+      "week52_low": 60074.203,
+      "week52_high": 126198.07
     },
     "WTI": {
-      "price": 112.61,
+      "price": 113.9,
       "change_pct": null,
-      "week52_low": null,
-      "week52_high": null
+      "week52_low": 54.98,
+      "week52_high": 119.48
     },
     "XAUUSD": {
-      "price": 4650.685,
+      "price": 4658.365,
       "change_pct": null,
-      "week52_low": null,
-      "week52_high": null
+      "week52_low": 2949.7,
+      "week52_high": 5586.2
     },
     "NVDA": {
       "price": 177.64,
       "change_pct": 0.14,
-      "week52_low": null,
-      "week52_high": null
+      "week52_low": 86.62,
+      "week52_high": 212.19
     },
     "TSLA": {
       "price": 352.82,
@@ -74,11 +74,13 @@
       "week52_high": 457.22
     },
     "VIX": {
+      "price": 24.17,
+      "change_pct": 1.26,
       "week52_low": 13.38,
       "week52_high": 60.13
     }
   },
   "fx": {
-    "USDJPY": 159.6855
+    "USDJPY": 159.6955
   }
 }
