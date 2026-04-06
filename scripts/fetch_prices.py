@@ -229,7 +229,9 @@ def main():
     week52 = fetch_all_52w()
     for ticker, w52 in week52.items():
         if ticker in prices:
-            prices[ticker].update(w52)
+            # Only overwrite existing 52W values if the new fetch succeeded
+            if w52.get('week52_low') is not None:
+                prices[ticker].update(w52)
         else:
             prices[ticker] = w52
 
