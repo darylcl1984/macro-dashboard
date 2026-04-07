@@ -1,8 +1,8 @@
 {
   "_note": "Price alerts for all Watchlist assets. Set 'below' and/or 'above' thresholds in USD. Set to null to disable. Red dot if price < below, green dot if price > above, grey dot if between.",
   "BTC":    { "below": 62500, "above": 77000 },
-  "XAUUSD": { "below": 4100,  "above": 4650  },
-  "WTI":    { "below": 85,    "above": 100   },
+  "XAUUSD": { "below": 4100,  "above": 4800  },
+  "WTI":    { "below": 95,    "above": 110   },
   "VIX":    { "below": null,   "above": 30   },
   "NVDA":   { "below": 164,   "above": null  },
   "TSLA":   { "below": 340,   "above": null  },
