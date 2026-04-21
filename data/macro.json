@@ -1,17 +1,13 @@
 {
-  "updated_at": "2026-04-20T10:04:55.380908+00:00",
+  "updated_at": "2026-04-21T09:45:56.181612+00:00",
   "indicators": {
     "US_M2": {
       "value": 22667.3,
       "date": "2026-02-01"
     },
     "US_10Y": {
-      "value": 4.32,
-      "date": "2026-04-16"
-    },
-    "USD_INDEX": {
-      "value": 118.8552,
-      "date": "2026-04-10"
+      "value": 4.26,
+      "date": "2026-04-17"
     },
     "JP_M2": {
       "value": 1280.08,
@@ -19,9 +15,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 29,
+      "value": 33,
       "classification": "Fear",
-      "date": "2026-04-20"
+      "date": "2026-04-21"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
