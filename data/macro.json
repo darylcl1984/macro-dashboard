@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-23T09:50:36.997722+00:00",
+  "updated_at": "2026-04-24T09:50:26.389660+00:00",
   "indicators": {
     "US_M2": {
       "value": 22667.3,
@@ -7,7 +7,7 @@
     },
     "US_10Y": {
       "value": 4.3,
-      "date": "2026-04-21"
+      "date": "2026-04-22"
     },
     "USD_INDEX": {
       "value": 118.0795,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 46,
+      "value": 39,
       "classification": "Fear",
-      "date": "2026-04-23"
+      "date": "2026-04-24"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
