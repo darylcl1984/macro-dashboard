@@ -1,16 +1,16 @@
 {
   "_note": "Price alerts for all Watchlist assets. Set 'below' and/or 'above' thresholds in USD. Set to null to disable. Red dot if price < below, green dot if price > above, grey dot if between.",
-  "BTC":    { "below": 62500, "above": 77000 },
+  "BTC":    { "below": 80000, "above": 85000 },
   "XAUUSD": { "below": 4100,  "above": 5000  },
-  "WTI":    { "below": 75,    "above": 105   },
+  "WTI":    { "below": 85,    "above": 110   },
   "VIX":    { "below": null,   "above": 30   },
   "NVDA":   { "below": 164,   "above": null  },
-  "TSLA":   { "below": 340,   "above": null  },
-  "PLTR":   { "below": 89,    "above": null  },
+  "TSLA":   { "below": 333,   "above": 500   },
+  "PLTR":   { "below": 125,    "above": null  },
   "TSM":    { "below": 316,   "above": null  },
   "GOOGL":  { "below": 235,   "above": null  },
   "META":   { "below": 479,   "above": null  },
   "NOW":    { "below": 90,    "above": null  },
   "GEV":    { "below": 275,   "above": null  },
-  "MSTR":   { "below": 118,   "above": null  }
+  "MSTR":   { "below": 155,   "above": 225   }
 }
