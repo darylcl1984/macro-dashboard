@@ -144,9 +144,17 @@ def load_manual():
 def main():
     print("Fetching macro indicators...")
 
+    # Seed from existing file so a failed fetch doesn't wipe previously good values
+    existing: dict = {}
+    if OUTPUT_FILE.exists():
+        try:
+            existing = json.loads(OUTPUT_FILE.read_text()).get("indicators", {})
+        except Exception:
+            pass
+
     results = {
         "updated_at": now_utc(),
-        "indicators": {},
+        "indicators": {k: v for k, v in existing.items() if k != "MANUAL"},
     }
     indicators = results["indicators"]
 
