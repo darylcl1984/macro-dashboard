@@ -60,7 +60,7 @@ The entire pipeline requires no paid infrastructure. The only costs are the two 
 | [CoinGecko](https://www.coingecko.com/en/api) | BTC price + 24h change | 3× daily (Mon–Fri) |
 | [Yahoo Finance](https://finance.yahoo.com) | VIX price + 52-week ranges for all assets | 3× daily (Mon–Fri) |
 | [Stooq](https://stooq.com) | WTI Crude, Gold (XAUUSD), USD/JPY | 3× daily (Mon–Fri) |
-| [Finnhub](https://finnhub.io) | Equities: NVDA, TSLA, GOOGL, META, TSM, PLTR, MSTR, NOW, GEV | 3× daily (Mon–Fri) |
+| [Finnhub](https://finnhub.io) | Equities: NVDA, TSLA, GOOGL, META, TSM, PLTR, MSTR, GEV | 3× daily (Mon–Fri) |
 | [FRED](https://fred.stlouisfed.org) | US M2, US 10Y Treasury yield, US Dollar Index (DXY) | Daily (Mon–Fri) |
 | [BOJ](https://www.stat-search.boj.or.jp) | Japan M2 | Daily (Mon–Fri) |
 | [Alternative.me](https://alternative.me/crypto/fear-and-greed-index/) | Crypto Fear & Greed Index | Daily (Mon–Fri) |

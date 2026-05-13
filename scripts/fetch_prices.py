@@ -8,7 +8,7 @@ Output schema:
 Sources:
   - CoinGecko (no key): BTC (includes 24h change)
   - Stooq (no key):     WTI (CL.F), XAUUSD
-  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, NOW, GEV, MSTR)
+  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, GEV, MSTR)
   - Yahoo Finance:      VIX
 """
 
@@ -115,7 +115,7 @@ def fetch_finnhub_prices():
         return {}, {}
 
     equity_prices = {}
-    equities = ["NVDA", "TSLA", "PLTR", "TSM", "GOOGL", "META", "NOW", "GEV", "MSTR"]
+    equities = ["NVDA", "TSLA", "PLTR", "TSM", "GOOGL", "META", "GEV", "MSTR"]
     for sym in equities:
         try:
             equity_prices[sym] = fetch_finnhub_quote(sym)
@@ -158,7 +158,7 @@ YAHOO_52W_SYMBOLS = {
     "TSM":    "TSM",
     "PLTR":   "PLTR",
     "MSTR":   "MSTR",
-    "NOW":    "NOW",
+
     "GEV":    "GEV",
     "VIX":    "%5EVIX",
 }

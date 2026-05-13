@@ -398,7 +398,7 @@ function renderPositions(prices, alerts) {
     alertRow(prices, alerts, 'TSM',   'TSM',   '$', 2),
     alertRow(prices, alerts, 'PLTR',  'PLTR',  '$', 2),
     alertRow(prices, alerts, 'MSTR',  'MSTR',  '$', 2),
-    alertRow(prices, alerts, 'NOW',   'NOW',   '$', 2),
+
     alertRow(prices, alerts, 'GEV',   'GEV',   '$', 2),
   ].join('');
   document.getElementById('group-tech').innerHTML = tech;

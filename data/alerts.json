@@ -10,7 +10,6 @@
   "TSM":    { "below": 316,   "above": null  },
   "GOOGL":  { "below": 235,   "above": null  },
   "META":   { "below": 479,   "above": null  },
-  "NOW":    { "below": 90,    "above": null  },
   "GEV":    { "below": 275,   "above": null  },
   "MSTR":   { "below": 155,   "above": 225   }
 }
