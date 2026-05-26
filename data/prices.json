@@ -1,80 +1,80 @@
 {
-  "updated_at": "2026-05-26T15:59:15.307651+00:00",
+  "updated_at": "2026-05-26T19:12:24.978613+00:00",
   "prices": {
     "BTC": {
-      "price": 76292,
-      "change_pct": -1.63,
+      "price": 75776,
+      "change_pct": -2.13,
       "week52_low": 60074.203,
       "week52_high": 126198.07
     },
     "WTI": {
-      "price": 93.87,
+      "price": 93.89,
       "change_pct": null,
       "week52_low": 54.98,
       "week52_high": 119.48
     },
     "XAUUSD": {
-      "price": 4506.8,
+      "price": 4499.81,
       "change_pct": null,
       "week52_low": 3242.4,
       "week52_high": 5586.2
     },
     "NVDA": {
-      "price": 213.07,
-      "change_pct": -1.05,
+      "price": 213.25,
+      "change_pct": -0.97,
       "week52_low": 132.92,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 429.34,
-      "change_pct": 0.78,
+      "price": 431.32,
+      "change_pct": 1.25,
       "week52_low": 273.21,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 137.22,
-      "change_pct": 0.25,
+      "price": 136.74,
+      "change_pct": -0.1,
       "week52_low": 118.93,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 411.17,
-      "change_pct": 1.64,
+      "price": 413.13,
+      "change_pct": 2.13,
       "week52_low": 190.56,
       "week52_high": 421.97
     },
     "GOOGL": {
-      "price": 386.54,
-      "change_pct": 0.93,
+      "price": 386.73,
+      "change_pct": 0.98,
       "week52_low": 162.0,
       "week52_high": 408.61
     },
     "META": {
-      "price": 608.33,
-      "change_pct": -0.32,
+      "price": 609.32,
+      "change_pct": -0.15,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1073.6,
-      "change_pct": 3.36,
+      "price": 1073.14,
+      "change_pct": 3.31,
       "week52_low": 458.646,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 163.29,
-      "change_pct": 2.13,
+      "price": 159.72,
+      "change_pct": -0.11,
       "week52_low": 104.17,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 16.94,
-      "change_pct": 2.11,
+      "price": 17.14,
+      "change_pct": 3.32,
       "week52_low": 13.38,
       "week52_high": 35.3
     }
   },
   "fx": {
-    "USDJPY": 159.3635
+    "USDJPY": 159.3315
   }
 }
