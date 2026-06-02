@@ -1,27 +1,27 @@
 {
-  "updated_at": "2026-06-02T19:58:56.992058+00:00",
+  "updated_at": "2026-06-02T22:55:30.213800+00:00",
   "prices": {
     "BTC": {
-      "price": 67117,
-      "change_pct": -6.1,
+      "price": 66452,
+      "change_pct": -6.76,
       "week52_low": 60074.203,
       "week52_high": 126198.07
     },
     "WTI": {
-      "price": 93.69,
+      "price": 94.17,
       "change_pct": null,
       "week52_low": 54.98,
       "week52_high": 119.48
     },
     "XAUUSD": {
-      "price": 4487.45,
+      "price": 4486.88,
       "change_pct": null,
       "week52_low": 3253.8,
       "week52_high": 5586.2
     },
     "NVDA": {
-      "price": 222.68,
-      "change_pct": -0.75,
+      "price": 222.82,
+      "change_pct": -0.69,
       "week52_low": 137.95,
       "week52_high": 236.54
     },
@@ -32,20 +32,20 @@
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 152.34,
-      "change_pct": -5.17,
+      "price": 152.17,
+      "change_pct": -5.28,
       "week52_low": 118.93,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 445.85,
-      "change_pct": 2.35,
+      "price": 446.69,
+      "change_pct": 2.54,
       "week52_low": 193.64,
       "week52_high": 449.39
     },
     "GOOGL": {
-      "price": 361.8,
-      "change_pct": -3.87,
+      "price": 361.85,
+      "change_pct": -3.86,
       "week52_low": 162.0,
       "week52_high": 408.61
     },
@@ -56,25 +56,25 @@
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 968.27,
-      "change_pct": 1.87,
+      "price": 969.67,
+      "change_pct": 2.01,
       "week52_low": 458.646,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 135.93,
-      "change_pct": -9.25,
+      "price": 136.08,
+      "change_pct": -9.15,
       "week52_low": 104.17,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 15.86,
-      "change_pct": -1.18,
+      "price": 15.77,
+      "change_pct": -1.74,
       "week52_low": 13.38,
       "week52_high": 35.3
     }
   },
   "fx": {
-    "USDJPY": 159.9385
+    "USDJPY": 159.9535
   }
 }
