@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-06-08T22:19:00.468069+00:00",
+  "updated_at": "2026-06-09T15:20:54.698702+00:00",
   "prices": {
     "BTC": {
-      "price": 63283,
-      "change_pct": -0.08,
-      "week52_low": 60074.203,
+      "price": 61560,
+      "change_pct": -3.85,
+      "week52_low": 59108.918,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 208.64,
-      "change_pct": 1.73,
-      "week52_low": 138.83,
+      "price": 205.76,
+      "change_pct": -1.38,
+      "week52_low": 140.85,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 408.95,
-      "change_pct": 4.59,
-      "week52_low": 273.21,
+      "price": 398.68,
+      "change_pct": -2.51,
+      "week52_low": 288.77,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 136.47,
-      "change_pct": 0.69,
-      "week52_low": 118.93,
+      "price": 132.49,
+      "change_pct": -2.92,
+      "week52_low": 122.68,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 426.8,
-      "change_pct": 2.8,
-      "week52_low": 202.28,
+      "price": 425.92,
+      "change_pct": -0.21,
+      "week52_low": 206.2,
       "week52_high": 450.16
     },
     "GOOGL": {
-      "price": 363.31,
-      "change_pct": -1.42,
+      "price": 363.05,
+      "change_pct": -0.07,
       "week52_low": 162.0,
       "week52_high": 408.61
     },
     "META": {
-      "price": 585.39,
-      "change_pct": -1.28,
+      "price": 592.92,
+      "change_pct": 1.29,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 933.85,
-      "change_pct": 0.03,
+      "price": 901.01,
+      "change_pct": -3.52,
       "week52_low": 458.646,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 127.2,
-      "change_pct": 5.61,
+      "price": 119.84,
+      "change_pct": -5.79,
       "week52_low": 104.17,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 18.92,
-      "change_pct": -12.04,
+      "price": 19.24,
+      "change_pct": 1.69,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
