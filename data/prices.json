@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-06-19T15:35:14.542003+00:00",
+  "updated_at": "2026-06-19T18:27:08.012623+00:00",
   "prices": {
     "BTC": {
-      "price": 63110,
-      "change_pct": -0.1,
+      "price": 63072,
+      "change_pct": 0.39,
       "week52_low": 59108.918,
       "week52_high": 126198.07
     },
@@ -56,8 +56,8 @@
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 16.79,
-      "change_pct": -8.95,
+      "price": 16.78,
+      "change_pct": -9.0,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
