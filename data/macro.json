@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-19T12:13:47.659471+00:00",
+  "updated_at": "2026-06-22T13:40:05.716208+00:00",
   "indicators": {
     "US_M2": {
       "value": 22804.5,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 14,
+      "value": 20,
       "classification": "Extreme Fear",
-      "date": "2026-06-19"
+      "date": "2026-06-22"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
