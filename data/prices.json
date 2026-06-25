@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-06-24T22:08:44.706211+00:00",
+  "updated_at": "2026-06-25T14:47:02.188277+00:00",
   "prices": {
     "BTC": {
-      "price": 61005,
-      "change_pct": -2.61,
-      "week52_low": 59108.918,
+      "price": 59412,
+      "change_pct": -2.76,
+      "week52_low": 58121.676,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 199.0,
-      "change_pct": -0.52,
-      "week52_low": 149.26,
+      "price": 194.39,
+      "change_pct": -2.32,
+      "week52_low": 151.49,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 375.53,
-      "change_pct": -1.59,
+      "price": 375.91,
+      "change_pct": 0.1,
       "week52_low": 288.77,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 113.5,
-      "change_pct": -2.74,
-      "week52_low": 112.25,
+      "price": 107.59,
+      "change_pct": -5.21,
+      "week52_low": 106.93,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 440.83,
-      "change_pct": 1.02,
-      "week52_low": 220.8,
+      "price": 439.74,
+      "change_pct": -0.25,
+      "week52_low": 221.18,
       "week52_high": 476.79
     },
     "GOOGL": {
-      "price": 345.29,
-      "change_pct": -0.24,
-      "week52_low": 167.55,
+      "price": 342.6,
+      "change_pct": -0.78,
+      "week52_low": 169.94,
       "week52_high": 408.61
     },
     "META": {
-      "price": 557.67,
-      "change_pct": -0.81,
+      "price": 554.37,
+      "change_pct": -0.59,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1057.65,
-      "change_pct": 2.19,
+      "price": 1092.06,
+      "change_pct": 3.25,
       "week52_low": 482.2,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 94.13,
-      "change_pct": -9.35,
-      "week52_low": 92.28,
+      "price": 88.91,
+      "change_pct": -5.55,
+      "week52_low": 86.62,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 18.63,
-      "change_pct": 7.81,
+      "price": 18.88,
+      "change_pct": -3.13,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
