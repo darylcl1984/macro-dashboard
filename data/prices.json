@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-06-29T16:00:37.339093+00:00",
+  "updated_at": "2026-06-29T18:56:08.849359+00:00",
   "prices": {
     "BTC": {
-      "price": 59740,
-      "change_pct": -0.09,
+      "price": 60146,
+      "change_pct": 1.04,
       "week52_low": 58075.92,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 194.0,
-      "change_pct": 0.76,
+      "price": 194.22,
+      "change_pct": 0.88,
       "week52_low": 151.49,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 400.67,
-      "change_pct": 5.52,
+      "price": 410.64,
+      "change_pct": 8.15,
       "week52_low": 288.77,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 115.54,
-      "change_pct": 2.31,
+      "price": 116.22,
+      "change_pct": 2.91,
       "week52_low": 106.37,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 447.78,
-      "change_pct": 3.57,
+      "price": 452.3,
+      "change_pct": 4.61,
       "week52_low": 221.18,
       "week52_high": 476.79
     },
     "GOOGL": {
-      "price": 352.61,
-      "change_pct": 4.51,
+      "price": 352.77,
+      "change_pct": 4.56,
       "week52_low": 172.77,
       "week52_high": 408.61
     },
     "META": {
-      "price": 564.79,
-      "change_pct": 2.64,
+      "price": 564.9,
+      "change_pct": 2.66,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1092.86,
-      "change_pct": 4.56,
+      "price": 1104.84,
+      "change_pct": 5.71,
       "week52_low": 482.2,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 88.67,
-      "change_pct": 7.73,
+      "price": 92.66,
+      "change_pct": 12.57,
       "week52_low": 81.81,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 17.97,
-      "change_pct": -2.39,
+      "price": 17.64,
+      "change_pct": -4.18,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
