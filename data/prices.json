@@ -1,68 +1,68 @@
 {
-  "updated_at": "2026-06-29T22:04:19.123602+00:00",
+  "updated_at": "2026-06-30T14:33:58.923162+00:00",
   "prices": {
     "BTC": {
-      "price": 60388,
-      "change_pct": 1.13,
+      "price": 58862,
+      "change_pct": -1.08,
       "week52_low": 58075.92,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 194.97,
-      "change_pct": 1.27,
+      "price": 198.02,
+      "change_pct": 1.56,
       "week52_low": 151.49,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 411.84,
-      "change_pct": 8.46,
+      "price": 414.54,
+      "change_pct": 0.66,
       "week52_low": 288.77,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 115.7,
-      "change_pct": 2.45,
+      "price": 116.28,
+      "change_pct": 0.5,
       "week52_low": 106.37,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 455.1,
-      "change_pct": 5.26,
+      "price": 470.83,
+      "change_pct": 3.46,
       "week52_low": 221.18,
       "week52_high": 476.79
     },
     "GOOGL": {
-      "price": 353.65,
-      "change_pct": 4.82,
+      "price": 353.23,
+      "change_pct": -0.12,
       "week52_low": 172.77,
       "week52_high": 408.61
     },
     "META": {
-      "price": 562.6,
-      "change_pct": 2.24,
+      "price": 556.43,
+      "change_pct": -1.1,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1102.51,
-      "change_pct": 5.49,
+      "price": 1144.23,
+      "change_pct": 3.78,
       "week52_low": 482.2,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 92.68,
-      "change_pct": 12.6,
+      "price": 87.95,
+      "change_pct": -5.1,
       "week52_low": 81.81,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 17.65,
-      "change_pct": -4.13,
+      "price": 17.27,
+      "change_pct": -2.15,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
     "XAUUSD": {
-      "week52_low": 3262.0,
+      "week52_low": 3263.9,
       "week52_high": 5586.2
     },
     "WTI": {
