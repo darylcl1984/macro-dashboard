@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-06-30T22:10:06.814753+00:00",
+  "updated_at": "2026-07-01T14:51:18.139422+00:00",
   "prices": {
     "BTC": {
-      "price": 58649,
-      "change_pct": -2.81,
-      "week52_low": 58075.92,
+      "price": 59561,
+      "change_pct": 1.82,
+      "week52_low": 58045.934,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 200.09,
-      "change_pct": 2.63,
-      "week52_low": 151.49,
+      "price": 195.4,
+      "change_pct": -2.34,
+      "week52_low": 152.97,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 420.6,
-      "change_pct": 2.13,
+      "price": 428.81,
+      "change_pct": 1.95,
       "week52_low": 288.77,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 116.67,
-      "change_pct": 0.84,
+      "price": 127.13,
+      "change_pct": 8.97,
       "week52_low": 106.37,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 477.57,
-      "change_pct": 4.94,
-      "week52_low": 221.18,
+      "price": 451.78,
+      "change_pct": -5.4,
+      "week52_low": 223.7,
       "week52_high": 479.0
     },
     "GOOGL": {
-      "price": 357.37,
-      "change_pct": 1.05,
+      "price": 361.68,
+      "change_pct": 1.21,
       "week52_low": 172.77,
       "week52_high": 408.61
     },
     "META": {
-      "price": 563.29,
-      "change_pct": 0.12,
+      "price": 620.52,
+      "change_pct": 10.16,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1174.86,
-      "change_pct": 6.56,
-      "week52_low": 482.2,
+      "price": 1136.62,
+      "change_pct": -3.25,
+      "week52_low": 497.3,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 86.93,
-      "change_pct": -6.2,
+      "price": 94.23,
+      "change_pct": 8.4,
       "week52_low": 81.81,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 16.45,
-      "change_pct": -10.65,
+      "price": 16.4,
+      "change_pct": -0.3,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
