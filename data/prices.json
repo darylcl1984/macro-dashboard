@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-07-01T22:13:14.856201+00:00",
+  "updated_at": "2026-07-02T14:20:37.918404+00:00",
   "prices": {
     "BTC": {
-      "price": 60757,
-      "change_pct": 3.67,
-      "week52_low": 58045.934,
+      "price": 61811,
+      "change_pct": 3.23,
+      "week52_low": 57747.766,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 197.58,
-      "change_pct": -1.25,
-      "week52_low": 152.97,
+      "price": 199.27,
+      "change_pct": 0.86,
+      "week52_low": 157.34,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 425.3,
-      "change_pct": 1.12,
+      "price": 407.62,
+      "change_pct": -4.16,
       "week52_low": 288.77,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 125.73,
-      "change_pct": 7.77,
+      "price": 131.28,
+      "change_pct": 4.41,
       "week52_low": 106.37,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 444.23,
-      "change_pct": -6.98,
+      "price": 456.4,
+      "change_pct": 2.74,
       "week52_low": 223.7,
       "week52_high": 479.0
     },
     "GOOGL": {
-      "price": 361.21,
-      "change_pct": 1.07,
+      "price": 362.48,
+      "change_pct": 0.35,
       "week52_low": 172.77,
       "week52_high": 408.61
     },
     "META": {
-      "price": 612.91,
-      "change_pct": 8.81,
+      "price": 590.66,
+      "change_pct": -3.63,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1134.35,
-      "change_pct": -3.45,
-      "week52_low": 497.3,
+      "price": 1135.96,
+      "change_pct": 0.14,
+      "week52_low": 506.02,
       "week52_high": 1181.95
     },
     "MSTR": {
-      "price": 93.39,
-      "change_pct": 7.43,
+      "price": 101.93,
+      "change_pct": 9.14,
       "week52_low": 81.81,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 16.59,
-      "change_pct": 0.85,
+      "price": 15.87,
+      "change_pct": -4.34,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
