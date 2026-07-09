@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-07-08T21:59:00.758969+00:00",
+  "updated_at": "2026-07-09T15:26:59.339706+00:00",
   "prices": {
     "BTC": {
-      "price": 62174,
-      "change_pct": -1.89,
+      "price": 63043,
+      "change_pct": 2.35,
       "week52_low": 57747.766,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 204.12,
-      "change_pct": 3.65,
-      "week52_low": 161.16,
+      "price": 201.97,
+      "change_pct": -1.05,
+      "week52_low": 161.61,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 394.06,
-      "change_pct": -2.19,
-      "week52_low": 293.55,
+      "price": 395.65,
+      "change_pct": 0.4,
+      "week52_low": 297.82,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 132.22,
-      "change_pct": -1.6,
+      "price": 126.52,
+      "change_pct": -4.31,
       "week52_low": 106.37,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 436.98,
-      "change_pct": 1.02,
+      "price": 443.62,
+      "change_pct": 1.52,
       "week52_low": 223.7,
       "week52_high": 479.0
     },
     "GOOGL": {
-      "price": 361.92,
-      "change_pct": -1.39,
-      "week52_low": 172.77,
+      "price": 353.48,
+      "change_pct": -2.33,
+      "week52_low": 174.38,
       "week52_high": 408.61
     },
     "META": {
-      "price": 603.12,
-      "change_pct": -2.02,
+      "price": 603.17,
+      "change_pct": 0.01,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1070.99,
-      "change_pct": -0.57,
+      "price": 1077.04,
+      "change_pct": 0.56,
       "week52_low": 520.0,
       "week52_high": 1195.94
     },
     "MSTR": {
-      "price": 93.87,
-      "change_pct": -3.58,
+      "price": 96.31,
+      "change_pct": 2.6,
       "week52_low": 81.81,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 16.9,
-      "change_pct": 4.77,
+      "price": 16.31,
+      "change_pct": -3.49,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
