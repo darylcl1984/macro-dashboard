@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-07-09T11:11:39.754514+00:00",
+  "updated_at": "2026-07-10T11:11:27.449370+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
       "date": "2026-05-01"
     },
     "US_10Y": {
-      "value": 4.55,
-      "date": "2026-07-07"
+      "value": 4.56,
+      "date": "2026-07-08"
     },
     "USD_INDEX": {
       "value": 120.6902,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 22,
+      "value": 23,
       "classification": "Extreme Fear",
-      "date": "2026-07-09"
+      "date": "2026-07-10"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
