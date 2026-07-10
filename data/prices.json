@@ -1,63 +1,63 @@
 {
-  "updated_at": "2026-07-09T22:14:25.163074+00:00",
+  "updated_at": "2026-07-10T14:44:05.066552+00:00",
   "prices": {
     "BTC": {
-      "price": 63224,
-      "change_pct": 1.7,
+      "price": 64049,
+      "change_pct": 1.81,
       "week52_low": 57747.766,
       "week52_high": 126198.07
     },
     "NVDA": {
-      "price": 202.78,
-      "change_pct": -0.66,
-      "week52_low": 161.61,
+      "price": 207.27,
+      "change_pct": 2.21,
+      "week52_low": 162.02,
       "week52_high": 236.54
     },
     "TSLA": {
-      "price": 406.55,
-      "change_pct": 3.17,
+      "price": 407.7,
+      "change_pct": 0.28,
       "week52_low": 297.82,
       "week52_high": 498.83
     },
     "PLTR": {
-      "price": 129.04,
-      "change_pct": -2.41,
+      "price": 126.38,
+      "change_pct": -2.06,
       "week52_low": 106.37,
       "week52_high": 207.52
     },
     "TSM": {
-      "price": 436.96,
-      "change_pct": -0.0,
+      "price": 434.05,
+      "change_pct": -0.67,
       "week52_low": 223.7,
       "week52_high": 479.0
     },
     "GOOGL": {
-      "price": 358.89,
-      "change_pct": -0.84,
-      "week52_low": 174.38,
+      "price": 354.45,
+      "change_pct": -1.24,
+      "week52_low": 176.48,
       "week52_high": 408.61
     },
     "META": {
-      "price": 631.48,
-      "change_pct": 4.7,
+      "price": 668.03,
+      "change_pct": 5.79,
       "week52_low": 520.26,
       "week52_high": 796.25
     },
     "GEV": {
-      "price": 1075.26,
-      "change_pct": 0.4,
-      "week52_low": 520.0,
+      "price": 1072.54,
+      "change_pct": -0.25,
+      "week52_low": 530.16,
       "week52_high": 1195.94
     },
     "MSTR": {
-      "price": 93.89,
-      "change_pct": 0.02,
+      "price": 95.53,
+      "change_pct": 1.75,
       "week52_low": 81.81,
       "week52_high": 457.22
     },
     "VIX": {
-      "price": 15.84,
-      "change_pct": -6.27,
+      "price": 15.51,
+      "change_pct": -2.08,
       "week52_low": 13.38,
       "week52_high": 35.3
     },
