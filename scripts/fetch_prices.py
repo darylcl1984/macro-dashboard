@@ -3,34 +3,39 @@ fetch_prices.py
 Fetches latest price data and writes to data/prices.json.
 
 Output schema:
-  prices.<SYMBOL> = { "price": float, "change_pct": float | null }
+  prices.<SYMBOL> = { "price": float | null, "change_pct": float | null,
+                      "week52_low": float | null, "week52_high": float | null }
+  fx.USDJPY = float
 
 Sources:
   - CoinGecko (no key): BTC (includes 24h change)
-  - Stooq (no key):     WTI (CL.F), XAUUSD
-  - Finnhub (API key):  Equities (NVDA, TSLA, PLTR, TSM, GOOGL, META, GEV, MSTR)
-  - Yahoo Finance:      VIX
+  - Yahoo Finance:      XAUUSD (GC=F), WTI (CL=F), VIX — quote + 52-week in one call
+  - Stooq (no key):     XAUUSD / WTI fallback; USDJPY FX
 """
 
 import json
-import os
 import re
 import time
 
 from utils import DATA_DIR, SESSION, fetch_json, now_utc, write_json
 
-FINNHUB_API_KEY = os.environ.get("FINNHUB_API_KEY", "")
 OUTPUT_FILE = DATA_DIR / "prices.json"
 
-FINNHUB_BASE = "https://finnhub.io/api/v1"
-FINNHUB_RATE_LIMIT_DELAY = 0.25  # seconds (free tier: 60 req/min)
+_YAHOO_UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
 
+# Yahoo chart symbols (URL-encoded where needed)
+YAHOO_SYMBOLS = {
+    "BTC":    "BTC-USD",
+    "XAUUSD": "GC%3DF",    # GC=F
+    "WTI":    "CL%3DF",    # CL=F
+    "VIX":    "%5EVIX",    # ^VIX
+}
 
-def finnhub_get(path, params):
-    params["token"] = FINNHUB_API_KEY
-    data = fetch_json(f"{FINNHUB_BASE}{path}", params=params)
-    time.sleep(FINNHUB_RATE_LIMIT_DELAY)
-    return data
+# Stooq symbols used as quote fallback for gold/WTI, and for FX
+STOOQ_QUOTE_FALLBACK = {
+    "XAUUSD": "xauusd",
+    "WTI":    "cl.f",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -56,7 +61,7 @@ def fetch_coingecko():
 
 
 # ---------------------------------------------------------------------------
-# Stooq — WTI, XAUUSD (no change_pct available from this endpoint)
+# Stooq — quote helper (gold/WTI fallback + USDJPY)
 # ---------------------------------------------------------------------------
 
 def fetch_stooq(symbol):
@@ -79,116 +84,52 @@ def fetch_stooq(symbol):
     return {"price": float(price), "change_pct": None}
 
 
-def fetch_stooq_prices():
-    results = {}
-    symbols = {
-        "WTI":    "cl.f",
-        "XAUUSD": "xauusd",
-        "USDJPY": "usdjpy",
+# ---------------------------------------------------------------------------
+# Yahoo Finance — quote + 52-week range in a single chart call
+# ---------------------------------------------------------------------------
+
+def fetch_yahoo_chart(ticker, yahoo_sym):
+    """
+    One Yahoo chart call → price, change_pct, week52_low, week52_high.
+    Raises on hard failure; returns null-padded fields when meta is partial.
+    """
+    resp = SESSION.get(
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_sym}",
+        params={"interval": "1d", "range": "5d"},
+        headers=_YAHOO_UA,
+        timeout=15,
+    )
+    resp.raise_for_status()
+    chart = resp.json()["chart"]["result"][0]["meta"]
+
+    price = chart.get("regularMarketPrice")
+    prev = chart.get("chartPreviousClose")
+    change_pct = None
+    if price is not None and prev:
+        change_pct = round((price - prev) / prev * 100, 2)
+
+    return {
+        "price": float(price) if price is not None else None,
+        "change_pct": change_pct,
+        "week52_low": chart.get("fiftyTwoWeekLow"),
+        "week52_high": chart.get("fiftyTwoWeekHigh"),
     }
-    for label, sym in symbols.items():
-        try:
-            results[label] = fetch_stooq(sym)
-        except Exception as e:
-            print(f"  [WARN] Stooq {label}: {e}")
-    return results
 
 
-# ---------------------------------------------------------------------------
-# Finnhub — equities + VIX (with change_pct from previous close)
-# ---------------------------------------------------------------------------
-
-def fetch_finnhub_quote(symbol):
-    """Returns {price, change_pct} using Finnhub /quote (c=current, pc=prev close)."""
-    data = finnhub_get("/quote", {"symbol": symbol})
-    c = data.get("c")
-    pc = data.get("pc")
-    if not c:
-        raise ValueError(f"No price returned for {symbol}")
-    change_pct = round((c - pc) / pc * 100, 2) if pc else None
-    return {"price": float(c), "change_pct": change_pct}
-
-
-def fetch_finnhub_prices():
-    if not FINNHUB_API_KEY:
-        print("  [WARN] FINNHUB_API_KEY not set — skipping Finnhub data")
-        return {}, {}
-
-    equity_prices = {}
-    equities = ["NVDA", "TSLA", "PLTR", "TSM", "GOOGL", "META", "GEV", "MSTR"]
-    for sym in equities:
-        try:
-            equity_prices[sym] = fetch_finnhub_quote(sym)
-        except Exception as e:
-            print(f"  [WARN] Finnhub equity {sym}: {e}")
-
-    return equity_prices, {}
-
-
-def fetch_vix():
-    try:
-        resp = SESSION.get(
-            "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX",
-            headers={"User-Agent": "Mozilla/5.0"},
-            params={"interval": "1d", "range": "1d"},
-            timeout=10,
-        )
-        resp.raise_for_status()
-        meta = resp.json()["chart"]["result"][0]["meta"]
-        price = meta["regularMarketPrice"]
-        prev  = meta["chartPreviousClose"]
-        return {"VIX": {"price": price, "change_pct": round((price - prev) / prev * 100, 2)}}
-    except Exception as e:
-        print(f"  [WARN] VIX: {e}")
-        return {}
-
-
-# ---------------------------------------------------------------------------
-# Yahoo Finance — 52-week high/low for all tracked assets
-# ---------------------------------------------------------------------------
-
-YAHOO_52W_SYMBOLS = {
-    "BTC":    "BTC-USD",
-    "XAUUSD": "GC%3DF",    # GC=F URL-encoded
-    "WTI":    "CL%3DF",    # CL=F URL-encoded
-    "NVDA":   "NVDA",
-    "TSLA":   "TSLA",
-    "GOOGL":  "GOOGL",
-    "META":   "META",
-    "TSM":    "TSM",
-    "PLTR":   "PLTR",
-    "MSTR":   "MSTR",
-
-    "GEV":    "GEV",
-    "VIX":    "%5EVIX",
-}
-
-_YAHOO_UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
-
-
-def fetch_yahoo_52w(ticker, yahoo_sym):
-    try:
-        resp = SESSION.get(
-            f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_sym}",
-            params={"interval": "1d", "range": "1y"},
-            headers=_YAHOO_UA,
-            timeout=15,
-        )
-        resp.raise_for_status()
-        meta = resp.json()["chart"]["result"][0]["meta"]
-        return {
-            "week52_low":  meta["fiftyTwoWeekLow"],
-            "week52_high": meta["fiftyTwoWeekHigh"],
-        }
-    except Exception as e:
-        print(f"    [WARN] Yahoo 52W {ticker}: {e}")
-        return {"week52_low": None, "week52_high": None}
-
-
-def fetch_all_52w():
+def fetch_yahoo_assets():
+    """Fetch Yahoo chart data for all tracked symbols (one call each)."""
     results = {}
-    for ticker, yahoo_sym in YAHOO_52W_SYMBOLS.items():
-        results[ticker] = fetch_yahoo_52w(ticker, yahoo_sym)
+    for ticker, yahoo_sym in YAHOO_SYMBOLS.items():
+        try:
+            results[ticker] = fetch_yahoo_chart(ticker, yahoo_sym)
+        except Exception as e:
+            print(f"  [WARN] Yahoo {ticker}: {e}")
+            results[ticker] = {
+                "price": None,
+                "change_pct": None,
+                "week52_low": None,
+                "week52_high": None,
+            }
         time.sleep(0.3)
     return results
 
@@ -209,31 +150,78 @@ def main():
     except Exception as e:
         print(f"  [ERROR] CoinGecko: {e}")
 
-    print("  Stooq: WTI, XAUUSD, USDJPY")
-    stooq = fetch_stooq_prices()
-    # Separate FX rates from asset prices
-    for key in ("USDJPY",):
-        if key in stooq:
-            fx[key] = stooq.pop(key)["price"]
-    prices.update(stooq)
+    print("  Yahoo Finance: XAUUSD, WTI, VIX (+ BTC 52W)")
+    yahoo = fetch_yahoo_assets()
 
-    print("  Finnhub: equities + FX")
-    equity_prices, fx_rates = fetch_finnhub_prices()
-    prices.update(equity_prices)
-    fx.update(fx_rates)
-
-    print("  Yahoo Finance: VIX")
-    prices.update(fetch_vix())
-
-    print("  Yahoo Finance: 52-week ranges")
-    week52 = fetch_all_52w()
-    for ticker, w52 in week52.items():
-        if ticker in prices:
-            # Only overwrite existing 52W values if the new fetch succeeded
-            if w52.get('week52_low') is not None:
-                prices[ticker].update(w52)
+    # BTC: keep CoinGecko quote; attach Yahoo 52W if available
+    if "BTC" in yahoo:
+        y = yahoo["BTC"]
+        if "BTC" in prices:
+            if y.get("week52_low") is not None:
+                prices["BTC"]["week52_low"] = y["week52_low"]
+            if y.get("week52_high") is not None:
+                prices["BTC"]["week52_high"] = y["week52_high"]
         else:
-            prices[ticker] = w52
+            # CoinGecko failed — fall back to Yahoo quote if present
+            entry = {
+                "price": y.get("price"),
+                "change_pct": y.get("change_pct"),
+                "week52_low": y.get("week52_low"),
+                "week52_high": y.get("week52_high"),
+            }
+            if entry["price"] is None:
+                print("  [WARN] BTC: no price from CoinGecko or Yahoo")
+            prices["BTC"] = entry
+
+    # XAUUSD / WTI: Yahoo primary, Stooq fallback for quote
+    for ticker in ("XAUUSD", "WTI"):
+        y = yahoo.get(ticker, {})
+        entry = {
+            "price": y.get("price"),
+            "change_pct": y.get("change_pct"),
+            "week52_low": y.get("week52_low"),
+            "week52_high": y.get("week52_high"),
+        }
+        if entry["price"] is None:
+            stooq_sym = STOOQ_QUOTE_FALLBACK.get(ticker)
+            if stooq_sym:
+                try:
+                    sq = fetch_stooq(stooq_sym)
+                    entry["price"] = sq["price"]
+                    entry["change_pct"] = sq["change_pct"]
+                    print(f"  [INFO] {ticker}: using Stooq fallback")
+                except Exception as e:
+                    print(f"  [WARN] Stooq fallback {ticker}: {e}")
+        if entry["price"] is None:
+            print(f"  [WARN] {ticker}: no price available — writing price: null")
+        prices[ticker] = entry
+
+    # VIX: Yahoo only
+    if "VIX" in yahoo:
+        y = yahoo["VIX"]
+        entry = {
+            "price": y.get("price"),
+            "change_pct": y.get("change_pct"),
+            "week52_low": y.get("week52_low"),
+            "week52_high": y.get("week52_high"),
+        }
+        if entry["price"] is None:
+            print("  [WARN] VIX: no price available — writing price: null")
+        prices["VIX"] = entry
+
+    print("  Stooq: USDJPY")
+    try:
+        usdjpy = fetch_stooq("usdjpy")
+        fx["USDJPY"] = usdjpy["price"]
+    except Exception as e:
+        print(f"  [WARN] Stooq USDJPY: {e}")
+
+    # Final guard: never leave a bare ranges dict without an explicit price key
+    for ticker, entry in list(prices.items()):
+        if "price" not in entry:
+            print(f"  [WARN] {ticker}: missing price key after merge — setting price: null")
+            entry["price"] = None
+            entry.setdefault("change_pct", None)
 
     results = {
         "updated_at": now_utc(),

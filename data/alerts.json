@@ -1,15 +1,7 @@
 {
-  "_note": "Price alerts for all Watchlist assets. Set 'below' and/or 'above' thresholds in USD. Set to null to disable. Red dot if price < below, green dot if price > above, grey dot if between.",
-  "BTC":    { "below": 75000, "above": 90000 },
-  "XAUUSD": { "below": 4100,  "above": 5000  },
-  "WTI":    { "below": 85,    "above": 110   },
-  "VIX":    { "below": null,   "above": 30   },
-  "NVDA":   { "below": 164,   "above": null  },
-  "TSLA":   { "below": 333,   "above": 500   },
-  "PLTR":   { "below": 125,    "above": null  },
-  "TSM":    { "below": 316,   "above": null  },
-  "GOOGL":  { "below": 235,   "above": null  },
-  "META":   { "below": 479,   "above": null  },
-  "GEV":    { "below": 275,   "above": null  },
-  "MSTR":   { "below": 155,   "above": 225   }
+  "_note": "Thesis-aligned price alerts. BTC below=$53k realized-price floor, above=$83.8k ETF cost-basis reclaim. Gold below=$4k monthly-close invalidation. WTI above=$120 oil-shock line. VIX above=30 stress. Red/amber dots on range bars reflect these levels; null disables that side.",
+  "BTC":    { "below": 53000, "above": 83800 },
+  "XAUUSD": { "below": 4000,  "above": null  },
+  "WTI":    { "below": null,  "above": 120   },
+  "VIX":    { "below": null,  "above": 30    }
 }

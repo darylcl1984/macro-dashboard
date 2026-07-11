@@ -51,11 +51,7 @@ const PRICE_TRIGGERS = [
 
 // Manual triggers: key → display label
 const MANUAL_TRIGGER_LABELS = {
-  googl_ad_revenue_decline: { label: 'GOOGL ad revenue',     threshold: 'Decline 2 consecutive Qs' },
-  meta_ad_revenue:          { label: 'META ad revenue',      threshold: '< 5% YoY 2 consecutive Qs while AI capex rising' },
-  nvda_gross_margin:        { label: 'NVDA gross margin',    threshold: '< 60%' },
-  taiwan_crisis:            { label: 'Taiwan military crisis', threshold: 'Binary escalation' },
-  tsla_optimus_musk:        { label: 'TSLA Optimus / Musk',  threshold: 'Binary reversal' },
+  taiwan_crisis: { label: 'Taiwan military crisis', threshold: 'Binary escalation' },
 };
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -277,7 +273,7 @@ function renderTriggers(prices, manual) {
 
   // Manual / binary triggers
   const manualTriggers = manual?.invalidation_triggers || {};
-  for (const [key, meta] of Object.entries(MANUAL_TRIGGER_LABELS)) {
+  for (const [key, trig] of Object.entries(MANUAL_TRIGGER_LABELS)) {
     const t = manualTriggers[key];
     const status = t?.status || 'green';
     const notes  = t?.notes  || '—';
@@ -286,8 +282,8 @@ function renderTriggers(prices, manual) {
     const stale  = staleness(upd, 30, 60);
     rows.push(`
       <tr>
-        <td>${meta.label}</td>
-        <td>${notes} ${staleBadge(stale.level, stale.label)} <span class="trigger-sep">—</span> <span class="trigger-threshold-inline">Trigger: ${meta.threshold}</span></td>
+        <td>${trig.label}</td>
+        <td>${notes} ${staleBadge(stale.level, stale.label)} <span class="trigger-sep">—</span> <span class="trigger-threshold-inline">Trigger: ${trig.threshold}</span></td>
         <td class="trigger-status ${dotClass}">●</td>
       </tr>`);
   }
@@ -388,20 +384,6 @@ function renderPositions(prices, alerts) {
     alertRow(prices, alerts, 'VIX', 'VIX',       '',  1),
   ].join('');
   document.getElementById('group-macro-signals').innerHTML = macroSignals;
-
-  // AI & Tech
-  const tech = [
-    alertRow(prices, alerts, 'NVDA',  'NVDA',  '$', 2),
-    alertRow(prices, alerts, 'TSLA',  'TSLA',  '$', 2),
-    alertRow(prices, alerts, 'GOOGL', 'GOOGL', '$', 2),
-    alertRow(prices, alerts, 'META',  'META',  '$', 2),
-    alertRow(prices, alerts, 'TSM',   'TSM',   '$', 2),
-    alertRow(prices, alerts, 'PLTR',  'PLTR',  '$', 2),
-    alertRow(prices, alerts, 'MSTR',  'MSTR',  '$', 2),
-
-    alertRow(prices, alerts, 'GEV',   'GEV',   '$', 2),
-  ].join('');
-  document.getElementById('group-tech').innerHTML = tech;
 }
 
 // ─── Section 4: Macro Indicators Panel ────────────────────────────────────────

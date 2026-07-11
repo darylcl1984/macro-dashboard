@@ -29,8 +29,6 @@ jobs:
         run: pip install requests
 
       - name: Fetch prices
-        env:
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: python scripts/fetch_prices.py
 
       - name: Commit and push data
