@@ -19,11 +19,6 @@
         <span class="status-value" id="scenario-value">—</span>
         <span class="status-sub" id="scenario-prob"></span>
       </div>
-      <div class="status-cell" id="s-assessed">
-        <span class="status-label">Last Updated</span>
-        <span class="status-value" id="last-updated-value">—</span>
-        <span class="status-sub" id="last-updated-sub"></span>
-      </div>
       <div class="status-cell" id="s-m2">
         <span class="status-label">Global M2 YoY</span>
         <span class="status-value" id="m2-yoy">—</span>
@@ -34,63 +29,68 @@
         <span class="status-value" id="fg-value">—</span>
         <span class="status-sub" id="fg-class"></span>
       </div>
+      <div class="status-cell" id="s-triggers" role="button" tabindex="0" title="Jump to trigger board">
+        <span class="status-label">Triggers</span>
+        <span class="status-value" id="trigger-tally">—</span>
+        <span class="status-sub">green · amber · red</span>
+      </div>
     </div>
   </header>
 
   <main>
 
-    <!-- ── Regime Summary Bar ─────────────────────────────────────────── -->
-    <div id="regime-bar" class="regime-bar"></div>
+    <!-- ── Pillar Panels ──────────────────────────────────────────────── -->
+    <div class="pillar-grid" id="pillar-grid">
 
-    <!-- ── Section 2: Market State ───────────────────────────────────── -->
-    <section class="panel" id="panel-positions">
-      <h2 class="panel-title">Market State</h2>
-
-      <div class="positions-grid">
-
-        <div class="position-group">
-          <h3 class="group-title">Hard Money</h3>
-          <table class="price-table">
-            <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">24h</th><th>52W Range</th></tr></thead>
-            <tbody id="group-hard-money"></tbody>
-          </table>
-
-          <h3 class="group-title group-title-sub">Macro Signals</h3>
-          <table class="price-table">
-            <thead><tr><th>Signal</th><th class="num">Value</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
-            <tbody id="group-macro-signals"></tbody>
-          </table>
+      <section class="panel pillar-panel" id="pillar-monetary">
+        <h2 class="panel-title">Monetary Expansion</h2>
+        <div class="pillar-body" id="pillar-monetary-body">
+          <div class="loading">Loading…</div>
         </div>
+      </section>
 
-      </div>
-    </section>
+      <section class="panel pillar-panel" id="pillar-dedollar">
+        <h2 class="panel-title">De-Dollarisation</h2>
+        <div class="pillar-body" id="pillar-dedollar-body">
+          <div class="loading">Loading…</div>
+        </div>
+      </section>
 
-    <!-- ── Section 3: Macro Indicators Panel ─────────────────────────── -->
-    <section class="panel" id="panel-macro">
-      <h2 class="panel-title">Macro Indicators</h2>
-      <div class="macro-grid" id="macro-grid">
-        <div class="loading">Loading…</div>
-      </div>
-    </section>
+      <section class="panel pillar-panel" id="pillar-ai">
+        <h2 class="panel-title">AI Transition</h2>
+        <div class="pillar-body" id="pillar-ai-body">
+          <div class="loading">Loading…</div>
+        </div>
+      </section>
 
-    <!-- ── Section 4: Thesis Invalidation Triggers ───────────────────── -->
+      <section class="panel pillar-panel" id="pillar-hardmoney">
+        <h2 class="panel-title">Hard Money Market State</h2>
+        <div class="pillar-body" id="pillar-hardmoney-body">
+          <div class="loading">Loading…</div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ── Invalidation Trigger Board ─────────────────────────────────── -->
     <section class="panel" id="panel-triggers">
       <h2 class="panel-title">Thesis Invalidation Triggers</h2>
       <table class="trigger-table">
         <thead>
           <tr>
-            <th style="width:25%">Trigger</th>
-            <th style="width:68%">Detail</th>
-            <th style="width:7%" class="num">Status</th>
+            <th style="width:28%">Trigger</th>
+            <th style="width:28%">Threshold</th>
+            <th style="width:32%">Current</th>
+            <th style="width:12%" class="num">Status</th>
           </tr>
         </thead>
         <tbody id="trigger-rows">
-          <tr><td colspan="3" class="loading">Loading…</td></tr>
+          <tr><td colspan="4" class="loading">Loading…</td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- ── Section 5: Thesis Narrative (collapsible) ─────────────────── -->
+    <!-- ── Thesis Narrative (collapsible) ─────────────────────────────── -->
     <section class="panel" id="panel-thesis">
       <details id="thesis-details">
         <summary class="thesis-summary">
@@ -131,7 +131,7 @@
         <span id="footer-assessed-ts">—</span>
       </div>
       <div class="footer-sources">
-        Data: FRED · ECB · BOJ · CoinGecko · Stooq · Yahoo · Alternative.me
+        Data: FRED · ECB · BoE · BOJ · CoinGecko · Stooq · Yahoo · Alternative.me · WGC/IMF (manual)
       </div>
       <div class="footer-sources">
         Data updates Mon–Fri only. Stale badges on weekends are expected.

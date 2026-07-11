@@ -217,43 +217,194 @@ th.num { text-align: right; }
   padding-bottom: 0;
 }
 
-/* ─── Positions ────────────────────────────────────────────────────────── */
+/* ─── Status chips & tally ─────────────────────────────────────────────── */
 
-.positions-grid {
+.status-chip, .tally-chip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+.chip-green { color: var(--green); border-color: var(--green-dim); background: rgba(34,197,94,0.08); }
+.chip-amber { color: var(--amber); border-color: var(--amber-dim); background: rgba(245,158,11,0.08); }
+.chip-red   { color: var(--red);   border-color: var(--red-dim);   background: rgba(239,68,68,0.08); }
+
+.tally-chip { font-size: 14px; min-width: 1.4em; text-align: center; }
+.tally-sep  { color: var(--text-muted); margin: 0 2px; }
+
+#s-triggers { cursor: pointer; }
+#s-triggers:hover { background: var(--surface-2); }
+
+.est-tag {
+  font-size: 10px;
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--border-2);
+  padding: 0 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.trigger-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+/* ─── Pillar grid ──────────────────────────────────────────────────────── */
+
+.pillar-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
+  gap: 16px;
 }
 
-.position-group {
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  align-content: start;
-}
-.position-group:nth-child(2n) { border-right: none; }
-.position-group:nth-last-child(-n+2) { border-bottom: none; }
+.pillar-panel { min-width: 0; }
 
-.group-title {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.pillar-body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-stat-value {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.hero-stat-sub {
+  font-size: 13px;
   color: var(--text-dim);
-  padding: 8px 12px 6px;
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--border);
+  margin-top: 4px;
 }
 
-.group-title-sub { margin-top: 16px; }
+.mini-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mini-grid-3 { grid-template-columns: 1fr; }
 
-.price-table { table-layout: fixed; width: 100%; }
-.price-table th:nth-child(1) { width: 18%; }
-.price-table th:nth-child(2) { width: 20%; }
-.price-table th:nth-child(3) { width: 14%; }
-.price-table th:nth-child(4) { width: 48%; }
+.mini-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+
+.mini-card-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.mini-card-value {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.mini-card-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.bloc-table { font-size: 12px; }
+.bloc-table th, .bloc-table td { padding: 4px 8px; }
+
+.pillar-price-table { table-layout: fixed; width: 100%; }
+.pillar-price-table th:nth-child(1) { width: 16%; }
+.pillar-price-table th:nth-child(2) { width: 18%; }
+.pillar-price-table th:nth-child(3) { width: 14%; }
+.pillar-price-table th:nth-child(4) { width: 52%; }
 .price-table td.asset-name { font-weight: 500; white-space: nowrap; }
-/* Restore bottom border on last row — table may not sit at the bottom of its group */
-.price-table tr:last-child td { border-bottom: 1px solid var(--border); }
+
+.range-wrap { position: relative; }
+.range-mark-row {
+  position: relative;
+  height: 12px;
+  margin-top: 1px;
+}
+.range-mark-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-family: var(--mono);
+  color: var(--amber);
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.div-clock-label {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.div-clock-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.div-clock-fill { height: 100%; border-radius: 2px; }
+.fill-green { background: var(--green); }
+.fill-amber { background: var(--amber); }
+.fill-red   { background: var(--red); }
+
+.highlight-warn  { color: var(--amber); }
+.highlight-alert { color: var(--red); }
+
+/* Fear & Greed gauge bar */
+.fg-inline-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: var(--sans);
+  font-weight: 400;
+}
+
+.fg-bar-track {
+  height: 3px;
+  width: 100%;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  position: relative;
+  overflow: visible;
+}
+.fg-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.fg-bar-marker {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 10px;
+  background: var(--text);
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
 
 /* ─── 52-Week Range Bar ─────────────────────────────────────────────────── */
 
@@ -333,128 +484,6 @@ th.num { text-align: right; }
   font-weight: 400;
   opacity: 0.85;
   white-space: nowrap;
-}
-
-/* ─── Regime Summary Bar ───────────────────────────────────────────────── */
-
-.regime-bar {
-  font-size: 11px;
-  font-family: var(--mono);
-  color: var(--text-dim);
-  padding: 7px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  letter-spacing: 0.03em;
-}
-.regime-bar:empty { display: none; }
-
-/* ─── Macro Indicators Grid ────────────────────────────────────────────── */
-
-.macro-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-}
-
-.macro-card {
-  padding: 14px 16px;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.macro-card:last-child { border-right: none; }
-
-.macro-card-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-
-.macro-card-value {
-  font-family: var(--mono);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.macro-card-sub {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-top: 3px;
-}
-
-/* Primary macro card — elevated visual weight (Fear & Greed etc.) */
-.macro-card-primary {
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--border-2);
-}
-.macro-card-primary .macro-card-label { color: var(--text-dim); }
-.macro-card-primary .macro-card-value { font-size: 26px; }
-
-/* Hero macro card — Global M2 Composite, full-width, dominant */
-.macro-card-hero {
-  grid-column: 1 / -1;
-  background: var(--surface-2);
-  border-right: none;
-  border-bottom: 1px solid var(--border-2);
-  padding: 20px 28px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 24px;
-}
-.macro-card-hero .macro-card-label {
-  flex: 0 0 100%;
-  color: var(--text-dim);
-  margin-bottom: 6px;
-}
-.macro-card-hero .macro-card-value {
-  font-size: 36px;
-  line-height: 1;
-}
-.macro-card-hero .macro-card-sub {
-  font-size: 14px;
-  margin-top: 0;
-  align-self: center;
-  color: var(--text-dim);
-}
-
-.highlight-warn  { color: var(--amber); }
-.highlight-alert { color: var(--red); }
-
-/* Fear & Greed gauge bar */
-.fg-inline-sub {
-  font-size: 12px;
-  color: var(--text-dim);
-  font-family: var(--sans);
-  font-weight: 400;
-}
-
-.fg-bar-track {
-  height: 3px;
-  width: 100%;
-  background: var(--border);
-  border-radius: 2px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  position: relative;
-  overflow: visible;
-}
-.fg-bar-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
-.fg-bar-marker {
-  position: absolute;
-  top: -3px;
-  width: 2px;
-  height: 10px;
-  background: var(--text);
-  border-radius: 1px;
-  transform: translateX(-50%);
 }
 
 /* ─── Thesis Section ───────────────────────────────────────────────────── */
@@ -589,20 +618,14 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
 /* ─── Responsive ───────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
-  .positions-grid { grid-template-columns: 1fr; }
-  .position-group { border-right: none; }
-  .position-group:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
-  .position-group:last-child { border-bottom: none; }
+  .pillar-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 700px) {
-  /* ── Base typography ── */
   html { font-size: 15px; }
 
   main { padding: 12px 12px 32px; gap: 12px; }
-  .regime-bar { margin-top: 4px; }
 
-  /* ── Status bar ── */
   :root { --status-bar-h: 116px; }
   #status-bar { height: auto; min-height: var(--status-bar-h); }
   #status-bar-inner {
@@ -619,38 +642,28 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
   .status-cell:nth-child(odd) { border-right: 1px solid var(--border); }
   .status-cell:nth-last-child(-n+2) { border-bottom: none; }
 
-  /* Scenario hero — full width, large, colour-tinted */
   #s-scenario {
     flex: 1 1 100%;
     border-right: none !important;
     background: var(--surface-2);
     padding: 10px 16px;
   }
-  #s-scenario .status-value { font-size: 22px; }
+  #s-scenario .status-value { font-size: 18px; }
   #s-scenario .status-label { font-size: 10px; }
 
-  /* Hide Last Assessed on mobile — low signal, saves space */
-  #s-assessed { display: none; }
-
-  /* M2 YoY and Fear & Greed each take half width */
   #s-m2, #s-fg { flex: 1 1 50%; }
 
-  /* ── Section order ── */
-  main { display: flex; flex-direction: column; }
-  #regime-bar      { order: 0; }
-  #panel-positions { order: 1; }
-  #panel-macro     { order: 2; }
-  #panel-triggers  { order: 3; }
-  #panel-thesis    { order: 4; }
+  .hero-stat-value { font-size: 26px; }
+  .mini-grid { grid-template-columns: 1fr; }
 
-  /* ── Trigger table → card rows ── */
-  .trigger-table thead          { display: none; }
+  /* Trigger table → stacked rows */
+  .trigger-table thead { display: none; }
   .trigger-table tbody tr {
     display: grid;
-    grid-template-columns: 1fr 28px;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
     padding: 11px 14px;
-    gap: 3px 0;
+    gap: 3px 8px;
     border-bottom: 1px solid var(--border);
   }
   .trigger-table tbody tr:last-child { border-bottom: none; }
@@ -660,38 +673,37 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
     border: none;
     font-size: 13px;
   }
-  /* Row 1: trigger name */
   .trigger-table td:nth-child(1) {
     grid-column: 1; grid-row: 1;
     font-weight: 600;
     color: var(--text);
-    font-size: 13px;
   }
-  /* Row 2: detail (current → threshold or notes + threshold sub) */
   .trigger-table td:nth-child(2) {
     grid-column: 1; grid-row: 2;
     font-size: 12px;
     color: var(--text-dim);
   }
-  /* Status dot: right side, spanning both rows */
-  .trigger-table td.trigger-status {
-    grid-column: 2; grid-row: 1 / 3;
+  .trigger-table td:nth-child(3) {
+    grid-column: 1; grid-row: 3;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .trigger-table td:nth-child(4) {
+    grid-column: 2; grid-row: 1 / 4;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    padding: 0;
-    text-align: center;
   }
 
-  /* ── Price/alert tables → compact rows ── */
-  .price-table thead            { display: none; }
+  /* Price tables — keep range on small screens but compact */
+  .price-table thead { display: none; }
   .price-table tbody tr {
     display: grid;
     grid-template-columns: 1fr auto auto;
+    grid-template-rows: auto auto;
     align-items: center;
     padding: 9px 14px;
-    gap: 0 10px;
+    gap: 4px 10px;
     border-bottom: 1px solid var(--border);
   }
   .price-table td {
@@ -700,48 +712,28 @@ details:not([open]) > summary .summary-hint::after { content: 'expand'; }
     border: none;
     font-size: 13px;
   }
-  .price-table td.asset-name {
-    grid-column: 1;
-    font-weight: 500;
-    color: var(--text);
+  .price-table td.asset-name { grid-column: 1; grid-row: 1; font-weight: 500; }
+  .price-table td:nth-child(2) { grid-column: 2; grid-row: 1; font-family: var(--mono); text-align: right; }
+  .price-table td:nth-child(3) { grid-column: 3; grid-row: 1; font-family: var(--mono); text-align: right; }
+  .price-table td.range-cell { grid-column: 1 / -1; grid-row: 2; }
+
+  .bloc-table thead { display: none; }
+  .bloc-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
   }
-  .price-table td:nth-child(2) {
-    grid-column: 2;
-    font-family: var(--mono);
-    font-size: 13px;
-    text-align: right;
-    white-space: nowrap;
+  .bloc-table td { display: block; padding: 0; border: none; font-size: 12px; }
+  .bloc-table td::before {
+    content: attr(data-label) ': ';
+    color: var(--text-muted);
+    font-size: 10px;
+    text-transform: uppercase;
   }
-  .price-table td:nth-child(3) {
-    grid-column: 3;
-    font-family: var(--mono);
-    font-size: 12px;
-    text-align: right;
-    white-space: nowrap;
-    min-width: 52px;
-  }
-  /* Hide range column on mobile */
-  .price-table td:nth-child(4),
-  td.range-cell { display: none; }
 
-  /* ── Macro grid ── */
-  .macro-grid { grid-template-columns: 1fr 1fr; }
-
-  /* Primary cards span full width on mobile */
-  .macro-card-primary {
-    grid-column: 1 / -1;
-    border-right: none;
-  }
-  .macro-card-primary .macro-card-value { font-size: 30px; }
-
-  /* Hero card — reduce value slightly on mobile */
-  .macro-card-hero .macro-card-value { font-size: 30px; }
-
-  /* ── Watchlist group titles ── */
-  .group-title { font-size: 10px; padding: 8px 14px 6px; }
-  .price-table tbody tr:last-child { border-bottom: none; }
-
-  /* ── Thesis tables → cards ── */
+  /* Thesis tables → cards */
   .thesis-body .thesis-table,
   .thesis-body .thesis-table tbody,
   .thesis-body .thesis-table tr { display: block; width: 100%; }
