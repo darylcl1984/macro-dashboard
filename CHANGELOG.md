@@ -8,6 +8,30 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-07-11 — v6 — The Great Transition overhaul
+
+#### Added
+- [pipeline] ECB Eurozone M2 and BoE UK M4 fetches; FX rates (Stooq primary, Yahoo fallback) for the five-bloc composite
+- [pipeline] FRED series for HY OAS (`BAMLH0A0HYM2`) and US net liquidity components (WALCL / RRPONTSYD / WTREGEN)
+- [pipeline] Computed `GLOBAL_M2` composite + `data/m2_history.json` monthly snapshots with headline / FX-adjusted YoY scaffolding
+- [frontend] Four thesis pillar panels — Monetary Expansion, De-Dollarisation, AI Transition, Hard Money Market State
+- [frontend] Eight-row auto-computed invalidation trigger board; status-bar tally chips scroll to the board
+- [data] New `manual.json` schema — china_m2, CB gold, COFER, AI transition, divergence clock, manual trigger overrides only
+
+#### Changed
+- [pipeline] Gold/WTI pricing via Yahoo chart meta (quote + 52-week in one call); Stooq retained as quote fallback
+- [frontend] Status bar: Scenario · Global M2 YoY · Fear & Greed · Trigger tally (regime bar removed)
+- [frontend] USD index label corrected to "USD Broad Index (Fed)" (DTWEXBGS)
+- [data] Thesis-aligned alert thresholds — BTC $53k / $83.8k, gold $4k, WTI $120, VIX 30
+
+#### Removed
+- [pipeline] Finnhub integration and all equity tickers (NVDA, TSLA, PLTR, TSM, GOOGL, META, GEV, MSTR)
+- [frontend] Watchlist / AI & Tech Equities group and equity-specific invalidation triggers
+
+#### Notes
+- Knowledge layer (thesis v6, M2 note v2) owned separately — not edited in this overhaul commit series
+- Screenshots (`docs/macro-dashboard-screenshot01.png` / `02.png`) need owner refresh — cannot capture from this environment
+
 ### 2026-03-30
 
 #### Added
