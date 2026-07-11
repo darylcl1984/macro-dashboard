@@ -1,0 +1,25 @@
+[
+  {
+    "period": "2026-03",
+    "components_local": null,
+    "fx": null,
+    "composite_usd": 103.97
+  },
+  {
+    "period": "2026-07",
+    "components_local": {
+      "US_usd_bn": 23052.3,
+      "CN_cny_tn": 353.67,
+      "EZ_eur_tn": 16.38,
+      "JP_jpy_tn": 1296.44,
+      "UK_gbp_bn": 3278.5
+    },
+    "fx": {
+      "EURUSD": 1.1419,
+      "GBPUSD": 1.3398,
+      "USDCNY": 6.7667,
+      "USDJPY": 161.672
+    },
+    "composite_usd": 106.43
+  }
+]

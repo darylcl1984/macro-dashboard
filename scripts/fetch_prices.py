@@ -14,10 +14,9 @@ Sources:
 """
 
 import json
-import re
 import time
 
-from utils import DATA_DIR, SESSION, fetch_json, now_utc, write_json
+from utils import DATA_DIR, SESSION, fetch_json, fetch_stooq, now_utc, write_json
 
 OUTPUT_FILE = DATA_DIR / "prices.json"
 
@@ -61,27 +60,8 @@ def fetch_coingecko():
 
 
 # ---------------------------------------------------------------------------
-# Stooq — quote helper (gold/WTI fallback + USDJPY)
+# Stooq — USDJPY FX + gold/WTI quote fallback (via utils.fetch_stooq)
 # ---------------------------------------------------------------------------
-
-def fetch_stooq(symbol):
-    url = f"https://stooq.com/q/l/?s={symbol.lower()}&f=sd2t2ohlcv&h&e=json"
-    resp = SESSION.get(url, timeout=10)
-    resp.raise_for_status()
-    # Stooq sometimes emits malformed JSON (e.g. "volume":} with no value) — patch before parsing
-    text = re.sub(r'"volume":\s*([,}])', r'"volume": null\1', resp.text)
-    data = json.loads(text)
-    symbols = data.get("symbols", [])
-    if not symbols:
-        raise ValueError(f"No data for {symbol} from Stooq")
-    row = symbols[0]
-    # Futures (e.g. CL.F) may return N/D for close during off-hours; fall back to open
-    price = row.get("close")
-    if price is None or price == "N/D":
-        price = row.get("open")
-    if price is None or price == "N/D":
-        raise ValueError(f"Missing price for {symbol} from Stooq")
-    return {"price": float(price), "change_pct": None}
 
 
 # ---------------------------------------------------------------------------

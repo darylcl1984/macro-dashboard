@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T11:11:27.449370+00:00",
+  "updated_at": "2026-07-11T13:49:05.979807+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
@@ -19,57 +19,131 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 23,
-      "classification": "Extreme Fear",
-      "date": "2026-07-10"
+      "value": 26,
+      "classification": "Fear",
+      "date": "2026-07-11"
+    },
+    "EZ_M2": {
+      "value": 16.38,
+      "date": "2026-05",
+      "unit": "trillions EUR"
+    },
+    "UK_M4": {
+      "value": 3278.5,
+      "date": "2026-05",
+      "unit": "billions GBP"
+    },
+    "fx": {
+      "EURUSD": {
+        "value": 1.1419,
+        "date": "2026-07-11",
+        "source": "yahoo"
+      },
+      "GBPUSD": {
+        "value": 1.3398,
+        "date": "2026-07-11",
+        "source": "yahoo"
+      },
+      "USDCNY": {
+        "value": 6.7667,
+        "date": "2026-07-11",
+        "source": "yahoo"
+      },
+      "USDJPY": {
+        "value": 161.672,
+        "date": "2026-07-11",
+        "source": "yahoo"
+      }
+    },
+    "GLOBAL_M2": {
+      "value": 106.43,
+      "unit": "trillions_usd",
+      "components": {
+        "US": 23.05,
+        "CN": 52.27,
+        "EZ": 18.7,
+        "JP": 8.02,
+        "UK": 4.39
+      },
+      "component_dates": {
+        "US": "2026-05-01",
+        "CN": "2026-05",
+        "EZ": "2026-05",
+        "JP": "202606",
+        "UK": "2026-05"
+      },
+      "computed_at": "2026-07-11T13:49:12.047127+00:00"
+    },
+    "GLOBAL_M2_YOY": {
+      "headline_pct": null,
+      "fx_adjusted_pct": null,
+      "base_period": null,
+      "as_of_period": "2026-07"
     },
     "MANUAL": {
-      "_note": "Hand-edited. Commit after each update. Fetched by the frontend directly \u2014 not processed by any script.",
-      "_format": {
-        "dates": "ISO 8601: full datetime '2026-03-25T00:00:00Z' or date-only '2026-03-25'",
-        "scenario.current": "One of: Bull | Base | Bear | Tail Risk",
-        "invalidation_triggers.*.status": "One of: green | amber | red",
-        "china_m2.value": "Trillions CNY. Source: PBOC Money Supply table. Raw figure is in 100M CNY \u2014 divide by 10000.",
-        "uk_m2.value": "Billions GBP. Source: BOE series LPMVWYX. Raw figure is in millions GBP \u2014 divide by 1000.",
-        "global_m2.value": "Trillions USD. Your composite: sum of US+EU+JP+CN+UK M2 converted to USD.",
-        "global_m2.yoy_pct": "Year-over-year % change. Calculate vs same period prior year."
-      },
+      "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC release ~14th. cb_gold/cofer/ai_capex: quarterly. Trigger statuses here cover only manually-adjudicated triggers; the rest are computed by the frontend.",
       "scenario": {
-        "current": "Base",
-        "probability": "",
-        "updated": "2026-03-26",
-        "notes": ""
-      },
-      "global_m2": {
-        "value": 103.97,
-        "unit": "trillions_usd",
-        "yoy_pct": 10.43,
-        "period": "2026-03-26",
-        "updated": "2026-03-26"
-      },
-      "eur_m2": {
-        "value": 18.74,
-        "unit": "trillions_usd",
-        "period": "2026-03-26",
-        "updated": "2026-03-26"
+        "current": "B — Hawkish Grind",
+        "probability": "40%",
+        "updated": "2026-07-11",
+        "notes": "v6 scenario tree — see thesis §5. A Reconnection 30% / B Hawkish Grind 40% / C Credit-Forced Easing 20% / D Geopolitical Tail 10%."
       },
       "china_m2": {
-        "value": 50.29,
+        "value": 353.67,
         "unit": "trillions_cny",
-        "period": "2026-03-26",
-        "updated": "2026-03-26"
+        "period": "2026-05",
+        "updated": "2026-07-11",
+        "source": "PBoC monthly release; June figure due ~14 Jul 2026"
       },
-      "uk_m2": {
-        "value": 4.26,
-        "unit": "billions_gbp",
-        "period": "2026-03-26",
-        "updated": "2026-03-26"
+      "global_m2_yoy_estimate": {
+        "value": 7.0,
+        "unit": "pct",
+        "note": "Interim manual estimate; superseded automatically once m2_history.json spans 13 months",
+        "updated": "2026-07-11"
       },
-      "invalidation_triggers": {
-        "taiwan_crisis": {
+      "divergence": {
+        "start": "2025-07",
+        "note": "Month the BTC-M2 rolling-12m directional agreement broke. Reset to null when reconnected."
+      },
+      "cb_gold": {
+        "quarterly_tonnes": 244,
+        "period": "2026-Q1",
+        "yoy_pct": 3,
+        "latest_monthly": {
+          "tonnes": 41,
+          "period": "2026-05"
+        },
+        "note": "WGC net purchases. Floor intact; PBoC 20th consecutive month.",
+        "updated": "2026-07-11"
+      },
+      "cofer_usd_share": {
+        "consecutive_rising_quarters": 1,
+        "period": "2026-Q1",
+        "note": "Q1 2026: first counter-trend rise (headline and valuation-adjusted).",
+        "updated": "2026-07-11"
+      },
+      "ai_transition": {
+        "crossover_status": "Oracle crossed; Amazon crossing; aggregate hyperscaler capex > OCF expected ~Q3 2026",
+        "structural_slopes": "Inference cost halves ~2mo; pre-training efficiency ~3x/yr (Epoch, Feb 2026)",
+        "next_test": "Hyperscaler earnings, early Aug 2026",
+        "updated": "2026-07-11"
+      },
+      "triggers_manual": {
+        "gold_monthly_close": {
+          "status": "amber",
+          "notes": "June 2026 close $4,015.51 — $15 above the $4,000 line"
+        },
+        "cofer_reversal": {
+          "status": "amber",
+          "notes": "1 of 4 counter-trend quarters"
+        },
+        "taiwan": {
           "status": "green",
-          "notes": "No escalation",
-          "updated": "2026-03-26"
+          "notes": "No escalation"
+        },
+        "ai_financing": {
+          "status": "green",
+          "notes": "HY OAS ~2.7%; watch Q3 crossover + hyperscaler bond issuance"
         }
       }
     }
