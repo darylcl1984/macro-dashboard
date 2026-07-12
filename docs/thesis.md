@@ -1,150 +1,138 @@
 # THE GREAT TRANSITION
 
-## Macro Thesis & Portfolio Framework
+## Macro Thesis Framework
 
-v5.0 · March 2026
+July 2026
 
 > **NOT FINANCIAL ADVICE — For educational and analytical reference only.**
-
-*Portfolio weights shown are an illustrative reference allocation only — not a recommendation to buy or sell any asset.*
 
 ---
 
 ## 1. Thesis
 
-AI technological deflation and geopolitical restructuring & de-dollarisation are accelerating. Both forces converge on one outcome: accelerating global M2 expansion.
+Two structural forces — AI-driven technological deflation and geopolitical de-dollarisation — converge on a single output: sustained expansion of global money supply. Hard monetary assets are the primary beneficiaries. Horizon: 2030. The indicators here are waypoints, not trading signals.
 
-This is a structural positioning framework with a 2030 horizon. The 2026 scenario analysis represents near-term waypoints within that horizon — indicators of whether the structural thesis is tracking, accelerating, or failing. Risk management and drawdown tolerance are calibrated for a 4-year holding period, not a 12-month trade.
+### 1.1 The AI Transition — Two Timescales, Opposite Signs
 
-### 1.1 AI Technological Deflation
+The AI transition runs on two timescales, and they must be held separately:
 
-The cost of intelligence and labour is collapsing exponentially — and the rate of collapse is accelerating. Tokens per dollar are going parabolic on logarithmic charts.
+**Near term (now–2027): AI is inflationary and credit-coupled.** The buildout is a capex shock. Memory prices are up 4×+ since late 2025; consumer hardware prices are rising for the first time in decades; data-centre construction competes for power, labour, and materials. Critically, the financing structure flipped in 2026: aggregate hyperscaler capex (growing ~70%/yr) crosses above operating cash flow (~23%/yr) around Q3 2026 — Oracle already crossed, Amazon is crossing. The buildout is now funded by capital markets, not internal cash. This couples the AI transition to credit conditions: it continues only while external financing flows. A financing break is both the largest near-term deflation risk and — because the policy response to a credit event is easing — a fast route to the thesis's terminal state.
 
-This is driven by two recursive loops:
+**Structural (through 2030): the deflation is real and measured.** Frontier training compute grows ~5×/yr; pre-training efficiency ~3×/yr; inference cost at fixed capability halves roughly every two months; hardware price-performance improves ~37%/yr (Epoch AI, Feb 2026). These are observed slopes, not projections. As capability is deployed into labour substitution, the cost of intelligence-intensive work falls by orders of magnitude. Deflation in a debt-based system makes existing debt unserviceable, and the historical resolution is monetary expansion. The policy response can lag by years — Japan lagged nearly two decades — which is why the near-term/structural split matters for positioning survival.
 
-**Recursive self-learning.** Models training models. Synthetic data refining synthetic data. DeepSeek—a hedge fund—replicated frontier AI capabilities. Kimi matched GPT-5 reasoning on two MacBooks. Each generation bootstraps the next: faster, cheaper. Fewer humans per training cycle. The loop is already running. Deflation accelerates as the human-to-model recursive improvement cycle trends to zero.
+Physical-world signal, stated soberly: Terafab (Tesla/SpaceX/Intel joint venture, announced March 2026) is a $55–119B commitment to prototype vertically-integrated chip fabrication. It is a capex datapoint and a vertical-integration signal — not yet a recursive-manufacturing proof.
 
-**Recursive self-building.** Machines building machines. Tesla’s Terafab—announced March 21, 2026 as a Tesla/SpaceX/xAI joint venture in Austin—targets 1 Terawatt of compute per year and 100-200 billion chips annually, surpassing total global output by 50x. This is the clearest signal the loop is being engineered deliberately. Once robots build robots and factories build factories, the same exponential dynamic shifts from bits to atoms. The question is now when, not if.
+### 1.2 De-Dollarisation — Structural Trend, Cyclical Counter-Trend
 
-The resulting deflation is civilisation-scale: orders of magnitude cost reduction across every domain intelligence and physical labour touch. AI collapses the barrier between idea and execution. Implementation friction approaches zero. Musk’s Kardashev Type 2 framing and Terafab signal where the exponential leads if both loops close.
+The structural evidence remains intact: central banks have bought 850–1,045 tonnes of gold annually since 2022 (double the pre-2022 norm), and they **bought the 2026 price crash** — Q1 2026 net purchases of 244t were up 3% YoY, and the PBoC's June purchase (14.9t, its 20th consecutive month) was its largest since 2023. The buyer list is broadening.
 
-Policy consequence is directionally reliable but not immediate: deflation in a debt-based financial system makes debt unserviceable and has historically been resolved through monetary expansion. However, the policy response can lag significantly — Japan experienced nearly two decades of deflation before aggressive QE. The risk is that printing arrives after substantial drawdowns.
+But 2026 delivered an honest complication, and the thesis is stronger for absorbing it:
 
-### 1.2 Geopolitical Restructuring & De-Dollarisation
+- **The dollar's reserve share rose in Q1 2026** (IMF COFER) — the first reversal of the secular decline — driven by the Warsh Fed's hawkish reset and the strongest dollar in over a year. The de-dollarisation trend is secular but not monotonic; it has counter-cyclical episodes, and this is one.
+- **Stablecoins are re-dollarisation.** The GENIUS Act framework turns T-bill-backed stablecoins into synthetic Treasury demand — plausibly $1–2T within five years. Dollar *rails* are expanding even as dollar *reserves* diversify. Both can be true: states diversify away from the dollar while individuals and markets adopt tokenized dollars. Net effect: the fiscal arithmetic gets a buyer of first resort for bills, buying time without changing the destination — and the same rails are hard money's future on/off-ramp.
+- **The central-bank bid is gold's floor, not its price driver.** Gold's fall from $5,602 to ~$4,000 (−22%+) occurred with central-bank demand fully intact — the marginal price-setter is financial flows (ETFs, momentum, real-rate expectations). The structural case sets the floor and the direction; it does not prevent 20–30% drawdowns.
 
-Nations are diversifying reserves away from the US dollar. Central banks accumulated over 1,000 tonnes of gold annually from 2022–2024 — more than double the prior decade’s average. The dollar’s share of global reserves has declined from 72% in 2000 to ~57% in 2025, projected to reach 45–50% by 2030. Over 75% of surveyed central banks plan to increase gold holdings over the next five years.
+### 1.3 The Output: Monetary Expansion — Now Fiscal-Dominant
 
-Recent conflict in the Gulf demonstrated that missiles and drones have altered the cost calculus of naval power projection at critical chokepoints — the traditional enforcer of dollar compliance in trade settlement. Lower demand for US Treasuries means the US must print more to finance its deficits.
+M2 expansion is not the thesis; it is the consequence. The 2026 twist is *where it comes from*: the most hawkish Fed pivot in modern history is running concurrently with **accelerating** US money growth (M2 +5.6% YoY in May, up from +4.7%). The printing arrives through the fiscal back door — a ~$1.9T deficit (~5.8% of GDP) at near-full employment, ~$1.0T of net interest, and Treasury bill-issuance strategies explicitly designed to be absorbed (stablecoins, and the discussed Fed balance-sheet shift toward bills). Stabilizing debt/GDP would require a ~4.2%-of-GDP primary swing — roughly equivalent to zeroing defense spending. No democracy has done this without crisis. Austerity is not on any major bloc's political menu: SIPRI records global military spending at a record $2.887T in 2025 (11th consecutive rise, Europe +14%), largely debt-financed.
 
-This demand shift creates a structural supply imbalance. Individual central banks whose gold holdings are still below 10% of their own reserves — including major holders like China, India, and Saudi Arabia — lifting to just 10% would require an additional 1,200–2,600 tonnes of buying — one to three years of current annual accumulation on top of existing flows. Against constrained mine supply of ~3,500 tonnes per year, this supports a probability-weighted price range of $7,000–$10,000 by 2030.
+The five-bloc global M2 composite (US, China, Eurozone, Japan, UK) stands at ~$105.5T as of mid-2026, growing mid-to-high single digits YoY. Broader baskets print ~$135T — measure definitions matter; see the M2 note.
 
-### 1.3 The Downstream Output: M2 Expansion
-
-M2 expansion is not the thesis. It is the mathematical consequence of the forces above.
-
-AI deflation forces printing. De-dollarisation forces printing. War spending forces printing. Credit crises force printing. Every road leads to the same destination — the question is timing.
-
-Global M2 stands at approximately $100 trillion, growing at over 10% year-over-year. Structural pressures point to acceleration across major central banks: US fiscal deficits, China’s domestic deflation, EU defence spending and stagnation, Japan’s debt-to-GDP above 200%, and UK stagnation. Austerity is not tenable — debt-to-GDP ratios are rising across most major economies. Deglobalisation amplifies this — each bloc must now generate its own liquidity to replace the dollar system’s former role, resulting in higher total global money creation.
-
-Bitcoin has tracked global M2 with a 70–90 day lag. Correlation reached ~91% at a 70-day offset in the current cycle (Bitcoin Magazine Pro, Sep 2025). Over any rolling 12-month period, BTC has moved in the same direction as global liquidity ~83% of the time (Lyn Alden, Sep 2024). The relationship is directionally reliable but elastic — short-term deviations are common.
-
-**Correlation caveat:** The BTC–M2 relationship is directionally reliable over rolling 12-month periods (~83% agreement) but regularly diverges for 6–12 months during crypto cycle transitions, particularly post-halving bear phases. A sustained divergence where M2 expands while BTC declines is not automatically a thesis failure — it may reflect crypto-specific deleveraging within a structurally supportive liquidity environment. The thesis is invalidated only if BTC breaks below $52K (the ETF aggregate cost basis), which represents a structural demand failure rather than a cyclical drawdown.
+**The transmission caveat is now the central analytical question.** BTC historically tracked global M2 with a ~10–12-week lag (~83% rolling-12-month directional agreement). That relationship **decoupled around mid-2025**: through H1 2026, global liquidity made record highs (+12% YoY) while BTC fell ~22% YoY. The mechanism is understood — since 2024, ETF flows are the dominant short-run transmission channel, and when they reverse they overwhelm the broad-money signal for months. This framework previously tolerated 6–12 months of divergence; that window is now fully consumed. The tolerance is therefore formalized: the divergence clock is a first-class invalidation trigger (Section 4), and raw M2 is supplemented with US net-liquidity tracking. If liquidity keeps expanding and BTC reconnects, the thesis holds. If divergence reaches 18 months, the thesis's core transmission assumption is wrong regardless of the excuse available at the time.
 
 ---
 
-## 2. Portfolio
+## 2. Current Regime Read — July 2026
 
-Hard money is the core. Equities are satellites. Cash is ammunition.
-
-| Category          | Ticker | Thesis |
-|-------------------|--------|--------|
-| **Hard Money**    | BTCUSD | Highest-beta liquid asset correlated with global M2. Structural fiat debasement hedge. |
-|                   | GLD    | Central bank accumulation exceeding 1,000 tonnes annually. Primary de-dollarisation hedge. Gold’s share of global reserves rising from ~20% toward 25–30% by 2030. Probability-weighted price range by 2030: $7,000–$10,000. |
-| **AI & Tech** | TSLA | Physical-world AI deployment at manufacturing scale. Optimus (robotics) + FSD (autonomy) + Megapack (energy) + Terafab (recursive self-building). Only company combining mass-manufacturing capability with a humanoid robotics programme. Key risk: key-man concentration. |
-| | GOOGL | 4 billion daily users. Custom TPU silicon provides compute independence. DeepMind research edge. Risk: ~80% of revenue from search ads — vulnerable to AI-native disruption. |
-| | META | Advertising efficiency engine. 3.5 billion daily users. AI improves ad targeting and creative generation. $10B annual run-rate from AI video tools. |
-| | NVDA | Dominant AI training compute with strong CUDA ecosystem lock-in. Near-term supercycle driven by $400B+ data-centre capex and 5× efficiency gains (Blackwell → Vera Rubin). However, collapsing per-unit compute costs and rising competition will compress margins over 3–5 years as the business shifts from monopoly pricing to volume growth. |
-| | TSM | Monopoly on advanced-node chip fabrication. Every major AI chip designer depends on TSMC. Primary risk: geopolitical (Taiwan). |
-| | PLTR | AI platform for government and enterprise. Accumulates institutional knowledge with every deployment, building a compounding data moat. Benefits from geopolitical tension and defence spending. |
-| **Cash** | USD | Offensive optionality. Deployed into BTC on drawdowns, gold on pullbacks, or equities during broad market corrections. |
+- **Monetary:** Fed funds 3.50–3.75% under Chair Warsh (since May 2026); forward guidance abolished; dots show 9 of 18 members projecting hikes in 2026, but June payrolls were weak (+57k, −74k revisions) and hike odds for July are ~20%. Headline CPI 4.2% (energy base effects unwinding post-MoU) vs trimmed-mean 2.4% — the gap is closing from above. Meanwhile US M2 accelerates. Hawkish rhetoric, expanding aggregates: the thesis's expected steady-state.
+- **Geopolitical:** Islamabad MoU holding imperfectly; 60-day window expires ~16 Aug. Oil ~$70 (WTI). Dollar strong but off June highs. COFER counter-trend quarter on record.
+- **Hard money:** BTC ~$64k, −50% from the Oct 2025 ATH, ~8 months into a drawdown that historical cycles resolve in 11–17 months. Gold ~$4,000–4,050, −22% from January's ATH, June monthly close $4,015 — $15 above the invalidation line. Crypto Fear & Greed in Extreme Fear. Both assets are simultaneously near their structural floors and far from their cycle highs — maximum-information territory.
+- **AI transition:** Financing crossover due ~Q3 2026; hyperscaler earnings in early August are the first quarterly test. HY spreads (~2.7%) show no stress yet.
 
 ---
 
 ## 3. Reading the Indicators
 
-### VIX (Volatility Index)
+### Pillar 1 — Monetary Expansion
 
-The VIX measures expected 30-day volatility from S&P 500 options pricing. It is the “fear gauge.”
+**Global M2 composite (five blocs, USD)** — the thesis output variable. Above +8% YoY: strongly supportive. +3–8%: baseline expansion. Toward 0%: tightening headwind. Below 0%: invalidation territory. Watch the FX-adjusted rate alongside the headline: yuan appreciation can inflate the USD composite without any new money creation.
 
-**How to read it:** Below 15 = calm, complacent markets. 15–20 = normal range. 20–30 = elevated uncertainty. Above 30 = high fear, coinciding with selloffs, margin calls, and forced liquidation. Above 40 = panic, historically tied to major crises.
+**US M2 YoY** — half of globally active liquidity. Acceleration during a hawkish Fed = fiscal dominance confirmed.
 
-**What it means:** VIX above 30 signals equity stress — slow or pause DCA. Paradoxically, sustained high VIX creates the best buying opportunities as leveraged positions unwind. Cash exists to deploy in these moments.
+**US 10Y / broad dollar index** — rate pressure and dollar strength are the cyclical headwinds the thesis must survive. Note the dashboard tracks the Fed's broad trade-weighted index (~120), not DXY.
 
-### Fear & Greed Index (Crypto)
+### Pillar 2 — De-Dollarisation
 
-Published by Alternative.me. Scores overall crypto sentiment 0–100 using volatility (25%), momentum/volume (25%), social media (15%), Bitcoin dominance (10%), and Google Trends (10%).
+**Gold price vs the $4,000 line** — the market's verdict on the monetary-hedge bid.
 
-**How to read it:** 0–24 = Extreme Fear — historically precedes 30%+ BTC rallies within 3–6 months. 25–49 = Fear. 50 = Neutral. 51–74 = Greed. 75–100 = Extreme Greed — often precedes corrections.
+**Central-bank gold purchases (quarterly, WGC)** — the structural floor. Above ~200t/quarter net: intact. Sustained collapse toward pre-2022 norms (~100t/quarter): leg failing.
 
-**What it means:** Extreme Fear readings are buy signals. The index captures retail emotion. When retail is terrified, institutions and structural buyers accumulate. The discomfort of buying in fear is what generates returns.
+**COFER dollar reserve share (quarterly)** — the direct de-dollarisation measure. One counter-trend quarter is noise; four consecutive is trend reversal.
 
-### Global M2 Money Supply
+### Pillar 3 — AI Transition
 
-Aggregate money supply across the five major currency blocs (USD, CNY, EUR, JPY, GBP), converted to USD. Currently ~$100 trillion.
+**Hyperscaler capex vs operating cash flow (quarterly earnings)** — is the buildout still externally financeable?
 
-**How to read it:** Focus on year-over-year % change. M2 YoY above 8–10% = expansionary and structurally supportive for BTC and risk assets (70–90 day lag). Declining toward 0% = tightening headwind. Turning negative = thesis invalidation (rare and politically unsustainable).
+**HY credit spreads (daily, FRED)** — the canary for the credit-coupled buildout. Sub-3%: no stress. Above 5% alongside AI capex cuts: financing break.
+
+**Inference cost / capability slopes (Epoch, semi-annual check)** — is the structural deflation still on trend?
+
+### Pillar 4 — Hard Money Market State
+
+**BTC vs the $53k realized-price floor** — structural demand health.
+
+**BTC–M2 divergence clock** — months since the rolling-12-month directional agreement broke. Currently ~12. At 18, transmission assumption invalidated.
+
+**VIX / Crypto Fear & Greed** — sentiment extremes mark deployment windows in both directions. Extreme Fear with structural floors intact has historically been the highest-value observation this framework produces.
 
 ---
 
-## 4. Thesis Invalidation Triggers
+## 4. Invalidation Triggers
 
-These are conditions under which the structural thesis — or its expression through specific positions — requires immediate reassessment. A triggered condition does not automatically mean "sell everything." It means the assumptions underpinning the thesis or a position have materially changed, and continuing to hold without review is a decision by default rather than by analysis.
+A triggered condition does not mean "sell everything." It means an assumption failed and holding without reassessment is a decision by default. Concurrent triggers are a regime change, not additive events.
 
-The appropriate response ranges from reducing a single position to a full portfolio reassessment, depending on which trigger fires and whether multiple triggers activate simultaneously. Concurrent triggers (e.g. M2 turning negative while oil sustains above $120) represent a qualitatively different situation than any single trigger — treat them as a regime change signal, not additive individual events.
-
-| Trigger | Current | Threshold | Meaning |
+| Trigger | Threshold | Current (Jul 2026) | Status |
 |---|---|---|---|
-| BTC weekly close | $71,287 | < $52,000 | Below ETF aggregate cost basis. M2 correlation broken or structural demand shock. Action: reduce BTC exposure, reassess. |
-| Gold monthly close | $4,541 | < $4,000 | Central bank accumulation thesis failed. Coordinated selling or genuine deflation without monetary response. Action: reduce gold exposure. |
-| Oil sustained | $91.12 | > $120 (4+ weeks) | Strait disrupted. Inflation reignites. Fed forced hawkish. Action: pause equity deployment, accelerate gold. |
-| Global M2 YoY | +10.4% | < 0% | Coordinated global tightening. Liquidity expansion thesis collapses. Action: reduce all risk to 50%, move to cash. |
-| GOOGL ad revenue | +14% YoY (Q4 2025) | Decline for 2 consecutive quarters | AI transition failing. Search disruption outpacing replacement revenue. Action: reduce by 50%. |
-| NVDA gross margin | 75.0% (Q4 FY26) | < 60% | Chip commoditisation accelerating. Custom silicon eroding monopoly. Action: trim to 2%. |
-| Taiwan military crisis | No escalation | Major escalation | TSMC supply chain at existential risk. Action: exit TSM, reduce NVDA 50%, increase BTC + Gold. |
-| TSLA Optimus / Musk | Terafab announced | Major reversal or sustained multi-year delay | Robotics and recursive manufacturing thesis invalidated. Action: exit TSLA. |
-| META ad revenue | — | Quarterly ad revenue YoY growth < 5% for 2 consecutive quarters while AI capex continues rising | Advertising efficiency thesis failing — AI investment not translating to revenue growth. Action: reduce META by 50%. |
+| BTC structural demand | Weekly close < $53,000 (aggregate realized price; re-derived quarterly) | ~$64,000; cycle low $57,700 | **Amber** |
+| Gold monetary-hedge bid | Monthly close < $4,000 | June close $4,015.51 | **Amber** |
+| BTC–M2 transmission | Directional divergence ≥ 18 months | ~12 months and counting | **Amber** |
+| Dollar reserve share | COFER share rises 4 consecutive quarters | 1 counter-trend quarter (Q1 2026) | **Amber** |
+| Global M2 | YoY < 0% | ~+6–8% and accelerating | Green |
+| Oil shock | > $120 sustained 4+ weeks | WTI ~$70 | Green |
+| AI financing break | HY OAS > 5% with hyperscaler capex cuts | OAS ~2.7%; crossover test ~Q3 2026 | Green |
+| Taiwan escalation | Major military escalation | None | Green |
+
+Four ambers is an honest reading of July 2026: the thesis is under maximum documented stress without any single invalidation having fired. That is precisely when pre-committed lines matter most — the next 6–12 months adjudicate.
 
 ---
 
-## 5. Near-Term Scenario Analysis — 2026
+## 5. Scenarios — H2 2026 through 2027
 
-### Bull (35%)
+Built around the monetary regime as the primary axis, with credit and geopolitics as modifiers.
 
-Gulf conflict resolves within 12 weeks. New Fed chair signals dovish pivot. M2 expansion accelerates from war spending plus easing. US-China trade deal reached. Geopolitical risk premium compresses. All catalysts stack.
+### A. Reconnection (30%)
 
-**BTC: $120-150K · Gold: $6,000+ · Equities: +30-50%**
+Labour softness holds the Warsh Fed at bay; no 2026 hikes land. Fiscal-driven M2 expansion continues at +6–10%; the energy base effect pulls headline CPI toward the trimmed-mean and the Fed declares victory on its own terms. ETF outflows exhaust; BTC reconnects with the liquidity trend it lagged. Divergence clock resets.
 
-### Base (40%)
+**Waypoints: BTC recovers the $75–95k band (realized-price → ETF-cost-basis magnets). Gold reclaims $4,400+. Divergence clock resets before month 18.**
 
-Gulf conflict becomes sustained low-intensity campaign (3-6 months). Oil oscillates $90-110. Fed holds steady, possible H2 rate cut. M2 continues expanding at 10% YoY. Consumer credit stress builds but doesn’t break. AI adoption accelerates beneath the noise.
+### B. Hawkish Grind (40%)
 
-**BTC: $100-115K · Gold: $5,500-6,000 · Equities: flat to +15%**
+The dots win: one or two hikes land (Sep/Dec), the dollar stays strong, real rates bite. M2 keeps expanding (fiscal arithmetic doesn't care about 25bp moves) but risk transmission stays blocked. Hard money chops sideways-to-down; the $53k BTC floor and $4,000 gold line get tested for real. The thesis survives on its floors or fails on its lines — either outcome is information.
 
-### Bear (20%)
+**Waypoints: BTC $50–70k range; gold $3,800–4,300 with the monthly-close line under repeated test; divergence clock runs to 15–18 months and forces the verdict.**
 
-Strait of Hormuz disrupted. Oil above $120 sustained. Inflation reignites. Fed forced hawkish. AI-driven job displacement triggers consumer credit crisis — private credit stress cascades into banking pullback. Printing response arrives only after liquidation.
+### C. Credit-Forced Easing (20%)
 
-**BTC: $55–70K (tests invalidation trigger) · Gold: dips on margin calls then recovers · Equities: -20–30%**
+The financing crossover meets a risk event: an AI-credit accident (hyperscaler bond deal fails, private-credit AI exposure cracks, or an SPCX-style lockup cascade) blows HY spreads out. The Fed's hand is forced — the printing the thesis predicts arrives via crisis, after a liquidation. Hard money gets sold in the margin call, then leads the recovery, as in 2020.
 
-*A weekly close below $52,000 would activate the BTC invalidation trigger in Section 4, converting this from a drawdown to a thesis reassessment.*
+**Waypoints: an initial flush (BTC can breach $53k transiently — the trigger reads weekly closes, and consecutive weekly closes below invalidate), followed by policy response and the strongest hard-money regime of the cycle.**
 
-### Tail (5%)
+### D. Geopolitical Tail (10%)
 
-Full regional war with nuclear dimension. Dollar liquidity scramble. All risk assets crash simultaneously. Taiwan crisis concurrent with Middle East escalation.
+MoU collapse at/after the ~16 Aug window with Hormuz re-closure, or Taiwan escalation. Oil back above $120; inflation reignites; the Fed is forced hawkish into a supply shock. Stagflationary for risk, eventually bullish for hard money, brutal path.
 
-**BTC: < $40K · Gold: spikes then margin-call correction · Equities: -30%+**
-
-*Hard money positions (55%) provide best relative performance in bear and tail scenarios. Cash reserve (13%) provides deployment optionality during forced liquidation events.*
+**Waypoints: oil trigger fires; gold spikes then margin-call corrects; BTC correlates with risk until the policy response.**
 
 ---
 
