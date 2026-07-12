@@ -78,11 +78,13 @@ def fetch_fred():
         "HY_OAS":    "BAMLH0A0HYM2", # HY option-adjusted spread, %, daily
         "FED_BS":    "WALCL",        # Fed total assets, $M weekly
         "RRP":       "RRPONTSYD",    # Overnight RRP, $B daily
-        "TGA":       "WTREGEN",      # Treasury General Account, $B weekly
+        "TGA":       "WTREGEN",      # Treasury General Account, $M weekly (converted to $B below)
     }
     for label, sid in series.items():
         try:
             value, date = fred_latest(sid)
+            if label == "TGA":
+                value = round(value / 1000.0, 3)  # WTREGEN is millions USD; normalize to $B
             entry = {"value": value, "date": date}
             if label == "HY_OAS":
                 entry["unit"] = "pct"
@@ -101,6 +103,9 @@ def fetch_fred():
     tga = results.get("TGA")
     if fed and rrp and tga:
         net = fed["value"] / 1000.0 - rrp["value"] - tga["value"]
+        if not 2000 <= net <= 10000:
+            print(f"  [WARN] US_NET_LIQ {round(net, 1)} $B outside plausible 2000-10000 range — skipped (check series units)")
+            return results
         results["US_NET_LIQ"] = {
             "value": round(net, 1),
             "date": max(fed["date"], rrp["date"], tga["date"]),

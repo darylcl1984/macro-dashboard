@@ -19,7 +19,7 @@
 | `HY_OAS` | `BAMLH0A0HYM2` | High-yield option-adjusted spread, %. Daily. |
 | `FED_BS` | `WALCL` | Fed total assets, $M weekly. |
 | `RRP` | `RRPONTSYD` | Overnight reverse repo, $B daily. |
-| `TGA` | `WTREGEN` | Treasury General Account, $B weekly. |
+| `TGA` | `WTREGEN` | Treasury General Account, **$M** weekly — normalize to $B at ingest. |
 
 Compute `US_NET_LIQ` = WALCL/1000 − RRPONTSYD − WTREGEN (all normalized to $B; verify units at runtime — WALCL is in $M, the others in $B) and store `{value, date, unit: "billions_usd"}` alongside the raw three. If any component is missing, skip the computation with a `[WARN]` (don't write a wrong number).
 
