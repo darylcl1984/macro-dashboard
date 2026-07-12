@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-12T12:01:29.936840+00:00",
+  "updated_at": "2026-07-12T12:12:32.015702+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
@@ -72,7 +72,7 @@
         "JP": "202606",
         "UK": "2026-05"
       },
-      "computed_at": "2026-07-12T12:01:50.667355+00:00"
+      "computed_at": "2026-07-12T12:12:36.853550+00:00"
     },
     "GLOBAL_M2_YOY": {
       "headline_pct": null,
@@ -96,18 +96,18 @@
       "unit": "billions_usd"
     },
     "TGA": {
-      "value": 774062.0,
+      "value": 774.062,
       "date": "2026-07-08",
       "unit": "billions_usd"
     },
     "US_NET_LIQ": {
-      "value": -767326.9,
+      "value": 5961.0,
       "date": "2026-07-10",
       "unit": "billions_usd",
       "components": {
         "FED_BS_bn": 6735.6,
         "RRP_bn": 0.545,
-        "TGA_bn": 774062.0
+        "TGA_bn": 774.062
       }
     },
     "MANUAL": {
