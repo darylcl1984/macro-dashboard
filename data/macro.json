@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-07-11T23:13:18.134865+00:00",
+  "updated_at": "2026-07-12T12:01:29.936840+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
       "date": "2026-05-01"
     },
     "US_10Y": {
-      "value": 4.56,
-      "date": "2026-07-08"
+      "value": 4.54,
+      "date": "2026-07-09"
     },
     "USD_INDEX": {
       "value": 120.6902,
@@ -21,7 +21,7 @@
     "FEAR_GREED": {
       "value": 26,
       "classification": "Fear",
-      "date": "2026-07-11"
+      "date": "2026-07-12"
     },
     "EZ_M2": {
       "value": 16.38,
@@ -36,22 +36,22 @@
     "fx": {
       "EURUSD": {
         "value": 1.1419,
-        "date": "2026-07-11",
+        "date": "2026-07-12",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3398,
-        "date": "2026-07-11",
+        "value": 1.3401,
+        "date": "2026-07-12",
         "source": "yahoo"
       },
       "USDCNY": {
         "value": 6.7667,
-        "date": "2026-07-11",
+        "date": "2026-07-12",
         "source": "yahoo"
       },
       "USDJPY": {
         "value": 161.672,
-        "date": "2026-07-11",
+        "date": "2026-07-12",
         "source": "yahoo"
       }
     },
@@ -72,13 +72,43 @@
         "JP": "202606",
         "UK": "2026-05"
       },
-      "computed_at": "2026-07-11T23:13:25.865249+00:00"
+      "computed_at": "2026-07-12T12:01:50.667355+00:00"
     },
     "GLOBAL_M2_YOY": {
       "headline_pct": null,
       "fx_adjusted_pct": null,
       "base_period": null,
       "as_of_period": "2026-07"
+    },
+    "HY_OAS": {
+      "value": 2.7,
+      "date": "2026-07-09",
+      "unit": "pct"
+    },
+    "FED_BS": {
+      "value": 6735609.0,
+      "date": "2026-07-08",
+      "unit": "millions_usd"
+    },
+    "RRP": {
+      "value": 0.545,
+      "date": "2026-07-10",
+      "unit": "billions_usd"
+    },
+    "TGA": {
+      "value": 774062.0,
+      "date": "2026-07-08",
+      "unit": "billions_usd"
+    },
+    "US_NET_LIQ": {
+      "value": -767326.9,
+      "date": "2026-07-10",
+      "unit": "billions_usd",
+      "components": {
+        "FED_BS_bn": 6735.6,
+        "RRP_bn": 0.545,
+        "TGA_bn": 774062.0
+      }
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC release ~14th. cb_gold/cofer/ai_capex: quarterly. Trigger statuses here cover only manually-adjudicated triggers; the rest are computed by the frontend.",
