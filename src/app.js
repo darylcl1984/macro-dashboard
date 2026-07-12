@@ -266,9 +266,7 @@ function buildTriggers(prices, macro, manual) {
       threshold: 'Monthly close < $4,000',
       current() {
         const price = gold?.price;
-        const base = price != null ? fmt(price, 0, '$') + ' live' : '—';
-        const n = manualNotes('gold_monthly_close');
-        return n ? `${base} · ${n}` : base;
+        return price != null ? fmt(price, 0, '$') + ' live' : '—';
       },
       status() {
         const live = gold?.price;
@@ -360,9 +358,7 @@ function buildTriggers(prices, macro, manual) {
       label: 'AI financing break',
       threshold: 'HY OAS > 5% + capex cuts',
       current() {
-        const oasStr = oas != null ? `${oas.toFixed(2)}% OAS` : 'OAS —';
-        const n = manualNotes('ai_financing');
-        return n ? `${oasStr} · ${n}` : oasStr;
+        return oas != null ? `${oas.toFixed(2)}% OAS` : 'OAS —';
       },
       status() {
         const man = manualStatus('ai_financing');
@@ -385,7 +381,7 @@ function buildTriggers(prices, macro, manual) {
       status() {
         return manualStatus('taiwan') || 'green';
       },
-      note() { return manualNotes('taiwan'); },
+      note() { return ''; },
     },
   ];
 }

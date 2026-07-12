@@ -1,4 +1,4 @@
-const CACHE_NAME   = 'macro-dashboard-v4';
+const CACHE_NAME   = 'macro-dashboard-v5';
 const SHELL_ASSETS = ['./index.html', './styles.css', './app.js', './manifest.json'];
 
 // ─── Install: cache app shell ─────────────────────────────────────────────────
