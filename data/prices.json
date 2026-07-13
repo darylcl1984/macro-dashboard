@@ -1,27 +1,27 @@
 {
-  "updated_at": "2026-07-13T14:51:11.166647+00:00",
+  "updated_at": "2026-07-13T18:24:46.483513+00:00",
   "prices": {
     "BTC": {
-      "price": 62664,
-      "change_pct": -2.33,
+      "price": 61821,
+      "change_pct": -3.41,
       "week52_low": 57747.766,
       "week52_high": 126198.07
     },
     "XAUUSD": {
-      "price": 4010.6,
-      "change_pct": -1.48,
+      "price": 4000.0,
+      "change_pct": -1.74,
       "week52_low": 3263.9,
       "week52_high": 5586.2
     },
     "WTI": {
-      "price": 74.58,
-      "change_pct": 1.44,
+      "price": 77.68,
+      "change_pct": 5.66,
       "week52_low": 54.98,
       "week52_high": 119.48
     },
     "VIX": {
-      "price": 16.33,
-      "change_pct": 1.24,
+      "price": 16.94,
+      "change_pct": 5.02,
       "week52_low": 13.38,
       "week52_high": 35.3
     }
