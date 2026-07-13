@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-12T12:12:32.015702+00:00",
+  "updated_at": "2026-07-13T11:20:11.067452+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 26,
+      "value": 28,
       "classification": "Fear",
-      "date": "2026-07-12"
+      "date": "2026-07-13"
     },
     "EZ_M2": {
       "value": 16.38,
@@ -35,34 +35,34 @@
     },
     "fx": {
       "EURUSD": {
-        "value": 1.1419,
-        "date": "2026-07-12",
+        "value": 1.143,
+        "date": "2026-07-13",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3401,
-        "date": "2026-07-12",
+        "value": 1.3388,
+        "date": "2026-07-13",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.7667,
-        "date": "2026-07-12",
+        "value": 6.7655,
+        "date": "2026-07-13",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 161.672,
-        "date": "2026-07-12",
+        "value": 162.132,
+        "date": "2026-07-13",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 106.43,
+      "value": 106.44,
       "unit": "trillions_usd",
       "components": {
         "US": 23.05,
-        "CN": 52.27,
-        "EZ": 18.7,
-        "JP": 8.02,
+        "CN": 52.28,
+        "EZ": 18.72,
+        "JP": 8.0,
         "UK": 4.39
       },
       "component_dates": {
@@ -72,7 +72,7 @@
         "JP": "202606",
         "UK": "2026-05"
       },
-      "computed_at": "2026-07-12T12:12:36.853550+00:00"
+      "computed_at": "2026-07-13T11:20:16.370344+00:00"
     },
     "GLOBAL_M2_YOY": {
       "headline_pct": null,
