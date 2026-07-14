@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-07-13T11:20:11.067452+00:00",
+  "updated_at": "2026-07-14T10:04:35.202515+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
       "date": "2026-05-01"
     },
     "US_10Y": {
-      "value": 4.54,
-      "date": "2026-07-09"
+      "value": 4.56,
+      "date": "2026-07-10"
     },
     "USD_INDEX": {
-      "value": 120.6902,
-      "date": "2026-07-02"
+      "value": 120.5046,
+      "date": "2026-07-10"
     },
     "JP_M2": {
       "value": 1296.44,
@@ -19,9 +19,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 28,
-      "classification": "Fear",
-      "date": "2026-07-13"
+      "value": 22,
+      "classification": "Extreme Fear",
+      "date": "2026-07-14"
     },
     "EZ_M2": {
       "value": 16.38,
@@ -35,33 +35,33 @@
     },
     "fx": {
       "EURUSD": {
-        "value": 1.143,
-        "date": "2026-07-13",
+        "value": 1.1404,
+        "date": "2026-07-14",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3388,
-        "date": "2026-07-13",
+        "value": 1.3382,
+        "date": "2026-07-14",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.7655,
-        "date": "2026-07-13",
+        "value": 6.7787,
+        "date": "2026-07-14",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 162.132,
-        "date": "2026-07-13",
+        "value": 162.152,
+        "date": "2026-07-14",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 106.44,
+      "value": 106.29,
       "unit": "trillions_usd",
       "components": {
         "US": 23.05,
-        "CN": 52.28,
-        "EZ": 18.72,
+        "CN": 52.17,
+        "EZ": 18.68,
         "JP": 8.0,
         "UK": 4.39
       },
@@ -72,7 +72,7 @@
         "JP": "202606",
         "UK": "2026-05"
       },
-      "computed_at": "2026-07-13T11:20:16.370344+00:00"
+      "computed_at": "2026-07-14T10:04:42.167893+00:00"
     },
     "GLOBAL_M2_YOY": {
       "headline_pct": null,
@@ -81,8 +81,8 @@
       "as_of_period": "2026-07"
     },
     "HY_OAS": {
-      "value": 2.7,
-      "date": "2026-07-09",
+      "value": 2.69,
+      "date": "2026-07-10",
       "unit": "pct"
     },
     "FED_BS": {
@@ -91,8 +91,8 @@
       "unit": "millions_usd"
     },
     "RRP": {
-      "value": 0.545,
-      "date": "2026-07-10",
+      "value": 0.795,
+      "date": "2026-07-13",
       "unit": "billions_usd"
     },
     "TGA": {
@@ -101,12 +101,12 @@
       "unit": "billions_usd"
     },
     "US_NET_LIQ": {
-      "value": 5961.0,
-      "date": "2026-07-10",
+      "value": 5960.8,
+      "date": "2026-07-13",
       "unit": "billions_usd",
       "components": {
         "FED_BS_bn": 6735.6,
-        "RRP_bn": 0.545,
+        "RRP_bn": 0.795,
         "TGA_bn": 774.062
       }
     },
