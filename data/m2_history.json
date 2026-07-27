@@ -258,5 +258,22 @@
     "flags": [
       "UK_derived_from_MoM"
     ]
+  },
+  {
+    "period": "2026-07",
+    "components_local": {
+      "US_usd_bn": 23052.3,
+      "CN_cny_tn": 353.67,
+      "EZ_eur_tn": 16.41,
+      "JP_jpy_tn": 1296.44,
+      "UK_gbp_bn": 3278.5
+    },
+    "fx": {
+      "EURUSD": 1.1397,
+      "GBPUSD": 1.3319,
+      "USDCNY": 6.754,
+      "USDJPY": 163.612
+    },
+    "composite_usd": 106.4
   }
 ]
