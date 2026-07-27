@@ -6,15 +6,31 @@ __pycache__/
 .venv/
 venv/
 
-# Env / secrets
+# Env / secrets — never commit keys
 .env
 .env.*
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Local / agent working scratch (not product data)
+temp/
+tmp/
+*.tmp
+data/agent_manual_pack_*.json
+data/*_seed.json
+data/*.local.json
 
 # OS / editor
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+*.swp
+*~
 
-# Local Claude Code config
+# Local tool config
 .claude/
+.grok/
+.cursor/

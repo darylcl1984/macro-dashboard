@@ -1,25 +1,262 @@
 [
   {
-    "period": "2026-03",
-    "components_local": null,
-    "fx": null,
-    "composite_usd": 103.97
+    "period": "2025-05",
+    "components_local": {
+      "US_usd_bn": 21833.9,
+      "CN_cny_tn": 325.78,
+      "EZ_eur_tn": 15.72,
+      "JP_jpy_tn": 1267.0,
+      "UK_gbp_bn": 3108.0
+    },
+    "fx": {
+      "EURUSD": 1.1274,
+      "GBPUSD": 1.3358,
+      "USDCNY": 7.2166,
+      "USDJPY": 144.8762
+    },
+    "composite_usd": 97.597,
+    "composite_usd_4bloc_ex_uk": 93.445,
+    "flags": [
+      "UK_gbp_bn_derived_2nd_order",
+      "EZ_2dp",
+      "JP_4sf_average",
+      "fx_monthly_avg_G5"
+    ]
   },
   {
-    "period": "2026-07",
+    "period": "2025-07",
+    "components_local": {
+      "US_usd_bn": 22020.4,
+      "CN_cny_tn": 329.94,
+      "EZ_eur_tn": 15.74,
+      "JP_jpy_tn": 1270.0,
+      "UK_gbp_bn": null
+    },
+    "fx": {
+      "EURUSD": 1.1671,
+      "GBPUSD": 1.3489,
+      "USDCNY": 7.1741,
+      "USDJPY": 147.2014
+    },
+    "composite_usd": 95.009,
+    "composite_usd_4bloc_ex_uk": 95.009,
+    "flags": [
+      "UK_unpublished",
+      "composite_is_4bloc_ex_uk"
+    ]
+  },
+  {
+    "period": "2025-08",
+    "components_local": {
+      "US_usd_bn": 22087.1,
+      "CN_cny_tn": 331.98,
+      "EZ_eur_tn": 15.75,
+      "JP_jpy_tn": 1271.0,
+      "UK_gbp_bn": null
+    },
+    "fx": {
+      "EURUSD": 1.1647,
+      "GBPUSD": 1.3456,
+      "USDCNY": 7.1727,
+      "USDJPY": 147.4786
+    },
+    "composite_usd": 95.333,
+    "composite_usd_4bloc_ex_uk": 95.333,
+    "flags": [
+      "UK_unpublished",
+      "composite_is_4bloc_ex_uk"
+    ]
+  },
+  {
+    "period": "2025-09",
+    "components_local": {
+      "US_usd_bn": 22170.4,
+      "CN_cny_tn": 335.38,
+      "EZ_eur_tn": 15.79,
+      "JP_jpy_tn": 1271.0,
+      "UK_gbp_bn": null
+    },
+    "fx": {
+      "EURUSD": 1.1739,
+      "GBPUSD": 1.3506,
+      "USDCNY": 7.1235,
+      "USDJPY": 147.8629
+    },
+    "composite_usd": 96.383,
+    "composite_usd_4bloc_ex_uk": 96.383,
+    "flags": [
+      "UK_unpublished",
+      "composite_is_4bloc_ex_uk"
+    ]
+  },
+  {
+    "period": "2025-10",
+    "components_local": {
+      "US_usd_bn": 22245.1,
+      "CN_cny_tn": 335.13,
+      "EZ_eur_tn": 15.9,
+      "JP_jpy_tn": 1270.0,
+      "UK_gbp_bn": null
+    },
+    "fx": {
+      "EURUSD": 1.1641,
+      "GBPUSD": 1.3357,
+      "USDCNY": 7.12,
+      "USDJPY": 151.3545
+    },
+    "composite_usd": 96.214,
+    "composite_usd_4bloc_ex_uk": 96.214,
+    "flags": [
+      "UK_unpublished",
+      "composite_is_4bloc_ex_uk"
+    ]
+  },
+  {
+    "period": "2025-11",
+    "components_local": {
+      "US_usd_bn": 22277.3,
+      "CN_cny_tn": 336.99,
+      "EZ_eur_tn": 16.02,
+      "JP_jpy_tn": 1277.0,
+      "UK_gbp_bn": 3201.99
+    },
+    "fx": {
+      "EURUSD": 1.1558,
+      "GBPUSD": 1.3139,
+      "USDCNY": 7.1069,
+      "USDJPY": 155.1411
+    },
+    "composite_usd": 100.649,
+    "composite_usd_4bloc_ex_uk": 96.442,
+    "flags": [
+      "UK_reported_TE"
+    ]
+  },
+  {
+    "period": "2025-12",
+    "components_local": {
+      "US_usd_bn": 22353.4,
+      "CN_cny_tn": 340.29,
+      "EZ_eur_tn": 16.08,
+      "JP_jpy_tn": 1279.0,
+      "UK_gbp_bn": 3212.665
+    },
+    "fx": {
+      "EURUSD": 1.171,
+      "GBPUSD": 1.3387,
+      "USDCNY": 7.0432,
+      "USDJPY": 155.915
+    },
+    "composite_usd": 102.002,
+    "composite_usd_4bloc_ex_uk": 97.701,
+    "flags": [
+      "UK_reported_TE"
+    ]
+  },
+  {
+    "period": "2026-01",
+    "components_local": {
+      "US_usd_bn": 22429.3,
+      "CN_cny_tn": 347.19,
+      "EZ_eur_tn": 16.2047,
+      "JP_jpy_tn": 1279.0,
+      "UK_gbp_bn": 3209.5
+    },
+    "fx": {
+      "EURUSD": 1.1744,
+      "GBPUSD": 1.3536,
+      "USDCNY": 6.9692,
+      "USDJPY": 156.6505
+    },
+    "composite_usd": 103.787,
+    "composite_usd_4bloc_ex_uk": 99.443,
+    "flags": [
+      "UK_derived_from_MoM"
+    ]
+  },
+  {
+    "period": "2026-02",
+    "components_local": {
+      "US_usd_bn": 22626.9,
+      "CN_cny_tn": 349.22,
+      "EZ_eur_tn": 16.2458,
+      "JP_jpy_tn": 1274.9234,
+      "UK_gbp_bn": 3206.2
+    },
+    "fx": {
+      "EURUSD": 1.1824,
+      "GBPUSD": 1.3579,
+      "USDCNY": 6.9064,
+      "USDJPY": 155.1016
+    },
+    "composite_usd": 104.974,
+    "composite_usd_4bloc_ex_uk": 100.621,
+    "flags": [
+      "UK_derived_from_MoM"
+    ]
+  },
+  {
+    "period": "2026-03",
+    "components_local": {
+      "US_usd_bn": 22686.2,
+      "CN_cny_tn": 353.86,
+      "EZ_eur_tn": 16.2673,
+      "JP_jpy_tn": 1280.0,
+      "UK_gbp_bn": 3231.9
+    },
+    "fx": {
+      "EURUSD": 1.1557,
+      "GBPUSD": 1.3339,
+      "USDCNY": 6.8921,
+      "USDJPY": 158.6827
+    },
+    "composite_usd": 105.207,
+    "composite_usd_4bloc_ex_uk": 100.896,
+    "flags": [
+      "EZ_interpolated",
+      "UK_derived_from_MoM"
+    ]
+  },
+  {
+    "period": "2026-04",
+    "components_local": {
+      "US_usd_bn": 22804.5,
+      "CN_cny_tn": 353.04,
+      "EZ_eur_tn": 16.2887,
+      "JP_jpy_tn": 1296.0,
+      "UK_gbp_bn": 3238.4
+    },
+    "fx": {
+      "EURUSD": 1.1697,
+      "GBPUSD": 1.3454,
+      "USDCNY": 6.8371,
+      "USDJPY": 159.1173
+    },
+    "composite_usd": 105.995,
+    "composite_usd_4bloc_ex_uk": 101.638,
+    "flags": [
+      "UK_derived_from_MoM"
+    ]
+  },
+  {
+    "period": "2026-05",
     "components_local": {
       "US_usd_bn": 23052.3,
       "CN_cny_tn": 353.67,
-      "EZ_eur_tn": 16.38,
-      "JP_jpy_tn": 1296.44,
-      "UK_gbp_bn": 3278.5
+      "EZ_eur_tn": 16.3818,
+      "JP_jpy_tn": 1298.0755,
+      "UK_gbp_bn": 3241.6
     },
     "fx": {
-      "EURUSD": 1.1395,
-      "GBPUSD": 1.3324,
-      "USDCNY": 6.7614,
-      "USDJPY": 163.714
+      "EURUSD": 1.1681,
+      "GBPUSD": 1.3498,
+      "USDCNY": 6.7996,
+      "USDJPY": 158.153
     },
-    "composite_usd": 106.32
+    "composite_usd": 106.784,
+    "composite_usd_4bloc_ex_uk": 102.409,
+    "flags": [
+      "UK_derived_from_MoM"
+    ]
   }
 ]

@@ -118,33 +118,38 @@
       }
     },
     "GLOBAL_M2": {
-      "value": 106.32,
+      "value": 106.784,
       "unit": "trillions_usd",
       "components": {
         "US": 23.05,
-        "CN": 52.31,
-        "EZ": 18.67,
-        "JP": 7.92,
-        "UK": 4.37
+        "CN": 52.01,
+        "EZ": 19.14,
+        "JP": 8.21,
+        "UK": 4.38
       },
       "component_dates": {
         "US": "2026-05-01",
         "CN": "2026-05",
         "EZ": "2026-05",
-        "JP": "202606",
+        "JP": "202605",
         "UK": "2026-05"
       },
-      "computed_at": "2026-07-24T10:24:42.320118+00:00"
+      "computed_at": "2026-07-27T12:00:00+00:00",
+      "note": "May-2026 complete month (seeded history)"
     },
     "GLOBAL_M2_YOY": {
-      "headline_pct": null,
-      "fx_adjusted_pct": null,
-      "base_period": null,
-      "as_of_period": "2026-07",
-      "history_months": 2,
-      "history_ready": false,
+      "headline_pct": 9.41,
+      "fx_adjusted_pct": 6.45,
+      "base_period": "2025-05",
+      "as_of_period": "2026-05",
+      "history_months": 12,
       "history_needed": 13,
-      "history_note": "Computed YoY needs ~13 months of history (2 months on file)."
+      "history_ready": true,
+      "provisional": false,
+      "estimated": false,
+      "scope": "5bloc",
+      "span_months": 12,
+      "history_note": "Calendar YoY May 2025 → May 2026 · fixed-FX holds FX constant (money creation only). UK partly derived."
     },
     "HY_OAS": {
       "value": 2.68,
