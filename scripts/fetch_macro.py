@@ -49,8 +49,8 @@ _BOE_UA = {
 # FRED
 # ---------------------------------------------------------------------------
 
-def fred_latest(series_id):
-    """Return (value, date) for the most recent non-null observation."""
+def fred_observations(series_id, limit=24):
+    """Return list of (value, date) newest-first, skipping nulls."""
     if not FRED_API_KEY:
         raise RuntimeError("FRED_API_KEY not set")
     data = fetch_json(
@@ -60,13 +60,71 @@ def fred_latest(series_id):
             "api_key": FRED_API_KEY,
             "file_type": "json",
             "sort_order": "desc",
-            "limit": 10,  # grab a few in case latest is null
+            "limit": limit,
         },
     )
+    out = []
     for obs in data["observations"]:
         if obs["value"] != ".":
-            return float(obs["value"]), obs["date"]
-    raise ValueError(f"No valid observations for FRED series {series_id}")
+            out.append((float(obs["value"]), obs["date"]))
+    if not out:
+        raise ValueError(f"No valid observations for FRED series {series_id}")
+    return out
+
+
+def fred_latest(series_id):
+    """Return (value, date) for the most recent non-null observation."""
+    value, date = fred_observations(series_id, limit=10)[0]
+    return value, date
+
+
+def _yoy_from_obs(obs):
+    """
+    obs: newest-first list of (value, date).
+    Returns (yoy_pct, prior_yoy_pct, history_oldest_first) for monthly series.
+    """
+    if len(obs) < 13:
+        return None, None, []
+    # history oldest→newest for transmission strip (last 18 months max)
+    hist = [{"period": d[:7], "value": v} for v, d in reversed(obs[:18])]
+    cur_v, cur_d = obs[0]
+    # find observation ~12 months earlier
+    prior = None
+    for v, d in obs[1:]:
+        if d[:7] <= _shift_month(cur_d[:7], -12):
+            prior = (v, d)
+            break
+    if prior is None and len(obs) >= 13:
+        prior = obs[12]
+    yoy = None
+    if prior and prior[0]:
+        yoy = round((cur_v / prior[0] - 1) * 100, 2)
+    prior_yoy = None
+    if len(obs) >= 14:
+        # YoY as of previous month
+        p_cur = obs[1]
+        p_base = None
+        for v, d in obs[2:]:
+            if d[:7] <= _shift_month(p_cur[1][:7], -12):
+                p_base = (v, d)
+                break
+        if p_base is None and len(obs) >= 14:
+            p_base = obs[13]
+        if p_base and p_base[0]:
+            prior_yoy = round((p_cur[0] / p_base[0] - 1) * 100, 2)
+    return yoy, prior_yoy, hist
+
+
+def _shift_month(yyyy_mm, delta):
+    y, m = map(int, yyyy_mm.split("-"))
+    m += delta
+    while m <= 0:
+        m += 12
+        y -= 1
+    while m > 12:
+        m -= 12
+        y += 1
+    return f"{y:04d}-{m:02d}"
 
 
 def fetch_fred():
@@ -82,6 +140,26 @@ def fetch_fred():
     }
     for label, sid in series.items():
         try:
+            if label == "US_M2":
+                obs = fred_observations(sid, limit=24)
+                value, date = obs[0]
+                yoy, prior_yoy, hist = _yoy_from_obs(obs)
+                entry = {
+                    "value": value,
+                    "date": date,
+                    "unit": "billions_usd",
+                }
+                if yoy is not None:
+                    entry["yoy_pct"] = yoy
+                if prior_yoy is not None:
+                    entry["yoy_prior_pct"] = prior_yoy
+                    entry["yoy_delta_pp"] = round(yoy - prior_yoy, 2) if yoy is not None else None
+                if hist:
+                    entry["history"] = hist
+                results[label] = entry
+                print(f"    {label}: {value} ({date}) yoy={yoy} Δpp={entry.get('yoy_delta_pp')}")
+                continue
+
             value, date = fred_latest(sid)
             if label == "TGA":
                 value = round(value / 1000.0, 3)  # WTREGEN is millions USD; normalize to $B
@@ -475,6 +553,51 @@ def load_manual():
 
 
 # ---------------------------------------------------------------------------
+# Stablecoins (dollar rails proxy)
+# ---------------------------------------------------------------------------
+
+def fetch_stablecoins():
+    """
+    Aggregate stablecoin market cap via DefiLlama (no key).
+    Returns STABLECOIN_MCAP in billions USD.
+    """
+    data = fetch_json("https://stablecoins.llama.fi/stablecoins?includePrices=true", timeout=30)
+    pegged = data.get("peggedAssets") or []
+    total = 0.0
+    for asset in pegged:
+        circ = (asset.get("circulating") or {}).get("peggedUSD")
+        if circ is not None:
+            total += float(circ)
+    if total <= 0:
+        raise ValueError("No stablecoin circulating totals")
+    bn = round(total / 1e9, 1)
+    return {
+        "STABLECOIN_MCAP": {
+            "value": bn,
+            "unit": "billions_usd",
+            "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "source": "defillama",
+        }
+    }
+
+
+def enrich_global_m2_yoy(yoy, history):
+    """Attach history progress metadata for the dual M2 readout."""
+    periods = [e.get("period") for e in history if e.get("period")]
+    n = len(periods)
+    yoy = dict(yoy or {})
+    yoy["history_months"] = n
+    yoy["history_ready"] = yoy.get("headline_pct") is not None
+    yoy["history_needed"] = 13
+    if not yoy.get("history_ready"):
+        yoy["history_note"] = (
+            f"Computed YoY needs ~13 months of history "
+            f"({n} month{'s' if n != 1 else ''} on file)."
+        )
+    return yoy
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -540,14 +663,27 @@ def main():
         if global_m2 and snapshot:
             indicators["GLOBAL_M2"] = global_m2
             yoy = upsert_m2_history(snapshot)
-            indicators["GLOBAL_M2_YOY"] = yoy
+            hist = _seed_m2_history()
+            indicators["GLOBAL_M2_YOY"] = enrich_global_m2_yoy(yoy, hist)
             print(f"    GLOBAL_M2_YOY: headline={yoy['headline_pct']} fx_adj={yoy['fx_adjusted_pct']}")
         else:
             # Ensure history seed file still exists even if composite skipped
             hist = _seed_m2_history()
             write_json(M2_HISTORY_FILE, hist)
+            if "GLOBAL_M2_YOY" in indicators:
+                indicators["GLOBAL_M2_YOY"] = enrich_global_m2_yoy(
+                    indicators["GLOBAL_M2_YOY"], hist
+                )
     except Exception as e:
         print(f"  [WARN] GLOBAL_M2: {e}")
+
+    print("  Stablecoins: market cap (DefiLlama)")
+    try:
+        sc = fetch_stablecoins()
+        indicators.update(sc)
+        print(f"    STABLECOIN_MCAP: ${sc['STABLECOIN_MCAP']['value']}B")
+    except Exception as e:
+        print(f"  [WARN] Stablecoins: {e}")
 
     write_json(OUTPUT_FILE, results)
     print(f"Written to {OUTPUT_FILE}")

@@ -1,11 +1,22 @@
 {
-  "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC release ~14th. cb_gold/cofer/ai_capex: quarterly. Trigger statuses here cover only manually-adjudicated triggers; the rest are computed by the frontend.",
+  "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. ETF flows: weekly when possible.",
   "scenario": {
     "current": "B — Hawkish Grind",
     "probability": "40%",
     "updated": "2026-07-11",
-    "notes": "v6 scenario tree — see thesis §5. A Reconnection 30% / B Hawkish Grind 40% / C Credit-Forced Easing 20% / D Geopolitical Tail 10%."
+    "notes": "Base case for now: tight policy for longer (40%). Alternatives: markets reconnect with liquidity (30%), a credit scare forces easier policy (20%), or a geopolitics shock (10%).",
+    "waypoints": [
+      { "id": "btc_band", "label": "BTC holds the $50–70k grind band", "status": "hit" },
+      { "id": "gold_line", "label": "Gold monthly close tested near $4,000", "status": "approaching" },
+      { "id": "divergence", "label": "Divergence clock toward 15–18 months", "status": "approaching" },
+      { "id": "floors", "label": "BTC $53k floor and gold $4k line still hold", "status": "hit" }
+    ]
   },
+  "regime_bullets": [
+    "Hawkish talk from the Fed — money supply still growing",
+    "Hard assets near structural floors, far from cycle highs",
+    "Four watchpoints under stress · none broken yet"
+  ],
   "china_m2": {
     "value": 353.67,
     "unit": "trillions_cny",
@@ -16,52 +27,73 @@
   "global_m2_yoy_estimate": {
     "value": 7.0,
     "unit": "pct",
-    "note": "Interim manual estimate; superseded automatically once m2_history.json spans 13 months",
+    "note": "Hand estimate for overall money growth until we have a full year of history on this dashboard.",
     "updated": "2026-07-11"
+  },
+  "bloc_m2_yoy": {
+    "US": { "value": 5.6, "estimated": false },
+    "CN": { "value": 8.6, "estimated": false },
+    "EZ": { "value": 2.5, "estimated": true },
+    "JP": { "value": 1.5, "estimated": true },
+    "UK": { "value": 4.5, "estimated": false },
+    "unit": "pct",
+    "note": "Year-over-year money growth in local currency. Eurozone and Japan are midpoints of published ranges.",
+    "updated": "2026-07-11",
+    "source": "Official releases / mid-2026 compile (see Notes on Global M2)"
   },
   "divergence": {
     "start": "2025-07",
-    "note": "Month the BTC-M2 rolling-12m directional agreement broke. Reset to null when reconnected."
+    "note": "Since mid-2025, Bitcoin has not been tracking global money growth the way it used to. Timer resets when they move together again."
   },
   "cb_gold": {
     "quarterly_tonnes": 244,
     "period": "2026-Q1",
     "yoy_pct": 3,
+    "floor_tonnes": 200,
     "latest_monthly": {
       "tonnes": 41,
       "period": "2026-05"
     },
-    "note": "WGC net purchases. Floor intact; PBoC 20th consecutive month.",
+    "note": "Central banks are still net buyers. China has bought for 20 months in a row. That is the floor — markets still set the day-to-day gold price.",
     "updated": "2026-07-11"
   },
   "cofer_usd_share": {
     "consecutive_rising_quarters": 1,
     "period": "2026-Q1",
-    "note": "Q1 2026: first counter-trend rise (headline and valuation-adjusted).",
+    "note": "Q1 2026 was the first quarter the dollar’s share of reserves ticked up after a long decline.",
     "updated": "2026-07-11"
   },
   "ai_transition": {
-    "crossover_status": "Oracle crossed; Amazon crossing; aggregate hyperscaler capex > OCF expected ~Q3 2026",
-    "structural_slopes": "Inference cost halves ~2mo; pre-training efficiency ~3x/yr (Epoch, Feb 2026)",
-    "next_test": "Hyperscaler earnings, early Aug 2026",
+    "crossover_status": "Oracle already spends more than it earns from operations; Amazon is getting close. Big cloud/AI spenders as a group may tip that way around Q3 2026.",
+    "structural_slopes": "Running AI models is getting much cheaper (cost roughly halves every ~2 months). Training efficiency is also rising ~3× per year.",
+    "next_test": "Big tech earnings in early August 2026",
+    "capex_cuts": false,
     "updated": "2026-07-11"
+  },
+  "etf_flows": {
+    "period": "2026-07",
+    "net_usd_bn": -1.2,
+    "streak_weeks_outflow": 3,
+    "note": "Spot BTC ETF flows still net selling — short-run path still fighting broad money growth.",
+    "updated": "2026-07-11",
+    "source": "manual weekly read"
   },
   "triggers_manual": {
     "gold_monthly_close": {
       "status": "amber",
-      "notes": "June 2026 close $4,015.51 — $15 above the $4,000 line"
+      "notes": "June 2026 monthly close was $4,015.51 — only $15 above the $4,000 line."
     },
     "cofer_reversal": {
       "status": "amber",
-      "notes": "1 of 4 counter-trend quarters"
+      "notes": "One up quarter so far; need four in a row to call a real reversal."
     },
     "taiwan": {
       "status": "green",
-      "notes": "No escalation"
+      "notes": "No major military escalation."
     },
     "ai_financing": {
       "status": "green",
-      "notes": "HY OAS ~2.7%; watch Q3 crossover + hyperscaler bond issuance"
+      "notes": "Credit spreads are calm (~2.7%). Watch Q3 spending vs cash flow and big tech bond sales."
     }
   }
 }

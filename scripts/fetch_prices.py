@@ -15,6 +15,7 @@ Sources:
 
 import json
 import time
+from datetime import datetime
 
 from utils import DATA_DIR, SESSION, fetch_json, fetch_stooq, now_utc, write_json
 
@@ -94,6 +95,69 @@ def fetch_yahoo_chart(ticker, yahoo_sym):
         "week52_low": chart.get("fiftyTwoWeekLow"),
         "week52_high": chart.get("fiftyTwoWeekHigh"),
     }
+
+
+def _yahoo_history(yahoo_sym, interval, range_):
+    """Return list of {t, close} from Yahoo chart timestamps."""
+    resp = SESSION.get(
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{yahoo_sym}",
+        params={"interval": interval, "range": range_},
+        headers=_YAHOO_UA,
+        timeout=20,
+    )
+    resp.raise_for_status()
+    result = resp.json()["chart"]["result"][0]
+    ts = result.get("timestamp") or []
+    closes = (result.get("indicators") or {}).get("quote", [{}])[0].get("close") or []
+    out = []
+    for t, c in zip(ts, closes):
+        if c is None:
+            continue
+        out.append({"t": int(t), "close": float(c)})
+    return out
+
+
+def enrich_closes(ticker, yahoo_sym, entry):
+    """
+    Attach weekly_close, monthly_close, and for BTC a monthly series for
+    transmission vs money growth. Uses Yahoo history.
+    """
+    try:
+        # Weekly: last completed week bar
+        weekly = _yahoo_history(yahoo_sym, "1wk", "3mo")
+        if weekly:
+            last = weekly[-1]
+            # If the last bar is the current incomplete week, prefer previous when available
+            entry["weekly_close"] = round(last["close"], 2 if ticker != "BTC" else 0)
+            entry["weekly_close_as_of"] = datetime.utcfromtimestamp(last["t"]).strftime("%Y-%m-%d")
+            if len(weekly) >= 2:
+                prev = weekly[-2]
+                entry["weekly_close_prev"] = round(prev["close"], 2 if ticker != "BTC" else 0)
+    except Exception as e:
+        print(f"  [WARN] Yahoo weekly {ticker}: {e}")
+
+    try:
+        monthly = _yahoo_history(yahoo_sym, "1mo", "2y")
+        if monthly:
+            last = monthly[-1]
+            entry["monthly_close"] = round(last["close"], 2 if ticker != "BTC" else 0)
+            entry["monthly_close_as_of"] = datetime.utcfromtimestamp(last["t"]).strftime("%Y-%m")
+            if ticker == "BTC":
+                series = []
+                for bar in monthly[-18:]:
+                    series.append({
+                        "period": datetime.utcfromtimestamp(bar["t"]).strftime("%Y-%m"),
+                        "close": round(bar["close"], 0),
+                    })
+                entry["monthly_series"] = series
+            # ATH proxy: max of series / 52w high
+            if entry.get("week52_high") is not None:
+                entry["ath_proxy"] = entry["week52_high"]
+                entry["ath_note"] = "52-week high used as cycle-high proxy"
+    except Exception as e:
+        print(f"  [WARN] Yahoo monthly {ticker}: {e}")
+
+    return entry
 
 
 def fetch_yahoo_assets():
@@ -202,6 +266,17 @@ def main():
             print(f"  [WARN] {ticker}: missing price key after merge — setting price: null")
             entry["price"] = None
             entry.setdefault("change_pct", None)
+
+    # Weekly / monthly closes (BTC, gold) for official-style trigger adjudication
+    print("  Yahoo history: weekly/monthly closes")
+    for ticker in ("BTC", "XAUUSD"):
+        ysym = YAHOO_SYMBOLS.get(ticker)
+        if ysym and ticker in prices:
+            try:
+                prices[ticker] = enrich_closes(ticker, ysym, prices[ticker])
+                time.sleep(0.3)
+            except Exception as e:
+                print(f"  [WARN] enrich_closes {ticker}: {e}")
 
     results = {
         "updated_at": now_utc(),

@@ -100,6 +100,116 @@ function monthsSince(period) {
   return (now.getFullYear() - Number(m[1])) * 12 + ((now.getMonth() + 1) - Number(m[2]));
 }
 
+function m2BandClass(yoy) {
+  if (yoy == null || isNaN(yoy)) return 'neu';
+  if (yoy >= 8) return 'pos';
+  if (yoy >= 3) return 'tone-green';
+  if (yoy >= 0) return 'tone-amber';
+  return 'neg';
+}
+
+function assetContextHtml(entry) {
+  if (!entry || entry.price == null) return '';
+  const price = entry.price;
+  const ath = entry.ath_proxy ?? entry.week52_high;
+  const low = entry.week52_low;
+  const bits = [];
+  if (ath != null && ath > 0) {
+    const dd = ((price / ath) - 1) * 100;
+    bits.push(`${dd.toFixed(0)}% from cycle high`);
+  }
+  if (low != null && low > 0) {
+    const up = ((price / low) - 1) * 100;
+    bits.push(`${up.toFixed(0)}% above 52w low`);
+  }
+  if (!bits.length) return '';
+  return `<div class="asset-context">${bits.join(' · ')}</div>`;
+}
+
+function meterHtml(pct, tone, leftLabel, rightLabel) {
+  const p = Math.min(100, Math.max(0, pct));
+  const toneCls = tone ? ` is-${tone}` : '';
+  return `<div class="meter-block"><div class="meter">
+    <div class="meter-track"><div class="meter-fill${toneCls}" style="width:${p.toFixed(1)}%"></div></div>
+    <div class="meter-meta"><span>${leftLabel}</span><span>${rightLabel}</span></div>
+  </div></div>`;
+}
+
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/** "2026-07" → "Jul" (or "Jul 26" when year context helps). */
+function periodMonthLabel(period, withYear = false) {
+  const m = String(period || '').match(/^(\d{4})-(\d{2})$/);
+  if (!m) return period || '—';
+  const mon = MONTH_SHORT[Number(m[2]) - 1] || m[2];
+  return withYear ? `${mon} ${m[1].slice(2)}` : mon;
+}
+
+/** Month-by-month US M2 vs BTC direction (US M2 history + BTC monthly closes). */
+function buildTransmission(macro, prices) {
+  const m2h = macro?.indicators?.US_M2?.history || [];
+  const btcSeries = prices?.prices?.BTC?.monthly_series || [];
+  if (m2h.length < 3 || btcSeries.length < 3) {
+    return { months: [], agree: 0, disagree: 0, note: 'Need more history to compare US M2 with Bitcoin.' };
+  }
+  const m2Map = Object.fromEntries(m2h.map(e => [e.period, e.value]));
+  const btcMap = Object.fromEntries(btcSeries.map(e => [e.period, e.close]));
+  const periods = btcSeries.map(e => e.period).filter(p => m2Map[p] != null);
+  const months = [];
+  for (let i = 1; i < periods.length; i++) {
+    const p = periods[i];
+    const prev = periods[i - 1];
+    const m2Chg = m2Map[p] - m2Map[prev];
+    const btcChg = btcMap[p] - btcMap[prev];
+    if (m2Chg === 0 || btcChg === 0) {
+      months.push({
+        period: p,
+        state: 'na',
+        label: periodMonthLabel(p),
+        title: `${periodMonthLabel(p, true)}: flat month (skipped)`,
+      });
+      continue;
+    }
+    const same = (m2Chg > 0) === (btcChg > 0);
+    months.push({
+      period: p,
+      state: same ? 'agree' : 'disagree',
+      label: periodMonthLabel(p),
+      title: `${periodMonthLabel(p, true)}: US M2 ${m2Chg > 0 ? '↑' : '↓'} · BTC ${btcChg > 0 ? '↑' : '↓'}`,
+    });
+  }
+  // last 12 months of comparable pairs
+  const recent = months.slice(-12);
+  const a = recent.filter(m => m.state === 'agree').length;
+  const d = recent.filter(m => m.state === 'disagree').length;
+  let note = `${a} agree · ${d} disagree (last ${recent.length} months)`;
+  if (d > a) note += ' — still mostly out of sync';
+  else if (a > d) note += ' — leaning back into agreement';
+  return { months: recent, agree: a, disagree: d, note };
+}
+
+function transmissionHtml(tx) {
+  if (!tx.months.length) {
+    return `<div class="desk-block"><div class="tx-strip">
+      <div class="tx-strip-head">
+        <span class="tx-strip-title">US M2 vs Bitcoin (monthly)</span>
+        <span class="tx-strip-summary">${tx.note}</span>
+      </div>
+    </div></div>`;
+  }
+  const cells = tx.months.map(m =>
+    `<span class="tx-month ${m.state}" title="${m.title || m.period}">${m.label}</span>`
+  ).join('');
+  return `<div class="desk-block"><div class="tx-strip">
+    <div class="tx-strip-head">
+      <span class="tx-strip-title">US M2 vs Bitcoin (monthly)</span>
+      <span class="tx-strip-summary">${tx.note}</span>
+    </div>
+    <div class="tx-months" aria-label="Month-by-month direction">${cells}</div>
+    <div class="tx-legend">Each cell is a calendar month · green = same direction · amber = opposite · US M2 level vs BTC monthly close</div>
+  </div></div>`;
+}
+
 function worstStatus(...statuses) {
   const rank = { red: 3, amber: 2, green: 1, null: 0, undefined: 0 };
   let best = 'green';
@@ -170,7 +280,6 @@ function rangeBarHtml(sym, price, low, high, markers = []) {
     if (mk.kind === 'below' && price < mk.value) alerted = true;
     if (mk.kind === 'above' && price > mk.value) alerted = true;
   }
-  const color = alerted ? 'var(--amber)' : 'var(--text-dim)';
 
   const reversed = RANGE_REVERSED.has(sym);
   const descText = pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
@@ -197,12 +306,16 @@ function rangeBarHtml(sym, price, low, high, markers = []) {
       zones += `<div class="range-zone" style="left:${left}%;right:0"></div>`;
     }
     const tip = mk.label || fmtRangeVal(mk.value);
-    ticks += `<div class="range-tick" style="left:${left}%" data-tooltip="${tip}"></div>`;
-    labels += `<span class="range-mark-label" style="left:${left}%">${tip}</span>`;
+    const isThreshold = mk.kind === 'below' || mk.kind === 'above';
+    const tickCls = isThreshold ? 'range-tick' : 'range-tick is-mark';
+    const labCls = isThreshold ? 'range-mark-label is-threshold' : 'range-mark-label';
+    ticks += `<div class="${tickCls}" style="left:${left}%" data-tooltip="${tip}"></div>`;
+    labels += `<span class="${labCls}" style="left:${left}%">${tip}</span>`;
   }
 
+  const dotCls = alerted ? 'range-dot is-alert' : 'range-dot';
   return `<div class="range-wrap">
-    <div class="range-track">${zones}${ticks}<div class="range-dot" style="left:${(pct * 100).toFixed(1)}%;background:${color}"></div></div>
+    <div class="range-track">${zones}${ticks}<div class="${dotCls}" style="left:${(pct * 100).toFixed(1)}%"></div></div>
     <div class="range-mark-row">${labels}</div>
     <div class="range-desc">${desc}</div>
   </div>`;
@@ -238,57 +351,71 @@ function buildTriggers(prices, macro, manual) {
     return tm[key]?.notes || '';
   }
 
+  const btcWeekly = btc?.weekly_close ?? null;
+  const goldMonthly = gold?.monthly_close ?? null;
+
   return [
     {
       id: 'btc_demand',
-      label: 'BTC structural demand',
-      threshold: 'Weekly close < $53,000',
+      label: 'Bitcoin demand floor',
+      threshold: 'Weekly close under $53,000',
       current() {
-        const price = btc?.price;
-        if (price == null) return '—';
-        const low = btc.week52_low;
-        const bits = [fmt(price, 0, '$')];
-        if (low != null) bits.push(`52w low ${fmt(low, 0, '$')}`);
-        return bits.join(' · ');
+        const live = btc?.price;
+        const bits = [];
+        if (btcWeekly != null) bits.push(`Weekly close ${fmt(btcWeekly, 0, '$')}`);
+        if (live != null) bits.push(`Live ${fmt(live, 0, '$')}`);
+        if (btc?.week52_low != null) bits.push(`52w low ${fmt(btc.week52_low, 0, '$')}`);
+        return bits.length ? bits.join(' · ') : '—';
       },
       status() {
-        const price = btc?.price;
-        if (price == null) return 'green';
-        if (price < 53000) return 'red';
-        if (price < 60950 || (btc.week52_low != null && btc.week52_low < 58300)) return 'amber';
+        // Official rule uses weekly close; live price only softens toward amber
+        const close = btcWeekly ?? btc?.price;
+        if (close == null) return 'green';
+        if (close < 53000) return 'red';
+        if (close < 60950 || (btc.week52_low != null && btc.week52_low < 58300)) return 'amber';
+        if (btc?.price != null && btc.price < 60950) return 'amber';
         return 'green';
       },
-      note() { return ''; },
+      note() {
+        if (btcWeekly != null && btc?.weekly_close_as_of)
+          return `Adjudicated on weekly close as of ${btc.weekly_close_as_of}.`;
+        return 'Weekly close not loaded yet — using live price as stand-in.';
+      },
     },
     {
       id: 'gold_hedge',
-      label: 'Gold monetary-hedge bid',
-      threshold: 'Monthly close < $4,000',
+      label: 'Gold holding $4,000',
+      threshold: 'Monthly close under $4,000',
       current() {
-        const price = gold?.price;
-        return price != null ? fmt(price, 0, '$') + ' live' : '—';
+        const live = gold?.price;
+        const bits = [];
+        if (goldMonthly != null) {
+          bits.push(`Month close ${fmt(goldMonthly, 0, '$')}`);
+          if (gold.monthly_close_as_of) bits.push(`(${gold.monthly_close_as_of})`);
+        }
+        if (live != null) bits.push(`Live ${fmt(live, 0, '$')}`);
+        return bits.length ? bits.join(' · ') : '—';
       },
       status() {
-        const live = gold?.price;
         const man = manualStatus('gold_monthly_close');
-        const liveRed = live != null && live < 4000;
-        const liveAmber = live != null && live < 4000;
-        // Red: manual red, or live < 4000 AND manual red
-        if (man === 'red' || (liveRed && man === 'red')) return 'red';
-        // Amber: live < 4000 (pending close) OR manual amber
-        if (liveAmber || man === 'amber') return 'amber';
+        const month = goldMonthly;
+        const live = gold?.price;
+        if (man === 'red' || (month != null && month < 4000 && man === 'red')) return 'red';
+        if (month != null && month < 4000) return man === 'red' ? 'red' : 'amber';
+        if (live != null && live < 4000) return 'amber';
+        if (man === 'amber') return 'amber';
         return 'green';
       },
       note() { return manualNotes('gold_monthly_close'); },
     },
     {
       id: 'divergence',
-      label: 'BTC–M2 divergence',
-      threshold: '≥ 18 months',
+      label: 'Bitcoin lagging money growth',
+      threshold: '18 months or more out of sync',
       current() {
-        if (manual?.divergence?.start == null) return 'Reconnected';
+        if (manual?.divergence?.start == null) return 'Back in sync';
         if (divMonths == null) return '—';
-        return `${divMonths} mo since ${manual.divergence.start}`;
+        return `${divMonths} months since ${manual.divergence.start}`;
       },
       status() {
         if (manual?.divergence?.start == null) return 'green';
@@ -301,11 +428,12 @@ function buildTriggers(prices, macro, manual) {
     },
     {
       id: 'cofer',
-      label: 'COFER reversal',
-      threshold: '4 consecutive rising quarters',
+      label: 'Dollar share of reserves',
+      threshold: 'Up 4 quarters in a row',
       current() {
         if (coferQ == null) return '—';
-        return `${coferQ} consecutive · ${manual?.cofer_usd_share?.period || ''}`.trim();
+        const q = coferQ === 1 ? '1 rising quarter' : `${coferQ} rising quarters`;
+        return `${q}${manual?.cofer_usd_share?.period ? ` · ${manual.cofer_usd_share.period}` : ''}`;
       },
       status() {
         if (coferQ == null) return 'green';
@@ -317,13 +445,13 @@ function buildTriggers(prices, macro, manual) {
     },
     {
       id: 'global_m2',
-      label: 'Global M2',
-      threshold: 'YoY < 0%',
+      label: 'Global money supply',
+      threshold: 'Shrinking year-over-year',
       current() {
         if (m2yoy.value == null) return '—';
         const tag = m2yoy.estimated ? ' (est.)' : '';
         const sign = m2yoy.value >= 0 ? '+' : '';
-        return `${sign}${m2yoy.value.toFixed(1)}%${tag}`;
+        return `${sign}${m2yoy.value.toFixed(1)}%${tag} vs a year ago`;
       },
       status() {
         const y = m2yoy.value;
@@ -336,12 +464,12 @@ function buildTriggers(prices, macro, manual) {
     },
     {
       id: 'oil',
-      label: 'Oil shock',
-      threshold: '> $120 sustained 4+ weeks',
+      label: 'Oil price spike',
+      threshold: 'Above $120 for 4+ weeks',
       current() {
         const price = wti?.price;
         if (price == null) return '—';
-        if (price > 120) return `${fmt(price, 2, '$')} (pending 4-wk confirmation)`;
+        if (price > 120) return `${fmt(price, 2, '$')} (needs 4 weeks above $120 to confirm)`;
         return fmt(price, 2, '$');
       },
       status() {
@@ -355,25 +483,30 @@ function buildTriggers(prices, macro, manual) {
     },
     {
       id: 'ai_financing',
-      label: 'AI financing break',
-      threshold: 'HY OAS > 5% + capex cuts',
+      label: 'AI funding stress',
+      threshold: 'Junk spreads > 5% plus spending cuts',
       current() {
-        return oas != null ? `${oas.toFixed(2)}% OAS` : 'OAS —';
+        const bits = [];
+        if (oas != null) bits.push(`Junk bond spread ${oas.toFixed(2)}%`);
+        const cuts = manual?.ai_transition?.capex_cuts;
+        bits.push(cuts ? 'Capex cuts: yes' : 'Capex cuts: no');
+        return bits.join(' · ') || '—';
       },
       status() {
         const man = manualStatus('ai_financing');
+        const cuts = !!manual?.ai_transition?.capex_cuts;
         const oasRed = oas != null && oas > 5;
         const oasAmber = oas != null && oas > 4;
-        return worstStatus(
-          oasRed ? 'red' : oasAmber ? 'amber' : 'green',
-          man || 'green',
-        );
+        let computed = 'green';
+        if (oasRed && cuts) computed = 'red';
+        else if (oasRed || oasAmber || cuts) computed = 'amber';
+        return worstStatus(computed, man || 'green');
       },
       note() { return manualNotes('ai_financing'); },
     },
     {
       id: 'taiwan',
-      label: 'Taiwan escalation',
+      label: 'Taiwan conflict risk',
       threshold: 'Major military escalation',
       current() {
         return manualNotes('taiwan') || '—';
@@ -409,11 +542,31 @@ function renderTriggers(prices, macro, manual) {
       <td data-label="Trigger">${t.label}</td>
       <td data-label="Threshold"><span class="trigger-threshold-inline">${t.threshold}</span></td>
       <td data-label="Current"><span class="trigger-current">${current}</span>${noteHtml}</td>
-      <td class="num" data-label="Status">${statusChip(status)}</td>
+      <td class="trigger-status-cell" data-label="Status">${statusChip(status)}</td>
     </tr>`;
   });
   tbody.innerHTML = rows.join('');
-  return tallyTriggers(triggers);
+
+  const tally = tallyTriggers(triggers);
+  const board = document.getElementById('panel-triggers');
+  if (board) {
+    board.classList.remove('panel-alarm-amber', 'panel-alarm-red');
+    if (tally.red > 0) board.classList.add('panel-alarm-red');
+    else if (tally.amber >= 4) board.classList.add('panel-alarm-amber');
+  }
+  const sumEl = document.getElementById('trigger-summary');
+  if (sumEl) {
+    const stressed = tally.amber + tally.red;
+    const total = tally.green + tally.amber + tally.red;
+    if (tally.red > 0) {
+      sumEl.innerHTML = `<strong>${tally.red} broken</strong> · ${tally.amber} under stress · ${tally.green} clear — reassess assumptions.`;
+    } else if (tally.amber > 0) {
+      sumEl.innerHTML = `<strong>${tally.amber} of ${total} under stress</strong> · ${tally.red} broken · ${tally.green} clear. Concurrent ambers are pressure, not automatic invalidation.`;
+    } else {
+      sumEl.innerHTML = `<strong>All clear on formal lines</strong> · ${total} watchpoints green.`;
+    }
+  }
+  return tally;
 }
 
 // ─── Status bar ───────────────────────────────────────────────────────────────
@@ -427,22 +580,25 @@ function renderStatusBar(manual, macro, tally) {
   const cls = scenarioClass(current);
   scenarioEl.textContent = current;
   scenarioEl.className = `status-value scenario-${cls}`;
-  scenarioCell.className = `status-cell ${cls}`;
+  scenarioCell.classList.remove('bull', 'base', 'bear', 'tail');
+  scenarioCell.classList.add(cls);
   document.getElementById('scenario-prob').textContent = prob;
 
   const ind = macro?.indicators || {};
   const m2yoy = resolveM2Yoy(ind, manual);
   const m2yoyEl = document.getElementById('m2-yoy');
+  const m2s = staleness(m2yoy.sourceDate, 45, 90);
   if (m2yoy.value != null) {
     const sign = m2yoy.value >= 0 ? '+' : '';
     const cls2 = m2yoy.value > 0 ? 'pos' : 'neg';
+    const staleCls = m2s.level === 'amber' ? ' value-stale-amber'
+                   : m2s.level === 'red' ? ' value-stale-red' : '';
     const est  = m2yoy.estimated ? ' <span class="est-tag">est.</span>' : '';
-    m2yoyEl.innerHTML = `<span class="${cls2}">${sign}${m2yoy.value.toFixed(1)}%</span>${est}`;
+    m2yoyEl.innerHTML = `<span class="${cls2}${staleCls}">${sign}${m2yoy.value.toFixed(1)}%</span>${est}`;
   } else {
     m2yoyEl.textContent = '—';
   }
-  const m2s = staleness(m2yoy.sourceDate, 45, 90);
-  document.getElementById('m2-stale').innerHTML = staleBadge(m2s.level, m2s.label);
+  document.getElementById('m2-sub').innerHTML = staleBadge(m2s.level, m2s.label);
 
   const fg = ind.FEAR_GREED;
   const fgEl = document.getElementById('fg-value');
@@ -473,56 +629,93 @@ function setupTriggerScroll() {
 
 // ─── Pillar panels ────────────────────────────────────────────────────────────
 
-function heroStat(valueHtml, subHtml) {
+function heroStat(label, valueHtml, subHtml) {
   return `<div class="hero-stat">
+    ${label ? `<div class="hero-stat-label">${label}</div>` : ''}
     <div class="hero-stat-value">${valueHtml}</div>
     ${subHtml ? `<div class="hero-stat-sub">${subHtml}</div>` : ''}
   </div>`;
 }
 
-function miniCard(label, valueHtml, subHtml = '') {
-  return `<div class="mini-card">
+/**
+ * @param {'metric'|'text'} [variant]
+ * @param {string} [meterSlot] optional HTML for a progress meter (sibling of value, not in sub)
+ */
+function miniCard(label, valueHtml, subHtml = '', variant = 'metric', meterSlot = '') {
+  const valueCls = variant === 'text' ? 'mini-card-value mini-card-value--text' : 'mini-card-value';
+  return `<div class="mini-card${variant === 'text' ? ' mini-card--text' : ''}">
     <div class="mini-card-label">${label}</div>
-    <div class="mini-card-value">${valueHtml}</div>
+    <div class="${valueCls}">${valueHtml}</div>
+    ${meterSlot || ''}
     ${subHtml ? `<div class="mini-card-sub">${subHtml}</div>` : ''}
+  </div>`;
+}
+
+function fieldBlock(label, bodyHtml, metaHtml = '', isProse = false) {
+  return `<div class="field">
+    <div class="field-label">${label}</div>
+    <div class="${isProse ? 'field-prose' : 'field-value'}">${bodyHtml}</div>
+    ${metaHtml ? `<div class="field-meta">${metaHtml}</div>` : ''}
   </div>`;
 }
 
 function fgBarHtml(val) {
   if (val == null) return '';
   const pct = Math.min(100, Math.max(0, val));
-  const color = val <= 25 ? 'var(--red)' : val <= 45 ? 'var(--amber)'
-              : val <= 55 ? 'var(--text-dim)' : val <= 75 ? '#84cc16' : 'var(--green)';
+  const fillCls = val <= 25 ? 'fill-red' : val <= 45 ? 'fill-amber'
+                : val <= 55 ? 'fill-dim' : val <= 75 ? 'fill-greed' : 'fill-green';
   return `<div class="fg-bar-track">
-    <div class="fg-bar-fill" style="width:${pct}%;background:${color}"></div>
+    <div class="fg-bar-bands" aria-hidden="true">
+      <span class="fg-bar-band" style="left:25%"></span>
+      <span class="fg-bar-band" style="left:50%"></span>
+      <span class="fg-bar-band" style="left:75%"></span>
+    </div>
+    <div class="fg-bar-fill ${fillCls}" style="width:${pct}%"></div>
     <div class="fg-bar-marker" style="left:${pct}%"></div>
   </div>`;
 }
 
 function divergenceClockHtml(months, start) {
+  const ticks = `<div class="div-clock-ticks" aria-hidden="true">
+    <span class="div-clock-tick" style="left:66.67%" title="12 months"></span>
+    <span class="div-clock-tick" style="left:100%" title="18 months"></span>
+  </div>`;
   if (start == null) {
     return `<div class="div-clock">
-      <div class="div-clock-label pos">Reconnected</div>
-      <div class="div-clock-track"><div class="div-clock-fill fill-green" style="width:0%"></div></div>
+      <div class="div-clock-label pos">Back in sync</div>
+      <div class="div-clock-track">${ticks}<div class="div-clock-fill fill-green" style="width:2%"></div></div>
     </div>`;
   }
   if (months == null) return '<span class="neu">—</span>';
   const pct = Math.min(100, (months / 18) * 100);
   const tone = months >= 18 ? 'red' : months >= 12 ? 'amber' : 'green';
   return `<div class="div-clock">
-    <div class="div-clock-label chip-${tone}">${months} mo <span class="neu">/ 18</span></div>
-    <div class="div-clock-track"><div class="div-clock-fill fill-${tone}" style="width:${pct.toFixed(1)}%"></div></div>
+    <div class="div-clock-label tone-${tone}">${months} mo <span class="neu">/ 18</span></div>
+    <div class="div-clock-track">${ticks}<div class="div-clock-fill fill-${tone}" style="width:${pct.toFixed(1)}%"></div></div>
   </div>`;
+}
+
+/** Local-currency M2 YoY for a bloc from manual.bloc_m2_yoy (est. where flagged). */
+function blocM2YoyHtml(manual, bloc) {
+  const entry = manual?.bloc_m2_yoy?.[bloc];
+  if (entry == null) return '<span class="neu">—</span>';
+  const raw = typeof entry === 'number' ? entry : entry?.value;
+  if (raw == null || isNaN(raw)) return '<span class="neu">—</span>';
+  const isEst = typeof entry === 'object' ? !!entry.estimated : true;
+  const sign = raw >= 0 ? '+' : '';
+  const cls = raw >= 0 ? 'pos' : 'neg';
+  const est = isEst ? ' <span class="est-tag">est.</span>' : '';
+  return `<span class="${cls}">${sign}${Number(raw).toFixed(1)}%</span>${est}`;
 }
 
 function renderPillarMonetary(ind, manual) {
   const gm2 = ind.GLOBAL_M2;
   const m2yoy = resolveM2Yoy(ind, manual);
-  const fxAdj = ind.GLOBAL_M2_YOY?.fx_adjusted_pct;
+  const gy = ind.GLOBAL_M2_YOY || {};
+  const fxAdj = gy.fx_adjusted_pct;
   const comps = gm2?.components || {};
   const dates = gm2?.component_dates || {};
   const cn = manual?.china_m2;
-  const fx = ind.fx || {};
 
   const localVals = {
     US: ind.US_M2?.value != null ? `$${fmt(ind.US_M2.value, 0)}B` : '—',
@@ -533,10 +726,35 @@ function renderPillarMonetary(ind, manual) {
   };
 
   const yoyHtml = m2yoy.value != null
-    ? `${fmtPct(m2yoy.value)}${m2yoy.estimated ? ' <span class="est-tag">est.</span>' : ''}`
+    ? `<span class="${m2BandClass(m2yoy.value)}">${m2yoy.value >= 0 ? '+' : ''}${m2yoy.value.toFixed(1)}%</span>${m2yoy.estimated ? ' <span class="est-tag">est.</span>' : ''}`
     : '—';
-  const fxAdjHtml = fxAdj != null ? ` · FX-adj ${fmtPct(fxAdj)}` : '';
+  const fxCell = fxAdj != null
+    ? `<span class="${m2BandClass(fxAdj)}">${fxAdj >= 0 ? '+' : ''}${fxAdj.toFixed(1)}%</span>`
+    : '<span class="neu">—</span>';
 
+  const histMonths = gy.history_months ?? 0;
+  const histNeed = gy.history_needed ?? 13;
+  const histPct = Math.min(100, (histMonths / histNeed) * 100);
+  const histNote = gy.history_ready
+    ? 'Computed YoY live from dashboard history.'
+    : (gy.history_note || `Need ~${histNeed} months of history for auto YoY (${histMonths} on file).`);
+
+  const dualHtml = `<div class="metric-row">
+    <div class="metric-cell">
+      <div class="metric-label">USD total growth</div>
+      <div class="metric-value">${yoyHtml}</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">At fixed FX</div>
+      <div class="metric-value">${fxCell}</div>
+    </div>
+  </div>
+  <div class="track-block">
+    <div class="track-caption">${histNote}</div>
+    <div class="history-track"><div class="history-fill" style="width:${histPct.toFixed(0)}%"></div></div>
+  </div>`;
+
+  const blocNames = { US: 'US', CN: 'China', EZ: 'Eurozone', JP: 'Japan', UK: 'UK' };
   const blocRows = ['US', 'CN', 'EZ', 'JP', 'UK'].map(bloc => {
     const usd = comps[bloc];
     const date = dates[bloc];
@@ -548,9 +766,10 @@ function renderPillarMonetary(ind, manual) {
       : staleness(ind.US_M2?.date, 45, 90);
     const src = bloc === 'CN' ? ' <span class="est-tag">manual</span>' : '';
     return `<tr>
-      <td data-label="Bloc">${bloc}${src}</td>
+      <td data-label="Region">${blocNames[bloc]}${src}</td>
       <td class="num" data-label="Local">${localVals[bloc]}</td>
       <td class="num" data-label="USD">${usd != null ? `$${fmt(usd, 2)}T` : '—'}</td>
+      <td class="num" data-label="YoY">${blocM2YoyHtml(manual, bloc)}</td>
       <td data-label="As of">${fmtMacroDate(date)} ${staleBadge(stale.level, stale.label)}</td>
     </tr>`;
   }).join('');
@@ -563,69 +782,120 @@ function renderPillarMonetary(ind, manual) {
   const stale10y = staleness(us10y?.date, 5, 10);
   const staleUsd = staleness(usdIdx?.date, 5, 10);
   const staleUsM2 = staleness(usM2?.date, 45, 90);
+  const blocYoyNote = manual?.bloc_m2_yoy?.note
+    || 'Year-over-year money growth in each region’s own currency.';
+
+  let usYoySub = fmtMacroDate(usM2?.date);
+  if (usM2?.yoy_pct != null) {
+    const acc = usM2.yoy_delta_pp;
+    const accTxt = acc != null
+      ? (acc > 0 ? ` · accelerating (+${acc.toFixed(1)} pp)` : acc < 0 ? ` · cooling (${acc.toFixed(1)} pp)` : ' · steady')
+      : '';
+    usYoySub = `<span class="${m2BandClass(usM2.yoy_pct)}">${usM2.yoy_pct >= 0 ? '+' : ''}${usM2.yoy_pct.toFixed(1)}% YoY</span>${accTxt} · ${fmtMacroDate(usM2.date)}`;
+  }
+  usYoySub += staleBadge(staleUsM2.level, staleUsM2.label);
 
   document.getElementById('pillar-monetary-body').innerHTML = `
     ${heroStat(
+      'Global money supply (M2)',
       gm2?.value != null ? `$${fmt(gm2.value, 2)}T` : '—',
-      `YoY ${yoyHtml}${fxAdjHtml}`,
+      '',
     )}
-    <table class="bloc-table">
-      <thead><tr><th>Bloc</th><th class="num">Local</th><th class="num">USD</th><th>As of</th></tr></thead>
-      <tbody>${blocRows}</tbody>
-    </table>
+    ${dualHtml}
+    <div class="desk-block">
+      <table class="bloc-table">
+        <thead><tr>
+          <th>Region</th>
+          <th class="num">Local</th>
+          <th class="num">USD</th>
+          <th class="num">YoY</th>
+          <th>As of</th>
+        </tr></thead>
+        <tbody>${blocRows}</tbody>
+      </table>
+    </div>
+    <p class="desk-footnote">${blocYoyNote}</p>
     <div class="mini-grid">
-      ${miniCard('US M2', usM2?.value != null ? `$${fmt(usM2.value, 0)}B` : '—',
-        `${fmtMacroDate(usM2?.date)} ${staleBadge(staleUsM2.level, staleUsM2.label)}`)}
-      ${miniCard('US Net Liquidity', netLiq?.value != null ? `$${fmt(netLiq.value, 0)}B` : '—',
-        `${fmtMacroDate(netLiq?.date)} ${staleBadge(staleNet.level, staleNet.label)}`)}
-      ${miniCard('US 10Y', us10y?.value != null ? `${fmt(us10y.value, 2)}%` : '—',
-        `${fmtMacroDate(us10y?.date)} ${staleBadge(stale10y.level, stale10y.label)}`)}
-      ${miniCard('USD Broad Index (Fed)', usdIdx?.value != null ? fmt(usdIdx.value, 2) : '—',
-        `${fmtMacroDate(usdIdx?.date)} ${staleBadge(staleUsd.level, staleUsd.label)}`)}
+      ${miniCard('US money supply', usM2?.value != null ? `$${fmt(usM2.value, 0)}B` : '—', usYoySub)}
+      ${miniCard('US net liquidity', netLiq?.value != null ? `$${fmt(netLiq.value, 0)}B` : '—',
+        `${fmtMacroDate(netLiq?.date)}${staleBadge(staleNet.level, staleNet.label)}`)}
+      ${miniCard('US 10-year yield', us10y?.value != null ? `${fmt(us10y.value, 2)}%` : '—',
+        `${fmtMacroDate(us10y?.date)}${staleBadge(stale10y.level, stale10y.label)}`)}
+      ${miniCard('US dollar (broad index)', usdIdx?.value != null ? fmt(usdIdx.value, 2) : '—',
+        `${fmtMacroDate(usdIdx?.date)}${staleBadge(staleUsd.level, staleUsd.label)}`)}
     </div>
   `;
 }
 
-function renderPillarDedollar(prices, manual) {
+function renderPillarDedollar(prices, manual, macro) {
   const gold = prices?.prices?.XAUUSD;
   const price = gold?.price;
   const cb = manual?.cb_gold;
   const cofer = manual?.cofer_usd_share;
   const staleCb = staleness(cb?.updated || cb?.period, 120, 180);
   const staleCofer = staleness(cofer?.updated || cofer?.period, 120, 180);
+  const sc = macro?.indicators?.STABLECOIN_MCAP;
 
   const markers = [{ value: 4000, label: '$4,000', kind: 'below' }];
+  const floor = cb?.floor_tonnes ?? 200;
+  const q = cb?.quarterly_tonnes;
+  const floorOk = q != null && q >= floor;
+  const floorTone = floorOk ? 'green' : (q != null && q >= floor * 0.5 ? 'amber' : 'red');
+  const floorPct = q != null ? Math.min(100, (q / (floor * 1.5)) * 100) : 0;
+  const floorHtml = q != null
+    ? meterHtml(floorPct, floorTone, `Floor ~${floor}t/qtr`, floorOk ? 'Bid intact' : 'Below floor')
+    : '';
+
+  const coferQ = cofer?.consecutive_rising_quarters;
+  const coferPct = coferQ != null ? (coferQ / 4) * 100 : 0;
+  const coferTone = coferQ == null ? '' : coferQ >= 4 ? 'red' : coferQ >= 1 ? 'amber' : 'green';
+  const coferMeter = coferQ != null
+    ? meterHtml(coferPct, coferTone, `${coferQ} of 4 rising quarters`, coferQ >= 4 ? 'Reversal risk' : 'Noise until 4')
+    : '';
 
   document.getElementById('pillar-dedollar-body').innerHTML = `
-    <table class="price-table pillar-price-table">
-      <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
-      <tbody>
-        ${priceRowHtml('XAUUSD', 'Gold', price, changePctOf(prices?.prices, 'XAUUSD'), gold, markers, 0, '$')}
-      </tbody>
-    </table>
+    <div class="desk-block">
+      <table class="price-table pillar-price-table">
+        <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
+        <tbody>
+          ${priceRowHtml('XAUUSD', 'Gold', price, changePctOf(prices?.prices, 'XAUUSD'), gold, markers, 0, '$')}
+        </tbody>
+      </table>
+    </div>
+    ${assetContextHtml(gold)}
+    <p class="desk-footnote">Central-bank buying is the floor; day-to-day gold price is still set by markets.</p>
     <div class="mini-grid">
       ${miniCard(
-        'CB Gold Purchases',
-        cb?.quarterly_tonnes != null ? `${fmt(cb.quarterly_tonnes, 0)} t` : '—',
+        'Central bank gold buying',
+        q != null ? `${fmt(q, 0)} tonnes / qtr` : '—',
         [
-          cb?.yoy_pct != null ? `YoY ${fmtPct(cb.yoy_pct, 0)}` : null,
+          cb?.yoy_pct != null ? `${fmtPct(cb.yoy_pct, 0)} vs last year` : null,
           cb?.latest_monthly ? `Latest ${cb.latest_monthly.tonnes} t (${cb.latest_monthly.period})` : null,
-          `${fmtMacroDate(cb?.period)} ${staleBadge(staleCb.level, staleCb.label)}`,
-          cb?.note || null,
+          fmtMacroDate(cb?.period),
+          staleBadge(staleCb.level, staleCb.label),
         ].filter(Boolean).join(' · '),
+        'metric',
+        floorHtml,
       )}
       ${miniCard(
-        'COFER USD Share',
-        cofer?.consecutive_rising_quarters != null
-          ? `${cofer.consecutive_rising_quarters} rising Qs`
+        'Dollar share of world reserves',
+        coferQ != null
+          ? (coferQ === 1 ? '1 rising quarter' : `${coferQ} rising quarters`)
           : '—',
+        [cofer?.period || null, staleBadge(staleCofer.level, staleCofer.label)].filter(Boolean).join(' · '),
+        'metric',
+        coferMeter,
+      )}
+      ${miniCard(
+        'Dollar rails (stablecoins)',
+        sc?.value != null ? `$${fmt(sc.value, 1)}B` : '—',
         [
-          cofer?.period || null,
-          staleBadge(staleCofer.level, staleCofer.label),
-          cofer?.note || null,
+          'Tokenized dollars expanding with reserve diversification',
+          sc?.date ? fmtMacroDate(sc.date) : null,
         ].filter(Boolean).join(' · '),
       )}
     </div>
+    ${cb?.note || cofer?.note ? `<p class="desk-footnote">${[cb?.note, cofer?.note].filter(Boolean).join(' · ')}</p>` : ''}
   `;
 }
 
@@ -636,27 +906,51 @@ function renderPillarAi(ind, manual) {
   const staleAi = staleness(ai.updated, 45, 90);
   let oasTone = 'neu';
   if (oas?.value != null) {
-    oasTone = oas.value > 5 ? 'chip-red' : oas.value > 4 ? 'chip-amber' : 'chip-green';
+    oasTone = oas.value > 5 ? 'tone-red' : oas.value > 4 ? 'tone-amber' : 'tone-green';
   }
 
+  const cuts = !!ai.capex_cuts;
+  let financeStatus = 'green';
+  let financeLabel = 'Funding calm';
+  if (oas?.value != null && oas.value > 5 && cuts) {
+    financeStatus = 'red';
+    financeLabel = 'Funding break risk';
+  } else if ((oas?.value != null && oas.value > 4) || cuts) {
+    financeStatus = 'amber';
+    financeLabel = cuts ? 'Watch — capex cuts noted' : 'Watch — spreads elevated';
+  }
+
+  const oasLegend = `<span class="band-legend">
+    <span class="tone-green">calm &lt;4%</span>
+    <span class="tone-amber">watch 4–5%</span>
+    <span class="tone-red">stress &gt;5%</span>
+  </span>`;
+
   document.getElementById('pillar-ai-body').innerHTML = `
-    <div class="mini-grid mini-grid-3">
-      ${miniCard('Crossover Status', ai.crossover_status || '—', staleBadge(staleAi.level, staleAi.label))}
-      ${miniCard('Structural Slopes', ai.structural_slopes || '—')}
-      ${miniCard('Next Test', ai.next_test || '—')}
-    </div>
-    <div class="mini-grid">
-      ${miniCard(
-        'HY OAS',
-        oas?.value != null
-          ? `<span class="${oasTone}">${fmt(oas.value, 2)}%</span>`
-          : '—',
-        [
-          'green &lt;4% · amber 4–5% · red &gt;5%',
-          fmtMacroDate(oas?.date),
-          staleBadge(staleOas.level, staleOas.label),
-        ].filter(Boolean).join(' · '),
-      )}
+    <div class="ai-split">
+      <div class="ai-col">
+        <div class="ai-col-title">Near term — credit &amp; buildout</div>
+        <div class="field-stack">
+          ${fieldBlock('Spending vs cash flow', ai.crossover_status || '—', staleBadge(staleAi.level, staleAi.label), true)}
+          ${fieldBlock(
+            'Junk bond stress (HY OAS)',
+            oas?.value != null ? `<span class="${oasTone}">${fmt(oas.value, 2)}%</span>` : '—',
+            [oasLegend, fmtMacroDate(oas?.date), staleBadge(staleOas.level, staleOas.label)].filter(Boolean).join(' · '),
+            false,
+          )}
+        </div>
+        <div class="ai-finance-row">
+          <span class="status-chip chip-${financeStatus}">${financeLabel}</span>
+          <span class="meta-inline">Capex cuts: ${cuts ? 'yes' : 'no'}</span>
+        </div>
+      </div>
+      <div class="ai-col">
+        <div class="ai-col-title">Structural — cost of intelligence</div>
+        <div class="field-stack">
+          ${fieldBlock('Cost trends', ai.structural_slopes || '—', '', true)}
+          ${fieldBlock('Next checkpoint', ai.next_test || '—', '', true)}
+        </div>
+      </div>
     </div>
   `;
 }
@@ -666,28 +960,53 @@ function renderPillarHardMoney(prices, macro, manual) {
   const fg = macro?.indicators?.FEAR_GREED;
   const divStart = manual?.divergence?.start;
   const months = monthsSince(divStart);
+  const etf = manual?.etf_flows;
+  const tx = buildTransmission(macro, prices);
 
   const btcMarkers = [
     { value: 53000, label: '$53k', kind: 'below' },
-    { value: 83800, label: '$83.8k', kind: 'mark' },
+    { value: 70000, label: '$70k', kind: 'above' },
+  ];
+  const wtiMarkers = [
+    { value: 95, label: '$95', kind: 'above' },
+    { value: 120, label: '$120', kind: 'above' },
   ];
 
+  let etfValue = '—';
+  let etfSub = '';
+  if (etf?.net_usd_bn != null) {
+    const n = etf.net_usd_bn;
+    const cls = n >= 0 ? 'pos' : 'neg';
+    etfValue = `<span class="${cls}">${n >= 0 ? '+' : ''}${n.toFixed(1)}B</span>`;
+    const flowNote = n >= 0 ? 'Flows with liquidity' : 'Flows fighting liquidity';
+    etfSub = [
+      flowNote,
+      etf.streak_weeks_outflow != null && n < 0 ? `${etf.streak_weeks_outflow}w outflow streak` : null,
+      etf.period || null,
+      etf.note || null,
+    ].filter(Boolean).join(' · ');
+  }
+
   document.getElementById('pillar-hardmoney-body').innerHTML = `
-    <table class="price-table pillar-price-table">
-      <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
-      <tbody>
-        ${priceRowHtml('BTC', 'BTC', p.BTC?.price, changePctOf(p, 'BTC'), p.BTC, btcMarkers, 0, '$')}
-        ${priceRowHtml('WTI', 'WTI Crude', p.WTI?.price, changePctOf(p, 'WTI'), p.WTI,
-          [{ value: 120, label: '$120', kind: 'above' }], 2, '$')}
-        ${priceRowHtml('VIX', 'VIX', p.VIX?.price, changePctOf(p, 'VIX'), p.VIX,
-          [{ value: 30, label: '30', kind: 'above' }], 1, '')}
-      </tbody>
-    </table>
+    <div class="desk-block">
+      <table class="price-table pillar-price-table">
+        <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
+        <tbody>
+          ${priceRowHtml('BTC', 'BTC', p.BTC?.price, changePctOf(p, 'BTC'), p.BTC, btcMarkers, 0, '$')}
+          ${priceRowHtml('WTI', 'WTI Crude', p.WTI?.price, changePctOf(p, 'WTI'), p.WTI, wtiMarkers, 2, '$')}
+          ${priceRowHtml('VIX', 'VIX', p.VIX?.price, changePctOf(p, 'VIX'), p.VIX,
+            [{ value: 30, label: '30', kind: 'above' }], 1, '')}
+        </tbody>
+      </table>
+    </div>
+    ${assetContextHtml(p.BTC)}
+    ${transmissionHtml(tx)}
     <div class="mini-grid">
-      ${miniCard('Divergence Clock', divergenceClockHtml(months, divStart),
+      ${miniCard('How long BTC has lagged money growth', divergenceClockHtml(months, divStart),
         manual?.divergence?.note || '')}
+      ${miniCard('Spot BTC ETF flows', etfValue, etfSub || 'Update manually in manual.json')}
       ${miniCard(
-        'Fear &amp; Greed',
+        'Market mood (Fear &amp; Greed)',
         `<span class="${fgColorClass(fg?.value)}">${fg?.value ?? '—'}</span>
          <span class="fg-inline-sub">${fg?.classification || ''}</span>`,
         fgBarHtml(fg?.value),
@@ -699,9 +1018,53 @@ function renderPillarHardMoney(prices, macro, manual) {
 function renderPillars(prices, macro, manual) {
   const ind = macro?.indicators || {};
   renderPillarMonetary(ind, manual);
-  renderPillarDedollar(prices, manual);
+  renderPillarDedollar(prices, manual, macro);
   renderPillarAi(ind, manual);
   renderPillarHardMoney(prices, macro, manual);
+}
+
+function renderScenarioContext(manual) {
+  const shell = document.getElementById('context-block');
+  const regimeBlock = document.getElementById('regime-block');
+  const waypointsBlock = document.getElementById('waypoints-block');
+  const list = document.getElementById('regime-bullets');
+  const body = document.getElementById('waypoints-body');
+  const title = document.getElementById('context-title');
+  const wpLabel = document.getElementById('waypoints-label');
+  if (!shell) return;
+
+  const bullets = manual?.regime_bullets;
+  const wps = manual?.scenario?.waypoints;
+  let show = false;
+
+  if (regimeBlock && list && Array.isArray(bullets) && bullets.length) {
+    list.innerHTML = bullets.map(b => `<li>${b}</li>`).join('');
+    regimeBlock.hidden = false;
+    show = true;
+  } else if (regimeBlock) {
+    regimeBlock.hidden = true;
+  }
+
+  if (waypointsBlock && body && Array.isArray(wps) && wps.length) {
+    const sc = manual?.scenario?.current || 'Current scenario';
+    if (title) title.textContent = sc;
+    if (wpLabel) wpLabel.textContent = 'Waypoints';
+    body.innerHTML = wps.map(w => {
+      const st = (w.status || 'pending').toLowerCase();
+      const cls = st === 'hit' ? 'is-hit' : st === 'miss' ? 'is-miss' : 'is-approaching';
+      const label = st === 'hit' ? 'hit' : st === 'miss' ? 'miss' : 'near';
+      return `<div class="waypoint-row">
+        <span class="waypoint-status ${cls}">${label}</span>
+        <span class="waypoint-label">${w.label || w.id || '—'}</span>
+      </div>`;
+    }).join('');
+    waypointsBlock.hidden = false;
+    show = true;
+  } else if (waypointsBlock) {
+    waypointsBlock.hidden = true;
+  }
+
+  shell.hidden = !show;
 }
 
 // ─── Thesis markdown ──────────────────────────────────────────────────────────
@@ -759,53 +1122,104 @@ function renderFooter(prices, macro, manual) {
 }
 
 function setupRingHint() {
+  // Outline the whole source-narrative panel (both disclosures), not just the
+  // first summary row — inset so stroke isn't clipped by panel overflow:hidden.
+  const panel = document.getElementById('panel-thesis');
   const details = document.getElementById('thesis-details');
-  if (!details) return;
-  const summary = details.querySelector('.thesis-summary');
-  if (!summary) return;
+  if (!panel || !details) return;
 
-  const NS   = 'http://www.w3.org/2000/svg';
-  const svg  = document.createElementNS(NS, 'svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
   const path = document.createElementNS(NS, 'path');
-  const PAD  = 1, STROKE = 1.5;
+  const INSET = 2;
+  const RADIUS = 3;
+  const STROKE = 1.25;
 
+  svg.setAttribute('class', 'thesis-ring');
+  svg.setAttribute('aria-hidden', 'true');
   path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', 'rgba(59,130,246,0.55)');
   path.setAttribute('stroke-width', String(STROKE));
   path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('pathLength', '1');
-  path.setAttribute('stroke-dasharray', '0.12 0.88');
+  path.setAttribute('stroke-linejoin', 'round');
+  path.setAttribute('pathLength', '100');
+  // Dash ~12% of perimeter, gap the rest — offset 0→100 completes a full loop
+  path.setAttribute('stroke-dasharray', '12 88');
 
-  let kf = document.getElementById('ring-kf');
-  if (!kf) { kf = document.createElement('style'); kf.id = 'ring-kf'; document.head.appendChild(kf); }
-  kf.textContent = '@keyframes ring-travel { to { stroke-dashoffset: -1; } }';
-  path.style.animation = 'ring-travel 4s linear infinite';
+  const ringColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accent-ring').trim() || 'rgba(107,159,212,0.55)';
+  path.setAttribute('stroke', ringColor);
 
-  svg.appendChild(path);
-  summary.appendChild(svg);
-
-  function sizeRing() {
-    const { width, height } = summary.getBoundingClientRect();
-    if (!width || !height) return;
-    const w = width + PAD * 2, h = height + PAD * 2;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.style.position      = 'absolute';
-    svg.style.top           = `${-PAD}px`;
-    svg.style.left          = `${-PAD}px`;
-    svg.style.width         = `${w}px`;
-    svg.style.height        = `${h}px`;
-    svg.style.pointerEvents = 'none';
-    svg.style.zIndex        = '2';
-    svg.style.overflow      = 'visible';
-    const x = PAD, y = PAD;
-    path.setAttribute('d', `M ${x},${y} h ${width} v ${height} h ${-width} Z`);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    let kf = document.getElementById('ring-kf');
+    if (!kf) {
+      kf = document.createElement('style');
+      kf.id = 'ring-kf';
+      document.head.appendChild(kf);
+    }
+    kf.textContent = `
+      @keyframes ring-travel {
+        from { stroke-dashoffset: 0; }
+        to   { stroke-dashoffset: -100; }
+      }
+      .thesis-ring path {
+        animation: ring-travel 5.5s linear infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .thesis-ring path { animation: none; }
+      }
+    `;
   }
 
-  requestAnimationFrame(sizeRing);
-  const updateVisibility = () => { svg.style.display = details.hasAttribute('open') ? 'none' : ''; };
-  updateVisibility();
-  new MutationObserver(updateVisibility).observe(details, { attributes: true, attributeFilter: ['open'] });
+  svg.appendChild(path);
+  panel.appendChild(svg);
+
+  function roundedRectPath(x, y, w, h, r) {
+    const rr = Math.min(r, w / 2, h / 2);
+    return [
+      `M ${x + rr},${y}`,
+      `H ${x + w - rr}`,
+      `A ${rr} ${rr} 0 0 1 ${x + w},${y + rr}`,
+      `V ${y + h - rr}`,
+      `A ${rr} ${rr} 0 0 1 ${x + w - rr},${y + h}`,
+      `H ${x + rr}`,
+      `A ${rr} ${rr} 0 0 1 ${x},${y + h - rr}`,
+      `V ${y + rr}`,
+      `A ${rr} ${rr} 0 0 1 ${x + rr},${y}`,
+      'Z',
+    ].join(' ');
+  }
+
+  function sizeRing() {
+    const w = panel.clientWidth;
+    const h = panel.clientHeight;
+    if (!w || !h) return;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.setAttribute('width', String(w));
+    svg.setAttribute('height', String(h));
+    const iw = Math.max(0, w - INSET * 2);
+    const ih = Math.max(0, h - INSET * 2);
+    path.setAttribute('d', roundedRectPath(INSET, INSET, iw, ih, RADIUS));
+  }
+
+  function updateVisibility() {
+    // Hide once the primary thesis is opened; show again if collapsed
+    svg.style.display = details.hasAttribute('open') ? 'none' : '';
+    if (!details.hasAttribute('open')) sizeRing();
+  }
+
+  requestAnimationFrame(() => {
+    sizeRing();
+    updateVisibility();
+  });
+  new MutationObserver(updateVisibility).observe(details, {
+    attributes: true,
+    attributeFilter: ['open'],
+  });
   window.addEventListener('resize', sizeRing, { passive: true });
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(sizeRing).observe(panel);
+  }
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -844,6 +1258,7 @@ async function init() {
 
   const tally = renderTriggers(prices, macro, manual);
   renderStatusBar(manual, macro, tally);
+  renderScenarioContext(manual);
   renderPillars(prices, macro, manual);
   renderFooter(prices, macro, manual);
   renderThesis();

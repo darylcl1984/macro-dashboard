@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Great Transition — Macro Dashboard</title>
   <meta name="description" content="Thesis-driven macro dashboard tracking The Great Transition." />
-  <meta name="theme-color" content="#080808" />
+  <meta name="theme-color" content="#141922" />
   <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- ── Section 1: Thesis Status Bar ──────────────────────────────────── -->
+  <!-- ── Sticky status KPI strip ───────────────────────────────────────── -->
   <header id="status-bar">
     <div id="status-bar-inner">
       <div class="status-cell" id="s-scenario">
@@ -20,9 +23,9 @@
         <span class="status-sub" id="scenario-prob"></span>
       </div>
       <div class="status-cell" id="s-m2">
-        <span class="status-label">Global M2 YoY</span>
+        <span class="status-label">Money growth YoY</span>
         <span class="status-value" id="m2-yoy">—</span>
-        <span class="stale-badge" id="m2-stale"></span>
+        <span class="status-sub" id="m2-sub"></span>
       </div>
       <div class="status-cell" id="s-fg">
         <span class="status-label">Fear &amp; Greed</span>
@@ -32,114 +35,153 @@
       <div class="status-cell" id="s-triggers" role="button" tabindex="0" title="Jump to trigger board">
         <span class="status-label">Triggers</span>
         <span class="status-value" id="trigger-tally">—</span>
-        <span class="status-sub">green · amber · red</span>
+        <span class="status-sub">jump to board</span>
       </div>
     </div>
   </header>
 
   <main>
 
-    <!-- ── Pillar Panels ──────────────────────────────────────────────── -->
-    <div class="pillar-grid" id="pillar-grid">
+    <header class="page-header">
+      <div>
+        <div class="page-header-kicker">Macro desk</div>
+        <h1 class="page-header-title">The Great Transition</h1>
+        <p class="page-header-sub">A research view of the big forces that matter here: money growth, the dollar, AI spending, and hard assets.</p>
+      </div>
+      <span class="page-header-meta">Live · research only</span>
+    </header>
 
-      <section class="panel pillar-panel" id="pillar-monetary">
-        <h2 class="panel-title">Monetary Expansion</h2>
-        <div class="pillar-body" id="pillar-monetary-body">
-          <div class="loading">Loading…</div>
+    <div class="section-block" id="context-block" hidden>
+      <p class="section-kicker">Scenario context</p>
+      <section class="panel" id="panel-context">
+        <h2 class="panel-title" id="context-title">Regime &amp; waypoints</h2>
+        <div class="context-body">
+          <div class="context-block" id="regime-block" hidden>
+            <div class="context-label">Regime read</div>
+            <ul class="regime-bullets" id="regime-bullets"></ul>
+          </div>
+          <div class="context-block" id="waypoints-block" hidden>
+            <div class="context-label" id="waypoints-label">Waypoints</div>
+            <div class="waypoints-list" id="waypoints-body"></div>
+          </div>
         </div>
       </section>
+    </div>
 
-      <section class="panel pillar-panel" id="pillar-dedollar">
-        <h2 class="panel-title">De-Dollarisation</h2>
-        <div class="pillar-body" id="pillar-dedollar-body">
-          <div class="loading">Loading…</div>
-        </div>
-      </section>
+    <!-- ── Pillar desks ────────────────────────────────────────────────── -->
+    <div class="section-block">
+      <p class="section-kicker">Four themes</p>
+      <div class="pillar-grid" id="pillar-grid">
 
-      <section class="panel pillar-panel" id="pillar-ai">
-        <h2 class="panel-title">AI Transition</h2>
-        <div class="pillar-body" id="pillar-ai-body">
-          <div class="loading">Loading…</div>
-        </div>
-      </section>
+        <section class="panel pillar-panel" id="pillar-monetary">
+          <h2 class="panel-title">Money growth</h2>
+          <div class="pillar-body" id="pillar-monetary-body">
+            <div class="loading">Loading…</div>
+          </div>
+        </section>
 
-      <section class="panel pillar-panel" id="pillar-hardmoney">
-        <h2 class="panel-title">Hard Money Market State</h2>
-        <div class="pillar-body" id="pillar-hardmoney-body">
-          <div class="loading">Loading…</div>
-        </div>
-      </section>
+        <section class="panel pillar-panel" id="pillar-dedollar">
+          <h2 class="panel-title">Less dollar dependence</h2>
+          <div class="pillar-body" id="pillar-dedollar-body">
+            <div class="loading">Loading…</div>
+          </div>
+        </section>
 
+        <section class="panel pillar-panel" id="pillar-ai">
+          <h2 class="panel-title">AI transition</h2>
+          <div class="pillar-body" id="pillar-ai-body">
+            <div class="loading">Loading…</div>
+          </div>
+        </section>
+
+        <section class="panel pillar-panel" id="pillar-hardmoney">
+          <h2 class="panel-title">Hard assets right now</h2>
+          <div class="pillar-body" id="pillar-hardmoney-body">
+            <div class="loading">Loading…</div>
+          </div>
+        </section>
+
+      </div>
     </div>
 
     <!-- ── Invalidation Trigger Board ─────────────────────────────────── -->
-    <section class="panel" id="panel-triggers">
-      <h2 class="panel-title">Thesis Invalidation Triggers</h2>
-      <table class="trigger-table">
-        <thead>
-          <tr>
-            <th style="width:28%">Trigger</th>
-            <th style="width:28%">Threshold</th>
-            <th style="width:32%">Current</th>
-            <th style="width:12%" class="num">Status</th>
-          </tr>
-        </thead>
-        <tbody id="trigger-rows">
-          <tr><td colspan="4" class="loading">Loading…</td></tr>
-        </tbody>
-      </table>
-    </section>
+    <div class="section-block">
+      <p class="section-kicker">What would break the thesis</p>
+      <section class="panel" id="panel-triggers">
+        <h2 class="panel-title">Watchpoints</h2>
+        <table class="trigger-table">
+          <thead>
+            <tr>
+              <th>Trigger</th>
+              <th>Threshold</th>
+              <th>Current</th>
+              <th class="num">Status</th>
+            </tr>
+          </thead>
+          <tbody id="trigger-rows">
+            <tr><td colspan="4" class="loading">Loading…</td></tr>
+          </tbody>
+        </table>
+        <div class="trigger-summary" id="trigger-summary"></div>
+      </section>
+    </div>
 
     <!-- ── Thesis Narrative (collapsible) ─────────────────────────────── -->
-    <section class="panel" id="panel-thesis">
-      <details id="thesis-details">
-        <summary class="thesis-summary">
-          <span class="summary-chevron">▸</span>
-          Transition Thesis
-          <span class="summary-hint">expand</span>
-        </summary>
-        <div id="thesis-content" class="thesis-body">
-          <p class="loading">Loading thesis…</p>
-        </div>
-      </details>
-      <details id="m2-note-details">
-        <summary class="thesis-summary">
-          <span class="summary-chevron">▸</span>
-          Notes on Global M2
-          <span class="summary-hint">expand</span>
-        </summary>
-        <div id="m2-note-content" class="thesis-body">
-          <p class="loading">Loading…</p>
-        </div>
-      </details>
-    </section>
+    <div class="section-block">
+      <p class="section-kicker">Background reading</p>
+      <section class="panel" id="panel-thesis">
+        <details id="thesis-details">
+          <summary class="thesis-summary">
+            <span class="summary-chevron" aria-hidden="true">▸</span>
+            Full thesis write-up
+            <span class="summary-hint"></span>
+          </summary>
+          <div id="thesis-content" class="thesis-body">
+            <p class="loading">Loading thesis…</p>
+          </div>
+        </details>
+        <details id="m2-note-details">
+          <summary class="thesis-summary">
+            <span class="summary-chevron" aria-hidden="true">▸</span>
+            How global money supply is measured
+            <span class="summary-hint"></span>
+          </summary>
+          <div id="m2-note-content" class="thesis-body">
+            <p class="loading">Loading…</p>
+          </div>
+        </details>
+      </section>
+    </div>
 
   </main>
 
   <!-- ── Footer ─────────────────────────────────────────────────────── -->
   <footer id="site-footer">
     <div class="footer-inner">
-      <div class="footer-refresh">
-        <span class="footer-label">Prices updated:</span>
-        <span id="footer-prices-ts">—</span>
-        &nbsp;|&nbsp;
-        <span class="footer-label">Macro updated:</span>
-        <span id="footer-macro-ts">—</span>
-      </div>
-      <div class="footer-refresh">
-        <span class="footer-label">Thesis last assessed:</span>
-        <span id="footer-assessed-ts">—</span>
+      <div class="footer-meta">
+        <span class="footer-meta-item">
+          <span class="footer-label">Prices</span>
+          <span id="footer-prices-ts">—</span>
+        </span>
+        <span class="footer-meta-item">
+          <span class="footer-label">Macro</span>
+          <span id="footer-macro-ts">—</span>
+        </span>
+        <span class="footer-meta-item">
+          <span class="footer-label">Assessed</span>
+          <span id="footer-assessed-ts">—</span>
+        </span>
       </div>
       <div class="footer-sources">
-        Data: FRED · ECB · BoE · BOJ · CoinGecko · Stooq · Yahoo · Alternative.me · WGC/IMF (manual)
+        Data: FRED · ECB · BoE · BOJ · CoinGecko · Stooq · Yahoo · Alternative.me · DefiLlama · WGC/IMF (manual)
       </div>
-      <div class="footer-sources">
-        Data updates Mon–Fri only. Stale badges on weekends are expected.
+      <div class="footer-note">
+        Updates Mon–Fri only · weekend stale badges are expected
       </div>
       <div class="footer-links">
         <a href="https://github.com/darylcl1984/macro-dashboard" target="_blank" rel="noopener">GitHub</a>
-        &nbsp;·&nbsp;
-        Not financial advice — analytical framework for educational purposes.
+        <span class="sep" aria-hidden="true">·</span>
+        <span>Not financial advice — analytical framework for educational purposes.</span>
       </div>
     </div>
   </footer>

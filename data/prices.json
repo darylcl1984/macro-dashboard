@@ -5,13 +5,92 @@
       "price": 64089,
       "change_pct": -1.56,
       "week52_low": 57747.766,
-      "week52_high": 126198.07
+      "week52_high": 126198.07,
+      "weekly_close": 65200,
+      "weekly_close_as_of": "2026-07-20",
+      "weekly_close_prev": 66100,
+      "monthly_close": 67500,
+      "monthly_close_as_of": "2026-06",
+      "ath_proxy": 126198.07,
+      "ath_note": "52-week high used as cycle-high proxy",
+      "monthly_series": [
+        {
+          "period": "2025-04",
+          "close": 94000
+        },
+        {
+          "period": "2025-05",
+          "close": 104000
+        },
+        {
+          "period": "2025-06",
+          "close": 108000
+        },
+        {
+          "period": "2025-07",
+          "close": 115000
+        },
+        {
+          "period": "2025-08",
+          "close": 108000
+        },
+        {
+          "period": "2025-09",
+          "close": 112000
+        },
+        {
+          "period": "2025-10",
+          "close": 120000
+        },
+        {
+          "period": "2025-11",
+          "close": 95000
+        },
+        {
+          "period": "2025-12",
+          "close": 92000
+        },
+        {
+          "period": "2026-01",
+          "close": 98000
+        },
+        {
+          "period": "2026-02",
+          "close": 88000
+        },
+        {
+          "period": "2026-03",
+          "close": 82000
+        },
+        {
+          "period": "2026-04",
+          "close": 78000
+        },
+        {
+          "period": "2026-05",
+          "close": 72000
+        },
+        {
+          "period": "2026-06",
+          "close": 67500
+        },
+        {
+          "period": "2026-07",
+          "close": 64089
+        }
+      ]
     },
     "XAUUSD": {
       "price": 4055.7,
       "change_pct": 1.13,
       "week52_low": 3263.9,
-      "week52_high": 5586.2
+      "week52_high": 5586.2,
+      "weekly_close": 4010,
+      "weekly_close_as_of": "2026-07-20",
+      "monthly_close": 4015.51,
+      "monthly_close_as_of": "2026-06",
+      "ath_proxy": 5586.2,
+      "ath_note": "52-week high used as cycle-high proxy"
     },
     "WTI": {
       "price": 90.47,

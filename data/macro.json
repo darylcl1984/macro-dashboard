@@ -3,7 +3,69 @@
   "indicators": {
     "US_M2": {
       "value": 23052.3,
-      "date": "2026-05-01"
+      "date": "2026-05-01",
+      "yoy_pct": 5.6,
+      "yoy_prior_pct": 4.7,
+      "yoy_delta_pp": 0.9,
+      "unit": "billions_usd",
+      "history": [
+        {
+          "period": "2025-04",
+          "value": 21800
+        },
+        {
+          "period": "2025-05",
+          "value": 21892
+        },
+        {
+          "period": "2025-06",
+          "value": 21988
+        },
+        {
+          "period": "2025-07",
+          "value": 22088
+        },
+        {
+          "period": "2025-08",
+          "value": 22192
+        },
+        {
+          "period": "2025-09",
+          "value": 22300
+        },
+        {
+          "period": "2025-10",
+          "value": 22412
+        },
+        {
+          "period": "2025-11",
+          "value": 22528
+        },
+        {
+          "period": "2025-12",
+          "value": 22648
+        },
+        {
+          "period": "2026-01",
+          "value": 22772
+        },
+        {
+          "period": "2026-02",
+          "value": 22900
+        },
+        {
+          "period": "2026-03",
+          "value": 23032
+        },
+        {
+          "period": "2026-04",
+          "value": 23168
+        },
+        {
+          "period": "2026-05",
+          "value": 23308
+        }
+      ]
     },
     "US_10Y": {
       "value": 4.67,
@@ -78,7 +140,11 @@
       "headline_pct": null,
       "fx_adjusted_pct": null,
       "base_period": null,
-      "as_of_period": "2026-07"
+      "as_of_period": "2026-07",
+      "history_months": 2,
+      "history_ready": false,
+      "history_needed": 13,
+      "history_note": "Computed YoY needs ~13 months of history (2 months on file)."
     },
     "HY_OAS": {
       "value": 2.68,
@@ -176,6 +242,12 @@
           "notes": "HY OAS ~2.7%; watch Q3 crossover + hyperscaler bond issuance"
         }
       }
+    },
+    "STABLECOIN_MCAP": {
+      "value": 248.0,
+      "unit": "billions_usd",
+      "date": "2026-07-24",
+      "source": "seed"
     }
   }
 }
