@@ -398,13 +398,13 @@ function buildTriggers(prices, macro, manual) {
     {
       id: 'global_m2',
       group: 'money',
-      label: 'Global money supply',
-      threshold: 'YoY growth below 0%',
+      label: 'Global M2',
+      threshold: 'Headline YoY < 0%',
       current() {
         if (m2yoy.value == null) return '—';
-        const tag = m2yoy.estimated ? (m2yoy.provisional ? ' interim' : ' est.') : '';
         const sign = m2yoy.value >= 0 ? '+' : '';
-        return `${sign}${m2yoy.value.toFixed(1)}% YoY${tag}`;
+        const pureEst = m2yoy.estimated && !m2yoy.provisional;
+        return `${sign}${m2yoy.value.toFixed(1)}% headline${pureEst ? ' est.' : ''}`;
       },
       status() {
         const y = m2yoy.value;
@@ -413,19 +413,25 @@ function buildTriggers(prices, macro, manual) {
         if (y < 3) return 'amber';
         return 'green';
       },
-      note() { return m2yoy.estimated ? (manual?.global_m2_yoy_estimate?.note || '') : ''; },
+      note() {
+        if (m2yoy.fxAdjusted != null && !isNaN(m2yoy.fxAdjusted)) {
+          const s = m2yoy.fxAdjusted >= 0 ? '+' : '';
+          return `Fixed-FX ${s}${Number(m2yoy.fxAdjusted).toFixed(1)}%`;
+        }
+        return m2yoy.estimated ? (manual?.global_m2_yoy_estimate?.note || '') : '';
+      },
     },
     {
       id: 'cofer',
       group: 'money',
-      label: 'Dollar share of reserves',
-      threshold: 'Rising 4 quarters in a row',
+      label: 'Dollar reserve share',
+      threshold: 'Up 4 quarters straight',
       current() {
         if (coferQ == null) return '—';
         const share = manual?.cofer_usd_share?.usd_share_pct;
-        const q = coferQ === 1 ? '1 rising quarter' : `${coferQ} rising quarters`;
+        const q = coferQ === 1 ? '1 rising' : `${coferQ} rising`;
         const bits = [q];
-        if (share != null) bits.push(`${fmt(share, 2)}% USD`);
+        if (share != null) bits.push(`${fmt(share, 2)}%`);
         if (manual?.cofer_usd_share?.period) bits.push(manual.cofer_usd_share.period);
         return bits.join(' · ');
       },
@@ -435,20 +441,22 @@ function buildTriggers(prices, macro, manual) {
         if (coferQ >= 1) return 'amber';
         return 'green';
       },
-      note() { return manual?.cofer_usd_share?.note || ''; },
+      note() {
+        return manualNotes('cofer_reversal')
+          || (coferQ != null && coferQ > 0 && coferQ < 4
+            ? 'Noise until four rising quarters.'
+            : '');
+      },
     },
     {
       id: 'gold_hedge',
       group: 'gold',
-      label: 'Gold $4,000 floor',
-      threshold: 'Monthly close below $4,000',
+      label: 'Gold $4k floor',
+      threshold: 'Monthly close < $4,000',
       current() {
         const live = gold?.price;
         const bits = [];
-        if (goldMonthly != null) {
-          bits.push(`Month ${fmt(goldMonthly, 0, '$')}`);
-          if (gold.monthly_close_as_of) bits.push(gold.monthly_close_as_of);
-        }
+        if (goldMonthly != null) bits.push(`Month ${fmt(goldMonthly, 0, '$')}`);
         if (live != null) bits.push(`Live ${fmt(live, 0, '$')}`);
         return bits.length ? bits.join(' · ') : '—';
       },
@@ -467,14 +475,13 @@ function buildTriggers(prices, macro, manual) {
     {
       id: 'btc_demand',
       group: 'btc',
-      label: 'Bitcoin demand floor',
-      threshold: 'Weekly close below $53,000',
+      label: 'BTC $53k floor',
+      threshold: 'Weekly close < $53,000',
       current() {
         const live = btc?.price;
         const bits = [];
         if (btcWeekly != null) bits.push(`Week ${fmt(btcWeekly, 0, '$')}`);
         if (live != null) bits.push(`Live ${fmt(live, 0, '$')}`);
-        if (btc?.week52_low != null) bits.push(`52w low ${fmt(btc.week52_low, 0, '$')}`);
         return bits.length ? bits.join(' · ') : '—';
       },
       status() {
@@ -489,19 +496,19 @@ function buildTriggers(prices, macro, manual) {
       note() {
         if (btcWeekly != null && btc?.weekly_close_as_of)
           return `Judged on weekly close (${btc.weekly_close_as_of}).`;
-        return 'Weekly close not loaded — live price as stand-in.';
+        return 'Weekly close not loaded — live as stand-in.';
       },
     },
     {
       id: 'divergence',
       group: 'btc',
-      label: 'Bitcoin vs money growth',
-      threshold: 'Out of sync for 18+ months',
+      label: 'BTC–M2 lag',
+      threshold: '≥ 18 months out of sync',
       current() {
         if (manual?.divergence?.start == null) return 'Back in sync';
         if (divMonths == null) return '—';
         const since = periodMonthLabel(manual.divergence.start, true);
-        return `${divMonths} mo out of sync · since ${since}`;
+        return `${divMonths} mo · since ${since}`;
       },
       status() {
         if (manual?.divergence?.start == null) return 'green';
@@ -510,21 +517,24 @@ function buildTriggers(prices, macro, manual) {
         if (divMonths >= 12) return 'amber';
         return 'green';
       },
-      note() { return manual?.divergence?.note || ''; },
+      note() {
+        // Short board line; full transmission essay lives in docs / Bitcoin pillar.
+        return 'Manual clock · don’t reset on one green ETF week.';
+      },
     },
     {
       id: 'ai_financing',
       group: 'ai',
       label: 'AI funding stress',
-      threshold: 'HY spreads >5% and capex cuts',
+      threshold: 'OAS >5% and capex cuts',
       current() {
         const bits = [];
-        if (oas != null) bits.push(`HY OAS ${oas.toFixed(2)}%`);
+        if (oas != null) bits.push(`OAS ${oas.toFixed(2)}%`);
         const cuts = manual?.ai_transition?.capex_cuts;
-        bits.push(cuts ? 'Capex cuts: yes' : 'Capex cuts: no');
+        bits.push(cuts ? 'Cuts yes' : 'Cuts no');
         const hs = manual?.ai_transition?.hyperscaler_cash;
-        if (hs?.crossed) bits.push('Group cash crossed');
-        else if (hs?.gap_usd_b != null) bits.push(`Cash gap $${fmt(hs.gap_usd_b, 1)}B`);
+        if (hs?.crossed) bits.push('Cash crossed');
+        else if (hs?.gap_usd_b != null) bits.push(`Gap $${fmt(hs.gap_usd_b, 1)}B`);
         return bits.join(' · ') || '—';
       },
       status() {
@@ -546,12 +556,12 @@ function buildTriggers(prices, macro, manual) {
     {
       id: 'oil',
       group: 'tail',
-      label: 'Oil price spike',
-      threshold: 'Above $120 for 4+ weeks',
+      label: 'Oil spike',
+      threshold: 'WTI >$120 for 4+ weeks',
       current() {
         const price = wti?.price;
         if (price == null) return '—';
-        if (price > 120) return `${fmt(price, 2, '$')} · confirm 4 weeks above $120`;
+        if (price > 120) return `WTI ${fmt(price, 2, '$')} · confirm 4 weeks`;
         return `WTI ${fmt(price, 2, '$')}`;
       },
       status() {
@@ -583,8 +593,9 @@ function renderTriggers(prices, macro, manual) {
     const status = t.status();
     const note = t.note();
     const current = t.current();
+    const noteEsc = note ? String(note).replace(/"/g, '&quot;') : '';
     const noteHtml = note
-      ? `<div class="trigger-note">${note}</div>`
+      ? `<div class="trigger-note" title="${noteEsc}">${note}</div>`
       : '';
     const group = t.group || '';
     const groupStart = group && group !== prevGroup ? ' trigger-group-start' : '';
@@ -595,7 +606,12 @@ function renderTriggers(prices, macro, manual) {
         <span class="trigger-threshold-mobile">${t.threshold}</span>
       </td>
       <td data-label="Breaks if"><span class="trigger-threshold-inline">${t.threshold}</span></td>
-      <td data-label="Now"><span class="trigger-current">${current}</span>${noteHtml}</td>
+      <td data-label="Now" class="trigger-now-cell">
+        <div class="trigger-now">
+          <span class="trigger-current">${current}</span>
+          ${noteHtml}
+        </div>
+      </td>
       <td class="trigger-status-cell" data-label="Status">${statusChip(status)}</td>
     </tr>`;
   });
@@ -611,13 +627,17 @@ function renderTriggers(prices, macro, manual) {
   const sumEl = document.getElementById('trigger-summary');
   if (sumEl) {
     const total = tally.green + tally.amber + tally.red;
-    if (tally.red > 0) {
-      sumEl.innerHTML = `<strong>${tally.red} broken</strong> · ${tally.amber} watching · ${tally.green} clear · of ${total}`;
-    } else if (tally.amber > 0) {
-      sumEl.innerHTML = `<strong>${tally.amber} of ${total} watching</strong> · none broken · ${tally.green} clear`;
-    } else {
-      sumEl.innerHTML = `<strong>All clear</strong> · ${total} of ${total} green`;
-    }
+    const chips = [
+      `<span class="trigger-sum-chip chip-green">${tally.green} clear</span>`,
+      `<span class="trigger-sum-chip chip-amber">${tally.amber} watching</span>`,
+      `<span class="trigger-sum-chip chip-red">${tally.red} broken</span>`,
+    ].join('<span class="tally-sep">·</span>');
+    const lead = tally.red > 0
+      ? `<strong>${tally.red} broken</strong>`
+      : tally.amber > 0
+        ? `<strong>${tally.amber} of ${total} watching</strong>`
+        : `<strong>All clear</strong>`;
+    sumEl.innerHTML = `<span class="trigger-sum-k">Board</span><span class="trigger-sum-v">${lead}<span class="tally-sep">·</span>${chips}</span><span class="trigger-sum-n">of ${total}</span>`;
   }
   return tally;
 }

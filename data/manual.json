@@ -83,7 +83,7 @@
   },
   "divergence": {
     "start": "2025-07",
-    "note": "Since mid-2025, BTC has not tracked expanding money the way it used to (global M2 = multi-year destination; spot ETF = short-run pipe). Clock is manual. Do not reset on a single green ETF week — need sustained ETF + liquidity direction agreement first."
+    "note": "Manual clock since mid-2025. Global M2 is the multi-year destination; spot ETF is the short-run pipe. Do not reset on one green ETF week."
   },
   "cb_gold": {
     "quarterly_tonnes": 244,
@@ -152,15 +152,15 @@
   "triggers_manual": {
     "gold_monthly_close": {
       "status": "amber",
-      "notes": "June 2026 monthly close was $4,015.51 — only $15 above the $4,000 line."
+      "notes": "June close $15 above the $4,000 line."
     },
     "cofer_reversal": {
       "status": "amber",
-      "notes": "One up quarter so far; need four in a row to call a real reversal."
+      "notes": "Noise until four rising quarters."
     },
     "ai_financing": {
       "status": "green",
-      "notes": "Spreads calm (~2.7%). Group cash gap thin (~$9.5B Q1); Epoch trend cross ~Q3 2026. Watch August earnings and bond/equity raises."
+      "notes": "OAS calm · gap thin · watch Aug earnings."
     }
   }
 }
