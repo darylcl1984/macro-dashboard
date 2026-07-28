@@ -1,5 +1,15 @@
-const CACHE_NAME   = 'macro-dashboard-v47';
-const SHELL_ASSETS = ['./index.html', './styles.css', './app.js', './manifest.json'];
+const CACHE_NAME   = 'macro-dashboard-v48';
+const SHELL_ASSETS = [
+  './index.html',
+  './styles.css',
+  './app.js',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-192-maskable.png',
+  './icons/icon-512-maskable.png',
+  './icons/apple-touch-icon.png',
+];
 
 // ─── Install: cache app shell ─────────────────────────────────────────────────
 

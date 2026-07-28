@@ -1,10 +1,39 @@
 {
   "name": "The Great Transition — Macro Dashboard",
-  "short_name": "Macro Dashboard",
-  "description": "Thesis-driven macro dashboard tracking The Great Transition.",
+  "short_name": "Macro Desk",
+  "description": "Thesis-driven macro research terminal for The Great Transition.",
+  "id": "./",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#141922",
   "theme_color": "#141922",
-  "icons": []
+  "lang": "en",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }

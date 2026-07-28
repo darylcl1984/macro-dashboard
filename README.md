@@ -6,6 +6,8 @@ Waypoints, not trading signals. No portfolio, no positions.
 
 **Live:** [darylcl1984.github.io/macro-dashboard](https://darylcl1984.github.io/macro-dashboard)
 
+**PWA:** Installable from Chrome (desktop/Android) when served over HTTPS — icons + service worker + `manifest.json` under `src/`.
+
 ---
 
 ## Screenshots
