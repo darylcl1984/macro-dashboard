@@ -640,20 +640,37 @@ function renderStatusBar(manual, macro, tally) {
   const ind = macro?.indicators || {};
   const m2yoy = resolveM2Yoy(ind, manual);
   const m2yoyEl = document.getElementById('m2-yoy');
-  const m2s = staleness(m2yoy.sourceDate, 45, 90);
+  // Status bar: clean number + as-of period. Monthly M2 is always ~1–2 months lagged —
+  // do not show "N days ago" (noise) or interim chips (detail lives on the Money pillar).
   if (m2yoy.value != null) {
     const sign = m2yoy.value >= 0 ? '+' : '';
     const cls2 = m2yoy.value > 0 ? 'pos' : 'neg';
-    const staleCls = m2s.level === 'amber' ? ' value-stale-amber'
-                   : m2s.level === 'red' ? ' value-stale-red' : '';
-    const est  = m2yoy.estimated
-      ? ` <span class="est-tag" title="Interim figure — not a full calendar year-over-year yet">${m2yoy.provisional ? 'interim' : 'est.'}</span>`
+    // Only tag pure manual fallback (no computed headline), not provisional/mixed-vintage.
+    const pureEst = m2yoy.estimated && !m2yoy.provisional && ind?.GLOBAL_M2_YOY?.headline_pct == null;
+    const est = pureEst
+      ? ' <span class="est-tag" title="Manual estimate — computed YoY not available">est.</span>'
       : '';
-    m2yoyEl.innerHTML = `<span class="${cls2}${staleCls}">${sign}${m2yoy.value.toFixed(1)}%</span>${est}`;
+    m2yoyEl.innerHTML = `<span class="${cls2}">${sign}${m2yoy.value.toFixed(1)}%</span>${est}`;
   } else {
     m2yoyEl.textContent = '—';
   }
-  document.getElementById('m2-sub').innerHTML = staleBadge(m2s.level, m2s.label);
+  {
+    const bits = [];
+    const asOf = m2yoy.sourceDate
+      ? (periodMonthLabel(m2yoy.sourceDate, true) || m2yoy.sourceDate)
+      : '';
+    if (asOf) bits.push(asOf);
+    if (m2yoy.fxAdjusted != null && !isNaN(m2yoy.fxAdjusted)) {
+      const s = m2yoy.fxAdjusted >= 0 ? '+' : '';
+      bits.push(`fx ${s}${Number(m2yoy.fxAdjusted).toFixed(1)}%`);
+    }
+    // Only warn if data vintage is seriously behind (normal 1–2 month lag stays quiet).
+    const lagMo = monthsSince(m2yoy.sourceDate);
+    if (lagMo != null && lagMo > 3) {
+      bits.push(`<span class="stale-badge stale-amber">${lagMo} mo lag</span>`);
+    }
+    document.getElementById('m2-sub').innerHTML = bits.join(' · ');
+  }
 
   const fg = ind.FEAR_GREED;
   const fgEl = document.getElementById('fg-value');
@@ -1298,9 +1315,9 @@ function renderPillarHardMoney(prices, macro, manual) {
     { value: 70000, label: '$70k', kind: 'above' },
   ];
 
-  // Divergence cell
+  // Divergence cell — multi-year global M2 destination; short-run pipe is ETF
   let divValueHtml;
-  const divMeta = '18 mo = invalidation';
+  const divMeta = 'Global M2 destination · ETF = short-run pipe · 18 mo = invalidation';
   if (divStart == null) {
     divValueHtml = '<span class="pos">Back in sync</span>';
   } else if (months == null) {
@@ -1356,8 +1373,8 @@ function renderPillarHardMoney(prices, macro, manual) {
 
   document.getElementById('pillar-hardmoney-body').innerHTML = `
     <p class="desk-footnote desk-footnote--lead">
-      Private hard-money path for the de-dollarisation camp: floors, ETF flows, and lag vs money growth.
-      Gold’s CB/official story stays under De-dollarisation. Oil and vol are footnotes only.
+      Private hard-money path: floors, <strong>spot ETF flows</strong> (short-run pipe), and the lag clock vs expanding money
+      (global M2 is the multi-year destination). Gold’s CB story stays under De-dollarisation. Oil and vol are footnotes only.
     </p>
     <div class="desk-block">
       <table class="price-table pillar-price-table">
@@ -1380,7 +1397,7 @@ function renderPillarHardMoney(prices, macro, manual) {
           <div class="btc-cell-visual">${fgBarHtml(fgVal)}</div>
         </div>
         <div class="btc-cell">
-          <div class="btc-cell-label">Lag vs money growth</div>
+          <div class="btc-cell-label">Lag clock (global M2)</div>
           <div class="btc-cell-value">${divValueHtml}</div>
           <div class="btc-cell-visual">${divTrackOnly}</div>
           <div class="btc-cell-meta">${divMeta}</div>

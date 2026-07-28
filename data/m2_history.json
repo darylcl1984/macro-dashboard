@@ -240,23 +240,32 @@
   },
   {
     "period": "2026-05",
+    "scope": "5bloc",
     "components_local": {
       "US_usd_bn": 23052.3,
       "CN_cny_tn": 353.67,
-      "EZ_eur_tn": 16.3818,
-      "JP_jpy_tn": 1298.0755,
-      "UK_gbp_bn": 3241.6
+      "EZ_eur_tn": 16.41,
+      "JP_jpy_tn": 1296.44,
+      "UK_gbp_bn": 3278.5
+    },
+    "component_dates": {
+      "US": "2026-05-01",
+      "CN": "2026-05",
+      "EZ": "2026-06",
+      "JP": "202606",
+      "UK": "2026-05"
     },
     "fx": {
-      "EURUSD": 1.1681,
-      "GBPUSD": 1.3498,
-      "USDCNY": 6.7996,
-      "USDJPY": 158.153
+      "EURUSD": 1.1375,
+      "GBPUSD": 1.3292,
+      "USDCNY": 6.7652,
+      "USDJPY": 163.767
     },
-    "composite_usd": 106.784,
-    "composite_usd_4bloc_ex_uk": 102.409,
+    "fx_source": "fetch_spot",
+    "composite_usd": 106.28,
     "flags": [
-      "UK_derived_from_MoM"
+      "mixed_vintage",
+      "vintage_min=2026-05"
     ]
   },
   {

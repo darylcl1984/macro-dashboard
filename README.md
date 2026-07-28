@@ -145,20 +145,16 @@ python scripts/fetch_prices.py
 python scripts/fetch_macro.py
 ```
 
-**Serve the PWA** (paths resolve from `src/` → `../data/`):
+**Serve the PWA from the repo root** (so both `src/` and `data/` are reachable).  
+`app.js` loads JSON as `../data/*.json` from the page URL — that only works if the server root is the **repo**, not `src/` alone. Python’s `http.server` will **404** parent paths if you `cd src` first (empty desk).
 
 ```bash
-cd src
-python -m http.server 8080
-# → http://localhost:8080
-```
-
-Or from repo root:
-
-```bash
+# from repo root
 python -m http.server 8080
 # → http://localhost:8080/src/
 ```
+
+Do **not** serve only from `src/` unless you also expose `data/` another way.
 
 GitHub Actions can also be run via **workflow_dispatch** on the Actions tab.
 

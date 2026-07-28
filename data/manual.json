@@ -4,9 +4,9 @@
     "current": "B — Hawkish Grind",
     "active_id": "B",
     "probability": "40%",
-    "updated": "2026-07-27",
-    "notes": "Tight policy for longer is still the base case. Money keeps expanding; risk transmission does not. The thesis is decided on the floors, not the rhetoric.",
-    "next_check": "Hyperscaler earnings (early Aug) · FOMC · weekly BTC near $53k",
+    "updated": "2026-07-28",
+    "notes": "Tight policy for longer is still the base case. Money keeps expanding; risk transmission does not. Energy premiums and real rates can soak up print before it reaches BTC. The thesis is decided on the floors, not the rhetoric.",
+    "next_check": "FOMC path · hyperscaler earnings (early Aug) · weekly BTC vs $53k · oil if path toward $100",
     "book": [
       { "id": "A", "name": "Liquidity relink", "p": 30 },
       { "id": "B", "name": "Hawkish grind", "p": 40 },
@@ -14,7 +14,7 @@
       { "id": "D", "name": "Geo shock", "p": 10 }
     ],
     "rescore_if": [
-      "A — FOMC holds, ETF inflows return, BTC–M2 lag cools",
+      "A — FOMC holds, multi-week ETF inflows, and BTC–M2 lag cools (inflows alone are not enough)",
       "C — HY OAS above 4% or hyperscaler capex cuts",
       "D — oil path toward $100–120 / supply shock"
     ],
@@ -39,20 +39,21 @@
   },
   "regime_bullets": [
     "Fed talk is hawkish; money supply is still growing",
-    "Hard assets sit near floors, not cycle highs"
+    "Hard assets sit near floors, not cycle highs",
+    "Energy premium and real rates can absorb M2 before it reaches risk assets"
   ],
   "china_m2": {
     "value": 353.67,
     "unit": "trillions_cny",
     "period": "2026-05",
-    "updated": "2026-07-11",
-    "source": "PBoC monthly release; June figure due ~14 Jul 2026"
+    "updated": "2026-07-28",
+    "source": "PBoC monthly release (May 2026 vintage on desk; refresh when June/July print is ingested)"
   },
   "global_m2_yoy_estimate": {
     "value": 9.4,
     "unit": "pct",
-    "note": "Superseded by computed calendar YoY May-2025→May-2026 when GLOBAL_M2_YOY.headline_pct is set.",
-    "updated": "2026-07-27"
+    "note": "Fallback only. Prefer computed GLOBAL_M2_YOY (May-2025→May-2026 headline ~+9.4% / fixed-FX ~+6.5%).",
+    "updated": "2026-07-28"
   },
   "bloc_m2_yoy": {
     "US": {
@@ -82,7 +83,7 @@
   },
   "divergence": {
     "start": "2025-07",
-    "note": "Since mid-2025, Bitcoin has not been tracking global money growth the way it used to. Timer resets when they move together again."
+    "note": "Since mid-2025, BTC has not tracked expanding money the way it used to (global M2 = multi-year destination; spot ETF = short-run pipe). Clock is manual. Do not reset on a single green ETF week — need sustained ETF + liquidity direction agreement first."
   },
   "cb_gold": {
     "quarterly_tonnes": 244,
@@ -159,7 +160,7 @@
     },
     "ai_financing": {
       "status": "green",
-      "notes": "Spreads calm (~2.7%). Group cash gap thin (~$10B Q1); Epoch trend cross ~Q3 2026. Watch August earnings and bond/equity raises."
+      "notes": "Spreads calm (~2.7%). Group cash gap thin (~$9.5B Q1); Epoch trend cross ~Q3 2026. Watch August earnings and bond/equity raises."
     }
   }
 }

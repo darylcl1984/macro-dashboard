@@ -34,3 +34,8 @@ Thumbs.db
 .claude/
 .grok/
 .cursor/
+
+# Local agent handoff only — do not publish
+AGENTS.md
+AGENT.md
+CLAUDE.md

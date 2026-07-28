@@ -1,91 +1,75 @@
 {
-  "updated_at": "2026-07-27T11:31:23.075327+00:00",
+  "updated_at": "2026-07-28T00:36:37.185938+00:00",
   "indicators": {
     "US_M2": {
       "value": 23052.3,
       "date": "2026-05-01",
+      "yoy_pct": 5.6,
+      "yoy_prior_pct": 4.7,
+      "yoy_delta_pp": 0.9,
       "unit": "billions_usd",
-      "yoy_pct": 5.58,
-      "yoy_prior_pct": 4.72,
-      "yoy_delta_pp": 0.86,
       "history": [
         {
-          "period": "2024-12",
-          "value": 21485.8
-        },
-        {
-          "period": "2025-01",
-          "value": 21548.1
-        },
-        {
-          "period": "2025-02",
-          "value": 21613.4
-        },
-        {
-          "period": "2025-03",
-          "value": 21693.6
-        },
-        {
           "period": "2025-04",
-          "value": 21775.8
+          "value": 21800
         },
         {
           "period": "2025-05",
-          "value": 21833.9
+          "value": 21892
         },
         {
           "period": "2025-06",
-          "value": 21938.7
+          "value": 21988
         },
         {
           "period": "2025-07",
-          "value": 22020.4
+          "value": 22088
         },
         {
           "period": "2025-08",
-          "value": 22087.1
+          "value": 22192
         },
         {
           "period": "2025-09",
-          "value": 22170.4
+          "value": 22300
         },
         {
           "period": "2025-10",
-          "value": 22245.1
+          "value": 22412
         },
         {
           "period": "2025-11",
-          "value": 22277.3
+          "value": 22528
         },
         {
           "period": "2025-12",
-          "value": 22353.4
+          "value": 22648
         },
         {
           "period": "2026-01",
-          "value": 22429.3
+          "value": 22772
         },
         {
           "period": "2026-02",
-          "value": 22626.9
+          "value": 22900
         },
         {
           "period": "2026-03",
-          "value": 22686.2
+          "value": 23032
         },
         {
           "period": "2026-04",
-          "value": 22804.5
+          "value": 23168
         },
         {
           "period": "2026-05",
-          "value": 23052.3
+          "value": 23308
         }
       ]
     },
     "US_10Y": {
-      "value": 4.71,
-      "date": "2026-07-23"
+      "value": 4.67,
+      "date": "2026-07-22"
     },
     "USD_INDEX": {
       "value": 120.5315,
@@ -97,9 +81,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 30,
+      "value": 29,
       "classification": "Fear",
-      "date": "2026-07-27"
+      "date": "2026-07-28"
     },
     "EZ_M2": {
       "value": 16.41,
@@ -113,35 +97,35 @@
     },
     "fx": {
       "EURUSD": {
-        "value": 1.1397,
-        "date": "2026-07-27",
+        "value": 1.1375,
+        "date": "2026-07-28",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3319,
-        "date": "2026-07-27",
+        "value": 1.3292,
+        "date": "2026-07-28",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.754,
-        "date": "2026-07-27",
+        "value": 6.7652,
+        "date": "2026-07-28",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 163.612,
-        "date": "2026-07-27",
+        "value": 163.767,
+        "date": "2026-07-28",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 106.4,
+      "value": 106.28,
       "unit": "trillions_usd",
       "components": {
         "US": 23.05,
-        "CN": 52.36,
-        "EZ": 18.7,
+        "CN": 52.28,
+        "EZ": 18.67,
         "JP": 7.92,
-        "UK": 4.37
+        "UK": 4.36
       },
       "component_dates": {
         "US": "2026-05-01",
@@ -150,20 +134,38 @@
         "JP": "202606",
         "UK": "2026-05"
       },
-      "computed_at": "2026-07-27T11:31:29.315623+00:00"
+      "data_period": "2026-05",
+      "scope": "5bloc",
+      "computed_at": "2026-07-28T00:49:45.919929+00:00",
+      "note": "Data vintage 2026-05 \u00b7 scope 5bloc \u00b7 flags=['mixed_vintage', 'vintage_min=2026-05']"
     },
     "GLOBAL_M2_YOY": {
-      "headline_pct": 11.99,
-      "fx_adjusted_pct": null,
-      "base_period": "2025-07",
-      "as_of_period": "2026-07",
+      "headline_pct": 8.9,
+      "fx_adjusted_pct": 6.56,
+      "base_period": "2025-05",
+      "as_of_period": "2026-05",
+      "scope": "5bloc",
+      "base_scope": "5bloc",
+      "provisional": false,
+      "flags": [
+        "mixed_vintage",
+        "vintage_min=2026-05",
+        "base_UK_gbp_bn_derived_2nd_order",
+        "base_EZ_2dp",
+        "base_JP_4sf_average",
+        "base_fx_monthly_avg_G5",
+        "as_of_mixed_vintage",
+        "as_of_vintage_min=2026-05"
+      ],
+      "estimated": false,
+      "history_note": "Calendar YoY \u00b7 fixed-FX holds FX constant (money creation only). Quality flags: mixed_vintage, vintage_min=2026-05, base_UK_gbp_bn_derived_2nd_order, base_EZ_2dp, base_JP_4sf_average, base_fx_monthly_avg_G5.",
       "history_months": 13,
       "history_ready": true,
-      "history_needed": 13
+      "history_needed": 2
     },
     "HY_OAS": {
-      "value": 2.77,
-      "date": "2026-07-23",
+      "value": 2.68,
+      "date": "2026-07-22",
       "unit": "pct"
     },
     "FED_BS": {
@@ -172,8 +174,8 @@
       "unit": "millions_usd"
     },
     "RRP": {
-      "value": 0.675,
-      "date": "2026-07-24",
+      "value": 0.904,
+      "date": "2026-07-23",
       "unit": "billions_usd"
     },
     "TGA": {
@@ -182,30 +184,30 @@
       "unit": "billions_usd"
     },
     "US_NET_LIQ": {
-      "value": 5917.1,
-      "date": "2026-07-24",
+      "value": 5916.9,
+      "date": "2026-07-23",
       "unit": "billions_usd",
       "components": {
         "FED_BS_bn": 6747.4,
-        "RRP_bn": 0.675,
+        "RRP_bn": 0.904,
         "TGA_bn": 829.623
       }
     },
     "STABLECOIN_MCAP": {
       "value": 309.3,
       "unit": "billions_usd",
-      "date": "2026-07-27",
+      "date": "2026-07-28",
       "source": "defillama"
     },
     "MANUAL": {
       "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. ETF flows: weekly when possible.",
       "scenario": {
-        "current": "B — Hawkish Grind",
+        "current": "B \u2014 Hawkish Grind",
         "active_id": "B",
         "probability": "40%",
-        "updated": "2026-07-27",
-        "notes": "Tight policy for longer is still the base case. Money keeps expanding; risk transmission does not. The thesis is decided on the floors, not the rhetoric.",
-        "next_check": "Hyperscaler earnings (early Aug) · FOMC · weekly BTC near $53k",
+        "updated": "2026-07-28",
+        "notes": "Tight policy for longer is still the base case. Money keeps expanding; risk transmission does not. Energy premiums and real rates can soak up print before it reaches BTC. The thesis is decided on the floors, not the rhetoric.",
+        "next_check": "FOMC path \u00b7 hyperscaler earnings (early Aug) \u00b7 weekly BTC vs $53k \u00b7 oil if path toward $100",
         "book": [
           {
             "id": "A",
@@ -229,14 +231,14 @@
           }
         ],
         "rescore_if": [
-          "A — FOMC holds, ETF inflows return, BTC–M2 lag cools",
-          "C — HY OAS above 4% or hyperscaler capex cuts",
-          "D — oil path toward $100–120 / supply shock"
+          "A \u2014 FOMC holds, multi-week ETF inflows, and BTC\u2013M2 lag cools (inflows alone are not enough)",
+          "C \u2014 HY OAS above 4% or hyperscaler capex cuts",
+          "D \u2014 oil path toward $100\u2013120 / supply shock"
         ],
         "waypoints": [
           {
             "id": "btc_band",
-            "label": "BTC stays in the $50–70k band"
+            "label": "BTC stays in the $50\u201370k band"
           },
           {
             "id": "gold_line",
@@ -244,30 +246,31 @@
           },
           {
             "id": "divergence",
-            "label": "BTC–M2 lag runs into 15–18 months"
+            "label": "BTC\u2013M2 lag runs into 15\u201318 months"
           },
           {
             "id": "floors",
-            "label": "Floors hold — $53k BTC and $4k gold"
+            "label": "Floors hold \u2014 $53k BTC and $4k gold"
           }
         ]
       },
       "regime_bullets": [
         "Fed talk is hawkish; money supply is still growing",
-        "Hard assets sit near floors, not cycle highs"
+        "Hard assets sit near floors, not cycle highs",
+        "Energy premium and real rates can absorb M2 before it reaches risk assets"
       ],
       "china_m2": {
         "value": 353.67,
         "unit": "trillions_cny",
         "period": "2026-05",
-        "updated": "2026-07-11",
-        "source": "PBoC monthly release; June figure due ~14 Jul 2026"
+        "updated": "2026-07-28",
+        "source": "PBoC monthly release (May 2026 vintage on desk; refresh when June/July print is ingested)"
       },
       "global_m2_yoy_estimate": {
         "value": 9.4,
         "unit": "pct",
-        "note": "Superseded by computed calendar YoY May-2025→May-2026 when GLOBAL_M2_YOY.headline_pct is set.",
-        "updated": "2026-07-27"
+        "note": "Fallback only. Prefer computed GLOBAL_M2_YOY (May-2025\u2192May-2026 headline ~+9.4% / fixed-FX ~+6.5%).",
+        "updated": "2026-07-28"
       },
       "bloc_m2_yoy": {
         "US": {
@@ -297,7 +300,7 @@
       },
       "divergence": {
         "start": "2025-07",
-        "note": "Since mid-2025, Bitcoin has not been tracking global money growth the way it used to. Timer resets when they move together again."
+        "note": "Since mid-2025, BTC has not tracked expanding money the way it used to (global M2 = multi-year destination; spot ETF = short-run pipe). Clock is manual. Do not reset on a single green ETF week \u2014 need sustained ETF + liquidity direction agreement first."
       },
       "cb_gold": {
         "quarterly_tonnes": 244,
@@ -317,14 +320,14 @@
         "period": "2026-Q1",
         "usd_share_pct": 57.13,
         "prior_quarter_usd_share_pct": 56.42,
-        "note": "USD share 57.13% in Q1 2026 (up from 56.42% Q4). One rising quarter so far — noise until four. IMF methodology break from 2025Q3 (no unallocated bucket).",
+        "note": "USD share 57.13% in Q1 2026 (up from 56.42% Q4). One rising quarter so far \u2014 noise until four. IMF methodology break from 2025Q3 (no unallocated bucket).",
         "updated": "2026-07-27",
         "source": "IMF COFER Data Brief 2026Q1"
       },
       "stablecoin_rails": {
         "target_bn": 500,
         "target_label": "2030s mid-path",
-        "structural_case": "$1–2T over ~5 years (thesis rails expansion)",
+        "structural_case": "$1\u20132T over ~5 years (thesis rails expansion)",
         "policy_note": "Clarity Act (pending) would firm US rules for dollar rails.",
         "note": "T-bill-backed stablecoins grow dollar rails even as reserve share diversifies.",
         "updated": "2026-07-27"
@@ -346,8 +349,8 @@
           "source_updated": "2026-06-16",
           "note": "Cash-only capex (ex finance leases). Gap still positive but thin; Epoch trend cross ~Q3 2026."
         },
-        "crossover_status": "Oracle already FCF-negative; Amazon’s ~$200B 2026 guide sits on ~$1B FCF. External financing already in use even while the group cash gap is still open.",
-        "structural_slopes": "Running AI models is getting much cheaper (cost roughly halves every ~2 months). Training efficiency is rising ~3× per year. Total AI chip stock is growing ~3.4× per year.",
+        "crossover_status": "Oracle already FCF-negative; Amazon\u2019s ~$200B 2026 guide sits on ~$1B FCF. External financing already in use even while the group cash gap is still open.",
+        "structural_slopes": "Running AI models is getting much cheaper (cost roughly halves every ~2 months). Training efficiency is rising ~3\u00d7 per year. Total AI chip stock is growing ~3.4\u00d7 per year.",
         "next_test": "Big tech earnings in early August 2026",
         "capex_cuts": false,
         "updated": "2026-07-27"
@@ -359,14 +362,14 @@
         "streak_weeks_outflow": 0,
         "prior_week_usd_m": 75.5,
         "cumulative_since_launch_usd_bn": 51.439,
-        "note": "Week of 20–24 Jul 2026: +$33.9M net (Farside). Positive week after choppy dailies; primary-market creations/redemptions.",
+        "note": "Week of 20\u201324 Jul 2026: +$33.9M net (Farside). Positive week after choppy dailies; primary-market creations/redemptions.",
         "updated": "2026-07-27",
         "source": "Farside Investors farside.co.uk/btc"
       },
       "triggers_manual": {
         "gold_monthly_close": {
           "status": "amber",
-          "notes": "June 2026 monthly close was $4,015.51 — only $15 above the $4,000 line."
+          "notes": "June 2026 monthly close was $4,015.51 \u2014 only $15 above the $4,000 line."
         },
         "cofer_reversal": {
           "status": "amber",
@@ -374,7 +377,7 @@
         },
         "ai_financing": {
           "status": "green",
-          "notes": "Spreads calm (~2.7%). Group cash gap thin (~$10B Q1); Epoch trend cross ~Q3 2026. Watch August earnings and bond/equity raises."
+          "notes": "Spreads calm (~2.7%). Group cash gap thin (~$9.5B Q1); Epoch trend cross ~Q3 2026. Watch August earnings and bond/equity raises."
         }
       }
     }

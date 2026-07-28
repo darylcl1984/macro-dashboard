@@ -18,6 +18,8 @@ import csv
 import io
 import json
 import os
+import re
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 
 from utils import (
@@ -29,6 +31,49 @@ from utils import (
     now_utc,
     write_json,
 )
+
+
+def _to_yyyy_mm(raw):
+    """Normalize assorted date stamps to YYYY-MM, or None."""
+    if raw is None:
+        return None
+    s = str(raw).strip()
+    if not s:
+        return None
+    if re.fullmatch(r"\d{6}", s):
+        return f"{s[:4]}-{s[4:6]}"
+    m = re.match(r"^(\d{4})-(\d{2})", s)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}"
+    m = re.match(r"^(\d{4})/(\d{1,2})", s)
+    if m:
+        return f"{m.group(1)}-{int(m.group(2)):02d}"
+    return None
+
+
+def _history_scope(entry):
+    """
+    Basket scope for YoY comparability.
+    4bloc = UK missing / unpublished; 5bloc = full five-bloc composite.
+    """
+    if not entry:
+        return None
+    flags = entry.get("flags") or []
+    if entry.get("composite_is_4bloc_ex_uk") or "UK_unpublished" in flags:
+        return "4bloc"
+    if entry.get("scope") in ("4bloc", "5bloc"):
+        return entry["scope"]
+    cl = entry.get("components_local") or {}
+    if cl.get("UK_gbp_bn") is None and entry.get("composite_usd") is not None:
+        # Explicit null UK → 4-bloc; missing components_local entirely → unknown
+        if "UK_gbp_bn" in cl:
+            return "4bloc"
+    if cl.get("UK_gbp_bn") is not None:
+        return "5bloc"
+    # Seed rows with composite only: treat as unknown (block strict YoY)
+    if cl is None or cl == {}:
+        return "unknown"
+    return "5bloc"
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 OUTPUT_FILE = DATA_DIR / "macro.json"
@@ -410,6 +455,9 @@ def compute_global_m2(indicators, manual, fx):
     """
     Build GLOBAL_M2 from five blocs. Returns (global_m2_dict, snapshot) or (None, None).
     Skips entirely if any component is missing — never writes a partial sum.
+
+    History period is the **data vintage** (component print months), not the
+    wall-clock month of the pipeline run.
     """
     us = indicators.get("US_M2")
     jp = indicators.get("JP_M2")
@@ -460,17 +508,42 @@ def compute_global_m2(indicators, manual, fx):
         "UK": uk.get("date"),
     }
 
+    # Data vintage: modal component month; fall back to min; never wall-clock alone.
+    vintages = {
+        k: _to_yyyy_mm(v) for k, v in component_dates.items() if _to_yyyy_mm(v)
+    }
+    flags = []
+    if len(vintages) == 5:
+        counts = Counter(vintages.values())
+        period, _ = counts.most_common(1)[0]
+        if len(counts) > 1:
+            flags.append("mixed_vintage")
+            # Prefer the lagging (min) month as the conservative complete vintage
+            period = min(vintages.values())
+            flags.append(f"vintage_min={period}")
+    elif vintages:
+        period = min(vintages.values())
+        flags.append("incomplete_component_dates")
+    else:
+        period = datetime.now(timezone.utc).strftime("%Y-%m")
+        flags.append("vintage_fallback_run_month")
+
+    scope = "5bloc"  # all five locals present by construction above
     global_m2 = {
         "value": total,
         "unit": "trillions_usd",
         "components": components,
         "component_dates": component_dates,
+        "data_period": period,
+        "scope": scope,
         "computed_at": now_utc(),
+        "note": f"Data vintage {period} · scope {scope}"
+        + (f" · flags={flags}" if flags else ""),
     }
 
-    period = datetime.now(timezone.utc).strftime("%Y-%m")
     snapshot = {
         "period": period,
+        "scope": scope,
         "components_local": {
             "US_usd_bn": us["value"],
             "CN_cny_tn": cn["value"],
@@ -478,22 +551,32 @@ def compute_global_m2(indicators, manual, fx):
             "JP_jpy_tn": jp["value"],
             "UK_gbp_bn": uk["value"],
         },
+        "component_dates": component_dates,
         "fx": {k: fx[k]["value"] for k in needed_fx},
+        "fx_source": "fetch_spot",
         "composite_usd": total,
+        "flags": flags,
     }
-    print(f"    GLOBAL_M2: {total}T USD  components={components}")
+    print(f"    GLOBAL_M2: {total}T USD  vintage={period} scope={scope} components={components}")
+    if flags:
+        print(f"    GLOBAL_M2 flags: {flags}")
     return global_m2, snapshot
 
 
 def upsert_m2_history(snapshot):
-    """Upsert current-month snapshot; compute YoY when 12-month-prior exists."""
+    """Upsert by data-vintage period; YoY only when prior scope matches."""
     history = _seed_m2_history()
     period = snapshot["period"]
+    cur_scope = snapshot.get("scope") or _history_scope(snapshot)
 
-    # Upsert by period (overwrite within the month)
+    # Upsert by period (overwrite within the data month)
     replaced = False
     for i, entry in enumerate(history):
         if entry.get("period") == period:
+            # Preserve hand-curated flags when pipeline flags empty
+            if not snapshot.get("flags") and entry.get("flags"):
+                snapshot = dict(snapshot)
+                snapshot["flags"] = entry.get("flags")
             history[i] = snapshot
             replaced = True
             break
@@ -503,24 +586,50 @@ def upsert_m2_history(snapshot):
     history.sort(key=lambda e: e.get("period") or "")
     write_json(M2_HISTORY_FILE, history)
 
-    # YoY vs same month 12 months prior
+    # YoY vs same calendar month 12 months prior
     y, m = period.split("-")
     prior_period = f"{int(y) - 1}-{m}"
     prior = next((e for e in history if e.get("period") == prior_period), None)
 
     headline_pct = None
     fx_adjusted_pct = None
+    yoy_flags = list(snapshot.get("flags") or [])
+    provisional = False
+    scope_note = None
 
+    prior_scope = _history_scope(prior) if prior else None
     if prior and prior.get("composite_usd") is not None:
-        headline_pct = round(
-            (snapshot["composite_usd"] / prior["composite_usd"] - 1) * 100, 2
-        )
+        if prior_scope in (None, "unknown") or cur_scope in (None, "unknown"):
+            provisional = True
+            yoy_flags.append("scope_unknown")
+            scope_note = "YoY computed with unknown basket scope — treat as provisional"
+            headline_pct = round(
+                (snapshot["composite_usd"] / prior["composite_usd"] - 1) * 100, 2
+            )
+        elif prior_scope != cur_scope:
+            # Refuse apples-to-oranges headline (e.g. 4bloc base vs 5bloc as-of)
+            yoy_flags.append("scope_mismatch")
+            scope_note = (
+                f"Headline YoY withheld: base scope {prior_scope} vs as-of {cur_scope}"
+            )
+            print(f"  [WARN] GLOBAL_M2_YOY: {scope_note}")
+        else:
+            headline_pct = round(
+                (snapshot["composite_usd"] / prior["composite_usd"] - 1) * 100, 2
+            )
 
     prior_local = (prior or {}).get("components_local") if prior else None
     cur_fx = snapshot.get("fx") or {}
-    if prior_local and all(prior_local.get(k) is not None for k in (
-        "US_usd_bn", "CN_cny_tn", "EZ_eur_tn", "JP_jpy_tn", "UK_gbp_bn"
-    )) and all(k in cur_fx for k in ("EURUSD", "GBPUSD", "USDCNY", "USDJPY")):
+    if (
+        prior_local
+        and prior_scope == cur_scope
+        and prior_scope == "5bloc"
+        and all(
+            prior_local.get(k) is not None
+            for k in ("US_usd_bn", "CN_cny_tn", "EZ_eur_tn", "JP_jpy_tn", "UK_gbp_bn")
+        )
+        and all(k in cur_fx for k in ("EURUSD", "GBPUSD", "USDCNY", "USDJPY"))
+    ):
         # Revalue year-ago local components at *current* FX
         revalued = (
             prior_local["US_usd_bn"] / 1000.0
@@ -534,12 +643,45 @@ def upsert_m2_history(snapshot):
                 (snapshot["composite_usd"] / revalued - 1) * 100, 2
             )
 
-    return {
+    # Quality flags for notes; provisional only for true basket/scope failures.
+    # Routine mixed_vintage (e.g. JP one month ahead of China) is normal — not "interim".
+    severe = ("scope_mismatch", "scope_unknown", "UK_unpublished", "incomplete_component_dates")
+    for src, label in ((prior, "base"), (snapshot, "as_of")):
+        for f in (src or {}).get("flags") or []:
+            tag = f"{label}_{f}"
+            if tag not in yoy_flags:
+                yoy_flags.append(tag)
+            if any(x in str(f) for x in severe):
+                provisional = True
+    # Snapshot-level severe flags
+    for f in snapshot.get("flags") or []:
+        if any(x in str(f) for x in ("scope_mismatch", "scope_unknown")):
+            provisional = True
+
+    out = {
         "headline_pct": headline_pct,
         "fx_adjusted_pct": fx_adjusted_pct,
         "base_period": prior_period if prior else None,
         "as_of_period": period,
+        "scope": cur_scope,
+        "base_scope": prior_scope,
+        "provisional": provisional,
+        "flags": yoy_flags,
+        "estimated": False,
     }
+    if scope_note:
+        out["scope_note"] = scope_note
+    if yoy_flags and headline_pct is not None:
+        out["history_note"] = (
+            "Calendar YoY · fixed-FX holds FX constant (money creation only). "
+            f"Quality flags: {', '.join(yoy_flags[:6])}."
+        )
+    elif headline_pct is not None:
+        out["history_note"] = (
+            f"Calendar YoY {prior_period} → {period} · fixed-FX holds FX constant "
+            "(money creation only)."
+        )
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -587,12 +729,20 @@ def enrich_global_m2_yoy(yoy, history):
     n = len(periods)
     yoy = dict(yoy or {})
     yoy["history_months"] = n
+    # Ready when a matching prior-period headline exists (not "13 contiguous months").
     yoy["history_ready"] = yoy.get("headline_pct") is not None
-    yoy["history_needed"] = 13
+    yoy["history_needed"] = 2  # as-of + same month prior year
     if not yoy.get("history_ready"):
+        if yoy.get("scope_note"):
+            yoy["history_note"] = yoy["scope_note"]
+        else:
+            yoy["history_note"] = (
+                f"Computed YoY needs a same-month prior-year snapshot "
+                f"with matching basket scope ({n} month{'s' if n != 1 else ''} on file)."
+            )
+    elif not yoy.get("history_note"):
         yoy["history_note"] = (
-            f"Computed YoY needs ~13 months of history "
-            f"({n} month{'s' if n != 1 else ''} on file)."
+            "Calendar YoY · fixed-FX holds FX constant (money creation only)."
         )
     return yoy
 
