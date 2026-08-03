@@ -1,21 +1,17 @@
 {
-  "updated_at": "2026-07-31T21:57:52.141449+00:00",
+  "updated_at": "2026-08-03T14:55:39.150602+00:00",
   "prices": {
     "BTC": {
-      "price": 62925,
-      "change_pct": -2.71,
+      "price": 63710,
+      "change_pct": 1.09,
       "week52_low": 57747.766,
       "week52_high": 126198.07,
-      "weekly_close": 62871.0,
-      "weekly_close_as_of": "2026-07-31",
-      "weekly_close_prev": 64725.0,
-      "monthly_close": 62871.0,
-      "monthly_close_as_of": "2026-07",
+      "weekly_close": 63846.0,
+      "weekly_close_as_of": "2026-08-03",
+      "weekly_close_prev": 63482.0,
+      "monthly_close": 63831.0,
+      "monthly_close_as_of": "2026-08",
       "monthly_series": [
-        {
-          "period": "2025-03",
-          "close": 82549.0
-        },
         {
           "period": "2025-04",
           "close": 94207.0
@@ -78,38 +74,42 @@
         },
         {
           "period": "2026-07",
-          "close": 64725.0
+          "close": 62814.0
         },
         {
-          "period": "2026-07",
-          "close": 62871.0
+          "period": "2026-08",
+          "close": 62763.0
+        },
+        {
+          "period": "2026-08",
+          "close": 63831.0
         }
       ],
       "ath_proxy": 126198.07,
       "ath_note": "52-week high used as cycle-high proxy"
     },
     "XAUUSD": {
-      "price": 4098.6,
-      "change_pct": 0.59,
-      "week52_low": 3281.0,
+      "price": 4091.9,
+      "change_pct": 1.42,
+      "week52_low": 3310.1,
       "week52_high": 5586.2,
-      "weekly_close": 4098.6,
-      "weekly_close_as_of": "2026-07-31",
-      "weekly_close_prev": 4100.1,
-      "monthly_close": 4098.6,
-      "monthly_close_as_of": "2026-07",
+      "weekly_close": 4091.9,
+      "weekly_close_as_of": "2026-08-03",
+      "weekly_close_prev": 4049.1,
+      "monthly_close": 4091.9,
+      "monthly_close_as_of": "2026-08",
       "ath_proxy": 5586.2,
       "ath_note": "52-week high used as cycle-high proxy"
     },
     "WTI": {
-      "price": 86.8,
-      "change_pct": 5.07,
+      "price": 79.41,
+      "change_pct": -5.98,
       "week52_low": 54.98,
       "week52_high": 119.48
     },
     "VIX": {
-      "price": 15.99,
-      "change_pct": -14.35,
+      "price": 15.7,
+      "change_pct": -13.78,
       "week52_low": 13.38,
       "week52_high": 35.3
     }
