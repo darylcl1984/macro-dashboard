@@ -256,13 +256,13 @@
       "UK": "2026-06"
     },
     "fx": {
-      "EURUSD": 1.1545,
-      "GBPUSD": 1.346,
-      "USDCNY": 6.7383,
-      "USDJPY": 157.842
+      "EURUSD": 1.1527,
+      "GBPUSD": 1.3442,
+      "USDCNY": 6.7471,
+      "USDJPY": 158.389
     },
     "fx_source": "fetch_spot",
-    "composite_usd": 107.26,
+    "composite_usd": 107.14,
     "flags": [
       "mixed_vintage",
       "vintage_min=2026-05"
