@@ -245,24 +245,24 @@
       "US_usd_bn": 23155.2,
       "CN_cny_tn": 353.67,
       "EZ_eur_tn": 16.41,
-      "JP_jpy_tn": 1296.44,
+      "JP_jpy_tn": 1297.01,
       "UK_gbp_bn": 3308.8
     },
     "component_dates": {
       "US": "2026-06-01",
       "CN": "2026-05",
       "EZ": "2026-06",
-      "JP": "202606",
+      "JP": "202607",
       "UK": "2026-06"
     },
     "fx": {
-      "EURUSD": 1.1539,
-      "GBPUSD": 1.3503,
-      "USDCNY": 6.7452,
-      "USDJPY": 159.35
+      "EURUSD": 1.1545,
+      "GBPUSD": 1.3519,
+      "USDCNY": 6.7433,
+      "USDJPY": 159.241
     },
     "fx_source": "fetch_spot",
-    "composite_usd": 107.14,
+    "composite_usd": 107.17,
     "flags": [
       "mixed_vintage",
       "vintage_min=2026-05"
