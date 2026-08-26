@@ -83,7 +83,7 @@ Legacy aliases (`--green-dim`, etc.) map to wash/border companions so existing c
 4. **Desk / panel** — titled slab, body, optional KPI strip  
 5. **KPI strip** — mono label · value · meta in a shared elevated well with vertical hairlines  
 6. **Content blocks** — tables, range bars, progress clocks with explicit labels  
-7. **Grids** — 2-column pillars ≥900px; collapse cleanly below  
+7. **Grids** — top row 2-column (AI | Credit) ≥900px; Money and Hard money span full width; Hard money splits Official | Private; collapse to 1-col below 900px  
 
 Spacing: section gaps ~28–36px, panel padding ~14–18px. Max width **~1360px**, centered. Page gutters ~18px (not LM’s 32px print margin — MD has a sticky bar).
 

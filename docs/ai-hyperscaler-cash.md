@@ -1,6 +1,6 @@
 # Hyperscaler cash (OCF vs cash capex)
 
-Quarterly desk series for the **AI Transition** pillar: aggregate operating cash flow vs cash capital expenditure for the five large hyperscalers.
+Quarterly desk series for the **AI capability** desk (near-term path, not the ladder itself): aggregate operating cash flow vs cash capital expenditure for the five large hyperscalers.
 
 ## Canonical source
 

@@ -2,6 +2,8 @@
 
 July 2026 · desk-aligned cut 28 Jul 2026
 
+Global M2 is **stage 4** of the thesis spine (the output), not the claim. The claim is two forces → fiscal hinge → gold/BTC. Methodology below.
+
 ### 1. What the Composite Measures
 
 The dashboard’s Global M2 figure is a **five-bloc composite**: US + China + Eurozone + Japan + UK money supply, each converted to USD. As of the **May 2026 data vintage** it stands at **~$106.8T**.

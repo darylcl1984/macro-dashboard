@@ -8,6 +8,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-08-26 — Flow desks layout
+
+#### Changed
+- [frontend] Flow desks: AI | Credit on the top row; Money and Hard money span full width
+- [frontend] Hard money splits Official bid | Private run
+- [frontend] HY OAS lives only on Credit; inferred fiscal mini-card removed (US M2 remains the proxy)
+- [frontend] Spine Force B jumps to Credit (where the missing long-end bid hits)
+
 ### 2026-07-11 — v6 — The Great Transition overhaul
 
 #### Added

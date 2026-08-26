@@ -204,25 +204,25 @@ function buildTransmission(macro, prices) {
 
 function transmissionHtml(tx) {
   if (!tx.months.length) {
-    return `<div class="desk-block"><div class="tx-strip">
+    return `<div class="tx-strip">
       <div class="tx-strip-head">
         <span class="tx-strip-title">US M2 vs Bitcoin (monthly)</span>
         <span class="tx-strip-summary">${tx.note}</span>
       </div>
-    </div></div>`;
+    </div>`;
   }
   const n = tx.months.length;
   const cells = tx.months.map(m =>
     `<span class="tx-month ${m.state}" title="${m.title || m.period}">${m.label}</span>`
   ).join('');
-  return `<div class="desk-block"><div class="tx-strip">
+  return `<div class="tx-strip">
     <div class="tx-strip-head">
       <span class="tx-strip-title">US M2 vs Bitcoin (monthly)</span>
       <span class="tx-strip-summary">${tx.note}</span>
     </div>
     <div class="tx-months" style="--tx-n:${n}" aria-label="Rolling last ${n} months, month-by-month direction">${cells}</div>
     <div class="tx-legend">Same direction = green · opposite = amber · US M2 vs BTC (MoM)</div>
-  </div></div>`;
+  </div>`;
 }
 
 function worstStatus(...statuses) {
@@ -289,35 +289,36 @@ function fmtRangeVal(v) {
 }
 
 /**
+ * Quote-page 52-week range: last print as the hero, full-width low—marker—high.
  * markers: [{ value, label, kind?: 'below'|'above'|'mark' }]
- * entry: optional price entry for cycle-high / 52w context chips inside the cell
  */
-function rangeBarHtml(sym, price, low, high, markers = [], entry = null) {
-  if (price == null || low == null || high == null || high <= low) {
-    const ctx = assetContextInlineHtml(entry, price);
-    return ctx || '<span class="neu">—</span>';
-  }
-  const span = high - low;
-  const pct  = Math.min(1, Math.max(0, (price - low) / span));
+function rangePosition(price, low, high) {
+  if (price == null || low == null || high == null || high <= low) return null;
+  return Math.min(1, Math.max(0, (price - low) / (high - low)));
+}
 
-  let alerted = false;
-  for (const mk of markers) {
-    if (mk.kind === 'below' && price < mk.value) alerted = true;
-    if (mk.kind === 'above' && price > mk.value) alerted = true;
-  }
-
+function rangeDesc(sym, pct) {
+  if (pct == null) return { text: '', cls: '' };
   const reversed = RANGE_REVERSED.has(sym);
-  const descText = pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
-                 : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
-                 : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
-                 : 'Near 52w high';
-  const descCls  = reversed
+  const text = pct <= 0.10 ? 'Near 52w low'  : pct <= 0.25 ? 'Lower quarter'
+             : pct <= 0.40 ? 'Lower third'   : pct <= 0.60 ? 'Mid-range'
+             : pct <= 0.75 ? 'Upper third'   : pct <= 0.90 ? 'Upper quarter'
+             : 'Near 52w high';
+  const cls = reversed
     ? (pct <= 0.25 ? 'pos' : pct >= 0.75 ? 'highlight-warn' : '')
     : (pct <= 0.25 ? 'highlight-warn' : pct >= 0.75 ? 'pos' : '');
-  const alertIcon = alerted ? '<span class="range-alert-icon">⚠</span> ' : '';
-  const desc = descCls
-    ? `${alertIcon}<span class="${descCls}">${descText}</span>`
-    : `${alertIcon}${descText}`;
+  return { text, cls };
+}
+
+function rangeTrackHtml(sym, price, low, high, markers = []) {
+  const pct = rangePosition(price, low, high);
+  if (pct == null) return '';
+  const span = high - low;
+  let alerted = false;
+  for (const mk of markers) {
+    // Floor breaks only. `above` marks are path bands, not alerts.
+    if (mk.kind === 'below' && price < mk.value) alerted = true;
+  }
 
   let ticks = '', zones = '', labels = '';
   for (const mk of markers) {
@@ -338,36 +339,47 @@ function rangeBarHtml(sym, price, low, high, markers = [], entry = null) {
     labels += `<span class="${labCls}" style="left:${left}%">${tip}</span>`;
   }
 
-  const dotCls = alerted ? 'range-dot is-alert' : 'range-dot';
+  const leftPct = (pct * 100).toFixed(1);
+  const aria = `${sym} 52-week range ${fmtRangeVal(low)} to ${fmtRangeVal(high)}, now ${fmtRangeVal(price)}`;
+  const markCls = alerted ? 'range-marker is-alert' : 'range-marker';
   return `<div class="range-wrap">
-    <div class="range-track">${zones}${ticks}<div class="${dotCls}" style="left:${(pct * 100).toFixed(1)}%"></div></div>
-    <div class="range-mark-row">${labels}</div>
-    <div class="range-desc">${desc}</div>
+    <div class="range-track" role="img" aria-label="${aria}">${zones}${ticks}<div class="${markCls}" style="left:${leftPct}%"></div></div>
+    ${labels ? `<div class="range-mark-row">${labels}</div>` : ''}
   </div>`;
 }
 
-function priceRowHtml(sym, label, price, chg, entry, markers, decimals, prefix) {
-  const ctx = assetContextInlineHtml(entry, price);
-  const range = rangeBarHtml(sym, price, entry?.week52_low ?? null, entry?.week52_high ?? null, markers, entry);
-  // Main row: ticker | price | Δ aligned; chips sit on a second row under ticker+price
-  if (!ctx) {
-    return `<tr class="price-row">
-      <td class="asset-name" data-label="Asset"><span class="asset-ticker">${label}</span></td>
-      <td class="num" data-label="Price">${fmt(price, decimals, prefix)}</td>
-      <td class="num" data-label="Δ">${fmtPct(chg, 2)}</td>
-      <td class="range-cell" data-label="52W">${range}</td>
-    </tr>`;
-  }
-  return `<tr class="price-row price-row-main">
-      <td class="asset-name" data-label="Asset"><span class="asset-ticker">${label}</span></td>
-      <td class="num price-val" data-label="Price">${fmt(price, decimals, prefix)}</td>
-      <td class="num" data-label="Δ">${fmtPct(chg, 2)}</td>
-      <td class="range-cell" data-label="52W" rowspan="2">${range}</td>
-    </tr>
-    <tr class="price-row price-row-ctx">
-      <td colspan="2" class="asset-ctx-cell">${ctx}</td>
-      <td class="asset-ctx-spacer" aria-hidden="true"></td>
-    </tr>`;
+function assetQuoteHtml(sym, label, price, chg, entry, markers = [], decimals = 0, prefix = '$') {
+  const low = entry?.week52_low ?? null;
+  const high = entry?.week52_high ?? null;
+  const pct = rangePosition(price, low, high);
+  const desc = rangeDesc(sym, pct);
+  const bits = assetContextBits(entry, price);
+  const alerted = (markers || []).some(mk => mk.kind === 'below' && price < mk.value);
+  const meta = [
+    desc.text
+      ? (desc.cls ? `<span class="${desc.cls}">${desc.text}</span>` : desc.text)
+      : null,
+    alerted ? '<span class="range-alert-icon">⚠</span>' : null,
+    ...bits.map(b => `<span class="range-context-chip${b.cls ? ` ${b.cls}` : ''}">${b.text}</span>`),
+  ].filter(Boolean).join(' · ');
+
+  const hasRange = pct != null;
+  return `<div class="asset-quote">
+    <div class="asset-quote-head">
+      <span class="asset-quote-name">${label}</span>
+      <span class="asset-quote-chg">${fmtPct(chg, 2)}</span>
+    </div>
+    <div class="asset-quote-px">${fmt(price, decimals, prefix)}</div>
+    ${hasRange ? `<div class="asset-quote-range">
+      <div class="asset-quote-ends">
+        <span>${fmtRangeVal(low)}</span>
+        <span class="asset-quote-range-k">52-week</span>
+        <span>${fmtRangeVal(high)}</span>
+      </div>
+      ${rangeTrackHtml(sym, price, low, high, markers)}
+    </div>` : ''}
+    ${meta ? `<div class="asset-quote-meta">${meta}</div>` : ''}
+  </div>`;
 }
 
 // ─── Trigger board (single source of truth) ───────────────────────────────────
@@ -394,8 +406,8 @@ function buildTriggers(prices, macro, manual) {
   const btcWeekly = btc?.weekly_close ?? null;
   const goldMonthly = gold?.monthly_close ?? null;
 
-  // Order: money → reserves → gold → BTC cluster → AI → oil last
-  return [
+  // Order: AI funding → money → COFER → gold → BTC cluster → oil last
+  const rows = [
     {
       id: 'global_m2',
       group: 'money',
@@ -519,7 +531,7 @@ function buildTriggers(prices, macro, manual) {
         return 'green';
       },
       note() {
-        // Short board line; full transmission essay lives in docs / Bitcoin pillar.
+        // Short board line; full transmission essay lives in docs / Hard money desk.
         return 'Manual clock · don’t reset on one green ETF week.';
       },
     },
@@ -575,6 +587,8 @@ function buildTriggers(prices, macro, manual) {
       note() { return ''; },
     },
   ];
+  const order = ['ai_financing', 'global_m2', 'cofer', 'gold_hedge', 'btc_demand', 'divergence', 'oil'];
+  return order.map(id => rows.find(r => r.id === id)).filter(Boolean);
 }
 
 function tallyTriggers(triggers) {
@@ -621,9 +635,8 @@ function renderTriggers(prices, macro, manual) {
   const tally = tallyTriggers(triggers);
   const board = document.getElementById('panel-triggers');
   if (board) {
-    board.classList.remove('panel-alarm-amber', 'panel-alarm-red');
+    board.classList.remove('panel-alarm-red');
     if (tally.red > 0) board.classList.add('panel-alarm-red');
-    else if (tally.amber >= 4) board.classList.add('panel-alarm-amber');
   }
   const sumEl = document.getElementById('trigger-summary');
   if (sumEl) {
@@ -838,10 +851,13 @@ function renderPillarMonetary(ind, manual) {
   const fxCell = fxAdj != null && !isNaN(fxAdj)
     ? `<span class="${m2BandClass(fxAdj)}">${fxAdj >= 0 ? '+' : ''}${Number(fxAdj).toFixed(1)}%</span>${estTag}`
     : `<span class="neu" title="Compares money stocks using constant exchange rates">Pending</span>`;
-  const histNote = gy.history_note
-    || (gy.history_ready
-      ? 'Calendar YoY · fixed-FX holds FX constant (money creation only).'
-      : 'Fixed-FX pending until enough monthly M2 history is on file.');
+  const defaultHist = gy.history_ready
+    ? 'Calendar YoY · fixed-FX holds FX constant (money creation only).'
+    : 'Fixed-FX pending until enough monthly M2 history is on file.';
+  const rawHist = gy.history_note || defaultHist;
+  const flagIdx = rawHist.search(/Quality flags:\s*/i);
+  const histNote = flagIdx >= 0 ? rawHist.slice(0, flagIdx).trim() : rawHist;
+  const histFlags = flagIdx >= 0 ? rawHist.slice(flagIdx).replace(/^Quality flags:\s*/i, '').trim() : '';
 
   const m2KpiHtml = kpiStrip([
     {
@@ -881,27 +897,54 @@ function renderPillarMonetary(ind, manual) {
   }).join('');
 
   const usM2 = ind.US_M2;
+  const staleUsM2 = staleness(usM2?.date, 45, 90);
+  const blocYoyNote = manual?.bloc_m2_yoy?.note
+    || 'Year-over-year money growth in each region’s own currency.';
+
+  let usYoySub = 'Live proxy for the inferred fiscal gap';
+  if (usM2?.yoy_pct != null) {
+    const acc = usM2.yoy_delta_pp;
+    const accTxt = acc != null
+      ? (acc > 0 ? ` · accelerating (+${acc.toFixed(1)} pp)` : acc < 0 ? ` · cooling (${acc.toFixed(1)} pp)` : ' · steady')
+      : '';
+    usYoySub = `<span class="${m2BandClass(usM2.yoy_pct)}">${usM2.yoy_pct >= 0 ? '+' : ''}${usM2.yoy_pct.toFixed(1)}% YoY</span>${accTxt} · live proxy for the inferred fiscal gap · ${fmtMacroDate(usM2.date)}`;
+  } else if (usM2?.date) {
+    usYoySub = `Live proxy for the inferred fiscal gap · ${fmtMacroDate(usM2.date)}`;
+  }
+  usYoySub += staleBadge(staleUsM2.level, staleUsM2.label);
+
+  document.getElementById('pillar-monetary-body').innerHTML = `
+    <p class="desk-footnote desk-footnote--lead">
+      Stage 4 — the thesis <strong>output</strong>, not the claim. Read headline and fixed-FX first.
+    </p>
+    ${m2KpiHtml}
+    <p class="desk-footnote">${histNote}</p>
+    ${histFlags ? `<p class="desk-footnote desk-footnote--flags">Quality flags: ${histFlags}</p>` : ''}
+    <div class="desk-block">
+      <table class="bloc-table">
+        <thead><tr>
+          <th>Region</th>
+          <th class="num">Local</th>
+          <th class="num">USD</th>
+          <th class="num">YoY</th>
+          <th>As of</th>
+        </tr></thead>
+        <tbody>${blocRows}</tbody>
+      </table>
+    </div>
+    <p class="desk-footnote">${blocYoyNote}</p>
+    ${miniCard('US money supply', usM2?.value != null ? `$${fmt(usM2.value, 0)}B` : '—', usYoySub)}
+  `;
+}
+
+function pathHeadwindCards(ind) {
   const netLiq = ind.US_NET_LIQ;
   const us10y = ind.US_10Y;
   const usdIdx = ind.USD_INDEX;
   const staleNet = staleness(netLiq?.date, 10, 20);
   const stale10y = staleness(us10y?.date, 5, 10);
   const staleUsd = staleness(usdIdx?.date, 5, 10);
-  const staleUsM2 = staleness(usM2?.date, 45, 90);
-  const blocYoyNote = manual?.bloc_m2_yoy?.note
-    || 'Year-over-year money growth in each region’s own currency.';
 
-  let usYoySub = fmtMacroDate(usM2?.date);
-  if (usM2?.yoy_pct != null) {
-    const acc = usM2.yoy_delta_pp;
-    const accTxt = acc != null
-      ? (acc > 0 ? ` · accelerating (+${acc.toFixed(1)} pp)` : acc < 0 ? ` · cooling (${acc.toFixed(1)} pp)` : ' · steady')
-      : '';
-    usYoySub = `<span class="${m2BandClass(usM2.yoy_pct)}">${usM2.yoy_pct >= 0 ? '+' : ''}${usM2.yoy_pct.toFixed(1)}% YoY</span>${accTxt} · ${fmtMacroDate(usM2.date)}`;
-  }
-  usYoySub += staleBadge(staleUsM2.level, staleUsM2.label);
-
-  // Net liq = Fed balance sheet − reverse repo − TGA
   const nl = netLiq?.components || {};
   let netLiqSub = 'Fed − RRP − TGA · short-horizon liquidity (not M2)';
   if (nl.FED_BS_bn != null) {
@@ -915,7 +958,6 @@ function renderPillarMonetary(ind, manual) {
     netLiqSub = `Short-horizon liquidity · ${fmtMacroDate(netLiq.date)}${staleBadge(staleNet.level, staleNet.label)}`;
   }
 
-  // 10Y path headwind bands (dashboard heuristics, not invalidation triggers)
   let us10yValue = '—';
   let us10ySub = 'Path headwind · <4% easy · 4–5% grind · >5% tight';
   if (us10y?.value != null) {
@@ -948,28 +990,47 @@ function renderPillarMonetary(ind, manual) {
     staleBadge(staleUsd.level, staleUsd.label),
   ].filter(Boolean).join(' · ');
 
-  document.getElementById('pillar-monetary-body').innerHTML = `
+  return { netLiq, us10yValue, us10ySub, usdIdx, usdSub, netLiqSub };
+}
+
+function renderPillarDedollar(prices, manual, macro) {
+  const ind = macro?.indicators || {};
+  const oas = ind.HY_OAS;
+  const { netLiq, us10yValue, us10ySub, usdIdx, usdSub, netLiqSub } = pathHeadwindCards(ind);
+
+  let oasTone = 'neu';
+  let oasChip = 'green';
+  let oasWord = 'Calm';
+  if (oas?.value != null) {
+    if (oas.value > 5) {
+      oasTone = 'tone-red';
+      oasChip = 'red';
+      oasWord = 'Stress';
+    } else if (oas.value > 4) {
+      oasTone = 'tone-amber';
+      oasChip = 'amber';
+      oasWord = 'Watch';
+    } else {
+      oasTone = 'tone-green';
+    }
+  } else {
+    oasWord = '—';
+  }
+
+  document.getElementById('pillar-dedollar-body').innerHTML = `
     <p class="desk-footnote desk-footnote--lead">
-      This is the thesis <strong>output</strong>: sustained money growth in a debt system under AI deflation
-      and de-dollarisation. Read growth (and fixed-FX) first; rates, the dollar, and plumbing are path headwinds.
+      Stage 2 — corporates compete for duration; the official bid for the long end is impaired.
+      HY is the live credit tell. 10Y, the dollar, and net liquidity are <strong>path headwinds</strong>, not floor tests.
     </p>
-    ${m2KpiHtml}
-    <p class="desk-footnote">${histNote}</p>
-    <div class="desk-block">
-      <table class="bloc-table">
-        <thead><tr>
-          <th>Region</th>
-          <th class="num">Local</th>
-          <th class="num">USD</th>
-          <th class="num">YoY</th>
-          <th>As of</th>
-        </tr></thead>
-        <tbody>${blocRows}</tbody>
-      </table>
+    <div class="ai-status-bar">
+      <div class="ai-status-item">
+        <span class="ai-status-k">HY OAS</span>
+        <span class="ai-status-v ${oasTone}">${oas?.value != null ? `${fmt(oas.value, 2)}%` : '—'}</span>
+        <span class="status-chip chip-${oasChip}">${oasWord}</span>
+      </div>
     </div>
-    <p class="desk-footnote">${blocYoyNote}</p>
+    ${oasGaugeHtml(oas?.value)}
     <div class="mini-grid">
-      ${miniCard('US money supply', usM2?.value != null ? `$${fmt(usM2.value, 0)}B` : '—', usYoySub)}
       ${miniCard('US net liquidity', netLiq?.value != null ? `$${fmt(netLiq.value, 0)}B` : '—', netLiqSub)}
       ${miniCard('US 10-year yield', us10yValue, us10ySub)}
       ${miniCard('US dollar (Fed broad)', usdIdx?.value != null ? fmt(usdIdx.value, 2) : '—', usdSub)}
@@ -977,7 +1038,7 @@ function renderPillarMonetary(ind, manual) {
   `;
 }
 
-function renderPillarDedollar(prices, manual, macro) {
+function goldAndMixHtml(prices, manual, macro) {
   const gold = prices?.prices?.XAUUSD;
   const price = gold?.price;
   const cb = manual?.cb_gold;
@@ -1002,7 +1063,7 @@ function renderPillarDedollar(prices, manual, macro) {
   const coferPct = coferQ != null ? (coferQ / 4) * 100 : 0;
   const coferTone = coferQ == null ? '' : coferQ >= 4 ? 'red' : coferQ >= 1 ? 'amber' : 'green';
   const coferMeter = coferQ != null
-    ? meterHtml(coferPct, coferTone, `${coferQ} of 4 rising quarters`, coferQ >= 4 ? 'Reversal risk' : 'Noise until 4')
+    ? meterHtml(coferPct, coferTone, 'To reverse', coferQ >= 4 ? 'Trend break' : 'Noise until 4')
     : '';
 
   // Stablecoin rails path: live mcap vs mid-path $500B (thesis structural case is larger)
@@ -1031,64 +1092,41 @@ function renderPillarDedollar(prices, manual, macro) {
     ].filter(Boolean).join(' · ');
   }
 
-  // Layout: gold price → two primary cards (CB gold + rails) → full-width COFER strip
-  let coferValue = '—';
-  if (cofer?.usd_share_pct != null) {
-    const rising = coferQ != null
-      ? (coferQ === 1 ? ' · 1 rising Q' : ` · ${coferQ} rising Qs`)
-      : '';
-    coferValue = `${Number(cofer.usd_share_pct).toFixed(2)}% USD${rising}`;
-  } else if (coferQ != null) {
-    coferValue = coferQ === 1 ? '1 rising quarter' : `${coferQ} rising quarters`;
-  }
-
-  document.getElementById('pillar-dedollar-body').innerHTML = `
-    <p class="desk-footnote desk-footnote--lead">
-      Official side of the story: gold and CB buying as a monetary hedge, reserve mix (COFER), and dollar
-      <strong>rails</strong> (stablecoins). BTC’s market path is under <strong>Bitcoin</strong> — private hard money, not this official mix.
-    </p>
-    <div class="desk-block">
-      <table class="price-table pillar-price-table">
-        <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
-        <tbody>
-          ${priceRowHtml('XAUUSD', 'Gold', price, changePctOf(prices?.prices, 'XAUUSD'), gold, markers, 0, '$')}
-        </tbody>
-      </table>
-    </div>
-    <p class="desk-footnote">Central-bank buying is gold’s floor; markets still set the day-to-day price.</p>
-    <div class="mini-grid">
-      ${miniCard(
-        'Central bank gold buying',
-        q != null ? `${fmt(q, 0)} tonnes / qtr` : '—',
-        [
-          cb?.yoy_pct != null ? `${fmtPct(cb.yoy_pct, 0)} vs last year` : null,
-          cb?.latest_monthly ? `Latest ${cb.latest_monthly.tonnes} t (${cb.latest_monthly.period})` : null,
-          fmtMacroDate(cb?.period),
-          staleBadge(staleCb.level, staleCb.label),
-        ].filter(Boolean).join(' · '),
-        'metric',
-        floorHtml,
-      )}
-      ${miniCard(
-        'Dollar rails (stablecoins)',
-        sc?.value != null ? `$${fmt(sc.value, 1)}B` : '—',
-        railsSub,
-        'metric',
-        railsMeter,
-      )}
-    </div>
-    <div class="desk-block">
-      <div class="cofer-strip">
-        <div class="cofer-strip-main">
-          <div class="cofer-strip-label">Dollar share of world reserves (COFER)</div>
-          <div class="cofer-strip-value">${coferValue}</div>
-          <div class="cofer-strip-meta">
-            Official USD reserve share · 4 rising quarters = reverse
-            ${cofer?.period ? ` · ${cofer.period}` : ''}
-            ${staleBadge(staleCofer.level, staleCofer.label)}
-          </div>
-        </div>
-        <div class="cofer-strip-meter">${coferMeter}</div>
+  return `
+    ${assetQuoteHtml('XAUUSD', 'Gold', price, changePctOf(prices?.prices, 'XAUUSD'), gold, markers, 0, '$')}
+    ${miniCard(
+      'Central bank gold buying',
+      q != null ? `${fmt(q, 0)} tonnes / qtr` : '—',
+      [
+        cb?.yoy_pct != null ? `${fmtPct(cb.yoy_pct, 0)} vs last year` : null,
+        cb?.latest_monthly ? `Latest ${cb.latest_monthly.tonnes} t (${cb.latest_monthly.period})` : null,
+        fmtMacroDate(cb?.period),
+        staleBadge(staleCb.level, staleCb.label),
+      ].filter(Boolean).join(' · '),
+      'metric',
+      floorHtml,
+    )}
+    ${miniCard(
+      'Dollar rails (stablecoins)',
+      sc?.value != null ? `$${fmt(sc.value, 1)}B` : '—',
+      railsSub,
+      'metric',
+      railsMeter,
+    )}
+    <div class="cofer-strip">
+      <div class="cofer-kv">
+        <span class="cofer-k">USD share</span>
+        <span class="cofer-v">${cofer?.usd_share_pct != null ? `${Number(cofer.usd_share_pct).toFixed(2)}%` : '—'}</span>
+      </div>
+      <div class="cofer-kv">
+        <span class="cofer-k">Rising quarters</span>
+        <span class="cofer-v">${coferQ != null ? `${coferQ} of 4` : '—'}</span>
+      </div>
+      <div class="cofer-strip-meter">${coferMeter}</div>
+      <div class="cofer-strip-meta">
+        4 in a row = reverse
+        ${cofer?.period ? ` · ${cofer.period}` : ''}
+        ${staleBadge(staleCofer.level, staleCofer.label)}
       </div>
     </div>
   `;
@@ -1217,14 +1255,11 @@ function renderPillarAi(ind, manual) {
   const oas = ind.HY_OAS;
   // Prefer Epoch source date for cash series; fall back to block updated.
   const staleAi = staleness(hs.source_updated || ai.updated, 45, 90);
-  let oasTone = 'neu';
-  if (oas?.value != null) {
-    oasTone = oas.value > 5 ? 'tone-red' : oas.value > 4 ? 'tone-amber' : 'tone-green';
-  }
 
   const cuts = !!ai.capex_cuts;
   const gap = hs.gap_usd_b;
   // Top bar reflects market funding + cuts only. Thin cash gap lives on the card.
+  // HY OAS itself lives on the Credit desk; this chip is the derived funding read.
   const cashCrossed = !!(hs.crossed || (gap != null && gap < 0));
   let financeStatus = 'green';
   let financeLabel = 'Funding calm';
@@ -1242,8 +1277,8 @@ function renderPillarAi(ind, manual) {
 
   document.getElementById('pillar-ai-body').innerHTML = `
     <p class="desk-footnote desk-footnote--lead">
-      The structural force is <strong>technological deflation</strong> — intelligence getting cheaper.
-      Near term the buildout is still credit-coupled and can look inflationary. Hold both timescales; don’t treat them as one signal.
+      Force A — a <strong>capability ladder</strong>: intelligence per dollar compounds, then knowledge work, then labour.
+      Cost slopes are evidence the ladder is still compounding. Cash-cross is near-term path, not a floor test.
     </p>
     <div class="ai-status-bar">
       <div class="ai-status-item">
@@ -1254,34 +1289,26 @@ function renderPillarAi(ind, manual) {
         <span class="ai-status-k">Capex cuts</span>
         <span class="status-chip chip-${cuts ? 'amber' : 'green'}">${cuts ? 'Yes' : 'No'}</span>
       </div>
-      <div class="ai-status-item ai-status-item--grow">
-        <span class="ai-status-k">HY OAS</span>
-        <span class="ai-status-v ${oasTone}">${oas?.value != null ? `${fmt(oas.value, 2)}%` : '—'}</span>
-      </div>
     </div>
-    ${oasGaugeHtml(oas?.value)}
     <div class="ai-split">
-      <div class="ai-col">
-        <div class="ai-col-title">Near term — credit &amp; buildout</div>
+      <div class="ai-col" role="region" aria-labelledby="ai-struct-title">
+        <h3 class="ai-col-title" id="ai-struct-title">Structural — the ladder</h3>
+        <div class="field-stack">
+          ${fieldBlock('Cost trends', ai.structural_slopes || '—', 'Epoch slopes · not a 2026 print', true)}
+        </div>
+      </div>
+      <div class="ai-col" role="region" aria-labelledby="ai-path-title">
+        <h3 class="ai-col-title" id="ai-path-title">Near term — buildout (path)</h3>
         <div class="field-stack">
           ${hyperscalerCashHtml(hs, staleBadge(staleAi.level, staleAi.label))}
-          ${ai.crossover_status
-            ? fieldBlock('Company notes', ai.crossover_status, nextMeta, true)
-            : ''}
-          ${fieldBlock(
-            'Next test',
-            ai.next_test || '—',
-            '',
-            true,
-          )}
         </div>
       </div>
-      <div class="ai-col">
-        <div class="ai-col-title">Structural — cost of intelligence</div>
-        <div class="field-stack">
-          ${fieldBlock('Cost trends', ai.structural_slopes || '—', '', true)}
-        </div>
-      </div>
+    </div>
+    <div class="ai-foot">
+      ${ai.crossover_status
+        ? fieldBlock('Company notes', ai.crossover_status, nextMeta, true)
+        : ''}
+      ${fieldBlock('Next test', ai.next_test || '—', '', true)}
     </div>
   `;
 }
@@ -1325,8 +1352,8 @@ function etfFlowChartHtml(etf) {
 
   const read = thisM >= 0 ? 'With liquidity' : 'Against liquidity';
   return `<div class="flow-chart">
-    ${row('This week', thisM)}
-    ${priorM != null ? row('Prior week', priorM) : ''}
+    ${row('Week', thisM)}
+    ${priorM != null ? row('Prior', priorM) : ''}
     <div class="flow-axis"><span>Out</span><span>0</span><span>In</span></div>
     <div class="btc-cell-meta">${read}${etf.period ? ` · ${etf.period}` : ''}</div>
   </div>`;
@@ -1347,7 +1374,7 @@ function renderPillarHardMoney(prices, macro, manual) {
 
   // Divergence cell — multi-year global M2 destination; short-run pipe is ETF
   let divValueHtml;
-  const divMeta = 'Global M2 destination · ETF = short-run pipe · 18 mo = invalidation';
+  const divMeta = 'Global M2 is stage 4 · ETF = short-run channel · 18 mo = invalidation';
   if (divStart == null) {
     divValueHtml = '<span class="pos">Back in sync</span>';
   } else if (months == null) {
@@ -1383,54 +1410,64 @@ function renderPillarHardMoney(prices, macro, manual) {
   const vix = p.VIX;
   const wtiAlert = wti?.price != null && wti.price > 95;
   const vixAlert = vix?.price != null && vix.price > 30;
+  const wtiVal = wti?.price != null
+    ? `<span class="${wtiAlert ? 'tone-amber' : ''}">${fmt(wti.price, 2, '$')}</span>`
+    : '—';
+  const vixVal = vix?.price != null
+    ? `<span class="${vixAlert ? 'tone-amber' : ''}">${fmt(vix.price, 1)}</span>`
+    : '—';
+  const wtiMeta = [
+    fmtPct(changePctOf(p, 'WTI'), 2),
+    'oil / inflation',
+    'alert &gt;$95',
+    'shock &gt;$120',
+  ].join(' · ');
+  const vixMeta = [
+    fmtPct(changePctOf(p, 'VIX'), 2),
+    'equity vol',
+    'alert &gt;30',
+  ].join(' · ');
   const riskFoot = `
-    <div class="risk-footnote">
-      <div class="risk-footnote-label">Macro risk footnotes</div>
-      <div class="risk-footnote-items">
-        <div class="risk-chip${wtiAlert ? ' is-alert' : ''}">
-          <span class="risk-chip-k">WTI</span>
-          <span class="risk-chip-v">${wti?.price != null ? fmt(wti.price, 2, '$') : '—'}</span>
-          <span class="risk-chip-m">${fmtPct(changePctOf(p, 'WTI'), 2)} · oil/inflation · alert &gt;$95 · shock &gt;$120</span>
-        </div>
-        <div class="risk-chip${vixAlert ? ' is-alert' : ''}">
-          <span class="risk-chip-k">VIX</span>
-          <span class="risk-chip-v">${vix?.price != null ? fmt(vix.price, 1) : '—'}</span>
-          <span class="risk-chip-m">${fmtPct(changePctOf(p, 'VIX'), 2)} · equity vol · alert &gt;30</span>
-        </div>
-      </div>
-      <p class="desk-footnote risk-footnote-note">Context only — not Bitcoin thesis core.</p>
+    <div class="hm-foot">
+      <div class="desk-foot-kicker">Macro risk · not the sink</div>
+      ${fieldBlock('WTI', wtiVal, wtiMeta)}
+      ${fieldBlock('VIX', vixVal, vixMeta)}
     </div>`;
 
   document.getElementById('pillar-hardmoney-body').innerHTML = `
     <p class="desk-footnote desk-footnote--lead">
-      Private hard-money path: floors, <strong>spot ETF flows</strong> (short-run pipe), and the lag clock vs expanding money
-      (global M2 is the multi-year destination). Gold’s CB story stays under De-dollarisation. Oil and vol are footnotes only.
+      Stage 5 — the <strong>sink</strong>. Official bid (CB gold, COFER, rails) and private run (BTC floors, ETF, lag).
+      Oil and vol are footnotes.
     </p>
-    <div class="desk-block">
-      <table class="price-table pillar-price-table">
-        <thead><tr><th>Asset</th><th class="num">Price</th><th class="num">Δ</th><th>52W Range</th></tr></thead>
-        <tbody>
-          ${priceRowHtml('BTC', 'BTC', p.BTC?.price, changePctOf(p, 'BTC'), p.BTC, btcMarkers, 0, '$')}
-        </tbody>
-      </table>
-    </div>
-    ${transmissionHtml(tx)}
-    <div class="desk-block">
-      <div class="btc-signal-strip">
-        <div class="btc-cell">
-          <div class="btc-cell-label">Spot ETF flows</div>
-          <div class="btc-cell-visual btc-cell-visual--flow">${etfFlowChartHtml(etf)}</div>
+    <div class="ai-split hm-split">
+      <div class="ai-col" role="region" aria-labelledby="hm-official-title">
+        <h3 class="ai-col-title" id="hm-official-title">Official bid</h3>
+        <div class="hm-stack">
+          ${goldAndMixHtml(prices, manual, macro)}
         </div>
-        <div class="btc-cell">
-          <div class="btc-cell-label">Fear &amp; Greed Index</div>
-          <div class="btc-cell-value">${fgValueHtml}</div>
-          <div class="btc-cell-visual">${fgBarHtml(fgVal)}</div>
-        </div>
-        <div class="btc-cell">
-          <div class="btc-cell-label">Lag clock (global M2)</div>
-          <div class="btc-cell-value">${divValueHtml}</div>
-          <div class="btc-cell-visual">${divTrackOnly}</div>
-          <div class="btc-cell-meta">${divMeta}</div>
+      </div>
+      <div class="ai-col" role="region" aria-labelledby="hm-private-title">
+        <h3 class="ai-col-title" id="hm-private-title">Private run</h3>
+        <div class="hm-stack">
+          ${assetQuoteHtml('BTC', 'Bitcoin', p.BTC?.price, changePctOf(p, 'BTC'), p.BTC, btcMarkers, 0, '$')}
+          <div>
+            <div class="btc-cell-label">Spot ETF flows</div>
+            <div class="btc-cell-visual btc-cell-visual--flow">${etfFlowChartHtml(etf)}</div>
+          </div>
+          <div class="hm-pair">
+            <div>
+              <div class="btc-cell-label">Fear &amp; Greed Index</div>
+              <div class="btc-cell-value">${fgValueHtml}</div>
+              <div class="btc-cell-visual">${fgBarHtml(fgVal)}</div>
+            </div>
+            <div>
+              <div class="btc-cell-label">Lag clock (global M2)</div>
+              <div class="btc-cell-value">${divValueHtml}</div>
+              <div class="btc-cell-visual">${divTrackOnly}</div>
+              <div class="btc-cell-meta">${divMeta}</div>
+            </div>
+          </div>
+          ${transmissionHtml(tx)}
         </div>
       </div>
     </div>
@@ -1440,10 +1477,76 @@ function renderPillarHardMoney(prices, macro, manual) {
 
 function renderPillars(prices, macro, manual) {
   const ind = macro?.indicators || {};
-  renderPillarMonetary(ind, manual);
-  renderPillarDedollar(prices, manual, macro);
   renderPillarAi(ind, manual);
+  renderPillarDedollar(prices, manual, macro);
+  renderPillarMonetary(ind, manual);
   renderPillarHardMoney(prices, macro, manual);
+}
+
+function spineTone(st) {
+  if (st === 'red') return 'tone-red';
+  if (st === 'amber') return 'tone-amber';
+  return 'tone-green';
+}
+
+function spineStatusWord(st) {
+  if (st === 'red') return 'broken';
+  if (st === 'amber') return 'watching';
+  return 'clear';
+}
+
+function spineCell(kind, kicker, title, sub, status, target) {
+  const word = spineStatusWord(status);
+  const tone = spineTone(status);
+  return `<button type="button" class="spine-cell spine-${kind}" data-target="${target}">
+    <span class="spine-cell-id">${kicker}</span>
+    <span class="spine-cell-title">${title}</span>
+    <span class="spine-cell-sub">${sub}</span>
+    <span class="spine-cell-st ${tone}">${word}</span>
+  </button>`;
+}
+
+function renderSpine(prices, macro, manual) {
+  const el = document.getElementById('spine-body');
+  if (!el) return;
+  const triggers = buildTriggers(prices, macro, manual);
+  const stOf = (id) => {
+    const row = triggers.find(t => t.id === id);
+    return row ? row.status() : 'green';
+  };
+  const cuts = !!manual?.ai_transition?.capex_cuts;
+  const forceA = cuts ? 'amber' : 'green';
+  const mix = worstStatus(stOf('gold_hedge'), worstStatus(stOf('btc_demand'), stOf('cofer')));
+
+  el.innerHTML = `
+    <p class="desk-footnote desk-footnote--lead">
+      AI cheapens knowledge work, then labour, and that makes existing public debt harder to service in real terms.
+      At the same time, surplus countries no longer warehouse other people’s long government bonds the way they used to.
+      Either pressure ends in more money, or in official gold — and both show up in gold and bitcoin.
+    </p>
+    <div class="spine-inflows">
+      ${spineCell('inflow', 'A', 'AI capability ladder', 'Knowledge work → robotics / OTA labour', forceA, 'pillar-ai')}
+      ${spineCell('inflow', 'B', 'No duration left', 'Demographics → seizure risk → no bid for long bonds', stOf('cofer'), 'pillar-dedollar')}
+    </div>
+    <p class="spine-hinge">both hit the hinge</p>
+    <div class="spine-stages">
+      ${spineCell('stage', '2', 'Credit &amp; long end', 'HY · 10Y · $ · net liq', stOf('ai_financing'), 'pillar-dedollar')}
+      ${spineCell('stage', '3', 'Fiscal gap', 'Inferred — receipts vs interest', 'amber', 'pillar-monetary')}
+      ${spineCell('stage', '4', 'Money', 'Global M2 output', stOf('global_m2'), 'pillar-monetary')}
+      ${spineCell('stage', '5', 'Gold + BTC', 'Official bid and private run', mix, 'pillar-hardmoney')}
+    </div>
+  `;
+}
+
+function setupSpineJump() {
+  const root = document.getElementById('spine-body');
+  if (!root) return;
+  root.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-target]');
+    if (!btn) return;
+    const dest = document.getElementById(btn.getAttribute('data-target'));
+    if (dest) dest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 }
 
 /** Default A–D book if manual.scenario.book is missing. */
@@ -1732,113 +1835,12 @@ function mdToHtml(md) {
     .replace(/(.+)(?!>)$/, '$1</p>');
 }
 
-// ─── Footer + ring hint ───────────────────────────────────────────────────────
+// ─── Footer ───────────────────────────────────────────────────────────────────
 
 function renderFooter(prices, macro, manual) {
   document.getElementById('footer-prices-ts').textContent   = fmtTs(prices?.updated_at);
   document.getElementById('footer-macro-ts').textContent    = fmtTs(macro?.updated_at);
   document.getElementById('footer-assessed-ts').textContent = fmtDate(manual?.scenario?.updated);
-}
-
-function setupRingHint() {
-  // Outline the whole source-narrative panel (both disclosures), not just the
-  // first summary row — inset so stroke isn't clipped by panel overflow:hidden.
-  const panel = document.getElementById('panel-thesis');
-  const details = document.getElementById('thesis-details');
-  if (!panel || !details) return;
-
-  const NS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(NS, 'svg');
-  const path = document.createElementNS(NS, 'path');
-  const INSET = 2;
-  const RADIUS = 3;
-  const STROKE = 1.25;
-
-  svg.setAttribute('class', 'thesis-ring');
-  svg.setAttribute('aria-hidden', 'true');
-  path.setAttribute('fill', 'none');
-  path.setAttribute('stroke-width', String(STROKE));
-  path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('stroke-linejoin', 'round');
-  path.setAttribute('pathLength', '100');
-  // Dash ~12% of perimeter, gap the rest — offset 0→100 completes a full loop
-  path.setAttribute('stroke-dasharray', '12 88');
-
-  const ringColor = getComputedStyle(document.documentElement)
-    .getPropertyValue('--accent-ring').trim() || 'rgba(107,159,212,0.55)';
-  path.setAttribute('stroke', ringColor);
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion) {
-    let kf = document.getElementById('ring-kf');
-    if (!kf) {
-      kf = document.createElement('style');
-      kf.id = 'ring-kf';
-      document.head.appendChild(kf);
-    }
-    kf.textContent = `
-      @keyframes ring-travel {
-        from { stroke-dashoffset: 0; }
-        to   { stroke-dashoffset: -100; }
-      }
-      .thesis-ring path {
-        animation: ring-travel 5.5s linear infinite;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .thesis-ring path { animation: none; }
-      }
-    `;
-  }
-
-  svg.appendChild(path);
-  panel.appendChild(svg);
-
-  function roundedRectPath(x, y, w, h, r) {
-    const rr = Math.min(r, w / 2, h / 2);
-    return [
-      `M ${x + rr},${y}`,
-      `H ${x + w - rr}`,
-      `A ${rr} ${rr} 0 0 1 ${x + w},${y + rr}`,
-      `V ${y + h - rr}`,
-      `A ${rr} ${rr} 0 0 1 ${x + w - rr},${y + h}`,
-      `H ${x + rr}`,
-      `A ${rr} ${rr} 0 0 1 ${x},${y + h - rr}`,
-      `V ${y + rr}`,
-      `A ${rr} ${rr} 0 0 1 ${x + rr},${y}`,
-      'Z',
-    ].join(' ');
-  }
-
-  function sizeRing() {
-    const w = panel.clientWidth;
-    const h = panel.clientHeight;
-    if (!w || !h) return;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.setAttribute('width', String(w));
-    svg.setAttribute('height', String(h));
-    const iw = Math.max(0, w - INSET * 2);
-    const ih = Math.max(0, h - INSET * 2);
-    path.setAttribute('d', roundedRectPath(INSET, INSET, iw, ih, RADIUS));
-  }
-
-  function updateVisibility() {
-    // Hide once the primary thesis is opened; show again if collapsed
-    svg.style.display = details.hasAttribute('open') ? 'none' : '';
-    if (!details.hasAttribute('open')) sizeRing();
-  }
-
-  requestAnimationFrame(() => {
-    sizeRing();
-    updateVisibility();
-  });
-  new MutationObserver(updateVisibility).observe(details, {
-    attributes: true,
-    attributeFilter: ['open'],
-  });
-  window.addEventListener('resize', sizeRing, { passive: true });
-  if (typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(sizeRing).observe(panel);
-  }
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -1896,12 +1898,13 @@ async function init() {
 
   const tally = renderTriggers(prices, macro, manual);
   renderStatusBar(manual, macro, tally);
+  renderSpine(prices, macro, manual);
   renderScenarioContext(manual, prices, macro, tally);
   renderPillars(prices, macro, manual);
   renderFooter(prices, macro, manual);
   renderThesis();
   setupTriggerScroll();
-  setupRingHint();
+  setupSpineJump();
   setupStatusBarOffset();
 
   // Console fixture check for July 2026 expected tally

@@ -1,6 +1,6 @@
 # The Great Transition — Macro Dashboard
 
-Thesis-driven research terminal for a multi-year monetary transition: **AI deflation**, **de-dollarisation**, and their output — **sustained global money growth**. Hard assets (BTC, gold) are the primary beneficiaries. Horizon: the **2030s**.
+Thesis-driven research terminal for a multi-year monetary transition. Two forces — **AI capability ladder** and **no duration left** — hit a fiscal hinge and empty into **gold and BTC**. Money growth is the output, not the claim. Horizon: the **2030s**.
 
 This desk owns the 2030s floor and which A–D *path* the tape is on. It does not call whether the Jul–Dec 2026 window (`liquidity-monitor`) is in. A Q4 *signal* can print inside hawkish grind (B) without a first cut and without breaking floors. Thresholds are desk-local — a number on one desk does not bind the other.
 
@@ -26,15 +26,16 @@ Waypoints, not trading signals. No portfolio, no positions.
 
 ## What it tracks
 
-Two structural forces, one output:
+Two forces, one hinge, one sink:
 
 | Force | Near term | Structural |
 |---|---|---|
-| **AI** | Capex / credit-coupled buildout | Cost of intelligence collapsing |
-| **De-dollarisation** | COFER counter-cycles, CB gold | Reserve mix + dollar *rails* (stablecoins) |
-| **Output** | Fiscal-dominant M2 growth | Debt system under AI deflation → more money |
+| **AI ladder** | Capex / credit-coupled buildout | Knowledge-work then labour deflation (OTA / robotics) |
+| **No duration** | Path headwinds (10Y, $, HY) | No external long-end sink; freeze-risk; demographics |
+| **Hinge → money** | Transmission blocked or not (A–D) | Fiscal gap → more M2 and/or official hard assets |
+| **Sink** | ETF / lag clock | Gold + BTC (official bid and private run) |
 
-**Four desk themes** (UI): Money growth · De-dollarisation · AI transition · Bitcoin  
+**Flow desks** (UI): AI capability · Credit & long end · Money · Hard money  
 
 **Scenario book (H2 2026–2027 path, not a 2026-exit verdict):**
 
@@ -110,14 +111,15 @@ Only secret: free-tier **FRED API key** (`FRED_API_KEY` in GitHub Actions).
 ## Dashboard layout
 
 1. **Status bar** — Scenario, money growth YoY, Fear & Greed, watchpoint tally  
-2. **Path book (H2 2026–2027)** — A–D book, lead judgment, path waypoints (auto where possible), re-score if, next check, live tally  
-3. **Four themes**
-   - **Money growth** — Global M2, dual YoY, five-bloc table, US M2 / net liquidity / 10Y / broad $  
-   - **De-dollarisation** — Gold vs $4k, CB gold, stablecoin rails, COFER  
-   - **AI transition** — Group cash buildout (Epoch), HY OAS gauge, cost slopes  
-   - **Bitcoin** — $53k floor, US M2 vs BTC months, ETF flows, F&G, lag clock; WTI/VIX as footnotes  
-4. **Watchpoints** — Seven lines (money → reserves → gold → BTC cluster → AI → oil)  
-5. **Background reading** — Full thesis + M2 methodology note  
+2. **Spine (2030s)** — Force A + Force B → credit/long end → fiscal gap → money → gold/BTC  
+3. **Path book (H2 2026–2027)** — A–D book, lead judgment, path waypoints, re-score if, next check, live tally  
+4. **Flow desks**
+   - **AI capability** — ladder copy; Epoch slopes; cash buildout as near-term path  
+   - **Credit & long end** — HY OAS, 10Y, broad $, net liquidity  
+   - **Money** — Global M2, dual YoY, five-bloc table, US M2 (fiscal proxy)  
+   - **Hard money** — Official (gold, CB, COFER, rails) · Private (BTC floors, ETF, lag); WTI/VIX as footnotes  
+5. **Watchpoints** — Seven lines (AI funding → money → COFER → gold → BTC cluster → oil)  
+6. **Background reading** — Full thesis + M2 methodology note  
 
 Design system: [`docs/design-contract.md`](docs/design-contract.md)
 

@@ -1,4 +1,4 @@
-const CACHE_NAME   = 'macro-dashboard-v50';
+const CACHE_NAME   = 'macro-dashboard-v60';
 const SHELL_ASSETS = [
   './index.html',
   './styles.css',

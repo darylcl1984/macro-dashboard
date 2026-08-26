@@ -1,12 +1,12 @@
 {
   "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. ETF flows: weekly when possible.",
   "scenario": {
-    "current": "B — Hawkish Grind",
-    "active_id": "B",
-    "probability": "40%",
-    "updated": "2026-07-28",
-    "notes": "Hawkish grind remains the path book: money keeps expanding; risk transmission does not. That is not a call that the 2026 window is dead — a Q4 signal can print inside B without a cut and without breaking floors. Energy premiums and real rates can soak up print before it reaches BTC. The 2030s thesis is decided on the floors, not the rhetoric.",
-    "next_check": "FOMC path · hyperscaler earnings (early Aug) · weekly BTC vs $53k · oil if path toward $100",
+    "current": "A — Liquidity relink",
+    "active_id": "A",
+    "probability": "30%",
+    "updated": "2026-08-26",
+    "notes": "Active path is A. BTC weekly close $78.4k sits in the $75–95k relink band; gold is ~$4,716 (well above $4,400); spot ETF had a large net-inflow week ($1.92B, 17–21 Aug) after an outflow week. Money is still expanding (headline Global M2 +10.2% / fixed-FX +6.7%). That is not a 2026-window call and not a 2030s-floor event. The 18-month lag clock is still running (~13 mo from mid-2025) — one green ETF week does not reset it. Book weights unchanged; B remains the 40% typical base of the book.",
+    "next_check": "Complete ETF week of 24–28 Aug · lag clock (~13 mo) · Sep FOMC · Epoch Q2 cash actuals when the CSV fills",
     "book": [
       { "id": "A", "name": "Liquidity relink", "p": 30 },
       { "id": "B", "name": "Hawkish grind", "p": 40 },
@@ -14,22 +14,26 @@
       { "id": "D", "name": "Geo shock", "p": 10 }
     ],
     "rescore_if": [
-      "A — multi-week ETF inflows and BTC–M2 lag cools (inflows alone are not enough)",
+      "B — BTC weekly back below $70k and ETF week turns net outflow",
       "C — HY OAS above 4% or hyperscaler capex cuts",
       "D — oil path toward $100–120 / supply shock"
     ],
     "waypoints": [
       {
         "id": "btc_band",
-        "label": "BTC stays in the $50–70k band"
+        "label": "BTC holds the $75–95k relink band",
+        "status": "hit",
+        "lock": true
       },
       {
         "id": "gold_line",
-        "label": "Gold monthly close near $4,000"
+        "label": "Gold holds $4,400+",
+        "status": "hit",
+        "lock": true
       },
       {
         "id": "divergence",
-        "label": "BTC–M2 lag runs into 15–18 months"
+        "label": "Lag clock still running (~13 mo) — not yet reset"
       },
       {
         "id": "floors",
@@ -38,82 +42,82 @@
     ]
   },
   "regime_bullets": [
-    "Fed talk is hawkish; money supply is still growing",
-    "Hard assets sit near floors, not cycle highs",
-    "Energy premium and real rates can absorb M2 before it reaches risk assets"
+    "Tape has re-linked: BTC ~$78k weekly, gold ~$4.7k, F&G Greed",
+    "Money still expanding; 18-month lag clock has not been reset",
+    "No external long-end sink — gold and BTC remain the warehouse"
   ],
   "china_m2": {
-    "value": 353.67,
+    "value": 355.51,
     "unit": "trillions_cny",
-    "period": "2026-05",
-    "updated": "2026-07-28",
-    "source": "PBoC monthly release (May 2026 vintage on desk; refresh when June/July print is ingested)"
+    "period": "2026-07",
+    "updated": "2026-08-26",
+    "source": "PBoC Financial Statistics Report (July 2026), English release 14 Aug 2026. End-July M2 RMB355.51T, +7.7% YoY. https://www.pbc.gov.cn/en/3688247/3688978/3709137/2026081815052522832/index.html"
   },
   "global_m2_yoy_estimate": {
-    "value": 9.4,
+    "value": 10.23,
     "unit": "pct",
-    "note": "Fallback only. Prefer computed GLOBAL_M2_YOY (May-2025→May-2026 headline ~+9.4% / fixed-FX ~+6.5%).",
-    "updated": "2026-07-28"
+    "note": "Fallback only. Prefer computed GLOBAL_M2_YOY (May-2025→May-2026 headline +10.23% / fixed-FX +6.69% on the 25 Aug pipeline vintage).",
+    "updated": "2026-08-26"
   },
   "bloc_m2_yoy": {
     "US": {
-      "value": 5.6,
+      "value": 5.53,
       "estimated": false
     },
     "CN": {
-      "value": 8.6,
+      "value": 7.7,
       "estimated": false
     },
     "EZ": {
-      "value": 2.5,
-      "estimated": true
+      "value": 3.2,
+      "estimated": false
     },
     "JP": {
-      "value": 1.5,
-      "estimated": true
+      "value": 2.2,
+      "estimated": false
     },
     "UK": {
-      "value": 4.5,
+      "value": 5.0,
       "estimated": false
     },
     "unit": "pct",
-    "note": "Year-over-year money growth in local currency. Eurozone and Japan are midpoints of published ranges.",
-    "updated": "2026-07-11",
-    "source": "Official releases / mid-2026 compile (see Notes on Global M2)"
+    "note": "Local-currency YoY. US M2 +5.53% as of June 2026 (FRED/pipeline). China M2 +7.7% end-July (PBoC). Euro area M2 +3.2% June (ECB Monetary developments, 27 Jul 2026). Japan M2 +2.2% July average outstanding (BoJ Money Stock preliminary, 12 Aug 2026). UK M4ex +5.0% June (BoE Money and Credit, 29 Jul / 5 Aug 2026).",
+    "updated": "2026-08-26",
+    "source": "FRED M2SL · PBoC · ECB BSI M2 · BoJ Money Stock · BoE M4ex"
   },
   "divergence": {
     "start": "2025-07",
-    "note": "Manual clock since mid-2025. Global M2 is the multi-year destination; spot ETF is the short-run pipe. Do not reset on one green ETF week."
+    "note": "Manual clock since mid-2025. Still running (~13 months at Aug 2026). Do not reset on one green ETF week; need sustained ETF + same-sign money/BTC. Global M2 is stage 4; spot ETF is the short-run channel."
   },
   "cb_gold": {
-    "quarterly_tonnes": 244,
-    "period": "2026-Q1",
-    "yoy_pct": 3,
+    "quarterly_tonnes": 288.9,
+    "period": "2026-Q2",
+    "yoy_pct": 62,
     "floor_tonnes": 200,
     "latest_monthly": {
-      "tonnes": 41,
-      "period": "2026-05"
+      "tonnes": 20,
+      "period": "2026-07"
     },
-    "note": "WGC Q1 2026 net CB purchases 244t (+3% YoY). Use WGC primary (not secondary 337t). Floor intact.",
-    "updated": "2026-07-27",
-    "source": "WGC Gold Demand Trends Q1 2026"
+    "note": "WGC Gold Demand Trends Q2 2026: CB + other official net 288.9t in Q2 (+62% YoY vs 177.9t). Q1 was revised down to 57t (desk previously showed 244t primary). Q2 is a record second quarter and above the ~200t/q floor. H1 345t is the lowest first half since 2022. PBoC reported +20t in July (21st consecutive month; holdings ~2,366t).",
+    "updated": "2026-08-26",
+    "source": "WGC Gold Demand Trends Q2 2026 (30 Jul 2026), https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q2-2026/central-banks · PBoC/SAFE July reserves via WGC China update 7–8 Aug 2026"
   },
   "cofer_usd_share": {
     "consecutive_rising_quarters": 1,
     "period": "2026-Q1",
     "usd_share_pct": 57.13,
     "prior_quarter_usd_share_pct": 56.42,
-    "note": "USD share 57.13% in Q1 2026 (up from 56.42% Q4). One rising quarter so far — noise until four. IMF methodology break from 2025Q3 (no unallocated bucket).",
-    "updated": "2026-07-27",
-    "source": "IMF COFER Data Brief 2026Q1"
+    "note": "USD share 57.13% in 2026Q1 (up from 56.42% 2025Q4). One rising quarter — noise until four. IMF Data Brief (July 2026). 2026Q2 COFER not published as of 26 Aug (typical lag). Methodology break from 2025Q3 (no unallocated bucket) still applies.",
+    "updated": "2026-08-26",
+    "source": "IMF COFER Data Brief, 2026Q1, https://data.imf.org/en/news/imf%20data%20brief%20july%201"
   },
   "stablecoin_rails": {
     "target_bn": 500,
     "target_label": "2030s mid-path",
     "structural_case": "$1–2T over ~5 years (thesis rails expansion)",
     "policy_note": "Clarity Act (pending) would firm US rules for dollar rails.",
-    "note": "T-bill-backed stablecoins grow dollar rails even as reserve share diversifies.",
-    "updated": "2026-07-27"
+    "note": "T-bill-backed stablecoins grow private dollar rails even as official reserves diversify. Live mcap from DefiLlama on the pipeline (not this field).",
+    "updated": "2026-08-26"
   },
   "ai_transition": {
     "hyperscaler_cash": {
@@ -129,38 +133,38 @@
       "source": "Epoch AI",
       "source_url": "https://epoch.ai/data-insights/hyperscaler-capex-vs-cash-flow",
       "csv_url": "https://epoch.ai/data/charts/hyperscaler-capex-vs-cash-flow/ocf_vs_capex_log_data.csv",
-      "source_updated": "2026-06-16",
-      "note": "Cash-only capex (ex finance leases). Gap still positive but thin; Epoch trend cross ~Q3 2026."
+      "source_updated": "2026-08-26",
+      "note": "Last Epoch *actuals* still CY2026 Q1 (OCF $157.9B vs cash capex $148.4B, gap $9.5B). CSV has no Q2 actuals yet; Q2–Q3 rows are trend only (Q2 trend $177.5 vs $162.6 still uncrossed; Q3 trend $187.1 vs $185.7 almost crosses). Cash-only, leases excluded."
     },
-    "crossover_status": "Oracle already FCF-negative; Amazon’s ~$200B 2026 guide sits on ~$1B FCF. External financing already in use even while the group cash gap is still open.",
+    "crossover_status": "No group capex cuts in the Aug print. Amazon raised 2026 capex (~$220B vs prior ~$200B). Oracle remains FCF-negative. External financing is in use. Epoch Q2 cash actuals still pending in the CSV.",
     "structural_slopes": "Running AI models is getting much cheaper (cost roughly halves every ~2 months). Training efficiency is rising ~3× per year. Total AI chip stock is growing ~3.4× per year.",
-    "next_test": "Big tech earnings in early August 2026",
+    "next_test": "Epoch CSV Q2 actuals · next hyperscaler prints (Oct 2026)",
     "capex_cuts": false,
-    "updated": "2026-07-27"
+    "updated": "2026-08-26"
   },
   "etf_flows": {
-    "period": "2026-07-20/24",
-    "net_usd_bn": 0.034,
-    "net_usd_m": 33.9,
+    "period": "2026-08-17/21",
+    "net_usd_bn": 1.918,
+    "net_usd_m": 1917.8,
     "streak_weeks_outflow": 0,
-    "prior_week_usd_m": 75.5,
-    "cumulative_since_launch_usd_bn": 51.439,
-    "note": "Week of 20–24 Jul 2026: +$33.9M net (Farside). Positive week after choppy dailies; primary-market creations/redemptions.",
-    "updated": "2026-07-27",
-    "source": "Farside Investors farside.co.uk/btc"
+    "prior_week_usd_m": -385.2,
+    "cumulative_since_launch_usd_bn": 54.143,
+    "note": "Week of 17–21 Aug 2026: +$1,917.8M net (Farside daily sum: 297.5+189.3+517.2+606.3+307.5). Prior complete week 10–14 Aug: −$385.2M. Cumulative since launch $54.143B. Partial week 24–25 Aug also net inflow (not a complete week).",
+    "updated": "2026-08-26",
+    "source": "Farside Investors https://farside.co.uk/btc/"
   },
   "triggers_manual": {
     "gold_monthly_close": {
-      "status": "amber",
-      "notes": "June close $15 above the $4,000 line."
+      "status": "green",
+      "notes": "July close ~$4,047 (FocusEconomics / 31 Jul). August MTD ~$4,716 — $4k monthly line not in play. Month not closed."
     },
     "cofer_reversal": {
       "status": "amber",
-      "notes": "Noise until four rising quarters."
+      "notes": "Still one rising quarter (2026Q1). 2026Q2 COFER not published as of 26 Aug."
     },
     "ai_financing": {
       "status": "green",
-      "notes": "OAS calm · gap thin · watch Aug earnings."
+      "notes": "OAS 2.7% (21 Aug) · no capex cuts · Epoch Q1 gap still open · Q2 actuals pending."
     }
   }
 }
