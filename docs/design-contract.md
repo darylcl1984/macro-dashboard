@@ -1,11 +1,30 @@
 # Design Contract — Institutional Research Terminal
 
-**Status:** Active (visual overhaul 2026-07-27)  
+**Status:** Active (visual overhaul 2026-07-27; sibling-chrome pass 2026-08-26)  
 **Scope:** Look & feel only. No product/domain feature changes.
 
 ## Mood
 
 Institutional / research terminal. Dark-first. Quiet confidence: hierarchy and data do the work; decoration is sparse. Not consumer fintech candy, not neo-brutal, not glassmorphism.
+
+## Sibling chrome (liquidity-monitor)
+
+Same terminal family as liquidity-monitor: canvas `#141922`, IBM Plex, 2–4px radius, 1px hairlines, sage/amber/coral on **values**, kickers, flattened desks, KPI strips, unboxed status. Rails = command (path book) or alarm (watchpoints when broken) — not a rainbow on every theme. Nested title-strips and card-in-card wells are out.
+
+This is **not** a product merge. Macro-dashboard keeps its IA: sticky path clock, A–D path book, four themes, watchpoints. Do not import LM causal 01–05, ticker cards, MSTR, or kill rows.
+
+Hex values already match. Optional aliases in `:root` map LM names onto MD tokens (no rename of `--bg` / `--green` / `--red`):
+
+| MD token | LM alias | Value |
+|----------|----------|--------|
+| `--bg` | `--canvas` | `#141922` |
+| `--bg-elevated` | `--canvas-elev` | `#1a2030` |
+| `--border` | `--line` | `rgba(210, 220, 240, 0.12)` |
+| `--border-2` | `--line-strong` | `rgba(210, 220, 240, 0.18)` |
+| `--text-dim` | `--text-2` | `#b0bac9` |
+| `--text-muted` | `--text-3` | `#7d8999` |
+| `--green` | `--sage` | `#6fbf9a` |
+| `--red` | `--coral` | `#e07070` |
 
 ## Tokens (`src/styles.css` `:root`)
 
@@ -43,7 +62,7 @@ Legacy aliases (`--green-dim`, etc.) map to wash/border companions so existing c
 | UI | IBM Plex Sans |
 | Numbers / meta / badges | IBM Plex Mono |
 | Base | 13px, line-height 1.5 |
-| Section kickers | 10px, uppercase, tracking ~0.1em, tertiary |
+| Section kickers | 10px / 600, uppercase, tracking ~0.1em, tertiary |
 | Panel titles | ~15px, semibold, slight negative tracking |
 | Big KPIs | mono, tabular-nums, 16–22px (hero up to ~28px) |
 | Numerics | `font-variant-numeric: tabular-nums` on dashboards |
@@ -51,21 +70,22 @@ Legacy aliases (`--green-dim`, etc.) map to wash/border companions so existing c
 ## Shape & chrome
 
 - Radius **2–4px** (almost rectangular)
-- 1px hairlines; **no heavy drop shadows**
-- Desks: surface fill + optional subtle diagonal accent wash (~5–6% opacity)
-- Optional **3px left accent rail** on key desks (scenario / important panels)
-- Alarm: rare whole-panel border + soft outer glow (amber/coral)
+- 1px hairlines; **no heavy drop shadows**; no glass/blur on the status lid
+- Desks: surface fill, in-flow titles (no title-strip bars); inner blocks are hairlines, not nested wells
+- **3px left rail** = command (path book, follows active scenario tone) or alarm (watchpoints when broken) — not a rainbow on every theme
+- Alarm: thin mix border + 3px semantic rail (not a 20px glow)
 
 ## Layout patterns
 
-1. **Page header** — title, one-line subtitle, sticky mono status chips  
-2. **Section kickers** — uppercase micro labels between major areas  
-3. **Desk / panel** — titled block, body, optional KPI / mini-card strip  
-4. **KPI / mini-card** — mono label · value · meta line  
-5. **Content blocks** — tables, range bars, progress clocks with explicit labels  
-6. **Grids** — 2-column pillars ≥900px; collapse cleanly below  
+1. **Sticky status strip** — four command KPIs (scenario, M2 YoY, F&G, watchpoints), opaque, column-aligned with `main`  
+2. **Page header** — title, horizon, one-line subtitle (not a second LM-style nav/status grid)  
+3. **Section kickers** — 10px / 600 / ~0.1em uppercase between major areas  
+4. **Desk / panel** — titled slab, body, optional KPI strip  
+5. **KPI strip** — mono label · value · meta in a shared elevated well with vertical hairlines  
+6. **Content blocks** — tables, range bars, progress clocks with explicit labels  
+7. **Grids** — 2-column pillars ≥900px; collapse cleanly below  
 
-Spacing: section gaps ~28–36px, panel padding ~14–18px. Max width **~1360px**, centered.
+Spacing: section gaps ~28–36px, panel padding ~14–18px. Max width **~1360px**, centered. Page gutters ~18px (not LM’s 32px print margin — MD has a sticky bar).
 
 ## Interaction
 
@@ -90,16 +110,16 @@ Spacing: section gaps ~28–36px, panel padding ~14–18px. Max width **~1360px*
 |---------|--------|----------------|--------|
 | Design tokens + fonts | done | done | Spacing rhythm tokens + bar chrome |
 | Base body / focus / links | done | done | Selection color; reduced-motion |
-| Status bar (sticky KPI) | done | **polished** | Equal flex cells, blur, M2 sub-row, inset rail |
-| Page header + kickers | done | **polished** | Kicker eyebrow; section-block pairing |
-| Pillar desks (4) | done | **polished** | Hero label; desk-block frames; denser KPIs |
+| Status bar (sticky KPI) | done | **sibling** | Opaque lid, 1360 column, no glass; safe-area |
+| Page header + kickers | done | **sibling** | 10px/600 kickers; in-flow titles |
+| Pillar desks (4) | done | **sibling** | No rainbow rails; flattened inners; KPI strip on money lead |
 | Range / FG / div bars | done | **polished** | Unified track geometry; class-based dots; band ticks |
-| Trigger board | done | **polished** | Status cell; rare alarm glow from tally |
+| Watchpoints board | done | **sibling** | Alarm = thin edge + rail; status words clear/watching/broken |
 | Thesis collapsibles | done | **polished** | Quieter ring; title-aligned summaries |
-| Footer | done | **polished** | Meta row demotion |
+| Footer | done | **sibling** | Caption in the 1360 column, not an elevated band |
 | app.js hardcodes | done | done | tone/fill classes throughout |
-| PWA theme + SW cache | done | **v7** | Shell cache bump |
-| Consistency | done | **pass 2** | Density + hierarchy craft |
+| PWA theme + SW cache | done | **v50** | Shell cache bump; viewport-fit + safe-area |
+| Consistency | done | **sibling chrome** | Match LM family, not LM page |
 
 ## Files of record
 

@@ -236,7 +236,8 @@ function worstStatus(...statuses) {
 
 function statusChip(status) {
   const s = status || 'green';
-  return `<span class="status-chip chip-${s}">${s}</span>`;
+  const labels = { green: 'clear', amber: 'watching', red: 'broken' };
+  return `<span class="status-chip chip-${s}">${labels[s] || s}</span>`;
 }
 
 function fgColorClass(val) {
@@ -729,6 +730,16 @@ function heroStat(label, valueHtml, subHtml) {
   </div>`;
 }
 
+function kpiStrip(cells, cols) {
+  const n = cols || cells.length;
+  return `<div class="kpi-strip cols-${n}" role="group">${cells.map(c => `
+    <div class="kpi">
+      <span class="kpi-label">${c.label}</span>
+      <span class="kpi-value">${c.value}</span>
+      ${c.meta ? `<span class="kpi-meta">${c.meta}</span>` : ''}
+    </div>`).join('')}</div>`;
+}
+
 /**
  * @param {'metric'|'text'} [variant]
  * @param {string} [meterSlot] optional HTML for a progress meter (sibling of value, not in sub)
@@ -832,19 +843,22 @@ function renderPillarMonetary(ind, manual) {
       ? 'Calendar YoY · fixed-FX holds FX constant (money creation only).'
       : 'Fixed-FX pending until enough monthly M2 history is on file.');
 
-  const dualHtml = `<div class="metric-row">
-    <div class="metric-cell">
-      <div class="metric-label">USD total growth</div>
-      <div class="metric-value">${yoyHtml}</div>
-      <div class="metric-hint">Money + FX translation</div>
-    </div>
-    <div class="metric-cell">
-      <div class="metric-label">Fixed-FX growth</div>
-      <div class="metric-value">${fxCell}</div>
-      <div class="metric-hint">Money creation only</div>
-    </div>
-  </div>
-  <p class="desk-footnote">${histNote}</p>`;
+  const m2KpiHtml = kpiStrip([
+    {
+      label: 'Global money supply (M2)',
+      value: gm2?.value != null ? `$${fmt(gm2.value, 2)}T` : '—',
+    },
+    {
+      label: 'USD total growth',
+      value: yoyHtml,
+      meta: 'Money + FX translation',
+    },
+    {
+      label: 'Fixed-FX growth',
+      value: fxCell,
+      meta: 'Money creation only',
+    },
+  ], 3);
 
   const blocNames = { US: 'US', CN: 'China', EZ: 'Eurozone', JP: 'Japan', UK: 'UK' };
   const blocRows = ['US', 'CN', 'EZ', 'JP', 'UK'].map(bloc => {
@@ -939,12 +953,8 @@ function renderPillarMonetary(ind, manual) {
       This is the thesis <strong>output</strong>: sustained money growth in a debt system under AI deflation
       and de-dollarisation. Read growth (and fixed-FX) first; rates, the dollar, and plumbing are path headwinds.
     </p>
-    ${heroStat(
-      'Global money supply (M2)',
-      gm2?.value != null ? `$${fmt(gm2.value, 2)}T` : '—',
-      '',
-    )}
-    ${dualHtml}
+    ${m2KpiHtml}
+    <p class="desk-footnote">${histNote}</p>
     <div class="desk-block">
       <table class="bloc-table">
         <thead><tr>
@@ -1564,6 +1574,12 @@ function renderScenarioContext(manual, prices, macro, tally) {
   }
 
   const activeId = resolveActiveScenarioId(scenario);
+  const contextPanel = document.getElementById('panel-context');
+  if (contextPanel) {
+    const tone = scenarioClass(activeId);
+    contextPanel.classList.remove('bull', 'base', 'bear', 'tail');
+    contextPanel.classList.add(tone);
+  }
   const activeEntry = (scenario.book || defaultScenarioBook())
     .find(s => String(s.id).toUpperCase() === activeId);
   const titleText = scenario.current
