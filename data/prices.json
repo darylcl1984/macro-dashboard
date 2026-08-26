@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-08-26T13:05:18.372963+00:00",
+  "updated_at": "2026-08-26T18:45:18.394096+00:00",
   "prices": {
     "BTC": {
-      "price": 78329,
-      "change_pct": -0.9,
+      "price": 78325,
+      "change_pct": -1.05,
       "week52_low": 57747.766,
       "week52_high": 126198.07,
-      "weekly_close": 78206.0,
+      "weekly_close": 78300.0,
       "weekly_close_as_of": "2026-08-26",
       "weekly_close_prev": 78565.0,
-      "monthly_close": 78206.0,
+      "monthly_close": 78300.0,
       "monthly_close_as_of": "2026-08",
       "monthly_series": [
         {
@@ -78,38 +78,38 @@
         },
         {
           "period": "2026-08",
-          "close": 78964.0
+          "close": 78565.0
         },
         {
           "period": "2026-08",
-          "close": 78206.0
+          "close": 78300.0
         }
       ],
       "ath_proxy": 126198.07,
       "ath_note": "52-week high used as cycle-high proxy"
     },
     "XAUUSD": {
-      "price": 4672.3,
-      "change_pct": 1.04,
+      "price": 4648.0,
+      "change_pct": 0.52,
       "week52_low": 3382.0,
       "week52_high": 5586.2,
-      "weekly_close": 4671.9,
+      "weekly_close": 4648.0,
       "weekly_close_as_of": "2026-08-26",
       "weekly_close_prev": 4638.1,
-      "monthly_close": 4671.9,
+      "monthly_close": 4648.0,
       "monthly_close_as_of": "2026-08",
       "ath_proxy": 5586.2,
       "ath_note": "52-week high used as cycle-high proxy"
     },
     "WTI": {
-      "price": 80.56,
-      "change_pct": -7.47,
+      "price": 82.26,
+      "change_pct": -5.51,
       "week52_low": 54.98,
       "week52_high": 119.48
     },
     "VIX": {
-      "price": 15.67,
-      "change_pct": -2.12,
+      "price": 15.44,
+      "change_pct": -3.56,
       "week52_low": 13.38,
       "week52_high": 35.3
     }
