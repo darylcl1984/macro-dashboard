@@ -135,6 +135,8 @@ a:hover {
   top: 0; left: 0; right: 0;
   height: auto;
   padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
   background: var(--bg-elevated);
   border-bottom: 1px solid var(--border);
   z-index: 100;
@@ -161,10 +163,13 @@ a:hover {
 }
 .status-cell:first-child { padding-left: 0; }
 .status-cell:last-child { border-right: none; padding-right: 0; }
+/* Command rail is 3px inset; keep copy off it (first cell is pad-left 0). */
+#s-scenario { padding-left: 12px; }
 
 .status-label {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-muted);
@@ -176,7 +181,7 @@ a:hover {
 
 .status-value {
   font-family: var(--mono);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   line-height: 1.25;
@@ -268,9 +273,10 @@ a:hover {
 .chip-green { color: var(--green); }
 .chip-amber { color: var(--amber); }
 .chip-red   { color: var(--red); }
+.chip-unknown { color: var(--text-muted); }
 
 .tally-chip {
-  font-size: 15px;
+  font-size: 16px;
   min-width: 0;
   text-align: center;
   padding: 0;
@@ -309,9 +315,11 @@ main {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 2px 0 12px;
+  padding: 2px 0 0;
   border-bottom: none;
   min-width: 0;
+  /* One line of space before Spine (main already adds --section-gap) */
+  margin-bottom: calc(1em - var(--section-gap));
 }
 
 .page-header-kicker {
@@ -423,9 +431,11 @@ main {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xs);
-  background: var(--bg-elevated);
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
   overflow: hidden;
 }
 .scenario-chip {
@@ -499,9 +509,9 @@ main {
 .context-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-2);
+  gap: 0;
+  align-items: stretch;
 }
-.context-split { gap: 0; }
 .context-col {
   border: 0;
   border-radius: 0;
@@ -509,8 +519,9 @@ main {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--stack-gap);
+  gap: 10px;
   min-width: 0;
+  height: 100%;
 }
 .context-split > .context-col + .context-col {
   border-left: 1px solid var(--border);
@@ -558,6 +569,7 @@ main {
 .waypoint-status.is-approaching { color: var(--amber); }
 .waypoint-status.is-miss { color: var(--red); }
 .waypoint-label {
+  font-family: var(--mono);
   color: var(--text-dim);
   line-height: 1.4;
   padding-top: 1px;
@@ -593,8 +605,8 @@ main {
   flex-direction: column;
   gap: 3px;
   margin-top: auto;
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--border);
+  padding-top: 0;
+  border-top: none;
 }
 .context-next-k {
   font-family: var(--mono);
@@ -610,12 +622,16 @@ main {
   line-height: 1.4;
 }
 
-/* Footer: regime bullets + live tally */
+/* Footer: live tally (tape bullets live in the Path column) */
 .context-footer {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.context-col .regime-bullets {
+  margin-top: 2px;
 }
 .regime-bullets {
   list-style: none;
@@ -648,10 +664,8 @@ main {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 6px 8px;
-  padding: 8px 0;
+  padding: 0;
   border: 0;
-  border-top: 1px solid var(--border);
-  border-radius: 0;
   background: transparent;
   font-family: var(--mono);
   font-size: 11px;
@@ -1029,11 +1043,12 @@ main {
 }
 .hs-cash-head .field-label { margin-bottom: 0; }
 .hs-cash-headline {
-  font-family: var(--sans);
+  font-family: var(--mono);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.35;
   color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 .hs-cash-headline.tone-amber { color: var(--amber); }
 .hs-cash-headline.tone-red { color: var(--red); }
@@ -1162,8 +1177,8 @@ main {
   gap: 0;
 }
 .hm-stack > * {
-  padding: 10px 0;
-  border-top: 1px solid var(--border);
+  padding: 16px 0;
+  border-top: 1px solid var(--border-2);
   min-width: 0;
 }
 .hm-stack > *:first-child {
@@ -1172,17 +1187,14 @@ main {
 }
 .hm-stack > *:last-child { padding-bottom: 0; }
 .hm-stack .mini-card {
-  border: 0;
-  border-radius: 0;
-  padding: 0;
   background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-2);
+  padding: 16px 0;
 }
-.hm-stack .mini-card:hover { border-color: transparent; }
 .hm-stack .cofer-strip {
-  padding: 0;
   gap: var(--space-2);
 }
-.hm-stack .tx-strip { padding: 0; }
 .hm-stack .tx-months { flex-wrap: wrap; }
 .hm-stack .tx-month { flex: 1 1 2.4rem; }
 .hm-stack .price-table th,
@@ -1214,11 +1226,11 @@ main {
 }
 h3.ai-col-title,
 .ai-col-title {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: var(--label-track);
+  letter-spacing: 0.1em;
   color: var(--text-muted);
   padding-bottom: 0;
   border-bottom: none;
@@ -1500,6 +1512,23 @@ h3.ai-col-title,
   margin: 0;
   line-height: 1.3;
 }
+/* In-desk kickers match section kickers */
+.context-col-title,
+.context-desk-title,
+.desk-foot-kicker,
+.field-label,
+.mini-card-label,
+.btc-cell-label,
+.cofer-k,
+.ai-status-k,
+.spine-cell-id,
+.trigger-sum-k,
+.hs-dual-k,
+.hs-cash-head .field-label {
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
 
 /* Desk / panel */
 .panel {
@@ -1739,30 +1768,41 @@ th.num { text-align: right; }
 .spine-stages {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 0;
 }
 .spine-stages {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .spine-hinge {
-  font-family: var(--mono);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  font-family: var(--sans);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: var(--label-track);
+  letter-spacing: 0.1em;
   color: var(--text-muted);
   text-align: center;
-  margin: 8px 0 6px;
+  white-space: nowrap;
+}
+.spine-hinge::before,
+.spine-hinge::after {
+  content: '';
+  flex: 1 1 0;
+  height: 1px;
+  background: var(--border);
 }
 .spine-cell {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 3px;
-  padding: 8px 9px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: rgba(20, 25, 34, 0.35);
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   min-width: 0;
   text-align: left;
   cursor: pointer;
@@ -1770,7 +1810,11 @@ th.num { text-align: right; }
   font: inherit;
   width: 100%;
 }
-.spine-cell:hover { border-color: var(--border-2); background: var(--surface-2); }
+.spine-inflows .spine-cell + .spine-cell,
+.spine-stages .spine-cell + .spine-cell {
+  border-left: 1px solid var(--border);
+}
+.spine-cell:hover { background: transparent; }
 .spine-cell:focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
@@ -2156,9 +2200,6 @@ th.num { text-align: right; }
 }
 .range-dot.is-alert {
   background: var(--amber);
-  box-shadow:
-    0 0 0 1px rgba(20, 25, 34, 0.85),
-    0 0 8px var(--amber-wash);
 }
 
 .range-tick {
@@ -2407,6 +2448,7 @@ details:not([open]) > summary .summary-hint::after { content: 'show'; }
 .thesis-body .thesis-table th:first-child { padding-left: 0; }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .thesis-summary .summary-chevron { transition: none; }
   .fg-bar-fill { transition: none; }
 }
@@ -2514,6 +2556,9 @@ details:not([open]) > summary .summary-hint::after { content: 'show'; }
   .scenario-chip:nth-child(2n) { border-right: 0; }
   .scenario-chip:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
   .spine-stages { grid-template-columns: 1fr 1fr; }
+  .spine-stages .spine-cell { border-left: 0; }
+  .spine-stages .spine-cell:nth-child(2n) { border-left: 1px solid var(--border); }
+  .spine-stages .spine-cell:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
   /* Credit is full-width here: 2+1 uses the width instead of a tall stack */
   #pillar-dedollar-body .mini-grid { grid-template-columns: 1fr 1fr; gap: 8px 16px; }
   #pillar-dedollar-body .mini-card { border-top: none; padding: 8px 0; }
@@ -2533,7 +2578,7 @@ details:not([open]) > summary .summary-hint::after { content: 'show'; }
       "sub"
       "meta";
     gap: 3px;
-    padding-bottom: 12px;
+    padding-bottom: 0;
   }
   .page-header-kicker { grid-area: kicker; }
   .page-header-top {
@@ -2560,19 +2605,20 @@ details:not([open]) > summary .summary-hint::after { content: 'show'; }
 
 @media (max-width: 700px) {
   main {
-    padding: 12px 12px 28px;
-    gap: 20px;
+    padding: 16px var(--page-pad-x) 28px;
+    gap: var(--section-gap);
   }
 
   :root {
     /* Fallback only — JS measures #status-bar and sets the real value */
     --status-bar-h: calc(148px + env(safe-area-inset-top, 0px));
-    --section-gap: 20px;
-    --page-pad-x: 12px;
+    --section-gap: 28px;
+    --page-pad-x: 18px;
     --stack-gap: 10px;
     --panel-pad: 12px;
     --inset-pad: 10px;
   }
+  .pillar-grid { gap: 16px; }
 
   #status-bar {
     height: auto;
@@ -2581,26 +2627,33 @@ details:not([open]) > summary .summary-hint::after { content: 'show'; }
   #status-bar-inner {
     flex-wrap: wrap;
     height: auto;
-    padding: 0;
+    padding: 0 var(--page-pad-x);
   }
   .status-cell {
     flex: 1 1 50%;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 8px 12px;
+    padding: 8px 0;
     gap: 2px;
   }
-  .status-cell:first-child { padding-left: 12px; }
-  .status-cell:last-child { padding-right: 12px; }
+  .status-cell:first-child { padding-left: 0; }
+  .status-cell:last-child { padding-right: 0; }
   .status-cell:nth-child(odd) { border-right: 1px solid var(--border); }
 
   #s-scenario {
     flex: 1 1 100%;
     border-right: none !important;
-    background: color-mix(in srgb, var(--surface) 70%, transparent);
-    padding: 9px 14px;
+    background: transparent;
+    padding: 8px 0 8px 12px;
   }
+  #s-m2 { padding-right: 12px; }
+  #s-fg { padding-left: 12px; }
+  .status-value,
   #s-scenario .status-value { font-size: 16px; }
+  .trigger-sum-n {
+    margin-left: 0;
+    white-space: nowrap;
+  }
 
   #s-m2, #s-fg { flex: 1 1 50%; }
   #s-m2 { border-right: 1px solid var(--border); }

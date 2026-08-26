@@ -226,17 +226,22 @@ function transmissionHtml(tx) {
 }
 
 function worstStatus(...statuses) {
-  const rank = { red: 3, amber: 2, green: 1, null: 0, undefined: 0 };
-  let best = 'green';
+  const rank = { red: 3, amber: 2, green: 1, unknown: 0, null: -1, undefined: -1 };
+  let best = 'unknown';
+  let bestRank = -1;
   for (const s of statuses) {
-    if ((rank[s] || 0) > (rank[best] || 0)) best = s;
+    const r = Object.prototype.hasOwnProperty.call(rank, s) ? rank[s] : -1;
+    if (r > bestRank) {
+      bestRank = r;
+      best = s;
+    }
   }
   return best;
 }
 
 function statusChip(status) {
-  const s = status || 'green';
-  const labels = { green: 'clear', amber: 'watching', red: 'broken' };
+  const s = status || 'unknown';
+  const labels = { green: 'clear', amber: 'watching', red: 'broken', unknown: 'no data' };
   return `<span class="status-chip chip-${s}">${labels[s] || s}</span>`;
 }
 
@@ -421,7 +426,7 @@ function buildTriggers(prices, macro, manual) {
       },
       status() {
         const y = m2yoy.value;
-        if (y == null) return 'green';
+        if (y == null) return 'unknown';
         if (y < 0) return 'red';
         if (y < 3) return 'amber';
         return 'green';
@@ -449,7 +454,7 @@ function buildTriggers(prices, macro, manual) {
         return bits.join(' · ');
       },
       status() {
-        if (coferQ == null) return 'green';
+        if (coferQ == null) return 'unknown';
         if (coferQ >= 4) return 'red';
         if (coferQ >= 1) return 'amber';
         return 'green';
@@ -477,6 +482,7 @@ function buildTriggers(prices, macro, manual) {
         const man = manualStatus('gold_monthly_close');
         const month = goldMonthly;
         const live = gold?.price;
+        if (month == null && live == null && !man) return 'unknown';
         if (man === 'red' || (month != null && month < 4000 && man === 'red')) return 'red';
         if (month != null && month < 4000) return man === 'red' ? 'red' : 'amber';
         if (live != null && live < 4000) return 'amber';
@@ -500,7 +506,7 @@ function buildTriggers(prices, macro, manual) {
       status() {
         // Official rule uses weekly close; live price only softens toward amber
         const close = btcWeekly ?? btc?.price;
-        if (close == null) return 'green';
+        if (close == null) return 'unknown';
         if (close < 53000) return 'red';
         if (close < 60950 || (btc.week52_low != null && btc.week52_low < 58300)) return 'amber';
         if (btc?.price != null && btc.price < 60950) return 'amber';
@@ -525,7 +531,7 @@ function buildTriggers(prices, macro, manual) {
       },
       status() {
         if (manual?.divergence?.start == null) return 'green';
-        if (divMonths == null) return 'green';
+        if (divMonths == null) return 'unknown';
         if (divMonths >= 18) return 'red';
         if (divMonths >= 12) return 'amber';
         return 'green';
@@ -555,6 +561,7 @@ function buildTriggers(prices, macro, manual) {
         const cuts = !!manual?.ai_transition?.capex_cuts;
         const hs = manual?.ai_transition?.hyperscaler_cash;
         const cashTight = !!(hs && (hs.crossed || (hs.gap_usd_b != null && hs.gap_usd_b < 0)));
+        if (oas == null && !man && !cuts && !cashTight) return 'unknown';
         const oasRed = oas != null && oas > 5;
         const oasAmber = oas != null && oas > 4;
         let computed = 'green';
@@ -579,7 +586,7 @@ function buildTriggers(prices, macro, manual) {
       },
       status() {
         const price = wti?.price;
-        if (price == null) return 'green';
+        if (price == null) return 'unknown';
         if (price > 120) return 'red';
         if (price > 100) return 'amber';
         return 'green';
@@ -592,7 +599,7 @@ function buildTriggers(prices, macro, manual) {
 }
 
 function tallyTriggers(triggers) {
-  const counts = { green: 0, amber: 0, red: 0 };
+  const counts = { green: 0, amber: 0, red: 0, unknown: 0 };
   for (const t of triggers) {
     const s = t.status();
     if (counts[s] != null) counts[s]++;
@@ -858,11 +865,29 @@ function renderPillarMonetary(ind, manual) {
   const flagIdx = rawHist.search(/Quality flags:\s*/i);
   const histNote = flagIdx >= 0 ? rawHist.slice(0, flagIdx).trim() : rawHist;
   const histFlags = flagIdx >= 0 ? rawHist.slice(flagIdx).replace(/^Quality flags:\s*/i, '').trim() : '';
+  const histTitle = histFlags
+    ? ` title="Quality flags: ${histFlags.replace(/"/g, '&quot;')}"`
+    : '';
+
+  const usM2 = ind.US_M2;
+  let usM2Meta = 'Fiscal-gap proxy';
+  if (usM2?.yoy_pct != null) {
+    const acc = usM2.yoy_delta_pp;
+    const accTxt = acc != null
+      ? (acc > 0 ? ` · +${acc.toFixed(1)} pp` : acc < 0 ? ` · ${acc.toFixed(1)} pp` : '')
+      : '';
+    usM2Meta = `${usM2.yoy_pct >= 0 ? '+' : ''}${usM2.yoy_pct.toFixed(1)}% YoY${accTxt} · fiscal proxy`;
+  }
 
   const m2KpiHtml = kpiStrip([
     {
       label: 'Global money supply (M2)',
       value: gm2?.value != null ? `$${fmt(gm2.value, 2)}T` : '—',
+    },
+    {
+      label: 'US money supply',
+      value: usM2?.value != null ? `$${fmt(usM2.value, 0)}B` : '—',
+      meta: usM2Meta,
     },
     {
       label: 'USD total growth',
@@ -874,7 +899,7 @@ function renderPillarMonetary(ind, manual) {
       value: fxCell,
       meta: 'Money creation only',
     },
-  ], 3);
+  ], 4);
 
   const blocNames = { US: 'US', CN: 'China', EZ: 'Eurozone', JP: 'Japan', UK: 'UK' };
   const blocRows = ['US', 'CN', 'EZ', 'JP', 'UK'].map(bloc => {
@@ -896,30 +921,17 @@ function renderPillarMonetary(ind, manual) {
     </tr>`;
   }).join('');
 
-  const usM2 = ind.US_M2;
-  const staleUsM2 = staleness(usM2?.date, 45, 90);
-  const blocYoyNote = manual?.bloc_m2_yoy?.note
-    || 'Year-over-year money growth in each region’s own currency.';
-
-  let usYoySub = 'Live proxy for the inferred fiscal gap';
-  if (usM2?.yoy_pct != null) {
-    const acc = usM2.yoy_delta_pp;
-    const accTxt = acc != null
-      ? (acc > 0 ? ` · accelerating (+${acc.toFixed(1)} pp)` : acc < 0 ? ` · cooling (${acc.toFixed(1)} pp)` : ' · steady')
-      : '';
-    usYoySub = `<span class="${m2BandClass(usM2.yoy_pct)}">${usM2.yoy_pct >= 0 ? '+' : ''}${usM2.yoy_pct.toFixed(1)}% YoY</span>${accTxt} · live proxy for the inferred fiscal gap · ${fmtMacroDate(usM2.date)}`;
-  } else if (usM2?.date) {
-    usYoySub = `Live proxy for the inferred fiscal gap · ${fmtMacroDate(usM2.date)}`;
-  }
-  usYoySub += staleBadge(staleUsM2.level, staleUsM2.label);
+  const blocYoyNote = 'Year-over-year money growth in each region’s own currency.';
+  const blocYoyTitle = manual?.bloc_m2_yoy?.note
+    ? ` title="${String(manual.bloc_m2_yoy.note).replace(/"/g, '&quot;')}"`
+    : '';
 
   document.getElementById('pillar-monetary-body').innerHTML = `
     <p class="desk-footnote desk-footnote--lead">
       Stage 4 — the thesis <strong>output</strong>, not the claim. Read headline and fixed-FX first.
     </p>
     ${m2KpiHtml}
-    <p class="desk-footnote">${histNote}</p>
-    ${histFlags ? `<p class="desk-footnote desk-footnote--flags">Quality flags: ${histFlags}</p>` : ''}
+    <p class="desk-footnote"${histTitle}>${histNote}</p>
     <div class="desk-block">
       <table class="bloc-table">
         <thead><tr>
@@ -932,8 +944,7 @@ function renderPillarMonetary(ind, manual) {
         <tbody>${blocRows}</tbody>
       </table>
     </div>
-    <p class="desk-footnote">${blocYoyNote}</p>
-    ${miniCard('US money supply', usM2?.value != null ? `$${fmt(usM2.value, 0)}B` : '—', usYoySub)}
+    <p class="desk-footnote"${blocYoyTitle}>${blocYoyNote}</p>
   `;
 }
 
@@ -999,8 +1010,8 @@ function renderPillarDedollar(prices, manual, macro) {
   const { netLiq, us10yValue, us10ySub, usdIdx, usdSub, netLiqSub } = pathHeadwindCards(ind);
 
   let oasTone = 'neu';
-  let oasChip = 'green';
-  let oasWord = 'Calm';
+  let oasChip = 'unknown';
+  let oasWord = 'No print';
   if (oas?.value != null) {
     if (oas.value > 5) {
       oasTone = 'tone-red';
@@ -1012,9 +1023,9 @@ function renderPillarDedollar(prices, manual, macro) {
       oasWord = 'Watch';
     } else {
       oasTone = 'tone-green';
+      oasChip = 'green';
+      oasWord = 'Calm';
     }
-  } else {
-    oasWord = '—';
   }
 
   document.getElementById('pillar-dedollar-body').innerHTML = `
@@ -1063,7 +1074,7 @@ function goldAndMixHtml(prices, manual, macro) {
   const coferPct = coferQ != null ? (coferQ / 4) * 100 : 0;
   const coferTone = coferQ == null ? '' : coferQ >= 4 ? 'red' : coferQ >= 1 ? 'amber' : 'green';
   const coferMeter = coferQ != null
-    ? meterHtml(coferPct, coferTone, 'To reverse', coferQ >= 4 ? 'Trend break' : 'Noise until 4')
+    ? meterHtml(coferPct, coferTone, `${coferQ} of 4 rising`, coferQ >= 4 ? 'Trend break' : 'Need 4 to reverse')
     : '';
 
   // Stablecoin rails path: live mcap vs mid-path $500B (thesis structural case is larger)
@@ -1226,11 +1237,7 @@ function oasGaugeHtml(val) {
 
   if (val == null || isNaN(val)) {
     return `<div class="oas-gauge">
-      <div class="oas-gauge-track oas-gauge-track--empty">
-        <div class="oas-zone oas-zone-calm" style="width:50%"></div>
-        <div class="oas-zone oas-zone-watch" style="width:12.5%"></div>
-        <div class="oas-zone oas-zone-stress" style="width:37.5%"></div>
-      </div>
+      <div class="oas-gauge-track oas-gauge-track--empty"></div>
       <div class="oas-gauge-labels">${tickHtml}</div>
     </div>`;
   }
@@ -1486,12 +1493,14 @@ function renderPillars(prices, macro, manual) {
 function spineTone(st) {
   if (st === 'red') return 'tone-red';
   if (st === 'amber') return 'tone-amber';
+  if (st === 'unknown') return 'neu';
   return 'tone-green';
 }
 
 function spineStatusWord(st) {
   if (st === 'red') return 'broken';
   if (st === 'amber') return 'watching';
+  if (st === 'unknown') return 'no data';
   return 'clear';
 }
 
@@ -1512,7 +1521,7 @@ function renderSpine(prices, macro, manual) {
   const triggers = buildTriggers(prices, macro, manual);
   const stOf = (id) => {
     const row = triggers.find(t => t.id === id);
-    return row ? row.status() : 'green';
+    return row ? row.status() : 'unknown';
   };
   const cuts = !!manual?.ai_transition?.capex_cuts;
   const forceA = cuts ? 'amber' : 'green';
@@ -1712,6 +1721,17 @@ function renderScenarioContext(manual, prices, macro, tally) {
   // 3. Two-column: path waypoints | re-score + next check
   const midCols = [];
 
+  const bullets = [];
+  if (hasBullets) {
+    for (const b of manual.regime_bullets) {
+      if (/watchpoint/i.test(b)) continue;
+      bullets.push(b);
+    }
+  }
+  const bulletList = bullets.length
+    ? `<ul class="regime-bullets">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>`
+    : '';
+
   if (hasWps) {
     const rows = scenario.waypoints.map(w => {
       const st = resolveWaypointStatus(w, prices, macro, manual);
@@ -1724,6 +1744,7 @@ function renderScenarioContext(manual, prices, macro, tally) {
     midCols.push(`<div class="context-col">
       <div class="context-col-title">Path · ${activeId}</div>
       <div class="waypoints-list">${rows}</div>
+      ${bulletList}
     </div>`);
   }
 
@@ -1755,14 +1776,7 @@ function renderScenarioContext(manual, prices, macro, tally) {
     parts.push(`<div class="context-split">${midCols.join('')}</div>`);
   }
 
-  // 4. Compact footer: regime bullets + live tally
-  const bullets = [];
-  if (hasBullets) {
-    for (const b of manual.regime_bullets) {
-      if (/watchpoint/i.test(b)) continue;
-      bullets.push(b);
-    }
-  }
+  // 4. Watchpoint tally (tape bullets sit under Path marks)
   let tallyHtml = '';
   if (hasTally) {
     const total = tally.green + tally.amber + tally.red;
@@ -1776,14 +1790,10 @@ function renderScenarioContext(manual, prices, macro, tally) {
       <span class="context-tally-n">of ${total}</span>
     </div>`;
   }
-  if (bullets.length || tallyHtml) {
-    const list = bullets.length
-      ? `<ul class="regime-bullets">${bullets.map(b => `<li>${b}</li>`).join('')}</ul>`
-      : '';
-    parts.push(`<div class="context-footer">
-      ${list}
-      ${tallyHtml}
-    </div>`);
+  if (!hasWps && bulletList) {
+    parts.push(`<div class="context-footer">${bulletList}${tallyHtml}</div>`);
+  } else if (tallyHtml) {
+    parts.push(`<div class="context-footer">${tallyHtml}</div>`);
   }
 
   body.innerHTML = parts.join('');
