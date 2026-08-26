@@ -921,7 +921,7 @@ function renderPillarMonetary(ind, manual) {
     us10yValue = `<span class="${bandCls}">${fmt(y, 2)}%</span>`;
     us10ySub = [
       bandTxt,
-      'Path headwind · not a kill line',
+      'Path headwind · not an invalidation line',
       fmtMacroDate(us10y.date),
       staleBadge(stale10y.level, stale10y.label),
     ].filter(Boolean).join(' · ');
@@ -1532,7 +1532,7 @@ function scenarioBookHtml(scenario) {
       return `<div class="scenario-chip${isActive ? ' is-active' : ''} scenario-tone-${tone}" role="listitem"${isActive ? ' aria-current="true"' : ''}>
         <div class="scenario-chip-top">
           <span class="scenario-chip-id">${id}</span>
-          ${isActive ? '<span class="scenario-chip-badge">base</span>' : ''}
+          ${isActive ? `<span class="scenario-chip-badge">${id === 'B' ? 'book base' : 'active'}</span>` : ''}
         </div>
         <span class="scenario-chip-name">${s.name || id}</span>
         <span class="scenario-chip-p">${p != null ? `${p}%` : '—'}</span>

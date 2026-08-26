@@ -5,7 +5,7 @@
     "active_id": "B",
     "probability": "40%",
     "updated": "2026-07-28",
-    "notes": "Tight policy for longer is still the base case. Money keeps expanding; risk transmission does not. Energy premiums and real rates can soak up print before it reaches BTC. The thesis is decided on the floors, not the rhetoric.",
+    "notes": "Hawkish grind remains the path book: money keeps expanding; risk transmission does not. That is not a call that the 2026 window is dead — a Q4 signal can print inside B without a cut and without breaking floors. Energy premiums and real rates can soak up print before it reaches BTC. The 2030s thesis is decided on the floors, not the rhetoric.",
     "next_check": "FOMC path · hyperscaler earnings (early Aug) · weekly BTC vs $53k · oil if path toward $100",
     "book": [
       { "id": "A", "name": "Liquidity relink", "p": 30 },
@@ -14,7 +14,7 @@
       { "id": "D", "name": "Geo shock", "p": 10 }
     ],
     "rescore_if": [
-      "A — FOMC holds, multi-week ETF inflows, and BTC–M2 lag cools (inflows alone are not enough)",
+      "A — multi-week ETF inflows and BTC–M2 lag cools (inflows alone are not enough)",
       "C — HY OAS above 4% or hyperscaler capex cuts",
       "D — oil path toward $100–120 / supply shock"
     ],

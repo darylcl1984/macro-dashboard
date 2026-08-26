@@ -162,7 +162,7 @@ A red cell is not “sell everything.” It is **an assumption failed** — hold
 | 6 | AI funding stress | OAS >5% **and** capex cuts | OAS 2.7% · no cuts | Green |
 | 7 | Oil price spike | >$120 for 4+ weeks | WTI ~$90 | Green |
 
-**4 amber / 0 red.** Stress without breach — the next 6–12 months adjudicate.
+**4 amber / 0 red.** Stress without breach — the next 6–12 months color the *path*, not the 2030s floor.
 
 *Taiwan / major war = full rewrite, not a single row (see D).*
 
@@ -181,13 +181,13 @@ Axis: **monetary regime**. Credit and geopolitics are modifiers.
 
 ### A — Liquidity relink (30%)
 
-Fed stays on hold; no 2026 hikes. M2 stays expansionary. ETF outflows exhaust; BTC re-links to liquidity. Divergence clock resets.
+Money stays expansionary. ETF outflows exhaust; BTC re-links to liquidity. Divergence clock resets. A is the relink — not a call that 2026 hikes are off.
 
 **Path marks:** BTC $75–95k band · gold $4,400+ · clock resets before month 18.
 
 ### B — Hawkish grind (40%) · base
 
-Hikes land or stay threatened; dollar firm; real rates bite. M2 still expands (fiscal math). Risk stays blocked. Floors get a real test.
+Hawkish talk and threatened hikes keep the dollar firm and real rates biting. M2 still expands (fiscal math). Risk transmission stays blocked. Floors get a real test. A Q4 policy-signal can print inside B without a cut, without leaving B, and without breaking floors — grind is blocked transmission, not a veto of that signal.
 
 **Path marks:** BTC $50–70k · gold $3,800–4,300 with $4k monthly under fire · clock runs to 15–18 months.
 
@@ -207,7 +207,7 @@ MoU failure or major supply shock (e.g. Hormuz-style). Oil >$120; inflation re-a
 
 | Move toward | If |
 |---|---|
-| **A** | FOMC holds · ETF inflows return · lag cools |
+| **A** | ETF inflows return · BTC–M2 lag cools (inflows alone are not enough) |
 | **C** | HY OAS >4% or hyperscaler capex cuts |
 | **D** | Oil path toward $100–120 / clear supply shock |
 

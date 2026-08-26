@@ -2,6 +2,8 @@
 
 Thesis-driven research terminal for a multi-year monetary transition: **AI deflation**, **de-dollarisation**, and their output — **sustained global money growth**. Hard assets (BTC, gold) are the primary beneficiaries. Horizon: the **2030s**.
 
+This desk owns the 2030s floor and which A–D *path* the tape is on. It does not call whether the Jul–Dec 2026 window (`liquidity-monitor`) is in. A Q4 *signal* can print inside hawkish grind (B) without a first cut and without breaking floors. Thresholds are desk-local — a number on one desk does not bind the other.
+
 Waypoints, not trading signals. No portfolio, no positions.
 
 **Live:** [darylcl1984.github.io/macro-dashboard](https://darylcl1984.github.io/macro-dashboard)
@@ -34,7 +36,7 @@ Two structural forces, one output:
 
 **Four desk themes** (UI): Money growth · De-dollarisation · AI transition · Bitcoin  
 
-**Scenario book (H2 2026–2027):**
+**Scenario book (H2 2026–2027 path, not a 2026-exit verdict):**
 
 | ID | Name | Role |
 |---|---|---|
@@ -108,7 +110,7 @@ Only secret: free-tier **FRED API key** (`FRED_API_KEY` in GitHub Actions).
 ## Dashboard layout
 
 1. **Status bar** — Scenario, money growth YoY, Fear & Greed, watchpoint tally  
-2. **Base case & path** — A–D book, lead judgment, path waypoints (auto where possible), re-score if, next check, live tally  
+2. **Path book (H2 2026–2027)** — A–D book, lead judgment, path waypoints (auto where possible), re-score if, next check, live tally  
 3. **Four themes**
    - **Money growth** — Global M2, dual YoY, five-bloc table, US M2 / net liquidity / 10Y / broad $  
    - **De-dollarisation** — Gold vs $4k, CB gold, stablecoin rails, COFER  
