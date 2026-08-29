@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-08-28T22:08:40.444019+00:00",
+  "updated_at": "2026-08-29T00:46:35.897304+00:00",
   "prices": {
     "BTC": {
-      "price": 77396,
-      "change_pct": -3.6,
+      "price": 77785,
+      "change_pct": -3.27,
       "week52_low": 57747.766,
       "week52_high": 126198.07,
-      "weekly_close": 77433.0,
-      "weekly_close_as_of": "2026-08-28",
+      "weekly_close": 77785.0,
+      "weekly_close_as_of": "2026-08-29",
       "weekly_close_prev": 80258.0,
-      "monthly_close": 77433.0,
+      "monthly_close": 77785.0,
       "monthly_close_as_of": "2026-08",
       "monthly_series": [
         {
@@ -82,7 +82,7 @@
         },
         {
           "period": "2026-08",
-          "close": 77433.0
+          "close": 77785.0
         }
       ],
       "ath_proxy": 126198.07,
