@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-08-29T00:46:35.897304+00:00",
+  "updated_at": "2026-08-29T02:57:16.475976+00:00",
   "prices": {
     "BTC": {
-      "price": 77785,
-      "change_pct": -3.27,
+      "price": 77692,
+      "change_pct": -2.77,
       "week52_low": 57747.766,
       "week52_high": 126198.07,
-      "weekly_close": 77785.0,
+      "weekly_close": 77676.0,
       "weekly_close_as_of": "2026-08-29",
       "weekly_close_prev": 80258.0,
-      "monthly_close": 77785.0,
+      "monthly_close": 77676.0,
       "monthly_close_as_of": "2026-08",
       "monthly_series": [
         {
@@ -82,7 +82,7 @@
         },
         {
           "period": "2026-08",
-          "close": 77785.0
+          "close": 77676.0
         }
       ],
       "ath_proxy": 126198.07,
@@ -91,7 +91,7 @@
     "XAUUSD": {
       "price": 4504.1,
       "change_pct": -2.95,
-      "week52_low": 3426.6,
+      "week52_low": 3485.7,
       "week52_high": 5586.2,
       "weekly_close": 4504.1,
       "weekly_close_as_of": "2026-08-28",
