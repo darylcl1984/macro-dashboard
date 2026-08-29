@@ -6,7 +6,7 @@ This desk owns the 2030s floor and which A–D *path* the tape is on. It does no
 
 Waypoints, not trading signals. No portfolio, no positions.
 
-**Live:** [darylcl1984.github.io/macro-dashboard](https://darylcl1984.github.io/macro-dashboard)
+**Live:** [darylcl1984.github.io/macro-dashboard](https://darylcl1984.github.io/macro-dashboard) — opens the desk (`/src/`).
 
 **PWA:** Installable from Chrome (desktop/Android) when served over HTTPS — icons + service worker + `manifest.json` under `src/`.
 
@@ -64,8 +64,9 @@ APIs (CoinGecko · Stooq · Yahoo · Alternative.me
         │
         ▼
 GitHub Actions (cron, Mon–Fri)
-  fetch_prices.py  → data/prices.json   (3× daily)
-  fetch_macro.py   → data/macro.json    (1× daily)
+  fetch_prices.py     → data/prices.json    (3× daily)
+  fetch_macro.py      → data/macro.json     (1× daily)
+  sync_etf_flows.py   → data/etf_flows.json (from Liq; best-effort on macro fetch)
         │
         ▼
 data/*.json committed to repo
@@ -82,10 +83,11 @@ GitHub Pages PWA  (src/app.js reads JSON)
 | CB gold (WGC), COFER | Quarterly |
 | Hyperscaler OCF vs cash capex ([Epoch](https://epoch.ai/data-insights/hyperscaler-capex-vs-cash-flow)) | Quarterly — see [`docs/ai-hyperscaler-cash.md`](docs/ai-hyperscaler-cash.md) |
 | Scenario book, waypoints, rescore cues | As judgment changes |
-| ETF flows (Farside) | Weekly when possible |
 | Trigger notes (COFER / AI / gold) | As needed |
 
-Only secret: free-tier **FRED API key** (`FRED_API_KEY` in GitHub Actions).
+Spot ETF weeks are typed only in `liquidity-monitor/data/etf_flows.json`. This desk syncs a derived snapshot (`python scripts/sync_etf_flows.py`).
+
+Only secret: free-tier **FRED API key** (`FRED_API_KEY` in GitHub Actions). Empty key fails the macro job.
 
 ---
 
@@ -149,6 +151,7 @@ Get a free key: [FRED API key](https://fred.stlouisfed.org/docs/api/api_key.html
 pip install -r requirements.txt
 python scripts/fetch_prices.py
 python scripts/fetch_macro.py
+python scripts/sync_etf_flows.py
 ```
 
 **Serve the PWA from the repo root** (so both `src/` and `data/` are reachable).  
@@ -157,6 +160,7 @@ python scripts/fetch_macro.py
 ```bash
 # from repo root
 python -m http.server 8080
+# → http://localhost:8080/      (redirects to the desk)
 # → http://localhost:8080/src/
 ```
 
@@ -171,8 +175,8 @@ GitHub Actions can also be run via **workflow_dispatch** on the Actions tab.
 | Path | Role |
 |---|---|
 | `src/` | PWA (HTML / CSS / JS / service worker) |
-| `data/` | Live JSON (`prices`, `macro`, `manual`, M2 history) |
-| `scripts/` | Fetch jobs |
+| `data/` | Live JSON (`prices`, `macro`, `manual`, M2 history, `etf_flows` derived) |
+| `scripts/` | Fetch jobs + `sync_etf_flows.py` |
 | `docs/thesis.md` | Full thesis framework |
 | `docs/m2_note.md` | Global M2 methodology |
 | `docs/ai-hyperscaler-cash.md` | Epoch OCF/capex ingest pointer |

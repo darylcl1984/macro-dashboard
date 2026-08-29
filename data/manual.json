@@ -1,5 +1,5 @@
 {
-  "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. ETF flows: weekly when possible.",
+  "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. Spot ETF weeks: liquidity-monitor/data/etf_flows.json (run scripts/sync_etf_flows.py).",
   "scenario": {
     "current": "A — Liquidity relink",
     "active_id": "A",
@@ -141,17 +141,6 @@
     "next_test": "Epoch CSV Q2 actuals · next hyperscaler prints (Oct 2026)",
     "capex_cuts": false,
     "updated": "2026-08-26"
-  },
-  "etf_flows": {
-    "period": "2026-08-17/21",
-    "net_usd_bn": 1.918,
-    "net_usd_m": 1917.8,
-    "streak_weeks_outflow": 0,
-    "prior_week_usd_m": -385.2,
-    "cumulative_since_launch_usd_bn": 54.143,
-    "note": "Week of 17–21 Aug 2026: +$1,917.8M net (Farside daily sum: 297.5+189.3+517.2+606.3+307.5). Prior complete week 10–14 Aug: −$385.2M. Cumulative since launch $54.143B. Partial week 24–25 Aug also net inflow (not a complete week).",
-    "updated": "2026-08-26",
-    "source": "Farside Investors https://farside.co.uk/btc/"
   },
   "triggers_manual": {
     "gold_monthly_close": {

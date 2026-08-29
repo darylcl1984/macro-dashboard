@@ -13,7 +13,7 @@ Staging packs are **gitignored** (`data/agent_manual_pack_*.json`). Humans merge
 | CB gold | Quarterly | [WGC Gold Demand Trends](https://www.gold.org/goldhub/research/gold-demand-trends) | `cb_gold` |
 | COFER USD share | Quarterly | [IMF COFER data briefs](https://data.imf.org/) | `cofer_usd_share` |
 | Hyperscaler OCF/capex | Quarterly | [Epoch CSV](https://epoch.ai/data/charts/hyperscaler-capex-vs-cash-flow/ocf_vs_capex_log_data.csv) | `ai_transition.hyperscaler_cash` (+ short `crossover_status`) |
-| Spot BTC ETF flows | Weekly | [Farside](https://farside.co.uk/btc/) | `etf_flows` |
+| Spot BTC ETF flows | Weekly | [Farside](https://farside.co.uk/btc/) — **do not type here** | Append on `liquidity-monitor/data/etf_flows.json`, then `python scripts/sync_etf_flows.py` |
 | Scenario book | When judgment changes | Human + stress memo | `scenario.*` |
 | Trigger notes | As needed | Human | `triggers_manual.*` |
 | Divergence start | Rare | Human (see transmission memo) | `divergence` |
@@ -38,7 +38,6 @@ Detail for AI cash: `docs/ai-hyperscaler-cash.md`.
     "china_m2": null,
     "cb_gold": null,
     "cofer_usd_share": null,
-    "etf_flows": null,
     "ai_transition": null,
     "scenario": null,
     "triggers_manual": null,
@@ -62,7 +61,7 @@ Only non-null `patches` keys are candidates for merge. **Human** copies fields i
 | Series | Check |
 |--------|--------|
 | Epoch | Latest actual quarter; capex/OCF finite; `gap = ocf − capex`; `crossed` consistent; cite CSV URL + source_updated |
-| ETF | Period dates; net m and bn consistent (bn ≈ m/1000); cum since launch not wildly off ~$50B+ era |
+| ETF | Not a pack field. After Liq append + sync: `data/etf_flows.json` desk period/net match the latest Liq Friday row |
 | COFER | Share in plausible 50–65%; consecutive_rising_quarters logic vs prior |
 | CB gold | Prefer WGC primary tonnes; flag if secondary estimate differs |
 | China M2 | Units trillions CNY; period YYYY-MM; clear stale “due date” text |
@@ -82,6 +81,7 @@ Rules:
 - Output ONLY gitignored pack JSON (schema in desk-refresh-pack.md).
 - Prefer official/primary sources; quote URLs and as-of dates.
 - Do not invent GLOBAL_M2 or FRED series — leave those to pipeline.
+- Do not patch etf_flows — Farside weeks are typed only in liquidity-monitor.
 - Do not change scenario probabilities unless a stress-test memo says so;
   you may propose scenario.notes / next_check text.
 - List integrity checks and do_not_merge uncertainties.

@@ -14,6 +14,7 @@ Sources:
 """
 
 import json
+import sys
 import time
 from datetime import datetime
 
@@ -277,6 +278,14 @@ def main():
                 time.sleep(0.3)
             except Exception as e:
                 print(f"  [WARN] enrich_closes {ticker}: {e}")
+
+    core = ("BTC", "XAUUSD", "WTI", "VIX")
+    if not prices or all((prices.get(t) or {}).get("price") is None for t in core):
+        print(
+            "[ERROR] all core prices are null — refusing to write prices.json",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
     results = {
         "updated_at": now_utc(),

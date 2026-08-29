@@ -7,6 +7,7 @@ const DATA = {
   macro:  '../data/macro.json',
   manual: '../data/manual.json',
   alerts: '../data/alerts.json',
+  etf_flows: '../data/etf_flows.json',
   thesis: '../docs/thesis.md',
   m2note: '../docs/m2_note.md',
 };
@@ -1366,12 +1367,12 @@ function etfFlowChartHtml(etf) {
   </div>`;
 }
 
-function renderPillarHardMoney(prices, macro, manual) {
+function renderPillarHardMoney(prices, macro, manual, etfFlows) {
   const p = prices?.prices || {};
   const fg = macro?.indicators?.FEAR_GREED;
   const divStart = manual?.divergence?.start;
   const months = monthsSince(divStart);
-  const etf = manual?.etf_flows;
+  const etf = etfFlows;
   const tx = buildTransmission(macro, prices);
 
   const btcMarkers = [
@@ -1482,12 +1483,12 @@ function renderPillarHardMoney(prices, macro, manual) {
   `;
 }
 
-function renderPillars(prices, macro, manual) {
+function renderPillars(prices, macro, manual, etfFlows) {
   const ind = macro?.indicators || {};
   renderPillarAi(ind, manual);
   renderPillarDedollar(prices, manual, macro);
   renderPillarMonetary(ind, manual);
-  renderPillarHardMoney(prices, macro, manual);
+  renderPillarHardMoney(prices, macro, manual, etfFlows);
 }
 
 function spineTone(st) {
@@ -1882,12 +1883,14 @@ async function fetchJson(url) {
 
 async function init() {
   let prices = {}, macro = {}, manual = {}, alerts = {};
+  let etfFlows = null;
 
-  const [pricesResult, macroResult, manualResult, alertsResult] = await Promise.allSettled([
+  const [pricesResult, macroResult, manualResult, alertsResult, etfResult] = await Promise.allSettled([
     fetchJson(DATA.prices),
     fetchJson(DATA.macro),
     fetchJson(DATA.manual),
     fetchJson(DATA.alerts),
+    fetchJson(DATA.etf_flows),
   ]);
 
   if (pricesResult.status === 'fulfilled') prices = pricesResult.value;
@@ -1904,13 +1907,16 @@ async function init() {
   if (alertsResult.status === 'fulfilled') alerts = alertsResult.value;
   else console.warn('alerts.json failed:', alertsResult.reason);
 
+  if (etfResult.status === 'fulfilled') etfFlows = etfResult.value?.desk || null;
+  else console.warn('etf_flows.json failed:', etfResult.reason);
+
   void alerts; // reserved for future alert overlays
 
   const tally = renderTriggers(prices, macro, manual);
   renderStatusBar(manual, macro, tally);
   renderSpine(prices, macro, manual);
   renderScenarioContext(manual, prices, macro, tally);
-  renderPillars(prices, macro, manual);
+  renderPillars(prices, macro, manual, etfFlows);
   renderFooter(prices, macro, manual);
   renderThesis();
   setupTriggerScroll();

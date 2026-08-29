@@ -8,6 +8,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-08-29 — Pages redirect, fetch guards, one ETF writer
+
+#### Added
+- Root `index.html` + `.nojekyll` so GitHub Pages `/` opens the desk at `src/`
+- `scripts/sync_etf_flows.py` maps `liquidity-monitor/data/etf_flows.json` (canonical Farside weeks) onto this desk
+- Three `compute_global_m2` pipeline tests (happy path, missing component, out-of-range skip)
+
+#### Changed
+- Empty `FRED_API_KEY` fails `fetch_macro.py` (no fresh timestamp on stale FRED)
+- All-null core prices refuse to write `prices.json`
+- Spot ETF cell reads `data/etf_flows.json`; weeks are no longer typed in `manual.json`
+
 ### 2026-08-26 — Flow desks layout
 
 #### Changed

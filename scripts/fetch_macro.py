@@ -19,6 +19,7 @@ import io
 import json
 import os
 import re
+import sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 
@@ -752,6 +753,13 @@ def enrich_global_m2_yoy(yoy, history):
 # ---------------------------------------------------------------------------
 
 def main():
+    if not (FRED_API_KEY or "").strip():
+        print(
+            "[ERROR] FRED_API_KEY is empty or unset — refusing to run",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     print("Fetching macro indicators...")
 
     # Seed from existing file so a failed fetch doesn't wipe previously good values
@@ -799,6 +807,16 @@ def main():
         indicators["fx"] = fx
     elif "fx" not in indicators:
         print("  [WARN] No FX rates fetched")
+
+    print("  ETF flows: sync from liquidity-monitor (canonical)")
+    try:
+        from sync_etf_flows import sync_etf_flows
+
+        sync_etf_flows(required=False)
+    except SystemExit:
+        raise
+    except Exception as e:
+        print(f"  [WARN] ETF flows sync: {e}")
 
     print("  Manual: china_m2, scenario, triggers, …")
     manual = load_manual()
