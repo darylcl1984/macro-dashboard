@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T20:07:47.442592+00:00",
+  "updated_at": "2026-08-31T16:03:04.637505+00:00",
   "indicators": {
     "US_M2": {
       "value": 23218.0,
@@ -84,8 +84,8 @@
       ]
     },
     "US_10Y": {
-      "value": 4.66,
-      "date": "2026-08-26"
+      "value": 4.67,
+      "date": "2026-08-27"
     },
     "USD_INDEX": {
       "value": 118.0628,
@@ -97,9 +97,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 73,
+      "value": 62,
       "classification": "Greed",
-      "date": "2026-08-28"
+      "date": "2026-08-31"
     },
     "EZ_M2": {
       "value": 16.44,
@@ -113,34 +113,34 @@
     },
     "fx": {
       "EURUSD": {
-        "value": 1.1589,
-        "date": "2026-08-28",
+        "value": 1.1621,
+        "date": "2026-08-31",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3537,
-        "date": "2026-08-28",
+        "value": 1.3552,
+        "date": "2026-08-31",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.7255,
-        "date": "2026-08-28",
+        "value": 6.7078,
+        "date": "2026-08-31",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 160.082,
-        "date": "2026-08-28",
+        "value": 159.708,
+        "date": "2026-08-31",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 107.71,
+      "value": 107.92,
       "unit": "trillions_usd",
       "components": {
         "US": 23.22,
-        "CN": 52.86,
-        "EZ": 19.05,
-        "JP": 8.1,
+        "CN": 53.0,
+        "EZ": 19.1,
+        "JP": 8.12,
         "UK": 4.48
       },
       "component_dates": {
@@ -152,7 +152,7 @@
       },
       "data_period": "2026-06",
       "scope": "5bloc",
-      "computed_at": "2026-08-28T20:07:53.764722+00:00",
+      "computed_at": "2026-08-31T16:03:26.804753+00:00",
       "note": "Data vintage 2026-06 · scope 5bloc · flags=['mixed_vintage', 'vintage_min=2026-06']"
     },
     "GLOBAL_M2_YOY": {
@@ -176,8 +176,8 @@
       "history_note": "Computed YoY needs a same-month prior-year snapshot with matching basket scope (14 months on file)."
     },
     "HY_OAS": {
-      "value": 2.63,
-      "date": "2026-08-27",
+      "value": 2.6,
+      "date": "2026-08-28",
       "unit": "pct"
     },
     "FED_BS": {
@@ -206,13 +206,13 @@
       }
     },
     "STABLECOIN_MCAP": {
-      "value": 311.1,
+      "value": 311.4,
       "unit": "billions_usd",
-      "date": "2026-08-28",
+      "date": "2026-08-31",
       "source": "defillama"
     },
     "MANUAL": {
-      "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. ETF flows: weekly when possible.",
+      "_note": "Hand-edited. Commit after each update. China M2: monthly, PBoC ~14th. CB gold/COFER/AI: quarterly. Spot ETF weeks: liquidity-monitor/data/etf_flows.json (run scripts/sync_etf_flows.py).",
       "scenario": {
         "current": "A — Liquidity relink",
         "active_id": "A",
@@ -370,17 +370,6 @@
         "next_test": "Epoch CSV Q2 actuals · next hyperscaler prints (Oct 2026)",
         "capex_cuts": false,
         "updated": "2026-08-26"
-      },
-      "etf_flows": {
-        "period": "2026-08-17/21",
-        "net_usd_bn": 1.918,
-        "net_usd_m": 1917.8,
-        "streak_weeks_outflow": 0,
-        "prior_week_usd_m": -385.2,
-        "cumulative_since_launch_usd_bn": 54.143,
-        "note": "Week of 17–21 Aug 2026: +$1,917.8M net (Farside daily sum: 297.5+189.3+517.2+606.3+307.5). Prior complete week 10–14 Aug: −$385.2M. Cumulative since launch $54.143B. Partial week 24–25 Aug also net inflow (not a complete week).",
-        "updated": "2026-08-26",
-        "source": "Farside Investors https://farside.co.uk/btc/"
       },
       "triggers_manual": {
         "gold_monthly_close": {
