@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-31T16:03:04.637505+00:00",
+  "updated_at": "2026-09-01T13:23:15.086700+00:00",
   "indicators": {
     "US_M2": {
       "value": 23218.0,
@@ -84,12 +84,12 @@
       ]
     },
     "US_10Y": {
-      "value": 4.67,
-      "date": "2026-08-27"
+      "value": 4.73,
+      "date": "2026-08-28"
     },
     "USD_INDEX": {
-      "value": 118.0628,
-      "date": "2026-08-21"
+      "value": 118.7479,
+      "date": "2026-08-28"
     },
     "JP_M2": {
       "value": 1297.01,
@@ -97,9 +97,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 62,
+      "value": 69,
       "classification": "Greed",
-      "date": "2026-08-31"
+      "date": "2026-09-01"
     },
     "EZ_M2": {
       "value": 16.44,
@@ -107,73 +107,73 @@
       "unit": "trillions EUR"
     },
     "UK_M4": {
-      "value": 3308.8,
-      "date": "2026-06",
+      "value": 3299.0,
+      "date": "2026-07",
       "unit": "billions GBP"
     },
     "fx": {
       "EURUSD": {
-        "value": 1.1621,
-        "date": "2026-08-31",
+        "value": 1.1594,
+        "date": "2026-09-01",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3552,
-        "date": "2026-08-31",
+        "value": 1.3532,
+        "date": "2026-09-01",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.7078,
-        "date": "2026-08-31",
+        "value": 6.7101,
+        "date": "2026-09-01",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 159.708,
-        "date": "2026-08-31",
+        "value": 160.115,
+        "date": "2026-09-01",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 107.92,
+      "value": 107.82,
       "unit": "trillions_usd",
       "components": {
         "US": 23.22,
-        "CN": 53.0,
-        "EZ": 19.1,
-        "JP": 8.12,
-        "UK": 4.48
+        "CN": 52.98,
+        "EZ": 19.06,
+        "JP": 8.1,
+        "UK": 4.46
       },
       "component_dates": {
         "US": "2026-07-01",
         "CN": "2026-07",
         "EZ": "2026-07",
         "JP": "202607",
-        "UK": "2026-06"
+        "UK": "2026-07"
       },
-      "data_period": "2026-06",
+      "data_period": "2026-07",
       "scope": "5bloc",
-      "computed_at": "2026-08-31T16:03:26.804753+00:00",
-      "note": "Data vintage 2026-06 · scope 5bloc · flags=['mixed_vintage', 'vintage_min=2026-06']"
+      "computed_at": "2026-09-01T13:23:23.585835+00:00",
+      "note": "Data vintage 2026-07 · scope 5bloc"
     },
     "GLOBAL_M2_YOY": {
       "headline_pct": null,
       "fx_adjusted_pct": null,
-      "base_period": null,
-      "as_of_period": "2026-06",
+      "base_period": "2025-07",
+      "as_of_period": "2026-07",
       "scope": "5bloc",
-      "base_scope": null,
-      "provisional": false,
+      "base_scope": "4bloc",
+      "provisional": true,
       "flags": [
-        "mixed_vintage",
-        "vintage_min=2026-06",
-        "as_of_mixed_vintage",
-        "as_of_vintage_min=2026-06"
+        "scope_mismatch",
+        "base_UK_unpublished",
+        "base_composite_is_4bloc_ex_uk"
       ],
       "estimated": false,
+      "scope_note": "Headline YoY withheld: base scope 4bloc vs as-of 5bloc",
       "history_months": 14,
       "history_ready": false,
       "history_needed": 2,
-      "history_note": "Computed YoY needs a same-month prior-year snapshot with matching basket scope (14 months on file)."
+      "history_note": "Headline YoY withheld: base scope 4bloc vs as-of 5bloc"
     },
     "HY_OAS": {
       "value": 2.6,
@@ -186,8 +186,8 @@
       "unit": "millions_usd"
     },
     "RRP": {
-      "value": 0.175,
-      "date": "2026-08-28",
+      "value": 6.726,
+      "date": "2026-08-31",
       "unit": "billions_usd"
     },
     "TGA": {
@@ -196,19 +196,19 @@
       "unit": "billions_usd"
     },
     "US_NET_LIQ": {
-      "value": 5780.0,
-      "date": "2026-08-28",
+      "value": 5773.5,
+      "date": "2026-08-31",
       "unit": "billions_usd",
       "components": {
         "FED_BS_bn": 6730.9,
-        "RRP_bn": 0.175,
+        "RRP_bn": 6.726,
         "TGA_bn": 950.736
       }
     },
     "STABLECOIN_MCAP": {
-      "value": 311.4,
+      "value": 310.1,
       "unit": "billions_usd",
-      "date": "2026-08-31",
+      "date": "2026-09-01",
       "source": "defillama"
     },
     "MANUAL": {
