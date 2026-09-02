@@ -316,10 +316,10 @@
       "UK": "2026-07"
     },
     "fx": {
-      "EURUSD": 1.1594,
-      "GBPUSD": 1.3532,
-      "USDCNY": 6.7101,
-      "USDJPY": 160.115
+      "EURUSD": 1.1582,
+      "GBPUSD": 1.3479,
+      "USDCNY": 6.7092,
+      "USDJPY": 159.697
     },
     "fx_source": "fetch_spot",
     "composite_usd": 107.82,
