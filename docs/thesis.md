@@ -87,7 +87,7 @@ Gold and BTC are what you buy when you cannot warehouse someone else’s 30-year
 ### Official mix, still intact (evidence, not the claim)
 
 - CB gold buying ~**850–1,045t/yr** since 2022 (≈2× pre-2022).
-- CBs **bought the 2026 crash**: WGC Q1 net **244t** (+3% YoY).
+- CBs **bought the 2026 crash**: WGC Q1 first print **244t**. *(Later WGC revision: Q1 **57t**; Q2 **288.9t**. ~200t/q floor still holds on Q2. H1 345t is the lowest first half since 2022.)*
 - PBoC: long consecutive-month streak (e.g. June **14.9t**); use **WGC quarterly** for the structural series, national prints for color.
 
 ### 2026 complications (absorbed, not denied)
@@ -159,6 +159,8 @@ Either Force A’s print path or Force B’s “nowhere to warehouse” lands he
 
 ## 7. Regime snapshot — late July 2026
 
+> Dated tape cut (desk 27 Jul 2026). **Not the live board.** Path, watchpoints, and prints on the PWA are the current read. This table is frozen so the 2030s write-up does not chase weekly color.
+
 | Domain | Read |
 |---|---|
 | **Policy** | Funds 3.50–3.75% (Warsh); guidance off; dots still hawkish; labour soft; hike odds subdued near-term |
@@ -187,6 +189,8 @@ Spine first, then the H2 2026–2027 path book, then the four flow desks.
 ---
 
 ## 9. Watchpoints (invalidation)
+
+> **Breaks-if numbers are the committed lines.** The “Now / Status” columns below are the **27 Jul 2026** tape. The live PWA board is the only current tally.
 
 A red cell is not “sell everything.” It is **an assumption failed** — holding without reassessing is a choice. Several reds together = regime change.
 

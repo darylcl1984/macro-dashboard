@@ -8,6 +8,31 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### 2026-09-05 — Hard money desk tips
+
+#### Added
+- Liquidity-monitor-style desk tips on Hard money (range ticks, CB/COFER/rails meters, lag clock, F&amp;G, transmission months, WTI/VIX)
+
+### 2026-09-05 — Honesty pass (floors, YoY, two clocks)
+
+#### Added
+- Status-bar **floors** cell (BTC $53k / gold $4k) in place of lid Fear &amp; Greed; watchpoints cell names the hottest line
+- `manual.btc_realized_floor` (as-of / source) overlays the BTC floor
+- WTI weekly series for the 4-week oil rule; pipeline tests for completed bars and M2 history upsert; CI `test.yml`
+- Amber rail on watching watchpoint rows
+
+#### Changed
+- Headline Global M2 YoY no longer falls back to a different vintage when the pipeline withholds
+- Gold/BTC (and WTI) closes use the last **completed** Yahoo bar
+- BTC $53k amber is near-floor only (dropped 52-week-low latch)
+- Oil: first print &gt;$120 is watching until four weekly closes
+- Spine inflows labeled **Force A / Force B**; fiscal gap is “inferred”; stage 5 is the two floors (not COFER)
+- Path waypoints follow the active A–D book; one dialect (on path / off)
+- `alerts.json` is floor lines only; path bands come from the active book
+- Mixed-vintage M2 snapshots cannot overwrite a complete 5-bloc history month
+- Bloc-table US YoY prefers the pipeline print; ETF cell badges a stale week
+- Thesis §7/§9 and M2 note stamped as dated cuts vs the live board
+
 ### 2026-08-29 — Pages redirect, fetch guards, one ETF writer
 
 #### Added

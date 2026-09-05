@@ -1,7 +1,6 @@
 {
-  "_note": "Thesis-aligned price alerts. BTC below=$53k realized-price floor, above=$83.8k ETF cost-basis reclaim. Gold below=$4k monthly-close invalidation. WTI above=$120 oil-shock line. VIX above=30 stress. Red/amber dots on range bars reflect these levels; null disables that side.",
-  "BTC":    { "below": 53000, "above": 83800 },
-  "XAUUSD": { "below": 4000,  "above": null  },
-  "WTI":    { "below": null,  "above": 120   },
-  "VIX":    { "below": null,  "above": 30    }
+  "_note": "Floor lines only (watchpoints + range ticks). Path bands come from the active A–D book, not this file. Not trade alerts. BTC below = realized-price floor (manual.btc_realized_floor overlays when present). Gold below = monthly-close invalidation. WTI above = oil shock, red only after 4 weekly closes.",
+  "BTC":    { "below": 53000 },
+  "XAUUSD": { "below": 4000 },
+  "WTI":    { "above": 120 }
 }

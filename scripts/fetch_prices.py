@@ -118,40 +118,93 @@ def _yahoo_history(yahoo_sym, interval, range_):
     return out
 
 
-def enrich_closes(ticker, yahoo_sym, entry):
+def _bar_is_open(bar, kind, now):
+    dt = datetime.utcfromtimestamp(bar["t"])
+    if kind == "month":
+        return (dt.year, dt.month) == (now.year, now.month)
+    iso = dt.isocalendar()
+    now_iso = now.isocalendar()
+    same_week = (iso[0], iso[1]) == (now_iso[0], now_iso[1])
+    # Mon–Thu: current ISO week is still open. Fri–Sun: Friday close stands.
+    return same_week and now.weekday() < 4
+
+
+def pick_completed_bar(bars, kind, now=None):
+    """
+    Last finished week or month bar — skip every in-progress Yahoo bar.
+
+    Weekly: Mon–Thu the current ISO week is open. Fri–Sun accept this week's
+    bar (US session has closed Friday).
+    Monthly: skip every bar whose calendar month is still the current month.
+    """
+    now = now or datetime.utcnow()
+    if not bars:
+        return None
+    for bar in reversed(bars):
+        if _bar_is_open(bar, kind, now):
+            continue
+        return bar
+    return None
+
+
+def _round_close(ticker, close):
+    return round(close, 0 if ticker == "BTC" else 2)
+
+
+def enrich_closes(ticker, yahoo_sym, entry, now=None):
     """
     Attach weekly_close, monthly_close, and for BTC a monthly series for
-    transmission vs money growth. Uses Yahoo history.
+    transmission vs money growth. Uses Yahoo history. Closes are last
+    *completed* bars.
     """
+    now = now or datetime.utcnow()
     try:
-        # Weekly: last completed week bar
         weekly = _yahoo_history(yahoo_sym, "1wk", "3mo")
         if weekly:
-            last = weekly[-1]
-            # If the last bar is the current incomplete week, prefer previous when available
-            entry["weekly_close"] = round(last["close"], 2 if ticker != "BTC" else 0)
-            entry["weekly_close_as_of"] = datetime.utcfromtimestamp(last["t"]).strftime("%Y-%m-%d")
+            chosen = pick_completed_bar(weekly, "week", now=now)
+            if chosen:
+                entry["weekly_close"] = _round_close(ticker, chosen["close"])
+                entry["weekly_close_as_of"] = datetime.utcfromtimestamp(
+                    chosen["t"]
+                ).strftime("%Y-%m-%d")
             if len(weekly) >= 2:
                 prev = weekly[-2]
-                entry["weekly_close_prev"] = round(prev["close"], 2 if ticker != "BTC" else 0)
+                entry["weekly_close_prev"] = _round_close(ticker, prev["close"])
+            series = []
+            for bar in weekly:
+                if _bar_is_open(bar, "week", now):
+                    continue
+                dt = datetime.utcfromtimestamp(bar["t"])
+                series.append({
+                    "as_of": dt.strftime("%Y-%m-%d"),
+                    "close": _round_close(ticker, bar["close"]),
+                })
+            if ticker == "WTI" and series:
+                entry["weekly_series"] = series[-8:]
     except Exception as e:
         print(f"  [WARN] Yahoo weekly {ticker}: {e}")
 
     try:
         monthly = _yahoo_history(yahoo_sym, "1mo", "2y")
         if monthly:
-            last = monthly[-1]
-            entry["monthly_close"] = round(last["close"], 2 if ticker != "BTC" else 0)
-            entry["monthly_close_as_of"] = datetime.utcfromtimestamp(last["t"]).strftime("%Y-%m")
+            chosen = pick_completed_bar(monthly, "month", now=now)
+            if chosen:
+                entry["monthly_close"] = _round_close(ticker, chosen["close"])
+                entry["monthly_close_as_of"] = datetime.utcfromtimestamp(
+                    chosen["t"]
+                ).strftime("%Y-%m")
             if ticker == "BTC":
-                series = []
-                for bar in monthly[-18:]:
-                    series.append({
-                        "period": datetime.utcfromtimestamp(bar["t"]).strftime("%Y-%m"),
-                        "close": round(bar["close"], 0),
-                    })
-                entry["monthly_series"] = series
-            # ATH proxy: max of series / 52w high
+                cur = now.strftime("%Y-%m")
+                by_period = {}
+                for bar in monthly:
+                    period = datetime.utcfromtimestamp(bar["t"]).strftime("%Y-%m")
+                    if period == cur:
+                        continue
+                    by_period[period] = _round_close(ticker, bar["close"])
+                periods = sorted(by_period)[-18:]
+                entry["monthly_series"] = [
+                    {"period": p, "close": by_period[p]} for p in periods
+                ]
             if entry.get("week52_high") is not None:
                 entry["ath_proxy"] = entry["week52_high"]
                 entry["ath_note"] = "52-week high used as cycle-high proxy"
@@ -268,9 +321,9 @@ def main():
             entry["price"] = None
             entry.setdefault("change_pct", None)
 
-    # Weekly / monthly closes (BTC, gold) for official-style trigger adjudication
+    # Weekly / monthly closes (BTC, gold, WTI) — last *completed* bars
     print("  Yahoo history: weekly/monthly closes")
-    for ticker in ("BTC", "XAUUSD"):
+    for ticker in ("BTC", "XAUUSD", "WTI"):
         ysym = YAHOO_SYMBOLS.get(ticker)
         if ysym and ticker in prices:
             try:

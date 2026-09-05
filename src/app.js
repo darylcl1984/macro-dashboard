@@ -12,6 +12,87 @@ const DATA = {
   m2note: '../docs/m2_note.md',
 };
 
+/** Floor lines. `alerts.json` + optional `manual.btc_realized_floor` overlay at init. */
+let FLOORS = {
+  btcBelow: 53000,
+  goldBelow: 4000,
+  wtiAbove: 120,
+  wtiWatch: 100,
+  lagAmber: 12,
+  lagRed: 18,
+  oasWatch: 4,
+  oasBreak: 5,
+};
+
+/** Path-book marks (thesis §10). Used for range ticks and unlocked waypoints. */
+const PATH_MARKS = {
+  A: { btc: [75000, 95000], gold: 4400 },
+  B: { btc: [50000, 70000], gold: 4000, goldFire: 4300 },
+  C: { btc: [50000, 70000], gold: 4000, goldFire: 4300 },
+  D: { btc: [50000, 70000], gold: 4000, goldFire: 4300 },
+};
+
+function applyFloors(alerts, manual) {
+  if (alerts?.BTC?.below != null && !isNaN(Number(alerts.BTC.below))) {
+    FLOORS.btcBelow = Number(alerts.BTC.below);
+  }
+  if (alerts?.XAUUSD?.below != null && !isNaN(Number(alerts.XAUUSD.below))) {
+    FLOORS.goldBelow = Number(alerts.XAUUSD.below);
+  }
+  if (alerts?.WTI?.above != null && !isNaN(Number(alerts.WTI.above))) {
+    FLOORS.wtiAbove = Number(alerts.WTI.above);
+  }
+  const realized = manual?.btc_realized_floor?.value;
+  if (realized != null && !isNaN(Number(realized))) {
+    FLOORS.btcBelow = Number(realized);
+  }
+}
+
+function btcAmberLine() {
+  return FLOORS.btcBelow * 1.15;
+}
+
+function currentYearMonth() {
+  const n = new Date();
+  return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`;
+}
+
+/** Last finished monthly close — ignore the open Yahoo month bar. */
+function completedMonthly(entry) {
+  const asOf = entry?.monthly_close_as_of || null;
+  const close = entry?.monthly_close ?? null;
+  const open = !!(asOf && asOf === currentYearMonth());
+  return { value: open ? null : close, asOf, mtd: open ? close : null, open };
+}
+
+function oilWeekStreak(wti) {
+  const series = Array.isArray(wti?.weekly_series) ? wti.weekly_series : [];
+  let n = 0;
+  for (let i = series.length - 1; i >= 0; i--) {
+    if (series[i].close > FLOORS.wtiAbove) n += 1;
+    else break;
+  }
+  return n;
+}
+
+function quartersBehind(asOf) {
+  const m = String(asOf || '').match(/^(\d{4})-Q([1-4])$/i);
+  if (!m) return null;
+  const now = new Date();
+  const nowQ = now.getFullYear() * 4 + Math.floor(now.getMonth() / 3);
+  const thenQ = Number(m[1]) * 4 + (Number(m[2]) - 1);
+  return nowQ - thenQ;
+}
+
+function etfWeekEnd(etf) {
+  if (!etf) return null;
+  if (etf.week_ending) return etf.week_ending;
+  const p = String(etf.period || '');
+  const m = p.match(/^(\d{4}-\d{2}-)(\d{2})\/(\d{2})$/);
+  if (m) return `${m[1]}${m[3]}`;
+  return etf.updated || null;
+}
+
 // ─── Utilities ────────────────────────────────────────────────────────────────
 
 function fmt(n, decimals = 2, prefix = '', suffix = '') {
@@ -141,13 +222,43 @@ function assetContextInlineHtml(entry, price) {
   ).join('')}</div>`;
 }
 
-function meterHtml(pct, tone, leftLabel, rightLabel) {
+function escapeHtml(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** Sibling-chrome tooltip (liquidity-monitor desk-tip): title, body, extra lines. */
+function deskTip(title, body, extra) {
+  const extras = Array.isArray(extra) ? extra.filter(Boolean) : (extra ? [extra] : []);
+  const extraHtml = extras.map(line => `<span class="desk-tip-extra">${escapeHtml(line)}</span>`).join('');
+  const bodyHtml = body ? `<span class="desk-tip-body">${escapeHtml(body)}</span>` : '';
+  return `<span class="desk-tip" role="tooltip"><span class="desk-tip-title">${escapeHtml(title)}</span>${bodyHtml}${extraHtml}</span>`;
+}
+
+function tipEdge(pct) {
+  if (pct <= 18) return ' tip-start';
+  if (pct >= 82) return ' tip-end';
+  return '';
+}
+
+function meterHtml(pct, tone, leftLabel, rightLabel, tip) {
   const p = Math.min(100, Math.max(0, pct));
   const toneCls = tone ? ` is-${tone}` : '';
-  return `<div class="meter-block"><div class="meter">
-    <div class="meter-track"><div class="meter-fill${toneCls}" style="width:${p.toFixed(1)}%"></div></div>
-    <div class="meter-meta"><span>${leftLabel}</span><span>${rightLabel}</span></div>
-  </div></div>`;
+  const inner = `<div class="meter-track"><div class="meter-fill${toneCls}" style="width:${p.toFixed(1)}%"></div></div>
+    <div class="meter-meta"><span>${leftLabel}</span><span>${rightLabel}</span></div>`;
+  if (!tip || !tip.title) {
+    return `<div class="meter-block"><div class="meter">${inner}</div></div>`;
+  }
+  const aria = [tip.title, tip.body].filter(Boolean).join('. ');
+  return `<div class="meter-block">
+    <button type="button" class="has-tip meter-hit" aria-label="${escapeHtml(aria)}">
+      <div class="meter">${inner}</div>
+      ${deskTip(tip.title, tip.body, tip.extra)}
+    </button>
+  </div>`;
 }
 
 const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -169,7 +280,15 @@ function buildTransmission(macro, prices) {
   }
   const m2Map = Object.fromEntries(m2h.map(e => [e.period, e.value]));
   const btcMap = Object.fromEntries(btcSeries.map(e => [e.period, e.close]));
-  const periods = btcSeries.map(e => e.period).filter(p => m2Map[p] != null);
+  const curYm = currentYearMonth();
+  const seen = new Set();
+  const periods = [];
+  for (const e of btcSeries) {
+    const p = e.period;
+    if (!p || p === curYm || m2Map[p] == null || seen.has(p)) continue;
+    seen.add(p);
+    periods.push(p);
+  }
   const months = [];
   for (let i = 1; i < periods.length; i++) {
     const p = periods[i];
@@ -213,9 +332,13 @@ function transmissionHtml(tx) {
     </div>`;
   }
   const n = tx.months.length;
-  const cells = tx.months.map(m =>
-    `<span class="tx-month ${m.state}" title="${m.title || m.period}">${m.label}</span>`
-  ).join('');
+  const cells = tx.months.map((m, i) => {
+    const edge = i === 0 ? ' tip-start' : (i >= n - 2 ? ' tip-end' : '');
+    const body = m.state === 'agree' ? 'Same direction' : m.state === 'disagree' ? 'Opposite direction' : 'Flat month skipped';
+    return `<button type="button" class="has-tip tx-month ${m.state}${edge}" aria-label="${escapeHtml(m.title || m.period)}">
+      ${m.label}${deskTip(m.label, body, m.title)}
+    </button>`;
+  }).join('');
   return `<div class="tx-strip">
     <div class="tx-strip-head">
       <span class="tx-strip-title">US M2 vs Bitcoin (monthly)</span>
@@ -257,21 +380,50 @@ function fgColorClass(val) {
 
 function resolveM2Yoy(ind, manual) {
   const gy = ind?.GLOBAL_M2_YOY;
-  const computed = gy?.headline_pct;
-  if (computed != null && !isNaN(computed)) {
+  const lastGood = manual?.global_m2_yoy_estimate || null;
+  if (gy && Object.prototype.hasOwnProperty.call(gy, 'headline_pct')) {
+    const computed = gy.headline_pct;
+    if (computed != null && !isNaN(computed)) {
+      return {
+        value: computed,
+        estimated: !!(gy.provisional || gy.estimated),
+        sourceDate: gy.as_of_period,
+        fxAdjusted: gy.fx_adjusted_pct,
+        provisional: !!gy.provisional,
+        withheld: false,
+        scopeNote: gy.scope_note || '',
+        lastGood,
+      };
+    }
+    // Pipeline withheld (e.g. 4bloc vs 5bloc) — do not serve a different vintage as live.
     return {
-      value: computed,
-      estimated: !!(gy.provisional || gy.estimated),
+      value: null,
+      estimated: false,
       sourceDate: gy.as_of_period,
-      fxAdjusted: gy.fx_adjusted_pct,
-      provisional: !!gy.provisional,
+      fxAdjusted: null,
+      provisional: true,
+      withheld: true,
+      scopeNote: gy.scope_note || gy.history_note || 'Headline YoY withheld',
+      lastGood,
     };
   }
-  const est = manual?.global_m2_yoy_estimate?.value;
+  const est = lastGood?.value;
   if (est != null && !isNaN(est)) {
-    return { value: est, estimated: true, sourceDate: manual.global_m2_yoy_estimate.updated, fxAdjusted: null, provisional: false };
+    return {
+      value: est,
+      estimated: true,
+      sourceDate: lastGood.updated,
+      fxAdjusted: null,
+      provisional: false,
+      withheld: false,
+      scopeNote: '',
+      lastGood,
+    };
   }
-  return { value: null, estimated: false, sourceDate: null, fxAdjusted: null, provisional: false };
+  return {
+    value: null, estimated: false, sourceDate: null, fxAdjusted: null,
+    provisional: false, withheld: false, scopeNote: '', lastGood,
+  };
 }
 
 function scenarioClass(current) {
@@ -337,19 +489,31 @@ function rangeTrackHtml(sym, price, low, high, markers = []) {
     } else if (mk.kind === 'above') {
       zones += `<div class="range-zone" style="left:${left}%;right:0"></div>`;
     }
-    const tip = mk.label || fmtRangeVal(mk.value);
+    const label = mk.label || fmtRangeVal(mk.value);
     const isThreshold = mk.kind === 'below' || mk.kind === 'above';
-    const tickCls = isThreshold ? 'range-tick' : 'range-tick is-mark';
+    const tickCls = `has-tip range-tick${isThreshold ? '' : ' is-mark'}${tipEdge(tp * 100)}`;
     const labCls = isThreshold ? 'range-mark-label is-threshold' : 'range-mark-label';
-    ticks += `<div class="${tickCls}" style="left:${left}%" data-tooltip="${tip}"></div>`;
-    labels += `<span class="${labCls}" style="left:${left}%">${tip}</span>`;
+    const tipTitle = mk.tipTitle || label;
+    const tipBody = mk.tipBody || (mk.kind === 'below' ? 'Invalidation floor' : 'Path mark');
+    const aria = mk.tipBody ? `${tipTitle}. ${mk.tipBody}` : tipTitle;
+    ticks += `<button type="button" class="${tickCls}" style="left:${left}%" aria-label="${escapeHtml(aria)}">
+      <i></i>${deskTip(tipTitle, tipBody, mk.tipExtra)}
+    </button>`;
+    labels += `<span class="${labCls}" style="left:${left}%">${label}</span>`;
   }
 
   const leftPct = (pct * 100).toFixed(1);
   const aria = `${sym} 52-week range ${fmtRangeVal(low)} to ${fmtRangeVal(high)}, now ${fmtRangeVal(price)}`;
-  const markCls = alerted ? 'range-marker is-alert' : 'range-marker';
+  const markCls = `has-tip range-marker${alerted ? ' is-alert' : ''}${tipEdge(pct * 100)}`;
+  const nowTitle = `Now ${fmtRangeVal(price)}`;
+  const nowBody = `52-week ${fmtRangeVal(low)} – ${fmtRangeVal(high)}`;
+  const nowExtra = alerted ? 'Below the floor line' : '';
   return `<div class="range-wrap">
-    <div class="range-track" role="img" aria-label="${aria}">${zones}${ticks}<div class="${markCls}" style="left:${leftPct}%"></div></div>
+    <div class="range-track" role="img" aria-label="${aria}">${zones}${ticks}
+      <button type="button" class="${markCls}" style="left:${leftPct}%" aria-label="${escapeHtml(nowTitle + '. ' + nowBody)}">
+        ${deskTip(nowTitle, nowBody, nowExtra)}
+      </button>
+    </div>
     ${labels ? `<div class="range-mark-row">${labels}</div>` : ''}
   </div>`;
 }
@@ -361,10 +525,14 @@ function assetQuoteHtml(sym, label, price, chg, entry, markers = [], decimals = 
   const desc = rangeDesc(sym, pct);
   const bits = assetContextBits(entry, price);
   const alerted = (markers || []).some(mk => mk.kind === 'below' && price < mk.value);
+  const floorBits = (markers || [])
+    .filter(mk => mk.kind === 'below' && mk.label)
+    .map(mk => `Floor ${mk.label}`);
   const meta = [
     desc.text
       ? (desc.cls ? `<span class="${desc.cls}">${desc.text}</span>` : desc.text)
       : null,
+    ...floorBits,
     alerted ? '<span class="range-alert-icon">⚠</span>' : null,
     ...bits.map(b => `<span class="range-context-chip${b.cls ? ` ${b.cls}` : ''}">${b.text}</span>`),
   ].filter(Boolean).join(' · ');
@@ -410,7 +578,13 @@ function buildTriggers(prices, macro, manual) {
   }
 
   const btcWeekly = btc?.weekly_close ?? null;
-  const goldMonthly = gold?.monthly_close ?? null;
+  const goldMonth = completedMonthly(gold);
+  const goldFloor = FLOORS.goldBelow;
+  const btcFloor = FLOORS.btcBelow;
+  const btcNear = btcAmberLine();
+  const realizedNote = manual?.btc_realized_floor?.as_of
+    ? `Realized-price floor as of ${manual.btc_realized_floor.as_of}.`
+    : '';
 
   // Order: AI funding → money → COFER → gold → BTC cluster → oil last
   const rows = [
@@ -420,12 +594,17 @@ function buildTriggers(prices, macro, manual) {
       label: 'Global M2',
       threshold: 'Headline YoY < 0%',
       current() {
+        if (m2yoy.withheld) {
+          const asOf = m2yoy.sourceDate ? periodMonthLabel(m2yoy.sourceDate, true) : '';
+          return asOf ? `Withheld · ${asOf}` : 'Withheld';
+        }
         if (m2yoy.value == null) return '—';
         const sign = m2yoy.value >= 0 ? '+' : '';
         const pureEst = m2yoy.estimated && !m2yoy.provisional;
         return `${sign}${m2yoy.value.toFixed(1)}% headline${pureEst ? ' est.' : ''}`;
       },
       status() {
+        if (m2yoy.withheld) return 'withheld';
         const y = m2yoy.value;
         if (y == null) return 'unknown';
         if (y < 0) return 'red';
@@ -433,6 +612,13 @@ function buildTriggers(prices, macro, manual) {
         return 'green';
       },
       note() {
+        if (m2yoy.withheld) {
+          const g = m2yoy.lastGood;
+          const last = g?.value != null
+            ? `Last good pair ${g.period ? periodMonthLabel(g.period, true) + ' ' : ''}${g.value >= 0 ? '+' : ''}${Number(g.value).toFixed(1)}% (not this vintage).`
+            : '';
+          return [m2yoy.scopeNote, last].filter(Boolean).join(' ');
+        }
         if (m2yoy.fxAdjusted != null && !isNaN(m2yoy.fxAdjusted)) {
           const s = m2yoy.fxAdjusted >= 0 ? '+' : '';
           return `Fixed-FX ${s}${Number(m2yoy.fxAdjusted).toFixed(1)}%`;
@@ -470,23 +656,27 @@ function buildTriggers(prices, macro, manual) {
     {
       id: 'gold_hedge',
       group: 'gold',
-      label: 'Gold $4k floor',
-      threshold: 'Monthly close < $4,000',
+      label: `Gold $${fmt(goldFloor, 0)} floor`,
+      threshold: `Monthly close < $${fmt(goldFloor, 0)}`,
       current() {
         const live = gold?.price;
         const bits = [];
-        if (goldMonthly != null) bits.push(`Month ${fmt(goldMonthly, 0, '$')}`);
+        if (goldMonth.open && goldMonth.mtd != null) {
+          bits.push(`MTD ${fmt(goldMonth.mtd, 0, '$')}`);
+        } else if (goldMonth.value != null) {
+          const when = goldMonth.asOf ? periodMonthLabel(goldMonth.asOf, true) : 'Month';
+          bits.push(`${when} close ${fmt(goldMonth.value, 0, '$')}`);
+        }
         if (live != null) bits.push(`Live ${fmt(live, 0, '$')}`);
         return bits.length ? bits.join(' · ') : '—';
       },
       status() {
         const man = manualStatus('gold_monthly_close');
-        const month = goldMonthly;
+        const month = goldMonth.value;
         const live = gold?.price;
         if (month == null && live == null && !man) return 'unknown';
-        if (man === 'red' || (month != null && month < 4000 && man === 'red')) return 'red';
-        if (month != null && month < 4000) return man === 'red' ? 'red' : 'amber';
-        if (live != null && live < 4000) return 'amber';
+        if (man === 'red' || (month != null && month < goldFloor)) return 'red';
+        if (live != null && live < goldFloor) return 'amber';
         if (man === 'amber') return 'amber';
         return 'green';
       },
@@ -495,8 +685,8 @@ function buildTriggers(prices, macro, manual) {
     {
       id: 'btc_demand',
       group: 'btc',
-      label: 'BTC $53k floor',
-      threshold: 'Weekly close < $53,000',
+      label: `BTC $${fmt(btcFloor / 1000, 0)}k floor`,
+      threshold: `Weekly close < $${fmt(btcFloor, 0)}`,
       current() {
         const live = btc?.price;
         const bits = [];
@@ -505,18 +695,22 @@ function buildTriggers(prices, macro, manual) {
         return bits.length ? bits.join(' · ') : '—';
       },
       status() {
-        // Official rule uses weekly close; live price only softens toward amber
         const close = btcWeekly ?? btc?.price;
         if (close == null) return 'unknown';
-        if (close < 53000) return 'red';
-        if (close < 60950 || (btc.week52_low != null && btc.week52_low < 58300)) return 'amber';
-        if (btc?.price != null && btc.price < 60950) return 'amber';
+        if (close < btcFloor) return 'red';
+        if (close < btcNear) return 'amber';
+        if (btc?.price != null && btc.price < btcNear) return 'amber';
         return 'green';
       },
       note() {
-        if (btcWeekly != null && btc?.weekly_close_as_of)
-          return `Judged on weekly close (${btc.weekly_close_as_of}).`;
-        return 'Weekly close not loaded — live as stand-in.';
+        const bits = [];
+        if (btcWeekly != null && btc?.weekly_close_as_of) {
+          bits.push(`Judged on weekly close (${btc.weekly_close_as_of}).`);
+        } else {
+          bits.push('Weekly close not loaded — live as stand-in.');
+        }
+        if (realizedNote) bits.push(realizedNote);
+        return bits.join(' ');
       },
     },
     {
@@ -533,8 +727,8 @@ function buildTriggers(prices, macro, manual) {
       status() {
         if (manual?.divergence?.start == null) return 'green';
         if (divMonths == null) return 'unknown';
-        if (divMonths >= 18) return 'red';
-        if (divMonths >= 12) return 'amber';
+        if (divMonths >= FLOORS.lagRed) return 'red';
+        if (divMonths >= FLOORS.lagAmber) return 'amber';
         return 'green';
       },
       note() {
@@ -563,8 +757,8 @@ function buildTriggers(prices, macro, manual) {
         const hs = manual?.ai_transition?.hyperscaler_cash;
         const cashTight = !!(hs && (hs.crossed || (hs.gap_usd_b != null && hs.gap_usd_b < 0)));
         if (oas == null && !man && !cuts && !cashTight) return 'unknown';
-        const oasRed = oas != null && oas > 5;
-        const oasAmber = oas != null && oas > 4;
+        const oasRed = oas != null && oas > FLOORS.oasBreak;
+        const oasAmber = oas != null && oas > FLOORS.oasWatch;
         let computed = 'green';
         // Red only when market stress + management cuts (thesis invalidation path).
         // Epoch cash cross alone is amber watch — external financing is expected.
@@ -578,21 +772,35 @@ function buildTriggers(prices, macro, manual) {
       id: 'oil',
       group: 'tail',
       label: 'Oil spike',
-      threshold: 'WTI >$120 for 4+ weeks',
+      threshold: `WTI >$${FLOORS.wtiAbove} for 4+ weeks`,
       current() {
         const price = wti?.price;
         if (price == null) return '—';
-        if (price > 120) return `WTI ${fmt(price, 2, '$')} · confirm 4 weeks`;
+        const streak = oilWeekStreak(wti);
+        if (price > FLOORS.wtiAbove || streak > 0) {
+          return `WTI ${fmt(price, 2, '$')} · ${streak}/4 weeks`;
+        }
         return `WTI ${fmt(price, 2, '$')}`;
       },
       status() {
+        const man = manualStatus('oil');
+        if (man === 'red') return 'red';
         const price = wti?.price;
-        if (price == null) return 'unknown';
-        if (price > 120) return 'red';
-        if (price > 100) return 'amber';
+        const streak = oilWeekStreak(wti);
+        if (streak >= 4) return 'red';
+        if (price == null && !streak) return 'unknown';
+        if (price > FLOORS.wtiAbove || streak >= 1) return 'amber';
+        if (price > FLOORS.wtiWatch) return 'amber';
+        if (man === 'amber') return 'amber';
         return 'green';
       },
-      note() { return ''; },
+      note() {
+        const streak = oilWeekStreak(wti);
+        if (wti?.price != null && wti.price > FLOORS.wtiAbove && streak < 4) {
+          return 'First print through $120 — confirm four weekly closes.';
+        }
+        return '';
+      },
     },
   ];
   const order = ['ai_financing', 'global_m2', 'cofer', 'gold_hedge', 'btc_demand', 'divergence', 'oil'];
@@ -603,7 +811,8 @@ function tallyTriggers(triggers) {
   const counts = { green: 0, amber: 0, red: 0, unknown: 0 };
   for (const t of triggers) {
     const s = t.status();
-    if (counts[s] != null) counts[s]++;
+    const key = s === 'withheld' ? 'unknown' : s;
+    if (counts[key] != null) counts[key]++;
   }
   return counts;
 }
@@ -623,7 +832,7 @@ function renderTriggers(prices, macro, manual) {
     const group = t.group || '';
     const groupStart = group && group !== prevGroup ? ' trigger-group-start' : '';
     prevGroup = group;
-    return `<tr class="trigger-row trigger-group-${group}${groupStart}" data-group="${group}">
+    return `<tr class="trigger-row trigger-${status} trigger-group-${group}${groupStart}" data-group="${group}">
       <td data-label="Watchpoint">
         <span class="trigger-label">${t.label}</span>
         <span class="trigger-threshold-mobile">${t.threshold}</span>
@@ -643,8 +852,9 @@ function renderTriggers(prices, macro, manual) {
   const tally = tallyTriggers(triggers);
   const board = document.getElementById('panel-triggers');
   if (board) {
-    board.classList.remove('panel-alarm-red');
+    board.classList.remove('panel-alarm-red', 'panel-alarm-amber');
     if (tally.red > 0) board.classList.add('panel-alarm-red');
+    else if (tally.amber > 0) board.classList.add('panel-alarm-amber');
   }
   const sumEl = document.getElementById('trigger-summary');
   if (sumEl) {
@@ -661,12 +871,21 @@ function renderTriggers(prices, macro, manual) {
         : `<strong>All clear</strong>`;
     sumEl.innerHTML = `<span class="trigger-sum-k">Board</span><span class="trigger-sum-v">${lead}<span class="tally-sep">·</span>${chips}</span><span class="trigger-sum-n">of ${total}</span>`;
   }
-  return tally;
+  return { tally, triggers };
 }
 
 // ─── Status bar ───────────────────────────────────────────────────────────────
 
-function renderStatusBar(manual, macro, tally) {
+function hottestWatchpoint(triggers) {
+  const rows = triggers.map(t => ({ id: t.id, label: t.label, status: t.status() }));
+  const red = rows.find(r => r.status === 'red');
+  if (red) return red;
+  const ambers = rows.filter(r => r.status === 'amber');
+  if (!ambers.length) return null;
+  return ambers.find(r => r.id === 'divergence') || ambers[0];
+}
+
+function renderStatusBar(manual, macro, tally, triggers) {
   const scenario = manual?.scenario;
   const current  = scenario?.current || '—';
   const prob     = scenario?.probability || '';
@@ -684,10 +903,11 @@ function renderStatusBar(manual, macro, tally) {
   const m2yoyEl = document.getElementById('m2-yoy');
   // Status bar: clean number + as-of period. Monthly M2 is always ~1–2 months lagged —
   // do not show "N days ago" (noise) or interim chips (detail lives on the Money pillar).
-  if (m2yoy.value != null) {
+  if (m2yoy.withheld) {
+    m2yoyEl.innerHTML = '<span class="neu">—</span>';
+  } else if (m2yoy.value != null) {
     const sign = m2yoy.value >= 0 ? '+' : '';
     const cls2 = m2yoy.value > 0 ? 'pos' : 'neg';
-    // Only tag pure manual fallback (no computed headline), not provisional/mixed-vintage.
     const pureEst = m2yoy.estimated && !m2yoy.provisional && ind?.GLOBAL_M2_YOY?.headline_pct == null;
     const est = pureEst
       ? ' <span class="est-tag" title="Manual estimate — computed YoY not available">est.</span>'
@@ -698,36 +918,76 @@ function renderStatusBar(manual, macro, tally) {
   }
   {
     const bits = [];
-    const asOf = m2yoy.sourceDate
-      ? (periodMonthLabel(m2yoy.sourceDate, true) || m2yoy.sourceDate)
-      : '';
-    if (asOf) bits.push(asOf);
-    if (m2yoy.fxAdjusted != null && !isNaN(m2yoy.fxAdjusted)) {
-      const s = m2yoy.fxAdjusted >= 0 ? '+' : '';
-      bits.push(`fx ${s}${Number(m2yoy.fxAdjusted).toFixed(1)}%`);
-    }
-    // Only warn if data vintage is seriously behind (normal 1–2 month lag stays quiet).
-    const lagMo = monthsSince(m2yoy.sourceDate);
-    if (lagMo != null && lagMo > 3) {
-      bits.push(`<span class="stale-badge stale-amber">${lagMo} mo lag</span>`);
+    if (m2yoy.withheld) {
+      bits.push('withheld');
+      const asOf = m2yoy.sourceDate
+        ? (periodMonthLabel(m2yoy.sourceDate, true) || m2yoy.sourceDate)
+        : '';
+      if (asOf) bits.push(asOf);
+      const g = m2yoy.lastGood;
+      if (g?.value != null) {
+        const when = g.period ? periodMonthLabel(g.period, true) : 'May';
+        bits.push(`May +${Number(g.value).toFixed(1)}%`);
+      }
+    } else {
+      const asOf = m2yoy.sourceDate
+        ? (periodMonthLabel(m2yoy.sourceDate, true) || m2yoy.sourceDate)
+        : '';
+      if (asOf) bits.push(asOf);
+      if (m2yoy.fxAdjusted != null && !isNaN(m2yoy.fxAdjusted)) {
+        const s = m2yoy.fxAdjusted >= 0 ? '+' : '';
+        bits.push(`fx ${s}${Number(m2yoy.fxAdjusted).toFixed(1)}%`);
+      }
+      const lagMo = monthsSince(m2yoy.sourceDate);
+      if (lagMo != null && lagMo > 3) {
+        bits.push(`<span class="stale-badge stale-amber">${lagMo} mo lag</span>`);
+      }
     }
     document.getElementById('m2-sub').innerHTML = bits.join(' · ');
   }
 
-  const fg = ind.FEAR_GREED;
-  const fgEl = document.getElementById('fg-value');
-  fgEl.textContent = fg?.value != null ? fg.value : '—';
-  fgEl.className = `status-value ${fgColorClass(fg?.value)}`;
-  document.getElementById('fg-class').textContent = fg?.classification || '';
+  const floorEl = document.getElementById('floor-value');
+  const floorSub = document.getElementById('floor-sub');
+  const goldRow = triggers && triggers.find(t => t.id === 'gold_hedge');
+  const btcRow = triggers && triggers.find(t => t.id === 'btc_demand');
+  const floorSt = worstStatus(goldRow ? goldRow.status() : 'unknown', btcRow ? btcRow.status() : 'unknown');
+  const floorWord = floorSt === 'red' ? 'broken' : floorSt === 'amber' ? 'near' : floorSt === 'unknown' ? 'no data' : 'intact';
+  const floorTone = floorSt === 'red' ? 'tone-red' : floorSt === 'amber' ? 'tone-amber' : floorSt === 'unknown' ? 'neu' : 'tone-green';
+  if (floorEl) {
+    floorEl.innerHTML = `<span class="${floorTone}">${floorWord}</span>`;
+  }
+  if (floorSub) {
+    floorSub.textContent = `BTC $${Math.round(FLOORS.btcBelow / 1000)}k · gold $${Math.round(FLOORS.goldBelow / 1000)}k`;
+  }
 
   const tallyEl = document.getElementById('trigger-tally');
-  tallyEl.innerHTML = [
-    `<span class="tally-chip chip-green">${tally.green}</span>`,
-    `<span class="tally-sep">·</span>`,
-    `<span class="tally-chip chip-amber">${tally.amber}</span>`,
-    `<span class="tally-sep">·</span>`,
-    `<span class="tally-chip chip-red">${tally.red}</span>`,
-  ].join('');
+  const hot = triggers ? hottestWatchpoint(triggers) : null;
+  const hotWord = hot
+    ? (hot.status === 'red' ? 'broken' : 'watching')
+    : (tally.red + tally.amber === 0 ? 'all clear' : '');
+  if (hot) {
+    tallyEl.innerHTML = `<span class="${hot.status === 'red' ? 'tone-red' : 'tone-amber'}">${hot.label}</span>`;
+  } else {
+    tallyEl.innerHTML = [
+      `<span class="tally-chip chip-green">${tally.green}</span>`,
+      `<span class="tally-sep">·</span>`,
+      `<span class="tally-chip chip-amber">${tally.amber}</span>`,
+      `<span class="tally-sep">·</span>`,
+      `<span class="tally-chip chip-red">${tally.red}</span>`,
+    ].join('');
+  }
+  const trigCell = document.getElementById('s-triggers');
+  if (trigCell) {
+    const name = hot ? `${hot.label} ${hotWord}` : `Watchpoints ${tally.green} clear`;
+    trigCell.setAttribute('aria-label', name);
+    trigCell.title = hot ? `${hot.label} — ${hotWord}. Jump to board.` : 'Jump to watchpoint board';
+  }
+  const trigSub = document.getElementById('trigger-sub');
+  if (trigSub) {
+    trigSub.textContent = hot
+      ? `${hotWord} · ${tally.amber} watching · ${tally.red} broken`
+      : '';
+  }
 }
 
 function setupTriggerScroll() {
@@ -783,11 +1043,13 @@ function fieldBlock(label, bodyHtml, metaHtml = '', isProse = false) {
   </div>`;
 }
 
-function fgBarHtml(val) {
+function fgBarHtml(val, classification) {
   if (val == null) return '';
   const pct = Math.min(100, Math.max(0, val));
   const fillCls = val <= 25 ? 'fill-red' : val <= 45 ? 'fill-amber'
                 : val <= 55 ? 'fill-dim' : val <= 75 ? 'fill-greed' : 'fill-green';
+  const word = classification || (val <= 25 ? 'Extreme Fear' : val <= 45 ? 'Fear'
+    : val <= 55 ? 'Neutral' : val <= 75 ? 'Greed' : 'Extreme Greed');
   return `<div class="fg-bar-track">
     <div class="fg-bar-bands" aria-hidden="true">
       <span class="fg-bar-band" style="left:25%"></span>
@@ -795,15 +1057,25 @@ function fgBarHtml(val) {
       <span class="fg-bar-band" style="left:75%"></span>
     </div>
     <div class="fg-bar-fill ${fillCls}" style="width:${pct}%"></div>
-    <div class="fg-bar-marker" style="left:${pct}%"></div>
+    <button type="button" class="has-tip fg-bar-marker${tipEdge(pct)}" style="left:${pct}%" aria-label="Fear and Greed ${val}, ${word}">
+      ${deskTip(`${val} · ${word}`, 'Sentiment, not a floor', 'Matters most when floors still hold')}
+    </button>
+  </div>`;
+}
+
+function lagClockTicksHtml() {
+  return `<div class="div-clock-ticks">
+    <button type="button" class="has-tip div-clock-tick" style="left:66.67%" aria-label="12 months, watching zone">
+      <i></i>${deskTip('12 months', 'Watching zone', 'Clock still running')}
+    </button>
+    <button type="button" class="has-tip div-clock-tick tip-end" style="left:100%" aria-label="18 months, transmission invalidation">
+      <i></i>${deskTip('18 months', 'Transmission assumption dead', 'Manual reset only · not one green ETF week')}
+    </button>
   </div>`;
 }
 
 function divergenceClockHtml(months, start) {
-  const ticks = `<div class="div-clock-ticks" aria-hidden="true">
-    <span class="div-clock-tick" style="left:66.67%" title="12 months"></span>
-    <span class="div-clock-tick" style="left:100%" title="18 months"></span>
-  </div>`;
+  const ticks = lagClockTicksHtml();
   if (start == null) {
     return `<div class="div-clock">
       <div class="div-clock-label pos">Back in sync</div>
@@ -820,7 +1092,19 @@ function divergenceClockHtml(months, start) {
 }
 
 /** Local-currency M2 YoY for a bloc from manual.bloc_m2_yoy (est. where flagged). */
-function blocM2YoyHtml(manual, bloc) {
+function blocM2YoyHtml(manual, bloc, ind) {
+  const pipe = {
+    US: ind?.US_M2?.yoy_pct,
+    EZ: ind?.EZ_M2?.yoy_pct,
+    JP: ind?.JP_M2?.yoy_pct,
+    UK: ind?.UK_M4?.yoy_pct,
+  };
+  if (bloc !== 'CN' && pipe[bloc] != null && !isNaN(Number(pipe[bloc]))) {
+    const raw = Number(pipe[bloc]);
+    const sign = raw >= 0 ? '+' : '';
+    const cls = raw >= 0 ? 'pos' : 'neg';
+    return `<span class="${cls}">${sign}${raw.toFixed(1)}%</span>`;
+  }
   const entry = manual?.bloc_m2_yoy?.[bloc];
   if (entry == null) return '<span class="neu">—</span>';
   const raw = typeof entry === 'number' ? entry : entry?.value;
@@ -840,9 +1124,11 @@ function renderPillarMonetary(ind, manual) {
   const comps = gm2?.components || {};
   const dates = gm2?.component_dates || {};
   const cn = manual?.china_m2;
-  const estTag = (m2yoy.estimated || gy.provisional)
-    ? ' <span class="est-tag" title="Interim figure — not a full calendar year-over-year yet">interim</span>'
-    : '';
+  const estTag = m2yoy.withheld
+    ? ''
+    : ((m2yoy.estimated || gy.provisional)
+      ? ' <span class="est-tag" title="Interim figure — not a full calendar year-over-year yet">interim</span>'
+      : '');
 
   const localVals = {
     US: ind.US_M2?.value != null ? `$${fmt(ind.US_M2.value, 0)}B` : '—',
@@ -852,17 +1138,26 @@ function renderPillarMonetary(ind, manual) {
     UK: ind.UK_M4?.value != null ? `£${fmt(ind.UK_M4.value, 1)}B` : '—',
   };
 
-  const yoyHtml = m2yoy.value != null
-    ? `<span class="${m2BandClass(m2yoy.value)}">${m2yoy.value >= 0 ? '+' : ''}${m2yoy.value.toFixed(1)}%</span>${estTag}`
-    : '—';
+  const yoyHtml = m2yoy.withheld
+    ? `<span class="neu" title="${(m2yoy.scopeNote || 'Headline YoY withheld').replace(/"/g, '&quot;')}">Withheld</span>`
+    : (m2yoy.value != null
+      ? `<span class="${m2BandClass(m2yoy.value)}">${m2yoy.value >= 0 ? '+' : ''}${m2yoy.value.toFixed(1)}%</span>${estTag}`
+      : '—');
   // Fixed-FX = money creation only (revalue base-period locals at latest FX)
   const fxCell = fxAdj != null && !isNaN(fxAdj)
     ? `<span class="${m2BandClass(fxAdj)}">${fxAdj >= 0 ? '+' : ''}${Number(fxAdj).toFixed(1)}%</span>${estTag}`
     : `<span class="neu" title="Compares money stocks using constant exchange rates">Pending</span>`;
-  const defaultHist = gy.history_ready
-    ? 'Calendar YoY · fixed-FX holds FX constant (money creation only).'
-    : 'Fixed-FX pending until enough monthly M2 history is on file.';
-  const rawHist = gy.history_note || defaultHist;
+  const lastGoodFoot = (() => {
+    const g = m2yoy.lastGood;
+    if (!m2yoy.withheld || g?.value == null) return '';
+    return ` Last good 5-bloc pair ${g.value >= 0 ? '+' : ''}${Number(g.value).toFixed(1)}% — not this vintage.`;
+  })();
+  const defaultHist = m2yoy.withheld
+    ? (m2yoy.scopeNote || 'Headline YoY withheld until baskets match.')
+    : gy.history_ready
+      ? 'Calendar YoY · fixed-FX holds FX constant (money creation only).'
+      : 'Fixed-FX pending until enough monthly M2 history is on file.';
+  const rawHist = (gy.history_note || defaultHist) + lastGoodFoot;
   const flagIdx = rawHist.search(/Quality flags:\s*/i);
   const histNote = flagIdx >= 0 ? rawHist.slice(0, flagIdx).trim() : rawHist;
   const histFlags = flagIdx >= 0 ? rawHist.slice(flagIdx).replace(/^Quality flags:\s*/i, '').trim() : '';
@@ -917,7 +1212,7 @@ function renderPillarMonetary(ind, manual) {
       <td data-label="Region">${blocNames[bloc]}${src}</td>
       <td class="num" data-label="Local"><span class="bloc-soft-label">Local </span>${localVals[bloc]}</td>
       <td class="num" data-label="USD"><span class="bloc-soft-label">USD </span>${usd != null ? `$${fmt(usd, 2)}T` : '—'}</td>
-      <td class="num" data-label="YoY">${blocM2YoyHtml(manual, bloc)}</td>
+      <td class="num" data-label="YoY">${blocM2YoyHtml(manual, bloc, ind)}</td>
       <td data-label="As of"><span class="bloc-soft-label">As of </span>${fmtMacroDate(date)} ${staleBadge(stale.level, stale.label)}</td>
     </tr>`;
   }).join('');
@@ -1061,21 +1356,55 @@ function goldAndMixHtml(prices, manual, macro) {
   const rails = manual?.stablecoin_rails || {};
   const railsTarget = rails.target_bn ?? 500;
 
-  const markers = [{ value: 4000, label: '$4,000', kind: 'below' }];
+  const markers = [{
+    value: FLOORS.goldBelow,
+    label: `$${fmt(FLOORS.goldBelow, 0)}`,
+    kind: 'below',
+    tipTitle: `$${fmt(FLOORS.goldBelow, 0)} floor`,
+    tipBody: 'Monthly close invalidation',
+    tipExtra: 'Breaks if the finished month closes below this line',
+  }];
+  const activeId = resolveActiveScenarioId(manual?.scenario);
+  const pmarks = PATH_MARKS[activeId] || PATH_MARKS.B;
+  if (pmarks.gold && pmarks.gold !== FLOORS.goldBelow) {
+    markers.push({
+      value: pmarks.gold,
+      label: `$${fmt(pmarks.gold, 0)}`,
+      kind: 'band',
+      tipTitle: `$${fmt(pmarks.gold, 0)} path mark`,
+      tipBody: `Path ${activeId} gold line`,
+      tipExtra: 'Not a floor — book waypoint',
+    });
+  }
   const floor = cb?.floor_tonnes ?? 200;
   const q = cb?.quarterly_tonnes;
   const floorOk = q != null && q >= floor;
   const floorTone = floorOk ? 'green' : (q != null && q >= floor * 0.5 ? 'amber' : 'red');
   const floorPct = q != null ? Math.min(100, (q / (floor * 1.5)) * 100) : 0;
   const floorHtml = q != null
-    ? meterHtml(floorPct, floorTone, `Floor ~${floor}t/qtr`, floorOk ? 'Bid intact' : 'Below floor')
+    ? meterHtml(floorPct, floorTone, `Floor ~${floor}t/qtr`, floorOk ? 'Bid intact' : 'Below floor', {
+        title: `${fmt(q, 0)} t / qtr`,
+        body: `Official bid vs ~${floor} t/q floor`,
+        extra: [
+          floorOk ? 'Bid intact' : 'Below the ~200 t/q floor',
+          cb?.period ? String(cb.period) : '',
+          'WGC quarterly net · structural series',
+        ],
+      })
     : '';
 
   const coferQ = cofer?.consecutive_rising_quarters;
   const coferPct = coferQ != null ? (coferQ / 4) * 100 : 0;
   const coferTone = coferQ == null ? '' : coferQ >= 4 ? 'red' : coferQ >= 1 ? 'amber' : 'green';
   const coferMeter = coferQ != null
-    ? meterHtml(coferPct, coferTone, `${coferQ} of 4 rising`, coferQ >= 4 ? 'Trend break' : 'Need 4 to reverse')
+    ? meterHtml(coferPct, coferTone, `${coferQ} of 4 rising`, coferQ >= 4 ? 'Trend break' : 'Need 4 to reverse', {
+        title: `${coferQ} of 4 rising`,
+        body: 'Dollar share of official reserves',
+        extra: [
+          cofer?.usd_share_pct != null ? `${Number(cofer.usd_share_pct).toFixed(2)}% · ${cofer.period || ''}` : '',
+          coferQ >= 4 ? 'Four in a row = mix reverse' : 'Noise until four rising quarters',
+        ],
+      })
     : '';
 
   // Stablecoin rails path: live mcap vs mid-path $500B (thesis structural case is larger)
@@ -1088,8 +1417,15 @@ function goldAndMixHtml(prices, manual, macro) {
     const tone = pctOfTarget >= 100 ? 'green' : pctOfTarget >= 50 ? 'amber' : '';
     const left = `$${fmt(sc.value, 0)}B now`;
     const right = `$${fmt(railsTarget, 0)}B ${rails.target_label || 'target'}`;
-    railsMeter = meterHtml(Math.min(100, pctOfTarget), tone, left, right);
     const remain = Math.max(0, railsTarget - sc.value);
+    railsMeter = meterHtml(Math.min(100, pctOfTarget), tone, left, right, {
+      title: `$${fmt(sc.value, 0)}B rails`,
+      body: `Private dollar rails vs $${fmt(railsTarget, 0)}B mid-path`,
+      extra: [
+        remain > 0 ? `$${fmt(remain, 0)}B still to mid-path` : 'Mid-path target reached',
+        'Not a substitute for official duration',
+      ],
+    });
     railsSub = [
       remain > 0
         ? `$${fmt(remain, 0)}B to $${fmt(railsTarget, 0)}B mid-path (${pctOfTarget.toFixed(0)}%)`
@@ -1206,10 +1542,14 @@ function hyperscalerCashHtml(hs, staleMeta = '') {
   }
 
   const q = hs.as_of_quarter || '—';
+  const qLag = quartersBehind(hs.as_of_quarter);
+  const lagNote = qLag != null && qLag >= 2
+    ? `actuals ${qLag} quarters behind`
+    : '';
   const crossWhen = hs.epoch_crossover_quarter
     ? (crossed ? `Epoch marked cross ${hs.epoch_crossover_quarter}` : `Trend cross ~${hs.epoch_crossover_quarter}`)
     : '';
-  const metaParts = [q, 'cash only · 5 names', crossWhen, staleMeta].filter(Boolean);
+  const metaParts = [q, 'cash only · 5 names', crossWhen, lagNote, staleMeta].filter(Boolean);
 
   return `<div class="hs-cash">
     <div class="hs-cash-head">
@@ -1359,11 +1699,13 @@ function etfFlowChartHtml(etf) {
   }
 
   const read = thisM >= 0 ? 'With liquidity' : 'Against liquidity';
+  const etfStale = staleness(etfWeekEnd(etf), 8, 16);
+  const etfAge = staleBadge(etfStale.level, etfStale.label);
   return `<div class="flow-chart">
     ${row('Week', thisM)}
     ${priorM != null ? row('Prior', priorM) : ''}
     <div class="flow-axis"><span>Out</span><span>0</span><span>In</span></div>
-    <div class="btc-cell-meta">${read}${etf.period ? ` · ${etf.period}` : ''}</div>
+    <div class="btc-cell-meta">${read}${etf.period ? ` · ${etf.period}` : ''}${etfAge ? ` ${etfAge}` : ''}</div>
   </div>`;
 }
 
@@ -1375,9 +1717,35 @@ function renderPillarHardMoney(prices, macro, manual, etfFlows) {
   const etf = etfFlows;
   const tx = buildTransmission(macro, prices);
 
+  const activeId = resolveActiveScenarioId(manual?.scenario);
+  const pmarks = PATH_MARKS[activeId] || PATH_MARKS.B;
   const btcMarkers = [
-    { value: 53000, label: '$53k', kind: 'below' },
-    { value: 70000, label: '$70k', kind: 'above' },
+    {
+      value: FLOORS.btcBelow,
+      label: `$${Math.round(FLOORS.btcBelow / 1000)}k`,
+      kind: 'below',
+      tipTitle: `$${Math.round(FLOORS.btcBelow / 1000)}k floor`,
+      tipBody: 'Weekly close · aggregate realized price',
+      tipExtra: manual?.btc_realized_floor?.as_of
+        ? `As of ${manual.btc_realized_floor.as_of} · not ETF cost basis`
+        : 'Not ETF cost basis',
+    },
+    {
+      value: pmarks.btc[0],
+      label: `$${Math.round(pmarks.btc[0] / 1000)}k`,
+      kind: 'band',
+      tipTitle: `$${Math.round(pmarks.btc[0] / 1000)}k path mark`,
+      tipBody: `Path ${activeId} band`,
+      tipExtra: 'Not a floor — book waypoint',
+    },
+    {
+      value: pmarks.btc[1],
+      label: `$${Math.round(pmarks.btc[1] / 1000)}k`,
+      kind: 'band',
+      tipTitle: `$${Math.round(pmarks.btc[1] / 1000)}k path mark`,
+      tipBody: `Path ${activeId} band`,
+      tipExtra: 'Not a floor — book waypoint',
+    },
   ];
 
   // Divergence cell — multi-year global M2 destination; short-run pipe is ETF
@@ -1392,19 +1760,14 @@ function renderPillarHardMoney(prices, macro, manual, etfFlows) {
     divValueHtml = `<span class="${tone}">${months} mo</span> <span class="neu">/ 18</span>`;
   }
   const divTrackOnly = (() => {
+    const ticks = lagClockTicksHtml();
     if (divStart == null) {
-      return `<div class="div-clock-track"><div class="div-clock-ticks" aria-hidden="true">
-        <span class="div-clock-tick" style="left:66.67%"></span>
-        <span class="div-clock-tick" style="left:100%"></span>
-      </div><div class="div-clock-fill fill-green" style="width:2%"></div></div>`;
+      return `<div class="div-clock-track">${ticks}<div class="div-clock-fill fill-green" style="width:2%"></div></div>`;
     }
     if (months == null) return '';
     const pct = Math.min(100, (months / 18) * 100);
     const tone = months >= 18 ? 'red' : months >= 12 ? 'amber' : 'green';
-    return `<div class="div-clock-track"><div class="div-clock-ticks" aria-hidden="true">
-      <span class="div-clock-tick" style="left:66.67%" title="12 months"></span>
-      <span class="div-clock-tick" style="left:100%" title="18 months"></span>
-    </div><div class="div-clock-fill fill-${tone}" style="width:${pct.toFixed(1)}%"></div></div>`;
+    return `<div class="div-clock-track">${ticks}<div class="div-clock-fill fill-${tone}" style="width:${pct.toFixed(1)}%"></div></div>`;
   })();
 
   // Fear & Greed cell
@@ -1416,7 +1779,7 @@ function renderPillarHardMoney(prices, macro, manual, etfFlows) {
 
   const wti = p.WTI;
   const vix = p.VIX;
-  const wtiAlert = wti?.price != null && wti.price > 95;
+  const wtiAlert = wti?.price != null && wti.price > FLOORS.wtiWatch;
   const vixAlert = vix?.price != null && vix.price > 30;
   const wtiVal = wti?.price != null
     ? `<span class="${wtiAlert ? 'tone-amber' : ''}">${fmt(wti.price, 2, '$')}</span>`
@@ -1427,19 +1790,35 @@ function renderPillarHardMoney(prices, macro, manual, etfFlows) {
   const wtiMeta = [
     fmtPct(changePctOf(p, 'WTI'), 2),
     'oil / inflation',
-    'alert &gt;$95',
-    'shock &gt;$120',
+    `watch &gt;$${FLOORS.wtiWatch}`,
+    `shock &gt;$${FLOORS.wtiAbove} × 4w`,
   ].join(' · ');
   const vixMeta = [
     fmtPct(changePctOf(p, 'VIX'), 2),
     'equity vol',
     'alert &gt;30',
   ].join(' · ');
+  const wtiTip = deskTip(
+    wti?.price != null ? `WTI ${fmt(wti.price, 2, '$')}` : 'WTI',
+    'Oil / inflation footnote — not the sink',
+    [`Watch >$${FLOORS.wtiWatch}`, `Shock >$${FLOORS.wtiAbove} for 4 weekly closes`],
+  );
+  const vixTip = deskTip(
+    vix?.price != null ? `VIX ${fmt(vix.price, 1)}` : 'VIX',
+    'Equity vol footnote — not the sink',
+    'Stress above 30',
+  );
   const riskFoot = `
     <div class="hm-foot">
       <div class="desk-foot-kicker">Macro risk · not the sink</div>
-      ${fieldBlock('WTI', wtiVal, wtiMeta)}
-      ${fieldBlock('VIX', vixVal, vixMeta)}
+      <button type="button" class="has-tip field-hit" aria-label="WTI, oil inflation footnote">
+        ${fieldBlock('WTI', wtiVal, wtiMeta)}
+        ${wtiTip}
+      </button>
+      <button type="button" class="has-tip field-hit" aria-label="VIX, equity vol footnote">
+        ${fieldBlock('VIX', vixVal, vixMeta)}
+        ${vixTip}
+      </button>
     </div>`;
 
   document.getElementById('pillar-hardmoney-body').innerHTML = `
@@ -1466,7 +1845,7 @@ function renderPillarHardMoney(prices, macro, manual, etfFlows) {
             <div>
               <div class="btc-cell-label">Fear &amp; Greed Index</div>
               <div class="btc-cell-value">${fgValueHtml}</div>
-              <div class="btc-cell-visual">${fgBarHtml(fgVal)}</div>
+              <div class="btc-cell-visual">${fgBarHtml(fgVal, fg?.classification)}</div>
             </div>
             <div>
               <div class="btc-cell-label">Lag clock (global M2)</div>
@@ -1494,7 +1873,7 @@ function renderPillars(prices, macro, manual, etfFlows) {
 function spineTone(st) {
   if (st === 'red') return 'tone-red';
   if (st === 'amber') return 'tone-amber';
-  if (st === 'unknown') return 'neu';
+  if (st === 'unknown' || st === 'withheld' || st === 'structural' || st === 'inferred') return 'neu';
   return 'tone-green';
 }
 
@@ -1502,6 +1881,9 @@ function spineStatusWord(st) {
   if (st === 'red') return 'broken';
   if (st === 'amber') return 'watching';
   if (st === 'unknown') return 'no data';
+  if (st === 'withheld') return 'withheld';
+  if (st === 'structural') return 'structural';
+  if (st === 'inferred') return 'inferred';
   return 'clear';
 }
 
@@ -1526,7 +1908,7 @@ function renderSpine(prices, macro, manual) {
   };
   const cuts = !!manual?.ai_transition?.capex_cuts;
   const forceA = cuts ? 'amber' : 'green';
-  const mix = worstStatus(stOf('gold_hedge'), worstStatus(stOf('btc_demand'), stOf('cofer')));
+  const floors = worstStatus(stOf('gold_hedge'), stOf('btc_demand'));
 
   el.innerHTML = `
     <p class="desk-footnote desk-footnote--lead">
@@ -1535,15 +1917,15 @@ function renderSpine(prices, macro, manual) {
       Either pressure ends in more money, or in official gold — and both show up in gold and bitcoin.
     </p>
     <div class="spine-inflows">
-      ${spineCell('inflow', 'A', 'AI capability ladder', 'Knowledge work → robotics / OTA labour', forceA, 'pillar-ai')}
-      ${spineCell('inflow', 'B', 'No duration left', 'Demographics → seizure risk → no bid for long bonds', stOf('cofer'), 'pillar-dedollar')}
+      ${spineCell('inflow', 'Force A', 'AI capability ladder', 'Knowledge work → robotics / OTA labour', forceA, 'pillar-ai')}
+      ${spineCell('inflow', 'Force B', 'No duration left', 'Demographics → seizure risk → no bid for long bonds', 'structural', 'pillar-dedollar')}
     </div>
     <p class="spine-hinge">both hit the hinge</p>
     <div class="spine-stages">
       ${spineCell('stage', '2', 'Credit &amp; long end', 'HY · 10Y · $ · net liq', stOf('ai_financing'), 'pillar-dedollar')}
-      ${spineCell('stage', '3', 'Fiscal gap', 'Inferred — receipts vs interest', 'amber', 'pillar-monetary')}
+      ${spineCell('stage', '3', 'Fiscal gap', 'Inferred — no receipts series', 'inferred', 'pillar-monetary')}
       ${spineCell('stage', '4', 'Money', 'Global M2 output', stOf('global_m2'), 'pillar-monetary')}
-      ${spineCell('stage', '5', 'Gold + BTC', 'Official bid and private run', mix, 'pillar-hardmoney')}
+      ${spineCell('stage', '5', 'Gold + BTC', 'Official bid and private run', floors, 'pillar-hardmoney')}
     </div>
   `;
 }
@@ -1588,57 +1970,47 @@ function resolveWaypointStatus(wp, prices, macro, manual) {
   const btc = p.BTC;
   const gold = p.XAUUSD;
   const btcPx = btc?.weekly_close ?? btc?.price;
-  const goldMonth = gold?.monthly_close;
-  const goldLive = gold?.price;
-  const goldRef = goldMonth ?? goldLive;
+  const goldDone = completedMonthly(gold);
+  const goldRef = goldDone.value ?? gold?.price;
   const divMonths = monthsSince(manual?.divergence?.start);
   const id = wp?.id;
+  const activeId = resolveActiveScenarioId(manual?.scenario);
+  const marks = PATH_MARKS[activeId] || PATH_MARKS.B;
 
   if (id === 'btc_band') {
-    if (btcPx == null) return wp.status || 'approaching';
-    if (btcPx >= 50000 && btcPx <= 70000) return 'hit';
-    if (btcPx >= 45000 && btcPx <= 80000) return 'approaching';
-    return 'miss';
+    if (btcPx == null) return wp.status || 'miss';
+    const [lo, hi] = marks.btc;
+    return (btcPx >= lo && btcPx <= hi) ? 'hit' : 'miss';
   }
   if (id === 'gold_line') {
-    if (goldRef == null) return wp.status || 'approaching';
-    if (goldRef < 4000) return 'miss';
-    // Inside the grind test zone around the line
-    if (goldRef <= 4300) return 'approaching';
-    return 'hit';
+    if (goldRef == null) return wp.status || 'miss';
+    return goldRef >= marks.gold ? 'hit' : 'miss';
   }
   if (id === 'divergence') {
-    if (manual?.divergence?.start == null) return 'hit'; // clock reset = path healed
-    if (divMonths == null) return wp.status || 'approaching';
-    if (divMonths >= 18) return 'miss';
-    if (divMonths >= 15) return 'hit'; // reached the 15–18 adjudication zone
-    if (divMonths >= 12) return 'approaching';
-    return 'approaching';
+    if (manual?.divergence?.start == null) return 'hit'; // clock reset
+    if (divMonths == null) return wp.status || 'miss';
+    if (divMonths >= FLOORS.lagRed) return 'miss';
+    // Path A: relink wants the clock reset. B/C/D: running clock is on-path until 18.
+    if (activeId === 'A') return 'miss';
+    return 'hit';
   }
   if (id === 'floors') {
-    const btcOk = btcPx == null ? null : btcPx >= 53000;
-    const goldOk = goldRef == null ? null : goldRef >= 4000;
+    const btcOk = btcPx == null ? null : btcPx >= FLOORS.btcBelow;
+    const goldOk = goldRef == null ? null : goldRef >= FLOORS.goldBelow;
     if (btcOk === false || goldOk === false) return 'miss';
-    if (btcOk === true && goldOk === true) {
-      // Soft stress if close to either line
-      const btcNear = btcPx < 60950;
-      const goldNear = goldRef < 4200;
-      return (btcNear || goldNear) ? 'approaching' : 'hit';
-    }
-    return wp.status || 'approaching';
+    if (btcOk === true && goldOk === true) return 'hit';
+    return wp.status || 'miss';
   }
 
-  const st = (wp?.status || 'approaching').toLowerCase();
-  if (st === 'hit' || st === 'miss' || st === 'approaching' || st === 'near') {
-    return st === 'near' ? 'approaching' : st;
-  }
-  return 'approaching';
+  const st = (wp?.status || 'miss').toLowerCase();
+  if (st === 'hit' || st === 'miss') return st;
+  if (st === 'approaching' || st === 'near') return 'miss';
+  return 'miss';
 }
 
 function waypointStatusLabel(st) {
   if (st === 'hit') return 'on path';
-  if (st === 'miss') return 'off';
-  return 'watch';
+  return 'off';
 }
 
 function scenarioBookHtml(scenario) {
@@ -1677,9 +2049,8 @@ function renderScenarioContext(manual, prices, macro, tally) {
   const hasWps = Array.isArray(scenario.waypoints) && scenario.waypoints.length;
   const hasRescore = Array.isArray(scenario.rescore_if) && scenario.rescore_if.length;
   const hasNext = !!scenario.next_check;
-  const hasTally = tally && (tally.green + tally.amber + tally.red) > 0;
 
-  const show = hasBook || hasNotes || hasBullets || hasWps || hasRescore || hasNext || hasTally;
+  const show = hasBook || hasNotes || hasBullets || hasWps || hasRescore || hasNext;
   shell.hidden = !show;
   if (!show) {
     body.innerHTML = '';
@@ -1777,24 +2148,8 @@ function renderScenarioContext(manual, prices, macro, tally) {
     parts.push(`<div class="context-split">${midCols.join('')}</div>`);
   }
 
-  // 4. Watchpoint tally (tape bullets sit under Path marks)
-  let tallyHtml = '';
-  if (hasTally) {
-    const total = tally.green + tally.amber + tally.red;
-    const bits = [];
-    if (tally.red > 0) bits.push(`<span class="tone-red">${tally.red} broken</span>`);
-    if (tally.amber > 0) bits.push(`<span class="tone-amber">${tally.amber} watching</span>`);
-    bits.push(`<span class="tone-green">${tally.green} clear</span>`);
-    tallyHtml = `<div class="context-tally">
-      <span class="context-tally-k">Watchpoints</span>
-      <span class="context-tally-v">${bits.join('<span class="tally-sep">·</span>')}</span>
-      <span class="context-tally-n">of ${total}</span>
-    </div>`;
-  }
   if (!hasWps && bulletList) {
-    parts.push(`<div class="context-footer">${bulletList}${tallyHtml}</div>`);
-  } else if (tallyHtml) {
-    parts.push(`<div class="context-footer">${tallyHtml}</div>`);
+    parts.push(`<div class="context-footer">${bulletList}</div>`);
   }
 
   body.innerHTML = parts.join('');
@@ -1910,10 +2265,10 @@ async function init() {
   if (etfResult.status === 'fulfilled') etfFlows = etfResult.value?.desk || null;
   else console.warn('etf_flows.json failed:', etfResult.reason);
 
-  void alerts; // reserved for future alert overlays
+  applyFloors(alerts, manual);
 
-  const tally = renderTriggers(prices, macro, manual);
-  renderStatusBar(manual, macro, tally);
+  const { tally, triggers } = renderTriggers(prices, macro, manual);
+  renderStatusBar(manual, macro, tally, triggers);
   renderSpine(prices, macro, manual);
   renderScenarioContext(manual, prices, macro, tally);
   renderPillars(prices, macro, manual, etfFlows);

@@ -10,7 +10,11 @@ The dashboard’s Global M2 figure is a **five-bloc composite**: US + China + Eu
 
 You will see other “global M2” figures in circulation — commonly ~$135T. Those are broader baskets (top-20 economies, GDP-weighted variants). Neither is wrong; they are different measures. The five-bloc composite is used here because it covers most *active* global liquidity with five reliable statistical sources, and because its history is kept internally consistent. When comparing against external charts (e.g. BTC-vs-M2 overlays), always check which basket the chart uses.
 
-### 2. Current Levels (May 2026 vintage on desk)
+### 2. Current Levels
+
+**Live desk (Sep 2026):** five-bloc stock **~$108.0T** (data vintage **July 2026**, all five locals). Headline and fixed-FX YoY are **withheld**: July 2025 history is 4-bloc (`UK_unpublished`), so July-vs-July would mix baskets. The last complete 5-bloc pair on file is **May 2025 → May 2026** (~**+10.2%** headline / ~**+6.7%** fixed-FX). Invalidation remains headline YoY **&lt; 0%** when a matching-scope pair exists.
+
+**May 2026 vintage** (the July 2026 write-up; kept for the leakage table below):
 
 | Bloc | Level (local) | YoY (local) | Data as of | USD equiv. |
 |---|---|---|---|---|

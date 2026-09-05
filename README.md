@@ -112,7 +112,7 @@ Only secret: free-tier **FRED API key** (`FRED_API_KEY` in GitHub Actions). Empt
 
 ## Dashboard layout
 
-1. **Status bar** — Scenario, money growth YoY, Fear & Greed, watchpoint tally  
+1. **Status bar** — Scenario, money growth YoY, floors (BTC/gold), hottest watchpoint  
 2. **Spine (2030s)** — Force A + Force B → credit/long end → fiscal gap → money → gold/BTC  
 3. **Path book (H2 2026–2027)** — A–D book, lead judgment, path waypoints, re-score if, next check, live tally  
 4. **Flow desks**

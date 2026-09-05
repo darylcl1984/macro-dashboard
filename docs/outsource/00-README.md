@@ -1,5 +1,7 @@
 # Outsourced Coding Tasks — The Great Transition Overhaul
 
+**Historical.** This pack shipped the v6 overhaul (July 2026). Do not re-implement from these files. Living rules: `AGENTS.md`, `docs/design-contract.md`, `docs/thesis.md`. Local serve is from the **repo root** (`python -m http.server 8080`), not `src/`.
+
 Read this file completely before starting any task. These tasks convert the dashboard from a portfolio-watchlist layout to a thesis-pillar layout. The knowledge work (thesis v6, M2 note v2, README, trigger definitions) is already done — your job is implementation only.
 
 ## Order and independence

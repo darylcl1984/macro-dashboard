@@ -564,27 +564,67 @@ def compute_global_m2(indicators, manual, fx):
     return global_m2, snapshot
 
 
+def _is_complete_aligned(snapshot):
+    """True when all five blocs print the same calendar month as `period`."""
+    if not snapshot:
+        return False
+    period = snapshot.get("period")
+    if not period:
+        return False
+    if (snapshot.get("scope") or _history_scope(snapshot)) != "5bloc":
+        return False
+    dates = snapshot.get("component_dates") or {}
+    months = [_to_yyyy_mm(dates.get(k)) for k in ("US", "CN", "EZ", "JP", "UK")]
+    if any(m is None for m in months):
+        return False
+    return all(m == period for m in months)
+
+
+def apply_history_upsert(history, snapshot):
+    """
+    Insert or replace `snapshot` in a history list.
+
+    Never overwrite a complete same-month 5-bloc row with a mixed-vintage
+    print (vintage_min would otherwise clobber a finished month).
+    Returns (history, row_used_for_yoy).
+    """
+    history = list(history)
+    period = snapshot["period"]
+    yoy_snap = snapshot
+    replaced = False
+    for i, entry in enumerate(history):
+        if entry.get("period") != period:
+            continue
+        if _is_complete_aligned(entry) and not _is_complete_aligned(snapshot):
+            print(
+                f"  [WARN] GLOBAL_M2 history {period}: keeping complete 5-bloc row "
+                "(incoming mixed vintage)"
+            )
+            yoy_snap = entry
+            replaced = True
+            break
+        incoming = dict(snapshot)
+        # Preserve hand-curated flags when pipeline flags empty on a mixed run
+        if not incoming.get("flags") and entry.get("flags") and not _is_complete_aligned(incoming):
+            incoming["flags"] = entry.get("flags")
+        history[i] = incoming
+        yoy_snap = incoming
+        replaced = True
+        break
+    if not replaced:
+        history.append(snapshot)
+        yoy_snap = snapshot
+    history.sort(key=lambda e: e.get("period") or "")
+    return history, yoy_snap
+
+
 def upsert_m2_history(snapshot):
     """Upsert by data-vintage period; YoY only when prior scope matches."""
     history = _seed_m2_history()
+    history, snapshot = apply_history_upsert(history, snapshot)
     period = snapshot["period"]
     cur_scope = snapshot.get("scope") or _history_scope(snapshot)
 
-    # Upsert by period (overwrite within the data month)
-    replaced = False
-    for i, entry in enumerate(history):
-        if entry.get("period") == period:
-            # Preserve hand-curated flags when pipeline flags empty
-            if not snapshot.get("flags") and entry.get("flags"):
-                snapshot = dict(snapshot)
-                snapshot["flags"] = entry.get("flags")
-            history[i] = snapshot
-            replaced = True
-            break
-    if not replaced:
-        history.append(snapshot)
-
-    history.sort(key=lambda e: e.get("period") or "")
     write_json(M2_HISTORY_FILE, history)
 
     # YoY vs same calendar month 12 months prior
@@ -764,9 +804,12 @@ def main():
 
     # Seed from existing file so a failed fetch doesn't wipe previously good values
     existing: dict = {}
+    existing_updated = None
     if OUTPUT_FILE.exists():
         try:
-            existing = json.loads(OUTPUT_FILE.read_text(encoding="utf-8")).get("indicators", {})
+            prev = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
+            existing = prev.get("indicators", {}) or {}
+            existing_updated = prev.get("updated_at")
         except Exception:
             pass
 
@@ -775,9 +818,14 @@ def main():
         "indicators": {k: v for k, v in existing.items() if k != "MANUAL"},
     }
     indicators = results["indicators"]
+    core_this_run = False
 
     print("  FRED: US M2, 10Y, USD Index, HY OAS, Fed BS / RRP / TGA")
-    indicators.update(fetch_fred())
+    fred = fetch_fred()
+    if fred:
+        indicators.update(fred)
+        if "US_M2" in fred:
+            core_this_run = True
 
     print("  ECB: Eurozone M2")
     try:
@@ -852,6 +900,13 @@ def main():
         print(f"    STABLECOIN_MCAP: ${sc['STABLECOIN_MCAP']['value']}B")
     except Exception as e:
         print(f"  [WARN] Stablecoins: {e}")
+
+    if not core_this_run:
+        if existing_updated:
+            results["updated_at"] = existing_updated
+            print("  [WARN] US_M2 not fetched this run — keeping prior updated_at")
+        else:
+            print("  [WARN] US_M2 not fetched this run — no prior timestamp")
 
     write_json(OUTPUT_FILE, results)
     print(f"Written to {OUTPUT_FILE}")

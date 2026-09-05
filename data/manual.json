@@ -4,9 +4,9 @@
     "current": "A — Liquidity relink",
     "active_id": "A",
     "probability": "30%",
-    "updated": "2026-08-26",
-    "notes": "Active path is A. BTC weekly close $78.4k sits in the $75–95k relink band; gold is ~$4,716 (well above $4,400); spot ETF had a large net-inflow week ($1.92B, 17–21 Aug) after an outflow week. Money is still expanding (headline Global M2 +10.2% / fixed-FX +6.7%). That is not a 2026-window call and not a 2030s-floor event. The 18-month lag clock is still running (~13 mo from mid-2025) — one green ETF week does not reset it. Book weights unchanged; B remains the 40% typical base of the book.",
-    "next_check": "Complete ETF week of 24–28 Aug · lag clock (~13 mo) · Sep FOMC · Epoch Q2 cash actuals when the CSV fills",
+    "updated": "2026-09-05",
+    "notes": "Active path is A. BTC weekly close ~$80k still sits in the $75–95k relink band; gold live ~$4,477 (above the $4,400 path mark, well above the $4k floor). Spot ETF: +$1.92B (17–21 Aug) then +$0.92B (24–28 Aug) — two inflow weeks; the week ending 4 Sep is not on the desk yet. July Global M2 stock is ~$108T; headline YoY is withheld (July 2025 history is 4-bloc). Last good 5-bloc pair remains May +10.2% / +6.7%. That is not a 2026-window call and not a 2030s-floor event. The 18-month lag clock is still running (~14 mo from mid-2025) — two green ETF weeks do not reset it. Book weights unchanged; B remains the 40% typical base of the book.",
+    "next_check": "ETF week ending 4 Sep (sync from Liq) · lag clock (~14 mo) · Epoch Q2 cash actuals · next FOMC",
     "book": [
       { "id": "A", "name": "Liquidity relink", "p": 30 },
       { "id": "B", "name": "Hawkish grind", "p": 40 },
@@ -33,7 +33,7 @@
       },
       {
         "id": "divergence",
-        "label": "Lag clock still running (~13 mo) — not yet reset"
+        "label": "Lag clock reset (still running, ~14 mo)"
       },
       {
         "id": "floors",
@@ -42,8 +42,8 @@
     ]
   },
   "regime_bullets": [
-    "Tape has re-linked: BTC ~$78k weekly, gold ~$4.7k, F&G Greed",
-    "Money still expanding; 18-month lag clock has not been reset",
+    "Tape still in the A band: BTC ~$80k weekly, gold ~$4.5k, F&G Greed",
+    "July M2 stock ~$108T; headline YoY withheld; 18-month lag clock has not been reset (~14 mo)",
     "No external long-end sink — gold and BTC remain the warehouse"
   ],
   "china_m2": {
@@ -56,8 +56,10 @@
   "global_m2_yoy_estimate": {
     "value": 10.23,
     "unit": "pct",
-    "note": "Fallback only. Prefer computed GLOBAL_M2_YOY (May-2025→May-2026 headline +10.23% / fixed-FX +6.69% on the 25 Aug pipeline vintage).",
-    "updated": "2026-08-26"
+    "period": "2026-05",
+    "fx_adjusted_pct": 6.69,
+    "note": "Last complete 5-bloc pair only (May-2025→May-2026). Not a live July print — headline YoY is withheld until UK 2025-07 is on file.",
+    "updated": "2026-09-05"
   },
   "bloc_m2_yoy": {
     "US": {
@@ -87,7 +89,13 @@
   },
   "divergence": {
     "start": "2025-07",
-    "note": "Manual clock since mid-2025. Still running (~13 months at Aug 2026). Do not reset on one green ETF week; need sustained ETF + same-sign money/BTC. Global M2 is stage 4; spot ETF is the short-run channel."
+    "note": "Manual clock since mid-2025. Still running (~14 months at Sep 2026). Do not reset on two green ETF weeks; need sustained ETF + same-sign money/BTC. Global M2 is stage 4; spot ETF is the short-run channel."
+  },
+  "btc_realized_floor": {
+    "value": 53000,
+    "as_of": "2026-07",
+    "source": "Thesis §6 aggregate realized price (desk cut Jul 2026). Not ETF cost basis.",
+    "note": "Refresh quarterly. Overlay on alerts.json BTC.below."
   },
   "cb_gold": {
     "quarterly_tonnes": 288.9,
@@ -145,7 +153,7 @@
   "triggers_manual": {
     "gold_monthly_close": {
       "status": "green",
-      "notes": "July close ~$4,047 (FocusEconomics / 31 Jul). August MTD ~$4,716 — $4k monthly line not in play. Month not closed."
+      "notes": "August close $4,431 (Yahoo GC=F). Live ~$4,477. $4k monthly line not in play."
     },
     "cofer_reversal": {
       "status": "amber",

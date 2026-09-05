@@ -77,7 +77,7 @@ Legacy aliases (`--green-dim`, etc.) map to wash/border companions so existing c
 
 ## Layout patterns
 
-1. **Sticky status strip** — four command KPIs (scenario, M2 YoY, F&G, watchpoints), opaque, column-aligned with `main`  
+1. **Sticky status strip** — four command KPIs (scenario, M2 YoY, floors, named hot watchpoint), opaque, column-aligned with `main`. Fear & Greed lives on Hard money Private.  
 2. **Page header** — title, horizon, one-line subtitle (not a second LM-style nav/status grid)  
 3. **Section kickers** — 10px / 600 / ~0.1em uppercase between major areas  
 4. **Desk / panel** — titled slab, body, optional KPI strip  
