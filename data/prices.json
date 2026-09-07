@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-09-07T17:39:33.648611+00:00",
+  "updated_at": "2026-09-07T20:14:02.340960+00:00",
   "prices": {
     "BTC": {
-      "price": 79094,
-      "change_pct": -0.81,
+      "price": 79236,
+      "change_pct": -0.68,
       "week52_low": 57747.766,
       "week52_high": 126198.07,
       "weekly_close": 80350.0,
