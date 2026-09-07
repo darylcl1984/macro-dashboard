@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-09-05T08:28:43.295609+00:00",
+  "updated_at": "2026-09-07T17:39:33.648611+00:00",
   "prices": {
     "BTC": {
-      "price": 79617,
-      "change_pct": -1.63,
+      "price": 79094,
+      "change_pct": -0.81,
       "week52_low": 57747.766,
       "week52_high": 126198.07,
-      "weekly_close": 79656.0,
-      "weekly_close_as_of": "2026-09-05",
-      "weekly_close_prev": 79672.0,
+      "weekly_close": 80350.0,
+      "weekly_close_as_of": "2026-08-31",
+      "weekly_close_prev": 80350.0,
       "monthly_close": 78549.0,
       "monthly_close_as_of": "2026-08",
       "monthly_series": [
@@ -90,11 +90,11 @@
     },
     "XAUUSD": {
       "price": 4476.6,
-      "change_pct": 1.03,
+      "change_pct": 2.96,
       "week52_low": 3590.0,
       "week52_high": 5586.2,
-      "weekly_close": 4476.6,
-      "weekly_close_as_of": "2026-09-04",
+      "weekly_close": 4429.8,
+      "weekly_close_as_of": "2026-08-31",
       "weekly_close_prev": 4429.8,
       "monthly_close": 4431.1,
       "monthly_close_as_of": "2026-08",
@@ -103,13 +103,17 @@
     },
     "WTI": {
       "price": 91.48,
-      "change_pct": 6.67,
+      "change_pct": 1.4,
       "week52_low": 54.98,
       "week52_high": 119.48,
       "weekly_close": 91.48,
-      "weekly_close_as_of": "2026-09-04",
+      "weekly_close_as_of": "2026-08-31",
       "weekly_close_prev": 91.48,
       "weekly_series": [
+        {
+          "as_of": "2026-07-13",
+          "close": 82.49
+        },
         {
           "as_of": "2026-07-20",
           "close": 89.31
@@ -137,10 +141,6 @@
         {
           "as_of": "2026-08-31",
           "close": 91.48
-        },
-        {
-          "as_of": "2026-09-04",
-          "close": 91.48
         }
       ],
       "monthly_close": 85.76,
@@ -149,8 +149,8 @@
       "ath_note": "52-week high used as cycle-high proxy"
     },
     "VIX": {
-      "price": 14.53,
-      "change_pct": -2.61,
+      "price": 15.3,
+      "change_pct": -6.36,
       "week52_low": 13.38,
       "week52_high": 35.3
     }
