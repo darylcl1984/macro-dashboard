@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T14:09:05.894780+00:00",
+  "updated_at": "2026-09-08T12:47:10.736560+00:00",
   "indicators": {
     "US_M2": {
       "value": 23218.0,
@@ -97,9 +97,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 71,
+      "value": 69,
       "classification": "Greed",
-      "date": "2026-09-07"
+      "date": "2026-09-08"
     },
     "EZ_M2": {
       "value": 16.44,
@@ -113,34 +113,34 @@
     },
     "fx": {
       "EURUSD": {
-        "value": 1.1632,
-        "date": "2026-09-07",
+        "value": 1.1618,
+        "date": "2026-09-08",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3537,
-        "date": "2026-09-07",
+        "value": 1.3551,
+        "date": "2026-09-08",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.6992,
-        "date": "2026-09-07",
+        "value": 6.6984,
+        "date": "2026-09-08",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 154.551,
-        "date": "2026-09-07",
+        "value": 153.924,
+        "date": "2026-09-08",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 108.27,
+      "value": 108.29,
       "unit": "trillions_usd",
       "components": {
         "US": 23.22,
         "CN": 53.07,
-        "EZ": 19.12,
-        "JP": 8.39,
+        "EZ": 19.1,
+        "JP": 8.43,
         "UK": 4.47
       },
       "component_dates": {
@@ -152,7 +152,7 @@
       },
       "data_period": "2026-07",
       "scope": "5bloc",
-      "computed_at": "2026-09-07T14:09:13.759951+00:00",
+      "computed_at": "2026-09-08T12:47:18.707946+00:00",
       "note": "Data vintage 2026-07 · scope 5bloc"
     },
     "GLOBAL_M2_YOY": {
@@ -206,9 +206,9 @@
       }
     },
     "STABLECOIN_MCAP": {
-      "value": 311.3,
+      "value": 310.8,
       "unit": "billions_usd",
-      "date": "2026-09-07",
+      "date": "2026-09-08",
       "source": "defillama"
     },
     "MANUAL": {
