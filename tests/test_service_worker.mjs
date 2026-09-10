@@ -11,7 +11,7 @@ function worker(overrides = {}) {
   let claimed = false;
   const cache = { match: async () => undefined, put: async () => {}, addAll: async () => {} };
   const context = {
-    URL, Response,
+    URL, Request, Response,
     self: {
       registration: { scope: 'https://example.org/macro-dashboard/src/' },
       addEventListener: (name, handler) => { handlers[name] = handler; },
@@ -65,5 +65,38 @@ test('Successful responses remain available when cache storage fails', async () 
   let response, saving;
   w.handlers.fetch({ request: { url: 'https://example.org/macro-dashboard/data/example.json', method: 'GET' }, waitUntil: promise => { saving = promise; }, respondWith: promise => { response = promise; } });
   assert.deepEqual(await (await response).json(), { fresh: true });
+  await saving;
+});
+
+test('Installed shell bypasses the HTTP cache and includes the versioned entry assets and module graph', async () => {
+  const w = worker();
+  let installing, requests;
+  w.cache.addAll = async assets => { requests = assets; };
+  w.handlers.install({ waitUntil: promise => { installing = promise; } });
+  await installing;
+  const cached = new Set(requests.map(request => request.url));
+  assert.ok(requests.every(request => request.cache === 'reload'));
+  const base = 'https://example.org/macro-dashboard/src/';
+  const version = currentCache.split('-v').at(-1);
+  for (const name of ['index.html', 'methodology.html', 'app.js', 'charts.js']) {
+    const source = readFileSync(new URL(`../src/${name}`, import.meta.url), 'utf8');
+    const references = [...source.matchAll(/(?:href|src)="([^"#]+\.(?:css|js)(?:\?[^"#]+)?)"|from\s+'([^']+)'/g)]
+      .map(match => match[1] || match[2]);
+    assert.ok(references.length > 0, `${name} must have shell dependencies`);
+    for (const ref of references) {
+      const url = new URL(ref, base);
+      assert.equal(url.searchParams.get('v'), version, `${name}: ${ref} must use the current release`);
+      assert.ok(cached.has(url.href), `${name}: ${ref} must be available offline`);
+    }
+  }
+});
+
+test('Network-first requests revalidate the separate browser HTTP cache', async () => {
+  let options;
+  const w = worker({ fetch: async (_request, init) => { options = init; return new Response('fresh stylesheet'); } });
+  let response, saving;
+  w.handlers.fetch({ request: { url: 'https://example.org/macro-dashboard/src/styles.css?v=91', method: 'GET' }, waitUntil: promise => { saving = promise; }, respondWith: promise => { response = promise; } });
+  assert.equal(await (await response).text(), 'fresh stylesheet');
+  assert.equal(options.cache, 'no-cache');
   await saving;
 });

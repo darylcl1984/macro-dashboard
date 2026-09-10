@@ -1,5 +1,5 @@
-import { chart } from './charts.js';
-import { finite, utc, monthIndex, ordered, windowYears, m2Metrics, globalMoney, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, estimatedExpertFrontier, expertDurationScale, eciAnnualizedGain, frontier, topDistinctLabs, quarterLabel, periodEnd } from './metrics.js';
+import { chart } from './charts.js?v=91';
+import { finite, utc, monthIndex, ordered, windowYears, m2Metrics, globalMoney, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, estimatedExpertFrontier, expertDurationScale, eciAnnualizedGain, frontier, topDistinctLabs, quarterLabel, periodEnd } from './metrics.js?v=91';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -235,4 +235,4 @@ window.addEventListener('scroll', () => {
   if (!navScheduled) { navScheduled = true; requestAnimationFrame(() => { updateNav(); navScheduled = false; }); }
 }, { passive: true });
 updateNav();
-if ('serviceWorker' in navigator && !['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) navigator.serviceWorker.register('./sw.js').catch(() => {});
+if ('serviceWorker' in navigator && !['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {});

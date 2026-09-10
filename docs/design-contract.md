@@ -59,4 +59,4 @@ Keep missing data, old observations, instrument proxies and source revisions vis
 
 ## Implementation
 
-Vanilla HTML/CSS/JS; CSS variables; no bundler or added UI framework. Isolate service-worker storage from sibling dashboards. Serve from the repository root and bump the shell cache for UI changes. No commit or publication without the user's instruction.
+Vanilla HTML/CSS/JS; CSS variables; no bundler or added UI framework. Isolate service-worker storage from sibling dashboards. Serve from the repository root. For frontend releases, bump the shell cache and the matching `?v=` references in both HTML pages and the app/chart module imports together. The worker precaches those exact versioned URLs, bypasses the HTTP cache at installation and revalidates network requests. The shell tests enforce version consistency and offline coverage. No commit or publication without the user's instruction.
