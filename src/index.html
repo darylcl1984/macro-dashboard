@@ -1,202 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>The Great Transition — Macro Dashboard</title>
-  <meta name="description" content="Thesis-driven macro dashboard tracking The Great Transition." />
-  <meta name="theme-color" content="#141922" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Macro Desk" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Macro Dashboard — The Great Transition</title>
+  <meta name="description" content="Fiscal dominance, hard-money monetization and technological deflation. A structural macro research dashboard.">
+  <meta name="theme-color" content="#0c151b">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>try { document.documentElement.dataset.theme = localStorage.getItem('macro-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); } catch {}</script>
 </head>
 <body>
-
-  <!-- ── Sticky status KPI strip ───────────────────────────────────────── -->
-  <header id="status-bar">
-    <div id="status-bar-inner">
-      <div class="status-cell" id="s-scenario">
-        <span class="status-label">Scenario</span>
-        <span class="status-value" id="scenario-value">—</span>
-        <span class="status-sub" id="scenario-prob"></span>
-      </div>
-      <div class="status-cell" id="s-m2">
-        <span class="status-label">Money growth YoY</span>
-        <span class="status-value" id="m2-yoy">—</span>
-        <span class="status-sub" id="m2-sub"></span>
-      </div>
-      <div class="status-cell" id="s-floors">
-        <span class="status-label">Floors</span>
-        <span class="status-value" id="floor-value">—</span>
-        <span class="status-sub" id="floor-sub"></span>
-      </div>
-      <div class="status-cell" id="s-triggers" role="button" tabindex="0" title="Jump to watchpoint board">
-        <span class="status-label">Watchpoints</span>
-        <span class="status-value" id="trigger-tally">—</span>
-        <span class="status-sub" id="trigger-sub"></span>
-      </div>
-    </div>
+  <a class="skip-link" href="#main">Skip to charts</a>
+  <main id="main">
+    <div class="page-heading"><div><p class="eyebrow"><span class="research-mark" aria-hidden="true"><i></i><i></i><i></i></span> MACRO RESEARCH <span class="heading-horizon">HORIZON / 2030s</span></p><h1>The Great <span>Transition</span></h1><p class="thesis-subtitle">Technology accelerates a monetary transition already shaped by debt, fiscal commitments and reserve diversification.</p></div><p id="desk-asof" class="desk-asof">Reading source dates…</p></div>
+  <header class="topbar">
+    <a class="wordmark" href="#main"><span class="brand-mark" aria-hidden="true">M</span> Macro <span class="wordmark-secondary">/ The Great Transition</span></a>
+    <nav aria-label="Sections"><a href="#technology" class="active" aria-current="location"><span aria-hidden="true">01</span> Technology</a><a href="#fiscal"><span aria-hidden="true">02</span> Fiscal</a><a href="#hard-money"><span aria-hidden="true">03</span> Hard money</a></nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch color theme">Light</button>
   </header>
-
-  <main>
-
-    <header class="page-header">
-      <div class="page-header-kicker">Macro desk</div>
-      <div class="page-header-top">
-        <h1 class="page-header-title">The Great Transition</h1>
-        <span class="page-header-meta">Structural horizon to the 2030s</span>
-      </div>
-      <p class="page-header-sub">
-        <span class="page-header-sub-lead">Cheaper intelligence, and no remaining bid for long government bonds.</span>
-        <span class="page-header-sub-list">AI ladder · no duration left · money · gold/BTC</span>
-      </p>
-    </header>
-
-    <div class="section-block" id="spine-block">
-      <h2 class="section-kicker">Spine · 2030s</h2>
-      <section class="panel" id="panel-spine">
-        <h2 class="panel-title">How the desks connect</h2>
-        <div class="context-body" id="spine-body">
-          <p class="loading">Loading…</p>
-        </div>
-      </section>
+    <div class="thesis-strip" aria-labelledby="thesis-strip-title">
+      <h2 id="thesis-strip-title">Structural thesis</h2>
+      <nav class="thesis-flow" aria-label="Explore the structural thesis">
+        <a class="thesis-node thesis-technology" href="#technology"><span class="thesis-role">Accelerant</span><strong>Technological deflation</strong><span class="thesis-detail">Expanding capability · falling production costs</span></a>
+        <div class="thesis-connection"><span class="thesis-arrow" aria-hidden="true">→</span><span>Pressure to sustain nominal incomes</span></div>
+        <a class="thesis-node thesis-fiscal" href="#fiscal"><span class="thesis-role">Transmission</span><strong>Fiscal dominance</strong><span class="thesis-detail">Nominal obligations · fiscal support</span></a>
+        <div class="thesis-connection"><span class="thesis-arrow" aria-hidden="true">→</span><span>Monetary expansion &amp; reserve diversification</span></div>
+        <a class="thesis-node thesis-hard-money" href="#hard-money"><span class="thesis-role">Monetization</span><strong>Hard-money monetization</strong><span class="thesis-detail">Gold · Bitcoin</span></a>
+      </nav>
     </div>
-
-    <div class="section-block" id="context-block" hidden>
-      <h2 class="section-kicker">Path book · H2 2026–2027</h2>
-      <section class="panel" id="panel-context">
-        <h2 class="panel-title" id="context-title">Scenario</h2>
-        <div class="context-body" id="context-body"></div>
-      </section>
-    </div>
-
-    <!-- ── Pillar desks ────────────────────────────────────────────────── -->
-    <div class="section-block">
-      <h2 class="section-kicker">Flow desks</h2>
-      <div class="pillar-grid" id="pillar-grid">
-
-        <section class="panel pillar-panel" id="pillar-ai">
-          <h2 class="panel-title">AI capability</h2>
-          <div class="pillar-body" id="pillar-ai-body">
-            <div class="loading">Loading…</div>
-          </div>
-        </section>
-
-        <section class="panel pillar-panel" id="pillar-dedollar">
-          <h2 class="panel-title">Credit &amp; long end</h2>
-          <div class="pillar-body" id="pillar-dedollar-body">
-            <div class="loading">Loading…</div>
-          </div>
-        </section>
-
-        <section class="panel pillar-panel pillar-span" id="pillar-monetary">
-          <h2 class="panel-title">Money</h2>
-          <div class="pillar-body" id="pillar-monetary-body">
-            <div class="loading">Loading…</div>
-          </div>
-        </section>
-
-        <section class="panel pillar-panel pillar-span" id="pillar-hardmoney">
-          <h2 class="panel-title">Hard money</h2>
-          <div class="pillar-body" id="pillar-hardmoney-body">
-            <div class="loading">Loading…</div>
-          </div>
-        </section>
-
-      </div>
-    </div>
-
-    <!-- ── Watchpoints board ──────────────────────────────────────────── -->
-    <div class="section-block">
-      <h2 class="section-kicker">What would break the thesis</h2>
-      <section class="panel" id="panel-triggers">
-        <h2 class="panel-title">Watchpoints</h2>
-        <p class="panel-sub" id="triggers-sub">Pre-committed invalidation</p>
-        <table class="trigger-table">
-          <thead>
-            <tr>
-              <th>Watchpoint</th>
-              <th>Breaks if</th>
-              <th>Now</th>
-              <th class="num">Status</th>
-            </tr>
-          </thead>
-          <tbody id="trigger-rows">
-            <tr><td colspan="4" class="loading">Loading…</td></tr>
-          </tbody>
-        </table>
-        <div class="trigger-summary" id="trigger-summary"></div>
-      </section>
-    </div>
-
-    <!-- ── Thesis Narrative (collapsible) ─────────────────────────────── -->
-    <div class="section-block">
-      <h2 class="section-kicker">Background reading</h2>
-      <section class="panel" id="panel-thesis">
-        <details id="thesis-details">
-          <summary class="thesis-summary">
-            <span class="summary-chevron" aria-hidden="true">▸</span>
-            Full thesis write-up
-            <span class="summary-hint"></span>
-          </summary>
-          <div id="thesis-content" class="thesis-body">
-            <p class="loading">Loading thesis…</p>
-          </div>
-        </details>
-        <details id="m2-note-details">
-          <summary class="thesis-summary">
-            <span class="summary-chevron" aria-hidden="true">▸</span>
-            How global money supply is measured
-            <span class="summary-hint"></span>
-          </summary>
-          <div id="m2-note-content" class="thesis-body">
-            <p class="loading">Loading…</p>
-          </div>
-        </details>
-      </section>
-    </div>
-
+    <p id="load-notice" class="notice" hidden></p>
+    <section id="technology" class="desk-section" aria-labelledby="tech-title"><div class="section-heading"><span class="section-number">01</span><h2 id="tech-title">Technological deflation</h2><span class="section-caption">Capability trajectory &amp; benchmarks</span></div><div id="tech-content"><p class="loading">Loading capability data…</p></div></section>
+    <section id="fiscal" class="desk-section" aria-labelledby="fiscal-title"><div class="section-heading"><span class="section-number">02</span><h2 id="fiscal-title">Fiscal dominance</h2><span class="section-caption">Debt, money &amp; dollar rails</span></div><div id="fiscal-content"><p class="loading">Loading monetary history…</p></div></section>
+    <section id="hard-money" class="desk-section" aria-labelledby="hard-title"><div class="section-heading"><span class="section-number">03</span><h2 id="hard-title">Hard-money monetization</h2><span class="section-caption">Prices &amp; capital flows</span></div><div id="hard-content"><p class="loading">Loading prices and flows…</p></div></section>
+    <footer><span>Macro desk · structural horizon to the 2030s</span><a href="https://github.com/darylcl1984/macro-dashboard" target="_blank" rel="noopener noreferrer">Source repository ↗</a></footer>
   </main>
-
-  <!-- ── Footer ─────────────────────────────────────────────────────── -->
-  <footer id="site-footer">
-    <div class="footer-inner">
-      <div class="footer-meta">
-        <span class="footer-meta-item">
-          <span class="footer-label">Prices</span>
-          <span id="footer-prices-ts">—</span>
-        </span>
-        <span class="footer-meta-item">
-          <span class="footer-label">Macro</span>
-          <span id="footer-macro-ts">—</span>
-        </span>
-        <span class="footer-meta-item">
-          <span class="footer-label">Assessed</span>
-          <span id="footer-assessed-ts">—</span>
-        </span>
-      </div>
-      <div class="footer-sources">
-        Data: FRED · ECB · BoE · BOJ · CoinGecko · Stooq · Yahoo · Alternative.me · DefiLlama · WGC/IMF (manual)
-      </div>
-      <div class="footer-note">
-        Updates Mon–Fri only · weekend stale badges are expected
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/darylcl1984/macro-dashboard" target="_blank" rel="noopener">GitHub</a>
-        <span class="sep" aria-hidden="true">·</span>
-        <span>Not financial advice — analytical framework for educational purposes.</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="app.js"></script>
+  <noscript>This dashboard needs JavaScript to draw its charts.</noscript>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

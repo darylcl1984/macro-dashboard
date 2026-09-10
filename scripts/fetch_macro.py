@@ -219,7 +219,8 @@ def fetch_fred():
             results[label] = entry
             print(f"    {label}: {value} ({date})")
         except Exception as e:
-            print(f"  [WARN] FRED {label} ({sid}): {e}")
+            # Requests errors can include the authenticated URL.
+            print(f"  [WARN] FRED {label} ({sid}): {type(e).__name__}")
 
     # US net liquidity = WALCL($M)/1000 − RRP($B) − TGA($B), all in $B
     fed = results.get("FED_BS")
@@ -595,6 +596,12 @@ def apply_history_upsert(history, snapshot):
     for i, entry in enumerate(history):
         if entry.get("period") != period:
             continue
+        # Daily snapshot FX must not replace a rebuilt monthly-average basket.
+        # The history backfill job updates these rows from official monthly data.
+        if _is_complete_aligned(entry) and "fx_monthly_avg_FRED" in (entry.get("flags") or []) and "fx_monthly_avg_FRED" not in (snapshot.get("flags") or []):
+            yoy_snap = entry
+            replaced = True
+            break
         if _is_complete_aligned(entry) and not _is_complete_aligned(snapshot):
             print(
                 f"  [WARN] GLOBAL_M2 history {period}: keeping complete 5-bloc row "

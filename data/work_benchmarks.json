@@ -1,0 +1,464 @@
+{
+  "fetched_at": "2026-09-10T01:46:44.031108+00:00",
+  "benchmarks": [
+    {
+      "id": "apex",
+      "title": "APEX-Agents",
+      "version": "1.1",
+      "metric": "Pass@1",
+      "description": "Professional work across banking, consulting and corporate law.",
+      "source": "Mercor · APEX-Agents",
+      "source_url": "https://www.mercor.com/apex/apex-agents-leaderboard/",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "version_source": "https://www.mercor.com/blog/introducing-apex-agents-1-1/",
+      "note": "Single-attempt task success. Errors are as reported by Mercor. Evaluation dates are not supplied; model release dates are not evaluation dates.",
+      "rows": [
+        {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "score": 68.6,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-09-01",
+          "evaluation_date": null
+        },
+        {
+          "model": "Gemini 3.7 Flash",
+          "creator": "Google",
+          "score": 67.8,
+          "reported_error": 5.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-08-13",
+          "evaluation_date": null
+        },
+        {
+          "model": "Opus 5",
+          "creator": "Anthropic",
+          "score": 65.8,
+          "reported_error": 5.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-07-24",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-6 Astra",
+          "creator": "OpenAI",
+          "score": 64.7,
+          "reported_error": 5.6,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-09-03",
+          "evaluation_date": null
+        },
+        {
+          "model": "Grok 4.6",
+          "creator": "xAI",
+          "score": 65.3,
+          "reported_error": 5.2,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-08-12",
+          "evaluation_date": null
+        },
+        {
+          "model": "Gemini 3.8 Flash",
+          "creator": "Google",
+          "score": 64.3,
+          "reported_error": 5.3,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-09-02",
+          "evaluation_date": null
+        },
+        {
+          "model": "Fable 5",
+          "creator": "Anthropic",
+          "score": 63.6,
+          "reported_error": 5.3,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-06-09",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-5.6 Terra",
+          "creator": "OpenAI",
+          "score": 58.2,
+          "reported_error": 5.3,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-07-09",
+          "evaluation_date": null
+        },
+        {
+          "model": "GLM-5.3",
+          "creator": "Zhipu",
+          "score": 56.6,
+          "reported_error": 5.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-08-14",
+          "evaluation_date": null
+        },
+        {
+          "model": "Grok 4.5",
+          "creator": "xAI",
+          "score": 56.2,
+          "reported_error": 5.4,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-07-08",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-5.5",
+          "creator": "OpenAI",
+          "score": 55.1,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-04-23",
+          "evaluation_date": null
+        },
+        {
+          "model": "Sonnet 5",
+          "creator": "Anthropic",
+          "score": 54.5,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-06-30",
+          "evaluation_date": null
+        },
+        {
+          "model": "GLM-5.3-Flash",
+          "creator": "Zhipu",
+          "score": 52.8,
+          "reported_error": 5.3,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-08-26",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-5.4",
+          "creator": "OpenAI",
+          "score": 52.4,
+          "reported_error": 5.3,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-03-05",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-5.6 Sol",
+          "creator": "OpenAI",
+          "score": 51.4,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-07-09",
+          "evaluation_date": null
+        },
+        {
+          "model": "Kimi K3",
+          "creator": "Kimi",
+          "score": 50.6,
+          "reported_error": 5.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-07-27",
+          "evaluation_date": null
+        },
+        {
+          "model": "Opus 4.7",
+          "creator": "Anthropic",
+          "score": 49.2,
+          "reported_error": 5.4,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-04-16",
+          "evaluation_date": null
+        },
+        {
+          "model": "Opus 4.8",
+          "creator": "Anthropic",
+          "score": 48.9,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-05-28",
+          "evaluation_date": null
+        },
+        {
+          "model": "DeepSeek-V4-Pro-0813",
+          "creator": "DeepSeek",
+          "score": 47.3,
+          "reported_error": 5.6,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-08-13",
+          "evaluation_date": null
+        },
+        {
+          "model": "Opus 4.6",
+          "creator": "Anthropic",
+          "score": 46.3,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-02-05",
+          "evaluation_date": null
+        },
+        {
+          "model": "Gemini 3.5 Flash",
+          "creator": "Google",
+          "score": 27.5,
+          "reported_error": 5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-05-19",
+          "evaluation_date": null
+        },
+        {
+          "model": "Gemini 3.6 Flash",
+          "creator": "Google",
+          "score": 46.9,
+          "reported_error": 5.2,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-07-21",
+          "evaluation_date": null
+        },
+        {
+          "model": "Muse Spark 1.2",
+          "creator": "Meta",
+          "score": 36.4,
+          "reported_error": 5.2,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-08-05",
+          "evaluation_date": null
+        },
+        {
+          "model": "Muse Spark 1.3",
+          "creator": "Meta",
+          "score": 57.8,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-09-02",
+          "evaluation_date": null
+        }
+      ]
+    },
+    {
+      "id": "terminal",
+      "title": "Terminal-Bench",
+      "version": "4.0",
+      "metric": "Resolution rate",
+      "description": "Technical tasks completed in a working terminal environment.",
+      "source": "Terminal-Bench · Stanford / Harbor / Laude Institute",
+      "source_url": "https://www.tbench.ai/",
+      "license": "Apache 2.0",
+      "license_url": "../docs/licenses/terminal-bench-Apache-2.0.txt",
+      "license_evidence": "https://epoch.ai/benchmarks/use-this-data",
+      "note": "Model plus agent setup. Reported errors are 95% confidence-interval half-widths; close scores can overlap.",
+      "rows": [
+        {
+          "model": "GPT-6 Astra",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "max",
+          "score": 58.18,
+          "reported_error": 2.79,
+          "evaluation_date": "2026-09-03",
+          "trials": 330
+        },
+        {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "max",
+          "score": 57.88,
+          "reported_error": 3.76,
+          "evaluation_date": "2026-09-01",
+          "trials": 330
+        },
+        {
+          "model": "GPT-6 Astra",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "xhigh",
+          "score": 57.88,
+          "reported_error": 2.72,
+          "evaluation_date": "2026-09-03",
+          "trials": 330
+        },
+        {
+          "model": "GPT-6 Astra",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "high",
+          "score": 57.88,
+          "reported_error": 2.97,
+          "evaluation_date": "2026-09-03",
+          "trials": 330
+        },
+        {
+          "model": "GPT-6 Astra",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "medium",
+          "score": 54.24,
+          "reported_error": 2.66,
+          "evaluation_date": "2026-09-03",
+          "trials": 330
+        },
+        {
+          "model": "Opus 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "max",
+          "score": 51.82,
+          "reported_error": 3.39,
+          "evaluation_date": "2026-07-24",
+          "trials": 330
+        },
+        {
+          "model": "GPT-6 Astra",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "low",
+          "score": 50.61,
+          "reported_error": 2.75,
+          "evaluation_date": "2026-09-03",
+          "trials": 330
+        },
+        {
+          "model": "Fable 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "max",
+          "score": 44.55,
+          "reported_error": 3.85,
+          "evaluation_date": "2026-06-09",
+          "trials": 330
+        },
+        {
+          "model": "GLM-5.3",
+          "creator": "Z.ai",
+          "agent": "Claude Code",
+          "effort": "max",
+          "score": 41.82,
+          "reported_error": 3.23,
+          "evaluation_date": "2026-08-14",
+          "trials": 330
+        },
+        {
+          "model": "GPT-5.6 Sol",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "max",
+          "score": 37.27,
+          "reported_error": 3.78,
+          "evaluation_date": "2026-06-26",
+          "trials": 330
+        },
+        {
+          "model": "Opus 4.8",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "max",
+          "score": 23.64,
+          "reported_error": 3.56,
+          "evaluation_date": "2026-05-28",
+          "trials": 330
+        },
+        {
+          "model": "GPT-5.6 Terra",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "max",
+          "score": 21.52,
+          "reported_error": 3.25,
+          "evaluation_date": "2026-06-26",
+          "trials": 330
+        },
+        {
+          "model": "Grok 4.6",
+          "creator": "xAI",
+          "agent": "Grok Build",
+          "effort": "high",
+          "score": 20.3,
+          "reported_error": 3.09,
+          "evaluation_date": "2026-08-12",
+          "trials": 330
+        },
+        {
+          "model": "Gemini 3.8 Flash",
+          "creator": "Google",
+          "agent": "mini-SWE-agent",
+          "effort": "high",
+          "score": 19.09,
+          "reported_error": 3.36,
+          "evaluation_date": "2026-09-02",
+          "trials": 330
+        },
+        {
+          "model": "GPT-5.6 Luna",
+          "creator": "OpenAI",
+          "agent": "Codex",
+          "effort": "max",
+          "score": 17.27,
+          "reported_error": 2.85,
+          "evaluation_date": "2026-06-26",
+          "trials": 330
+        },
+        {
+          "model": "Grok 4.5",
+          "creator": "xAI",
+          "agent": "Grok Build",
+          "effort": "high",
+          "score": 12.42,
+          "reported_error": 2.62,
+          "evaluation_date": "2026-07-16",
+          "trials": 330
+        },
+        {
+          "model": "Sonnet 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "max",
+          "score": 12.42,
+          "reported_error": 3.06,
+          "evaluation_date": "2026-06-30",
+          "trials": 330
+        },
+        {
+          "model": "Gemini 3.7 Flash",
+          "creator": "Google",
+          "agent": "mini-SWE-agent",
+          "effort": "high",
+          "score": 11.21,
+          "reported_error": 2.45,
+          "evaluation_date": "2026-08-13",
+          "trials": 330
+        }
+      ]
+    }
+  ],
+  "selection": "Top three distinct model labs by benchmark score; requested frontier models outside that selection are shown separately without changing the ranking.",
+  "omitted": [
+    {
+      "name": "OSWorld 2.0",
+      "checked_at": "2026-09-10",
+      "source_url": "https://osworld-v2.xlang.ai/",
+      "reason": "Official published results do not include Fable 5.1 or GPT-6 Astra."
+    }
+  ]
+}

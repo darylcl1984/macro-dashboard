@@ -2,9 +2,181 @@
   "source": "liquidity-monitor",
   "canonical_path": "liquidity-monitor/data/etf_flows.json",
   "source_url": "https://farside.co.uk/bitcoin-etf-flow-all-data/",
-  "synced_at": "2026-08-29T12:32:47.969353+00:00",
-  "notes": "Derived. Do not type Farside weeks here. Writer: liquidity-monitor/data/etf_flows.json. Run scripts/sync_etf_flows.py after appending a week on Liq.",
+  "synced_at": "2026-09-10T01:48:22.234484+00:00",
+  "notes": "Derived. Historical backfill from etf_flows_archive.json precedes the canonical series. Do not type current Farside weeks here. Writer: liquidity-monitor/data/etf_flows.json. Run scripts/sync_etf_flows.py after appending a week on Liq.",
   "weekly": [
+    {
+      "week_ending": "2025-08-08",
+      "net_flow_musd": 253.2
+    },
+    {
+      "week_ending": "2025-08-15",
+      "net_flow_musd": 547.6
+    },
+    {
+      "week_ending": "2025-08-22",
+      "net_flow_musd": -1178.5
+    },
+    {
+      "week_ending": "2025-08-29",
+      "net_flow_musd": 440.8
+    },
+    {
+      "week_ending": "2025-09-05",
+      "net_flow_musd": 250.3
+    },
+    {
+      "week_ending": "2025-09-12",
+      "net_flow_musd": 2323.9
+    },
+    {
+      "week_ending": "2025-09-19",
+      "net_flow_musd": 886.5
+    },
+    {
+      "week_ending": "2025-09-26",
+      "net_flow_musd": -897.6
+    },
+    {
+      "week_ending": "2025-10-03",
+      "net_flow_musd": 3236.0
+    },
+    {
+      "week_ending": "2025-10-10",
+      "net_flow_musd": 2714.8
+    },
+    {
+      "week_ending": "2025-10-17",
+      "net_flow_musd": -1225.3
+    },
+    {
+      "week_ending": "2025-10-24",
+      "net_flow_musd": 446.3
+    },
+    {
+      "week_ending": "2025-10-31",
+      "net_flow_musd": -799.0
+    },
+    {
+      "week_ending": "2025-11-07",
+      "net_flow_musd": -1208.4
+    },
+    {
+      "week_ending": "2025-11-14",
+      "net_flow_musd": -1111.7
+    },
+    {
+      "week_ending": "2025-11-21",
+      "net_flow_musd": -1216.8
+    },
+    {
+      "week_ending": "2025-11-28",
+      "net_flow_musd": 70.2
+    },
+    {
+      "week_ending": "2025-12-05",
+      "net_flow_musd": -87.7
+    },
+    {
+      "week_ending": "2025-12-12",
+      "net_flow_musd": 286.6
+    },
+    {
+      "week_ending": "2025-12-19",
+      "net_flow_musd": -497.1
+    },
+    {
+      "week_ending": "2025-12-26",
+      "net_flow_musd": -782.0
+    },
+    {
+      "week_ending": "2026-01-02",
+      "net_flow_musd": 459.0
+    },
+    {
+      "week_ending": "2026-01-09",
+      "net_flow_musd": -680.9
+    },
+    {
+      "week_ending": "2026-01-16",
+      "net_flow_musd": 1416.6
+    },
+    {
+      "week_ending": "2026-01-23",
+      "net_flow_musd": -1324.1
+    },
+    {
+      "week_ending": "2026-01-30",
+      "net_flow_musd": -1487.7
+    },
+    {
+      "week_ending": "2026-02-06",
+      "net_flow_musd": -318.1
+    },
+    {
+      "week_ending": "2026-02-13",
+      "net_flow_musd": -360.0
+    },
+    {
+      "week_ending": "2026-02-20",
+      "net_flow_musd": -315.9
+    },
+    {
+      "week_ending": "2026-02-27",
+      "net_flow_musd": 787.4
+    },
+    {
+      "week_ending": "2026-03-06",
+      "net_flow_musd": 568.5
+    },
+    {
+      "week_ending": "2026-03-13",
+      "net_flow_musd": 763.4
+    },
+    {
+      "week_ending": "2026-03-20",
+      "net_flow_musd": 93.1
+    },
+    {
+      "week_ending": "2026-03-27",
+      "net_flow_musd": -296.3
+    },
+    {
+      "week_ending": "2026-04-03",
+      "net_flow_musd": 22.2
+    },
+    {
+      "week_ending": "2026-04-10",
+      "net_flow_musd": 833.2
+    },
+    {
+      "week_ending": "2026-04-17",
+      "net_flow_musd": 996.5
+    },
+    {
+      "week_ending": "2026-04-24",
+      "net_flow_musd": 823.7
+    },
+    {
+      "week_ending": "2026-05-01",
+      "net_flow_musd": 162.8
+    },
+    {
+      "week_ending": "2026-05-08",
+      "net_flow_musd": 631.6
+    },
+    {
+      "week_ending": "2026-05-15",
+      "net_flow_musd": -995.5
+    },
+    {
+      "week_ending": "2026-05-22",
+      "net_flow_musd": -1256.3
+    },
+    {
+      "week_ending": "2026-05-29",
+      "net_flow_musd": -1415.6
+    },
     {
       "week_ending": "2026-06-05",
       "net_flow_musd": -1722.0
@@ -63,7 +235,7 @@
     "net_usd_m": 924.5,
     "net_usd_bn": 0.924,
     "streak_weeks_outflow": 0,
-    "updated": "2026-08-29",
+    "updated": "2026-09-10",
     "source": "Farside Investors (via liquidity-monitor/data/etf_flows.json)",
     "prior_week_usd_m": 1917.8
   }

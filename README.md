@@ -1,189 +1,93 @@
 # The Great Transition — Macro Dashboard
 
-Thesis-driven research terminal for a multi-year monetary transition. Two forces — **AI capability ladder** and **no duration left** — hit a fiscal hinge and empty into **gold and BTC**. Money growth is the output, not the claim. Horizon: the **2030s**.
+A structural macro research dashboard with a horizon into the 2030s. The current redesign organizes the thesis into three distinct sections. It is a local preview until explicitly published.
 
-This desk owns the 2030s floor and which A–D *path* the tape is on. It does not call whether the Jul–Dec 2026 window (`liquidity-monitor`) is in. A Q4 *signal* can print inside hawkish grind (B) without a first cut and without breaking floors. Thresholds are desk-local — a number on one desk does not bind the other.
-
-Waypoints, not trading signals. No portfolio, no positions.
-
-**Live:** [darylcl1984.github.io/macro-dashboard](https://darylcl1984.github.io/macro-dashboard) — opens the desk (`/src/`).
-
-**PWA:** Installable from Chrome (desktop/Android) when served over HTTPS — icons + service worker + `manifest.json` under `src/`.
-
----
-
-## Screenshots
-
-![Status bar, base-case book, and path waypoints](docs/dashboard-01.png)
-
-![Money growth and de-dollarisation pillars](docs/dashboard-02.png)
-
-![AI transition and Bitcoin pillars](docs/dashboard-03.png)
-
-![Watchpoints board and background reading](docs/dashboard-04.png)
-
----
-
-## What it tracks
-
-Two forces, one hinge, one sink:
-
-| Force | Near term | Structural |
-|---|---|---|
-| **AI ladder** | Capex / credit-coupled buildout | Knowledge-work then labour deflation (OTA / robotics) |
-| **No duration** | Path headwinds (10Y, $, HY) | No external long-end sink; freeze-risk; demographics |
-| **Hinge → money** | Transmission blocked or not (A–D) | Fiscal gap → more M2 and/or official hard assets |
-| **Sink** | ETF / lag clock | Gold + BTC (official bid and private run) |
-
-**Flow desks** (UI): AI capability · Credit & long end · Money · Hard money  
-
-**Scenario book (H2 2026–2027 path, not a 2026-exit verdict):**
-
-| ID | Name | Role |
-|---|---|---|
-| **A** | Liquidity relink (30%) | Money grows; BTC–M2 transmission heals |
-| **B** | Hawkish grind (40%) | **Base** — money grows; transmission blocked |
-| **C** | Credit scare (20%) | AI/credit break → forced easing |
-| **D** | Geo shock (10%) | Supply shock / stagflation path |
-
-Honesty mechanism: seven **pre-committed watchpoints**. Status is computed in public; corrections are documented, not goalpost-moved.
-
-Full write-up: [`docs/thesis.md`](docs/thesis.md) · M2 methodology: [`docs/m2_note.md`](docs/m2_note.md)
-
-*Not financial advice — analytical framework for educational purposes.*
-
----
-
-## Architecture
-
-GitHub Actions is a zero-cost backend. Python jobs fetch free/freemium APIs, commit JSON, GitHub Pages serves a static PWA. No server, no database, no bundler.
-
-```
-APIs (CoinGecko · Stooq · Yahoo · Alternative.me
-      FRED · BOJ · ECB · BoE)
-        │
-        ▼
-GitHub Actions (cron, Mon–Fri)
-  fetch_prices.py     → data/prices.json    (3× daily)
-  fetch_macro.py      → data/macro.json     (1× daily)
-  sync_etf_flows.py   → data/etf_flows.json (from Liq; best-effort on macro fetch)
-        │
-        ▼
-data/*.json committed to repo
-        │
-        ▼
-GitHub Pages PWA  (src/app.js reads JSON)
-```
-
-**Manual desk** (`data/manual.json`) — no free automated source, or judgment calls:
-
-| Series | Cadence |
+| Section | What it tracks |
 |---|---|
-| China M2 | Monthly (~14th, PBoC) |
-| CB gold (WGC), COFER | Quarterly |
-| Hyperscaler OCF vs cash capex ([Epoch](https://epoch.ai/data-insights/hyperscaler-capex-vs-cash-flow)) | Quarterly — see [`docs/ai-hyperscaler-cash.md`](docs/ai-hyperscaler-cash.md) |
-| Scenario book, waypoints, rescore cues | As judgment changes |
-| Trigger notes (COFER / AI / gold) | As needed |
+| Technological deflation | Epoch ECI frontier and estimated expert-task duration; APEX-Agents 1.1 and Terminal-Bench 4.0 with professional-work context |
+| Fiscal dominance | Federal debt/GDP; ten-year US M2 against its calculated 30-year CAGR; five-bloc broad money and regional growth; 2Y/30Y Treasury yields; USD stablecoin supply |
+| Hard-money monetization | Four-year gold and Bitcoin prices; four-year central-bank gold demand with a four-quarter moving average; over one year of weekly US spot Bitcoin ETF flows; Fear & Greed |
 
-Spot ETF weeks are typed only in `liquidity-monitor/data/etf_flows.json`. This desk syncs a derived snapshot (`python scripts/sync_etf_flows.py`).
+This desk studies structural forces. [Liquidity-monitor](https://github.com/darylcl1984/liquidity-monitor) owns the shorter-term liquidity window. No positions, portfolio tables or trade alerts.
 
-Only secret: free-tier **FRED API key** (`FRED_API_KEY` in GitHub Actions). Empty key fails the macro job.
+Thesis writing is paused. The saved thesis documents are not linked from the dashboard; its structural-thesis strip only navigates between sections. Historical implementation material and screenshots are grouped under [docs/archive](docs/archive/README.md).
 
----
+## Run locally
 
-## Data sources
+Serve from the **repository root**, because the app reads `../data/*.json`:
 
-| Source | Provides | Refresh |
-|---|---|---|
-| [CoinGecko](https://www.coingecko.com/en/api) | BTC + 24h change | 3× daily (Mon–Fri) |
-| [Yahoo Finance](https://finance.yahoo.com) | VIX + 52-week ranges | 3× daily |
-| [Stooq](https://stooq.com) | WTI, gold (XAUUSD), FX for M2 | 3× daily |
-| [FRED](https://fred.stlouisfed.org) | US M2, 10Y, broad dollar, HY OAS | Daily |
-| [BOJ](https://www.stat-search.boj.or.jp) | Japan M2 | Daily |
-| [ECB Data Portal](https://data.ecb.europa.eu) | Eurozone M2 | Daily |
-| [Bank of England](https://www.bankofengland.co.uk/boeapps/database/) | UK M4 | Daily |
-| [Alternative.me](https://alternative.me/crypto/fear-and-greed-index/) | Crypto Fear & Greed | Daily |
-| [Epoch AI](https://epoch.ai/data-insights/hyperscaler-capex-vs-cash-flow) | Hyperscaler OCF vs cash capex (CSV) | Quarterly (manual) |
-| Manual (`data/manual.json`) | China M2, CB gold, COFER, AI cash, scenario, ETF notes | Monthly / quarterly |
-
-**Computed in pipeline:** five-bloc Global M2 stock; headline YoY and **fixed-FX** YoY (money creation only). Stale badges fire when a source misses cadence (weekend staleness is expected).
-
----
-
-## Dashboard layout
-
-1. **Status bar** — Scenario, money growth YoY, floors (BTC/gold), hottest watchpoint  
-2. **Spine (2030s)** — Force A + Force B → credit/long end → fiscal gap → money → gold/BTC  
-3. **Path book (H2 2026–2027)** — A–D book, lead judgment, path waypoints, re-score if, next check, live tally  
-4. **Flow desks**
-   - **AI capability** — ladder copy; Epoch slopes; cash buildout as near-term path  
-   - **Credit & long end** — HY OAS, 10Y, broad $, net liquidity  
-   - **Money** — Global M2, dual YoY, five-bloc table, US M2 (fiscal proxy)  
-   - **Hard money** — Official (gold, CB, COFER, rails) · Private (BTC floors, ETF, lag); WTI/VIX as footnotes  
-5. **Watchpoints** — Seven lines (AI funding → money → COFER → gold → BTC cluster → oil)  
-6. **Background reading** — Full thesis + M2 methodology note  
-
-Design system: [`docs/design-contract.md`](docs/design-contract.md)
-
----
-
-## Local development
-
-```bash
-git clone https://github.com/darylcl1984/macro-dashboard.git
-cd macro-dashboard
+```sh
+python -m http.server 8081 --bind 127.0.0.1
 ```
 
-**API key** (for pipeline scripts):
+Open [the local dashboard](http://127.0.0.1:8081/src/). Port 8000 is reserved for liquidity-monitor. No build step or API key is needed to view the checked-in snapshots.
 
-```bash
-# Windows PowerShell
-$env:FRED_API_KEY = "your_fred_key"
-# macOS / Linux
-export FRED_API_KEY=your_fred_key
-```
+The [GitHub Pages address](https://darylcl1984.github.io/macro-dashboard/) remains the publication target. Local changes are not automatically deployed.
 
-Get a free key: [FRED API key](https://fred.stlouisfed.org/docs/api/api_key.html)
+## Data and refreshes
 
-**Fetch data:**
-
-```bash
-pip install -r requirements.txt
-python scripts/fetch_prices.py
-python scripts/fetch_macro.py
-python scripts/sync_etf_flows.py
-```
-
-**Serve the PWA from the repo root** (so both `src/` and `data/` are reachable).  
-`app.js` loads JSON as `../data/*.json` from the page URL — that only works if the server root is the **repo**, not `src/` alone. Python’s `http.server` will **404** parent paths if you `cd src` first (empty desk).
-
-```bash
-# from repo root
-python -m http.server 8080
-# → http://localhost:8080/      (redirects to the desk)
-# → http://localhost:8080/src/
-```
-
-Do **not** serve only from `src/` unless you also expose `data/` another way.
-
-GitHub Actions can also be run via **workflow_dispatch** on the Actions tab.
-
----
-
-## Repo map
-
-| Path | Role |
+| File | Source / update method |
 |---|---|
-| `src/` | PWA (HTML / CSS / JS / service worker) |
-| `data/` | Live JSON (`prices`, `macro`, `manual`, M2 history, `etf_flows` derived) |
-| `scripts/` | Fetch jobs + `sync_etf_flows.py` |
-| `docs/thesis.md` | Full thesis framework |
-| `docs/m2_note.md` | Global M2 methodology |
-| `docs/ai-hyperscaler-cash.md` | Epoch OCF/capex ingest pointer |
-| `docs/research/` | Revision provenance (not rendered) |
+| `data/dashboard_history.json` | `scripts/fetch_dashboard_history.py`: FRED, Coinbase, Stooq/Yahoo, DefiLlama and Alternative.me |
+| `data/m2_history.json` | `scripts/backfill_global_money.py`: same-month central-bank stocks and monthly-average FX; China remains reviewed input |
+| `data/gold_buying.json` | Reviewed four-year WGC quarterly extract; one publication vintage, including revisions |
+| `data/etf_flows.json` | `scripts/sync_etf_flows.py`: closed historical archive plus liquidity-monitor's canonical ongoing weeks |
+| `data/work_benchmarks.json` | `scripts/import_work_benchmarks.py`: original Mercor and Terminal-Bench leaderboards, with version and frontier-coverage checks |
+| `data/technology.json` | `scripts/import_epoch.py`: Epoch's public ECI CSV archive |
+| `data/metr_context.json` | `scripts/import_metr_context.py`: reviewed METR measurements and matching ECI calibration; refresh after an Epoch import |
+| `data/macro.json`, `data/manual.json` | Regional indicators and reviewed inputs used by the dashboard and refresh scripts |
 
----
+The unified [refresh workflow](.github/workflows/refresh-dashboard.yml) replaces the retired macro and legacy price jobs:
 
-## License
+| Cadence (UTC) | Coverage |
+|---|---|
+| Daily at 08:05, 12:05, 17:05 and 21:05 | Gold, Bitcoin, stablecoin supply and Fear & Greed |
+| Daily at 08:05 | Regional macro indicators, US M2/debt/yields, same-month global money, and ETF weeks from liquidity-monitor |
+| Mondays at 08:05 | Epoch ECI, then METR recalibration, plus original-publisher work benchmarks |
+| Manual run | All of the above |
 
-MIT
+Successful updates are validated before publication; failed sources retain usable snapshots and produce a failed Actions run. Only the automated snapshot files are staged. The old price writer, its isolated test, unused prices/alerts snapshots and two superseded workflows have been removed. Gold and Bitcoin charts use `data/dashboard_history.json`.
+
+These changes remain local. Scheduled refreshes begin after publication to the default branch, with Actions enabled and `FRED_API_KEY` configured. ETF synchronization also requires `LIQUIDITY_MONITOR_READ_TOKEN`, with read-only Contents access to the private liquidity-monitor repository. Its `master` branch is read without modification. See [refresh operations](docs/refresh-operations.md).
+For refreshes, install `requirements.txt` and supply `FRED_API_KEY` in the environment or GitHub Actions secrets. The history and global-money scripts also accept `--env-file` for a local key file. Never put a key in frontend code, source control or published JSON.
+
+ETF weeks are maintained in liquidity-monitor; this repo adds only a closed historical archive. Do not create a second ongoing writer here. Central-bank demand and China M2 remain reviewed updates.
+
+## Reading the measures
+
+- **M2:** the reference is calculated over the latest 360-month interval and anchored at the beginning of the displayed ten-year window. Current reference: approximately 6.28% CAGR, July 1996–July 2026.
+- **Global money:** five blocs, including UK M4. Only complete, same-month baskets are drawn. Headline YoY includes currency translation; fixed-FX YoY holds exchange rates constant.
+- **Gold:** the current price series is a clearly labelled continuous futures proxy. Central-bank purchases are a separate WGC series; the moving average requires four consecutive quarters.
+- **AI benchmarks:** task success against professional acceptance criteria. The original APEX human timing study is context, not a matched v1.1 human pass rate.
+- **ECI:** a linear latent capability scale. The summary shows the three-year frontier gain divided by three, in points per year. Expert-time tooltips distinguish METR measurements, approximate conversions and unvalidated extrapolations. A separate time line uses the logarithmic right axis; extended dashes identify estimates beyond the checked calibration range.
+
+See [data provenance and publication terms](docs/history-and-benchmark-sources.md), [M2 methodology](docs/m2_note.md), and the [design contract](docs/design-contract.md).
+
+## Repository layout
+
+| Directory | Purpose |
+|---|---|
+| `src/` | Dashboard, charts, offline support and the formatted methodology page |
+| `data/` | Current snapshots, reviewed inputs and the closed ETF archive |
+| `scripts/` | Active data refresh, import and validation tools |
+| `tests/` | Data, calculation and service-worker checks |
+| `docs/` | Current methodology, design, provenance and paused thesis work |
+| `docs/research/` | Source evidence and research history |
+| `docs/archive/` | Superseded instructions, completed redesign notes and old screenshots |
+
+Generated scratch downloads and old preview captures were cleared on 10 September 2026. Ignored `temp/` retains the supplied source input and locally installed test dependencies; neither is product data.
+
+## Validation
+
+```sh
+python -m unittest discover -s tests -v
+node --test tests/*.mjs
+node --check src/app.js
+node --check src/charts.js
+```
+
+The app is a vanilla HTML/CSS/JavaScript PWA with no bundler. Chart calculations are tested separately from rendering. Source requests time out, section failures remain local, and data writers preserve usable snapshots on failure. The service worker uses only its own project cache; bump its version after shell changes. It is disabled on localhost.
+
+## Licence
+
+Repository code: [MIT](LICENSE). Third-party datasets retain their own terms: Epoch and the APEX leaderboard use CC BY 4.0; Terminal-Bench leaderboard data uses Apache 2.0 with the [licence and notices retained](docs/licenses/README.md). WGC material is a limited attributed extract for review/commentary, not an unrestricted workbook redistribution. Other source data is not relicensed by this repository's MIT licence.

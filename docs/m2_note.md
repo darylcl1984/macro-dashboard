@@ -1,92 +1,57 @@
-# Notes on Global M2
+# How global money is measured
 
-July 2026 · desk-aligned cut 28 Jul 2026
+Updated 10 September 2026. This note describes the current three-section dashboard. The [earlier note](research/m2-note-pre-redesign-2026-09-10.md) preserves the original thesis discussion, estimates and historical desk diagnostics.
 
-Global M2 is **stage 4** of the thesis spine (the output), not the claim. The claim is two forces → fiscal hinge → gold/BTC. Methodology below.
+## The five-bloc basket
 
-### 1. What the Composite Measures
+The chart combines US, China, euro-area and Japan M2 with UK M4, converted to USD. It is a five-bloc broad-money composite, not every country's money supply. Cross-country definitions differ; this is a consistent basket rather than a globally harmonized monetary aggregate.
 
-The dashboard’s Global M2 figure is a **five-bloc composite**: US + China + Eurozone + Japan + UK money supply, each converted to USD. As of the **May 2026 data vintage** it stands at **~$106.8T**.
-
-You will see other “global M2” figures in circulation — commonly ~$135T. Those are broader baskets (top-20 economies, GDP-weighted variants). Neither is wrong; they are different measures. The five-bloc composite is used here because it covers most *active* global liquidity with five reliable statistical sources, and because its history is kept internally consistent. When comparing against external charts (e.g. BTC-vs-M2 overlays), always check which basket the chart uses.
-
-### 2. Current Levels
-
-**Live desk (Sep 2026):** five-bloc stock **~$108.0T** (data vintage **July 2026**, all five locals). Headline and fixed-FX YoY are **withheld**: July 2025 history is 4-bloc (`UK_unpublished`), so July-vs-July would mix baskets. The last complete 5-bloc pair on file is **May 2025 → May 2026** (~**+10.2%** headline / ~**+6.7%** fixed-FX). Invalidation remains headline YoY **&lt; 0%** when a matching-scope pair exists.
-
-**May 2026 vintage** (the July 2026 write-up; kept for the leakage table below):
-
-| Bloc | Level (local) | YoY (local) | Data as of | USD equiv. |
-|---|---|---|---|---|
-| US | $23.05T | +5.6% | May 2026 | $23.05T |
-| China | ¥353.67T | +8.6% | May 2026 | $52.01T |
-| Eurozone | €16.38T | ~+2.5% (est.) | May 2026 | $19.14T |
-| Japan | ¥1,296.44T | ~+1.5% (est.) | May 2026 vintage in composite | $8.21T |
-| UK (M4) | £3,278.5B | +4.5% | May 2026 | $4.38T |
-| **Composite** | | | | **~$106.78T** |
-
-**Calendar dual YoY (May 2025 → May 2026):**
-
-| Metric | Rate | Meaning |
+| Component | Published series | Local units stored |
 |---|---|---|
-| **Headline** | **~+9.4%** | USD composite growth (money + FX translation) |
-| **Fixed-FX** | **~+6.5%** | Prior-year local stocks revalued at *current* FX (money creation only) |
+| US M2 | FRED M2SL, seasonally adjusted | USD billions |
+| China M2 | Reviewed PBoC monthly releases | CNY trillions |
+| Euro-area M2 | ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E | EUR trillions |
+| Japan M2 | BOJ MD02.MAM1NAM2M2MO, monthly average | JPY trillions |
+| UK M4 | BoE LPMAUYN, seasonally adjusted | GBP billions |
 
-**Invalidation (watchpoint):** headline Global M2 YoY **&lt; 0%**. Always read fixed-FX beside headline when FX is doing heavy lifting.
+UK M4 is retained throughout; M4ex is not substituted. Latest observations and local-currency YoY appear in the regional table.
 
-**History notes:** `data/m2_history.json` holds monthly snapshots. There is a documented gap at **2025-06**. Some months carry quality flags (e.g. UK derived, 4-bloc ex-UK, EZ interpolated). The pipeline keys history by **data vintage** (component print months), not the wall-clock day of the fetch, and refuses headline YoY when base and as-of **scope** differ (5-bloc vs 4-bloc).
+## Conversion and comparability
 
-**Release lags (typical):** US FRED monthly (lagged); China PBoC ~mid-month; ECB/BOJ/BoE with their own calendars. China remains **manual** in `data/manual.json`.
+In USD trillions:
 
-### 3. FX Effects vs Money Creation
+```text
+US / 1000
++ China / USDCNY
++ euro area × EURUSD
++ Japan / USDJPY
++ UK / 1000 × GBPUSD
+```
 
-The USD composite conflates two things: actual money creation and currency translation. Both matter — but they mean different things for the thesis.
+Exchange rates are FRED monthly averages: EXCHUS, EXUSEU, EXJPUS and EXUSUK. Every plotted basket requires all five stocks from the same month and all four valid exchange rates.
 
-Example pattern: yuan *appreciation* inflates China’s USD-converted M2 without new yuan creation; yen *depreciation* shrinks Japan’s USD leg while local aggregates can still grow.
+The headline line uses each month's FX. The fixed-FX line revalues every month's local stocks using the latest complete month's exchange rates. Both YoY measures compare the same calendar month one year apart, using complete five-bloc baskets. Fixed-FX growth removes exchange-rate translation; it does not identify the policy or credit mechanism that created the money.
 
-- **Headline** = dollar-denominated size of the global money pool (relevant for USD-priced assets).  
-- **Fixed-FX** = monetary expansion holding FX constant (tests the “printing” claim).  
+No missing stocks are carried into another month, interpolated or replaced with zero. Missing months remain chart gaps. A mixed-month or daily-FX refresh cannot replace a completed monthly-average basket.
 
-A composite rising purely on FX is a weaker thesis confirmation than one rising on local-currency aggregates — flag which is driving.
+## Current coverage
 
-### 4. Not All M2 Is Globally Active
+There are 15 consecutive complete observations, May 2025–July 2026. The previously missing UK observations and June 2025 basket have been reconstructed from published sources.
 
-Capital-account openness, reserve status, and the eurodollar system determine how much of each bloc’s money supply actually circulates in global markets:
+July 2026: **$106.86T**, with **7.64% headline YoY** and **6.07% fixed-FX YoY**. These are computed directly from the chart's matching monthly observations. See [reconstruction and source provenance](history-and-benchmark-sources.md#global-money).
 
-| Bloc | Nominal M2 (May ’26) | Est. globally active | Leakage | Key mechanism |
-|---|---|---|---|---|
-| US | ~$23.1T | ~$19–20T | ~85% | Reserve currency; large offshore USD credit |
-| Eurozone | ~$19.1T | ~$8–9T | ~45% | Second reserve currency; open capital account |
-| China | ~$52.0T | ~$4–5T | ~8% | Largest nominal M2, mostly captive |
-| Japan | ~$8.2T | ~$2.5–3T | ~35% | Carry channel; domestically held psychology |
-| UK | ~$4.4T | ~$2.5–3T | ~65% | London FX hub |
-| **Total** | **~$106.8T** | **~$37–40T** | **~35%** | |
+US M2 has a separate ten-year chart. Its reference growth rate is calculated over the 30 years ending at the latest M2 observation, then anchored to the start of the displayed ten-year window. At July 2026 that reference is **6.28% CAGR**, using July 1996 and July 2026. Observed ten-year CAGR and latest YoY are separate readings.
 
-Leakage estimates are order-of-magnitude (BIS-era qualitative); re-verify annually. Implications:
+## Monetary stock is not freely mobile capital
 
-- **US M2 is disproportionately powerful** in global risk transmission.  
-- **De-dollarisation / capital-account opening** can unlock captive pools without new printing.  
-- **Stablecoins** are a sixth *rails* channel (T-bill-backed dollar liquidity) — re-dollarising private rails even as official reserves diversify. Track desk stablecoin mcap separately from the five-bloc sum.
+Capital controls, reserve-currency use, domestic banking structures and offshore credit affect how each aggregate reaches global asset markets. A dollar-equivalent yuan deposit is not interchangeable with a dollar deposit in its international use. The basket measures monetary stock; it does not apply speculative weights for each region's ability to transmit liquidity abroad.
 
-### 5. Transmission to BTC — layered model (2026)
+The earlier note's numerical “globally active” estimates remain archived as thesis assumptions, not measured series or inputs to this dashboard.
 
-**Do not confuse layers:**
+USD stablecoins are shown separately as dollar rails. Adding their gross supply to bank-money aggregates would risk counting related backing assets or deposits twice. Token supply alone also does not establish foreign adoption, payments activity or incremental Treasury demand.
 
-| Layer | Role | Desk surface |
-|---|---|---|
-| **Destination** | Global M2 (headline + fixed-FX) over years | Money growth pillar; invalidation YoY &lt; 0% |
-| **Short-run pipes** | Spot BTC **ETF flows**; US **net liquidity** + real rates / broad $ | Bitcoin ETF cell; money net-liq card |
-| **Bridge diagnostic** | **US M2 MoM vs BTC monthly** direction (12 mo) | Bitcoin strip — *labeled US, not global lag* |
-| **Invalidation clock** | Manual months since mid-2025 break → **18 mo** | Lag cell; resets only with sustained ETF + liquidity agreement |
+## Maintenance
 
-Historical relationship (global M2 lag ~10–12 weeks, high directional agreement) **broke around mid-2025**. Since Jan 2024 spot ETFs, **primary-market ETF flows** dominate the short run. Expanding M2 can coexist with soft BTC when rates, the dollar, energy premiums, and ETF outflows **absorb or redirect** the print.
+`scripts/fetch_macro.py` collects the existing regional snapshots. `scripts/backfill_global_money.py` then rebuilds complete monthly baskets from published regional histories, reviewed China observations and FRED FX. China remains a reviewed monthly input. Source revision dates can differ even when observation months match.
 
-Practical rules:
-
-- Divergence clock is **manual** until a proven auto-reset rule exists.  
-- One green ETF week does **not** reset the clock.  
-- US M2 vs BTC chips are a **diagnostic**, not a substitute for global M2.
-
----
-
-*For educational and analytical reference only. Not financial advice.*
+The historical thesis's BTC lag diagnostics and scenario thresholds are not rendered in the current interface. Monetary expansion and hard-asset flows are displayed separately; the dashboard does not impose a fixed price-transmission lag.

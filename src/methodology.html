@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Global Money Methodology — Macro Dashboard</title>
+  <meta name="description" content="Definitions, exchange-rate treatment and coverage of the dashboard's five-bloc broad-money composite.">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>try { document.documentElement.dataset.theme = localStorage.getItem('macro-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); } catch {}</script>
+</head>
+<body>
+  <main class="reading-page">
+    <a class="reading-back" href="./#fiscal">← Return to fiscal dominance</a>
+    <header class="reading-heading"><p class="eyebrow">METHODOLOGY · GLOBAL BROAD MONEY</p><h1>How global money<br>is measured</h1><p>A consistent five-bloc basket, with monetary growth and currency translation shown separately.</p></header>
+    <article class="reading-body">
+      <section><h2>Coverage and definitions</h2><p>The composite combines US, China, euro-area and Japan M2 with UK M4, converted into US dollars. It measures broad money in five major currency areas. It is not a measure of every country's money supply, and national monetary definitions are not fully harmonized.</p>
+        <div class="reading-table"><table><thead><tr><th scope="col">Region</th><th scope="col">Aggregate</th><th scope="col">Published source</th></tr></thead><tbody>
+          <tr><td>United States</td><td>M2 · seasonally adjusted</td><td><a href="https://fred.stlouisfed.org/series/M2SL">FRED · M2SL ↗</a></td></tr>
+          <tr><td>China</td><td>M2 · month-end stock</td><td><a href="http://www.pbc.gov.cn/en/">People's Bank of China ↗</a></td></tr>
+          <tr><td>Euro area</td><td>M2</td><td><a href="https://data.ecb.europa.eu/data/datasets/BSI/BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E">European Central Bank ↗</a></td></tr>
+          <tr><td>Japan</td><td>M2 · monthly average</td><td><a href="https://www.stat-search.boj.or.jp/">Bank of Japan ↗</a></td></tr>
+          <tr><td>United Kingdom</td><td>M4 · seasonally adjusted</td><td><a href="https://www.bankofengland.co.uk/boeapps/database/">Bank of England · LPMAUYN ↗</a></td></tr>
+        </tbody></table></div>
+        <p>UK M4 is used throughout. M4 excluding intermediate other financial corporations (M4ex) is a different aggregate and is not substituted.</p>
+      </section>
+      <section><h2>Currency conversion</h2><p>Each regional stock is converted to USD using FRED's monthly-average exchange rate for that observation month. The resulting series is expressed in USD trillions.</p>
+        <div class="formula-note"><span>Five-bloc total, in USD trillions</span><code>US M2 + China M2 ÷ USD/CNY<br>+ euro-area M2 × EUR/USD<br>+ Japan M2 ÷ USD/JPY<br>+ UK M4 × GBP/USD</code></div>
+        <p>All local stocks in this expression are first expressed in trillions of their respective currencies. The exchange-rate series are <a href="https://fred.stlouisfed.org/series/EXCHUS">EXCHUS</a>, <a href="https://fred.stlouisfed.org/series/EXUSEU">EXUSEU</a>, <a href="https://fred.stlouisfed.org/series/EXJPUS">EXJPUS</a> and <a href="https://fred.stlouisfed.org/series/EXUSUK">EXUSUK</a>.</p>
+      </section>
+      <section><h2>Headline and fixed-FX growth</h2><dl><dt>Headline series</dt><dd>Each month's money stocks are converted using that month's exchange rates. Growth includes both changes in local money supply and currency translation.</dd><dt>Fixed-FX series</dt><dd>Every historical observation is converted using the latest complete month's exchange rates. Growth therefore excludes changes in exchange rates.</dd><dt>Regional year-on-year growth</dt><dd>Each region's latest local-currency stock is compared with the same calendar month one year earlier.</dd></dl><p>The two composite growth rates also compare matching calendar months one year apart. Fixed-FX growth isolates changes in monetary stocks; it does not identify the fiscal, monetary or credit process responsible for them.</p></section>
+      <section><h2>Missing data and revisions</h2><p>A plotted observation requires all five money stocks from the same month and four valid exchange rates. Missing stocks are not carried forward, interpolated or replaced with zero. Missing months remain gaps in the chart.</p><p>Sources have different release calendars and may revise earlier observations. The dashboard uses the latest complete basket available, with the observation month shown beside the chart. The fixed-FX history is recalculated when that anchor month changes.</p></section>
+      <section><h2>Monetary stock and international liquidity</h2><p>Capital controls, reserve-currency use, domestic banking structures and offshore credit affect how readily each region's money reaches international markets. Equal dollar-equivalent stocks do not imply equal influence on global asset prices.</p><p>The composite applies no assumed weights for international mobility. USD stablecoins are displayed separately: adding their gross supply to bank-money aggregates could count related backing assets or deposits twice.</p></section>
+      <section><h2>The separate US M2 reference</h2><p>The US M2 chart compares the observed stock with a reference curve based on its latest 30-year compound annual growth rate. The reference begins at the start of the ten-year chart; both the calculation period and the curve update as new observations arrive.</p><div class="formula-note"><code>30-year CAGR = (latest M2 ÷ M2 360 months earlier)<sup>1/30</sup> − 1</code></div><p>The observed ten-year CAGR and latest year-on-year change are distinct measures and appear separately.</p></section>
+    </article>
+    <footer><span>Macro Dashboard · methodology reviewed September 2026</span><a href="./#fiscal">Return to dashboard ↗</a></footer>
+  </main>
+</body>
+</html>

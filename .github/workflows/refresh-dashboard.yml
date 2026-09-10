@@ -1,0 +1,155 @@
+name: Refresh dashboard data
+
+on:
+  schedule:
+    - cron: "5 8 * * *"
+    - cron: "5 12,17,21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dashboard-data-writer
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pip install -r requirements.txt
+
+      - name: Select refresh cadence
+        id: cadence
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          full=false
+          ai=false
+          if [ "$EVENT_NAME" = workflow_dispatch ] || [ "$SCHEDULE" = '5 8 * * *' ]; then
+            full=true
+            if [ "$EVENT_NAME" = workflow_dispatch ] || [ "$(date -u +%u)" = 1 ]; then ai=true; fi
+          fi
+          echo "full=$full" >> "$GITHUB_OUTPUT"
+          echo "ai=$ai" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh prices, dollar rails and sentiment
+        id: markets
+        continue-on-error: true
+        run: python scripts/fetch_dashboard_history.py --only gold bitcoin stablecoins fear_greed --strict
+
+      - name: Check access to the private canonical ETF source
+        id: upstream_access
+        if: steps.cadence.outputs.full == 'true'
+        continue-on-error: true
+        env:
+          READ_TOKEN: ${{ secrets.LIQUIDITY_MONITOR_READ_TOKEN }}
+        run: |
+          if [ -z "$READ_TOKEN" ]; then
+            echo '::error::Configure LIQUIDITY_MONITOR_READ_TOKEN with read-only Contents access to darylcl1984/liquidity-monitor. Existing ETF data will be retained.'
+            exit 1
+          fi
+
+      - name: Read canonical ETF data from liquidity-monitor
+        id: upstream
+        if: steps.cadence.outputs.full == 'true' && steps.upstream_access.outcome == 'success'
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          repository: darylcl1984/liquidity-monitor
+          ref: master
+          path: .upstream/liquidity-monitor
+          persist-credentials: false
+          token: ${{ secrets.LIQUIDITY_MONITOR_READ_TOKEN }}
+
+      - name: Sync ETF weeks and the closed historical archive
+        id: etf
+        if: steps.cadence.outputs.full == 'true' && steps.upstream.outcome == 'success'
+        continue-on-error: true
+        env:
+          ETF_FLOWS_SRC: .upstream/liquidity-monitor/data/etf_flows.json
+        run: python scripts/sync_etf_flows.py
+
+      - name: Refresh regional macro indicators
+        id: macro
+        if: steps.cadence.outputs.full == 'true'
+        continue-on-error: true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python scripts/fetch_macro.py
+
+      - name: Refresh US money, debt and Treasury histories
+        id: histories
+        if: steps.cadence.outputs.full == 'true'
+        continue-on-error: true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python scripts/fetch_dashboard_history.py --only us_m2 debt_gdp us_2y us_30y --strict
+
+      - name: Rebuild complete same-month global money history
+        id: global_money
+        if: steps.cadence.outputs.full == 'true'
+        continue-on-error: true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python scripts/backfill_global_money.py
+
+      - name: Refresh Epoch ECI
+        id: epoch
+        if: steps.cadence.outputs.ai == 'true'
+        continue-on-error: true
+        run: python scripts/import_epoch.py
+
+      - name: Refresh METR measurements and recalibrate against ECI
+        id: metr
+        if: steps.cadence.outputs.ai == 'true'
+        continue-on-error: true
+        run: python scripts/import_metr_context.py
+
+      - name: Refresh original-publisher benchmarks
+        id: benchmarks
+        if: steps.cadence.outputs.ai == 'true'
+        continue-on-error: true
+        run: python scripts/import_work_benchmarks.py
+
+      - name: Validate snapshots and calculations before publication
+        run: |
+          python -m unittest discover -s tests -v
+          node --test tests/*.mjs
+          node --check src/app.js
+          node --check src/charts.js
+
+      - name: Publish successful validated updates
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -- data/dashboard_history.json data/macro.json data/m2_history.json data/etf_flows.json data/technology.json data/metr_context.json data/work_benchmarks.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: refresh dashboard data [skip ci]"
+          git pull --rebase origin "$DEFAULT_BRANCH"
+          git push origin "HEAD:$DEFAULT_BRANCH"
+
+      - name: Report any failed source without discarding other updates
+        if: always()
+        env:
+          OUTCOMES: ${{ join(steps.*.outcome, ',') }}
+        run: |
+          if [[ ",$OUTCOMES," == *,failure,* ]]; then
+            echo '::error::One or more refresh or validation steps failed. Inspect the failed step; retained snapshots remain available.'
+            exit 1
+          fi

@@ -1,12 +1,20 @@
 [
   {
     "period": "2025-05",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-05",
+      "CN": "2025-05",
+      "EZ": "2025-05",
+      "JP": "2025-05",
+      "UK": "2025-05"
+    },
     "components_local": {
-      "US_usd_bn": 21833.9,
+      "US_usd_bn": 21836.1,
       "CN_cny_tn": 325.78,
-      "EZ_eur_tn": 15.72,
-      "JP_jpy_tn": 1267.0,
-      "UK_gbp_bn": 3108.0
+      "EZ_eur_tn": 15.724159,
+      "JP_jpy_tn": 1267.039,
+      "UK_gbp_bn": 3145.894
     },
     "fx": {
       "EURUSD": 1.1274,
@@ -14,23 +22,77 @@
       "USDCNY": 7.2166,
       "USDJPY": 144.8762
     },
-    "composite_usd": 97.597,
-    "composite_usd_4bloc_ex_uk": 93.445,
+    "composite_usd": 97.654611,
+    "composite_usd_4bloc_ex_uk": 93.452326,
     "flags": [
-      "UK_gbp_bn_derived_2nd_order",
-      "EZ_2dp",
-      "JP_4sf_average",
-      "fx_monthly_avg_G5"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
+  },
+  {
+    "period": "2025-06",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-06",
+      "CN": "2025-06",
+      "EZ": "2025-06",
+      "JP": "2025-06",
+      "UK": "2025-06"
+    },
+    "components_local": {
+      "US_usd_bn": 21942.6,
+      "CN_cny_tn": 330.29,
+      "EZ_eur_tn": 15.725981,
+      "JP_jpy_tn": 1268.1235,
+      "UK_gbp_bn": 3153.266
+    },
+    "fx": {
+      "EURUSD": 1.1534,
+      "GBPUSD": 1.3577,
+      "USDCNY": 7.1804,
+      "USDJPY": 144.4835
+    },
+    "composite_usd": 99.137909,
+    "composite_usd_4bloc_ex_uk": 94.85672,
+    "flags": [
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "https://english.www.gov.cn/archive/statistics/202507/14/content_WS6874b9d2c6d0868f4e8f4228.html",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2025-07",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-07",
+      "CN": "2025-07",
+      "EZ": "2025-07",
+      "JP": "2025-07",
+      "UK": "2025-07"
+    },
     "components_local": {
-      "US_usd_bn": 22020.4,
+      "US_usd_bn": 22025.5,
       "CN_cny_tn": 329.94,
-      "EZ_eur_tn": 15.74,
-      "JP_jpy_tn": 1270.0,
-      "UK_gbp_bn": null
+      "EZ_eur_tn": 15.743385,
+      "JP_jpy_tn": 1269.6074,
+      "UK_gbp_bn": 3159.316
     },
     "fx": {
       "EURUSD": 1.1671,
@@ -38,21 +100,38 @@
       "USDCNY": 7.1741,
       "USDJPY": 147.2014
     },
-    "composite_usd": 95.009,
-    "composite_usd_4bloc_ex_uk": 95.009,
+    "composite_usd": 99.276612,
+    "composite_usd_4bloc_ex_uk": 95.015011,
     "flags": [
-      "UK_unpublished",
-      "composite_is_4bloc_ex_uk"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2025-08",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-08",
+      "CN": "2025-08",
+      "EZ": "2025-08",
+      "JP": "2025-08",
+      "UK": "2025-08"
+    },
     "components_local": {
-      "US_usd_bn": 22087.1,
+      "US_usd_bn": 22092.6,
       "CN_cny_tn": 331.98,
-      "EZ_eur_tn": 15.75,
-      "JP_jpy_tn": 1271.0,
-      "UK_gbp_bn": null
+      "EZ_eur_tn": 15.762736,
+      "JP_jpy_tn": 1271.2263,
+      "UK_gbp_bn": 3174.832
     },
     "fx": {
       "EURUSD": 1.1647,
@@ -60,21 +139,38 @@
       "USDCNY": 7.1727,
       "USDJPY": 147.4786
     },
-    "composite_usd": 95.333,
-    "composite_usd_4bloc_ex_uk": 95.333,
+    "composite_usd": 99.627073,
+    "composite_usd_4bloc_ex_uk": 95.355019,
     "flags": [
-      "UK_unpublished",
-      "composite_is_4bloc_ex_uk"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2025-09",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-09",
+      "CN": "2025-09",
+      "EZ": "2025-09",
+      "JP": "2025-09",
+      "UK": "2025-09"
+    },
     "components_local": {
-      "US_usd_bn": 22170.4,
+      "US_usd_bn": 22176.1,
       "CN_cny_tn": 335.38,
-      "EZ_eur_tn": 15.79,
-      "JP_jpy_tn": 1271.0,
-      "UK_gbp_bn": null
+      "EZ_eur_tn": 15.79555,
+      "JP_jpy_tn": 1270.8414,
+      "UK_gbp_bn": 3192.877
     },
     "fx": {
       "EURUSD": 1.1739,
@@ -82,21 +178,38 @@
       "USDCNY": 7.1235,
       "USDJPY": 147.8629
     },
-    "composite_usd": 96.383,
-    "composite_usd_4bloc_ex_uk": 96.383,
+    "composite_usd": 100.706313,
+    "composite_usd_4bloc_ex_uk": 96.394013,
     "flags": [
-      "UK_unpublished",
-      "composite_is_4bloc_ex_uk"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2025-10",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-10",
+      "CN": "2025-10",
+      "EZ": "2025-10",
+      "JP": "2025-10",
+      "UK": "2025-10"
+    },
     "components_local": {
-      "US_usd_bn": 22245.1,
+      "US_usd_bn": 22249.8,
       "CN_cny_tn": 335.13,
-      "EZ_eur_tn": 15.9,
-      "JP_jpy_tn": 1270.0,
-      "UK_gbp_bn": null
+      "EZ_eur_tn": 15.910569,
+      "JP_jpy_tn": 1270.1907,
+      "UK_gbp_bn": 3186.236
     },
     "fx": {
       "EURUSD": 1.1641,
@@ -104,21 +217,38 @@
       "USDCNY": 7.12,
       "USDJPY": 151.3545
     },
-    "composite_usd": 96.214,
-    "composite_usd_4bloc_ex_uk": 96.214,
+    "composite_usd": 100.488126,
+    "composite_usd_4bloc_ex_uk": 96.23227,
     "flags": [
-      "UK_unpublished",
-      "composite_is_4bloc_ex_uk"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2025-11",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-11",
+      "CN": "2025-11",
+      "EZ": "2025-11",
+      "JP": "2025-11",
+      "UK": "2025-11"
+    },
     "components_local": {
-      "US_usd_bn": 22277.3,
+      "US_usd_bn": 22279.8,
       "CN_cny_tn": 336.99,
-      "EZ_eur_tn": 16.02,
-      "JP_jpy_tn": 1277.0,
-      "UK_gbp_bn": 3201.99
+      "EZ_eur_tn": 15.994672,
+      "JP_jpy_tn": 1276.6606,
+      "UK_gbp_bn": 3211.932
     },
     "fx": {
       "EURUSD": 1.1558,
@@ -126,20 +256,38 @@
       "USDCNY": 7.1069,
       "USDJPY": 155.1411
     },
-    "composite_usd": 100.649,
-    "composite_usd_4bloc_ex_uk": 96.442,
+    "composite_usd": 100.632927,
+    "composite_usd_4bloc_ex_uk": 96.41277,
     "flags": [
-      "UK_reported_TE"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2025-12",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2025-12",
+      "CN": "2025-12",
+      "EZ": "2025-12",
+      "JP": "2025-12",
+      "UK": "2025-12"
+    },
     "components_local": {
-      "US_usd_bn": 22353.4,
+      "US_usd_bn": 22355.3,
       "CN_cny_tn": 340.29,
-      "EZ_eur_tn": 16.08,
-      "JP_jpy_tn": 1279.0,
-      "UK_gbp_bn": 3212.665
+      "EZ_eur_tn": 16.075207,
+      "JP_jpy_tn": 1278.8812,
+      "UK_gbp_bn": 3226.568
     },
     "fx": {
       "EURUSD": 1.171,
@@ -147,20 +295,38 @@
       "USDCNY": 7.0432,
       "USDJPY": 155.915
     },
-    "composite_usd": 102.002,
-    "composite_usd_4bloc_ex_uk": 97.701,
+    "composite_usd": 102.015886,
+    "composite_usd_4bloc_ex_uk": 97.69648,
     "flags": [
-      "UK_reported_TE"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-01",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2026-01",
+      "CN": "2026-01",
+      "EZ": "2026-01",
+      "JP": "2026-01",
+      "UK": "2026-01"
+    },
     "components_local": {
-      "US_usd_bn": 22429.3,
+      "US_usd_bn": 22413.4,
       "CN_cny_tn": 347.19,
-      "EZ_eur_tn": 16.2047,
-      "JP_jpy_tn": 1279.0,
-      "UK_gbp_bn": 3209.5
+      "EZ_eur_tn": 16.176904,
+      "JP_jpy_tn": 1279.06,
+      "UK_gbp_bn": 3223.604
     },
     "fx": {
       "EURUSD": 1.1744,
@@ -168,20 +334,38 @@
       "USDCNY": 6.9692,
       "USDJPY": 156.6505
     },
-    "composite_usd": 103.787,
-    "composite_usd_4bloc_ex_uk": 99.443,
+    "composite_usd": 103.757851,
+    "composite_usd_4bloc_ex_uk": 99.394381,
     "flags": [
-      "UK_derived_from_MoM"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-02",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2026-02",
+      "CN": "2026-02",
+      "EZ": "2026-02",
+      "JP": "2026-02",
+      "UK": "2026-02"
+    },
     "components_local": {
-      "US_usd_bn": 22626.9,
+      "US_usd_bn": 22598.9,
       "CN_cny_tn": 349.22,
-      "EZ_eur_tn": 16.2458,
-      "JP_jpy_tn": 1274.9234,
-      "UK_gbp_bn": 3206.2
+      "EZ_eur_tn": 16.223483,
+      "JP_jpy_tn": 1274.7324,
+      "UK_gbp_bn": 3244.416
     },
     "fx": {
       "EURUSD": 1.1824,
@@ -189,20 +373,38 @@
       "USDCNY": 6.9064,
       "USDJPY": 155.1016
     },
-    "composite_usd": 104.974,
-    "composite_usd_4bloc_ex_uk": 100.621,
+    "composite_usd": 104.970525,
+    "composite_usd_4bloc_ex_uk": 100.564933,
     "flags": [
-      "UK_derived_from_MoM"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-03",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2026-03",
+      "CN": "2026-03",
+      "EZ": "2026-03",
+      "JP": "2026-03",
+      "UK": "2026-03"
+    },
     "components_local": {
-      "US_usd_bn": 22686.2,
+      "US_usd_bn": 22640.4,
       "CN_cny_tn": 353.86,
-      "EZ_eur_tn": 16.2673,
-      "JP_jpy_tn": 1280.0,
-      "UK_gbp_bn": 3231.9
+      "EZ_eur_tn": 16.274779,
+      "JP_jpy_tn": 1279.5037,
+      "UK_gbp_bn": 3272.289
     },
     "fx": {
       "EURUSD": 1.1557,
@@ -210,21 +412,38 @@
       "USDCNY": 6.8921,
       "USDJPY": 158.6827
     },
-    "composite_usd": 105.207,
-    "composite_usd_4bloc_ex_uk": 100.896,
+    "composite_usd": 105.220194,
+    "composite_usd_4bloc_ex_uk": 100.855288,
     "flags": [
-      "EZ_interpolated",
-      "UK_derived_from_MoM"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-04",
+    "scope": "5bloc",
+    "component_dates": {
+      "US": "2026-04",
+      "CN": "2026-04",
+      "EZ": "2026-04",
+      "JP": "2026-04",
+      "UK": "2026-04"
+    },
     "components_local": {
-      "US_usd_bn": 22804.5,
+      "US_usd_bn": 22756.7,
       "CN_cny_tn": 353.04,
-      "EZ_eur_tn": 16.2887,
-      "JP_jpy_tn": 1296.0,
-      "UK_gbp_bn": 3238.4
+      "EZ_eur_tn": 16.303998,
+      "JP_jpy_tn": 1295.6204,
+      "UK_gbp_bn": 3274.197
     },
     "fx": {
       "EURUSD": 1.1697,
@@ -232,97 +451,137 @@
       "USDCNY": 6.8371,
       "USDJPY": 159.1173
     },
-    "composite_usd": 105.995,
-    "composite_usd_4bloc_ex_uk": 101.638,
+    "composite_usd": 106.011068,
+    "composite_usd_4bloc_ex_uk": 101.605963,
     "flags": [
-      "UK_derived_from_MoM"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-05",
     "scope": "5bloc",
-    "components_local": {
-      "US_usd_bn": 23155.2,
-      "CN_cny_tn": 353.67,
-      "EZ_eur_tn": 16.41,
-      "JP_jpy_tn": 1297.01,
-      "UK_gbp_bn": 3308.8
-    },
     "component_dates": {
-      "US": "2026-06-01",
+      "US": "2026-05",
       "CN": "2026-05",
-      "EZ": "2026-06",
-      "JP": "202607",
-      "UK": "2026-06"
+      "EZ": "2026-05",
+      "JP": "2026-05",
+      "UK": "2026-05"
+    },
+    "components_local": {
+      "US_usd_bn": 23013.9,
+      "CN_cny_tn": 353.67,
+      "EZ_eur_tn": 16.349833,
+      "JP_jpy_tn": 1298.0903,
+      "UK_gbp_bn": 3280.1
     },
     "fx": {
-      "EURUSD": 1.1669,
-      "GBPUSD": 1.3639,
-      "USDCNY": 6.7215,
-      "USDJPY": 159.347
+      "EURUSD": 1.1681,
+      "GBPUSD": 1.3498,
+      "USDCNY": 6.7996,
+      "USDJPY": 158.153
     },
-    "fx_source": "fetch_spot",
-    "composite_usd": 107.58,
+    "composite_usd": 106.760786,
+    "composite_usd_4bloc_ex_uk": 102.333307,
     "flags": [
-      "mixed_vintage",
-      "vintage_min=2026-05"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-06",
     "scope": "5bloc",
-    "components_local": {
-      "US_usd_bn": 23218.0,
-      "CN_cny_tn": 355.51,
-      "EZ_eur_tn": 16.44,
-      "JP_jpy_tn": 1297.01,
-      "UK_gbp_bn": 3308.8
-    },
     "component_dates": {
-      "US": "2026-07-01",
-      "CN": "2026-07",
-      "EZ": "2026-07",
-      "JP": "202607",
+      "US": "2026-06",
+      "CN": "2026-06",
+      "EZ": "2026-06",
+      "JP": "2026-06",
       "UK": "2026-06"
     },
-    "fx": {
-      "EURUSD": 1.1621,
-      "GBPUSD": 1.3552,
-      "USDCNY": 6.7078,
-      "USDJPY": 159.708
+    "components_local": {
+      "US_usd_bn": 23115.2,
+      "CN_cny_tn": 355.51,
+      "EZ_eur_tn": 16.416939,
+      "JP_jpy_tn": 1296.1165,
+      "UK_gbp_bn": 3308.262
     },
-    "fx_source": "fetch_spot",
-    "composite_usd": 107.92,
+    "fx": {
+      "EURUSD": 1.1516,
+      "GBPUSD": 1.3338,
+      "USDCNY": 6.7758,
+      "USDJPY": 160.77
+    },
+    "composite_usd": 106.963042,
+    "composite_usd_4bloc_ex_uk": 102.550482,
     "flags": [
-      "mixed_vintage",
-      "vintage_min=2026-06"
-    ]
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   },
   {
     "period": "2026-07",
     "scope": "5bloc",
+    "component_dates": {
+      "US": "2026-07",
+      "CN": "2026-07",
+      "EZ": "2026-07",
+      "JP": "2026-07",
+      "UK": "2026-07"
+    },
     "components_local": {
       "US_usd_bn": 23218.0,
       "CN_cny_tn": 355.51,
-      "EZ_eur_tn": 16.44,
-      "JP_jpy_tn": 1297.01,
-      "UK_gbp_bn": 3299.0
-    },
-    "component_dates": {
-      "US": "2026-07-01",
-      "CN": "2026-07",
-      "EZ": "2026-07",
-      "JP": "202607",
-      "UK": "2026-07"
+      "EZ_eur_tn": 16.436438,
+      "JP_jpy_tn": 1296.6394,
+      "UK_gbp_bn": 3298.964
     },
     "fx": {
-      "EURUSD": 1.1618,
-      "GBPUSD": 1.3551,
-      "USDCNY": 6.6984,
-      "USDJPY": 153.924
+      "EURUSD": 1.1423,
+      "GBPUSD": 1.3383,
+      "USDCNY": 6.7757,
+      "USDJPY": 162.3295
     },
-    "fx_source": "fetch_spot",
-    "composite_usd": 108.29,
-    "flags": []
+    "composite_usd": 106.864427,
+    "composite_usd_4bloc_ex_uk": 102.449423,
+    "flags": [
+      "same_month_stocks",
+      "fx_monthly_avg_FRED"
+    ],
+    "sources": {
+      "US": "FRED M2SL",
+      "UK": "BoE LPMAUYN",
+      "EZ": "ECB BSI.M.U2.Y.V.M20.X.1.U2.2300.Z01.E",
+      "JP": "BOJ MD02.MAM1NAM2M2MO",
+      "CN": "PBoC · reviewed monthly stock",
+      "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
+    },
+    "checked_at": "2026-09-10"
   }
 ]

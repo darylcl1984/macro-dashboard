@@ -1,0 +1,326 @@
+{
+  "source": "METR \u00b7 Time Horizon 1.1",
+  "source_url": "https://metr.org/time-horizons/",
+  "data_url": "https://metr.org/assets/benchmark_results_1_1.yaml",
+  "fetched_at": "2026-09-10T04:04:27.635041+00:00",
+  "source_sha256": "aae31902b0519a4da73e16643915e5e8aca13cd3315c3aac893ce3d6dfe92ad9",
+  "benchmark": "METR-Horizon-v1.1",
+  "task_version": "799cc9c4b4483a93fc3445623a49ea1bd74fdeb2",
+  "eci_snapshot": "2026-09-10T01:14:14.943052+00:00",
+  "success_rate": 0.5,
+  "interval": "95% bootstrap confidence interval",
+  "anchor_id": "claude_3_7_sonnet_inspect",
+  "points_per_doubling": 5,
+  "calibration_source": "https://epoch.ai/data/eci-documentation/faq",
+  "axis_eci_range": [
+    125.88,
+    156.86
+  ],
+  "reliable_limit_minutes": 960,
+  "interpretation": "Model and release-date matches, not identical evaluation scaffolds. The right axis is an anchored historical illustration. METR values are separately published task-horizon estimates, not AI runtime or whole-job equivalence.",
+  "points": [
+    {
+      "id": "gpt_4",
+      "label": "GPT-4 (Mar 2023)",
+      "date": "2023-03-14",
+      "eci": 125.88,
+      "minutes": 3.987428,
+      "low_minutes": 1.93292,
+      "high_minutes": 7.995283,
+      "scaffolds": [
+        "modular-public",
+        "null"
+      ],
+      "illustrative_minutes": 7.251163,
+      "measured_to_illustrative_ratio": 0.549902
+    },
+    {
+      "id": "gpt_4_turbo_inspect",
+      "label": "GPT-4 Turbo (Apr 2024)",
+      "date": "2024-04-09",
+      "eci": 127.25,
+      "minutes": 3.732787,
+      "low_minutes": 1.980046,
+      "high_minutes": 6.736613,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 8.767785,
+      "measured_to_illustrative_ratio": 0.425739
+    },
+    {
+      "id": "gpt_4o_inspect",
+      "label": "GPT-4o (May 2024)",
+      "date": "2024-05-13",
+      "eci": 128.97,
+      "minutes": 6.991195,
+      "low_minutes": 4.001482,
+      "high_minutes": 12.905741,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 11.128694,
+      "measured_to_illustrative_ratio": 0.628213
+    },
+    {
+      "id": "claude_3_5_sonnet_20240620_inspect",
+      "label": "Claude 3.5 Sonnet",
+      "date": "2024-06-20",
+      "eci": 130.0,
+      "minutes": 11.395377,
+      "low_minutes": 5.489734,
+      "high_minutes": 22.384214,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 12.836788,
+      "measured_to_illustrative_ratio": 0.887712
+    },
+    {
+      "id": "claude_3_5_sonnet_20241022_inspect",
+      "label": "Claude 3.5 Sonnet (October 2024)",
+      "date": "2024-10-22",
+      "eci": 133.55,
+      "minutes": 20.522872,
+      "low_minutes": 10.144026,
+      "high_minutes": 40.82028,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 20.998471,
+      "measured_to_illustrative_ratio": 0.977351
+    },
+    {
+      "id": "claude_3_7_sonnet_inspect",
+      "label": "Claude 3.7 Sonnet",
+      "date": "2025-02-24",
+      "eci": 141.17,
+      "minutes": 60.388937,
+      "low_minutes": 33.006168,
+      "high_minutes": 104.226017,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 60.388937,
+      "measured_to_illustrative_ratio": 1.0
+    },
+    {
+      "id": "o3_inspect",
+      "label": "o3",
+      "date": "2025-04-16",
+      "eci": 146.91,
+      "minutes": 119.732634,
+      "low_minutes": 74.615398,
+      "high_minutes": 190.943818,
+      "scaffolds": [
+        "mtb/start_metr_task,triframe_inspect/triframe_agent",
+        "ai_rd_fix_embedding/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "re_bench_common/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "metr_tasks_swaa/init_solver,generate",
+        "triframe_inspect/triframe_agent"
+      ],
+      "illustrative_minutes": 133.825791,
+      "measured_to_illustrative_ratio": 0.89469
+    },
+    {
+      "id": "claude_4_opus_inspect",
+      "label": "Claude Opus 4",
+      "date": "2025-05-22",
+      "eci": 142.68,
+      "minutes": 100.366123,
+      "low_minutes": 59.994073,
+      "high_minutes": 163.454074,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 74.450641,
+      "measured_to_illustrative_ratio": 1.348089
+    },
+    {
+      "id": "claude_4_1_opus_inspect",
+      "label": "Claude Opus 4.1",
+      "date": "2025-08-05",
+      "eci": 144.12,
+      "minutes": 100.472004,
+      "low_minutes": 59.272391,
+      "high_minutes": 159.451918,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 90.900251,
+      "measured_to_illustrative_ratio": 1.1053
+    },
+    {
+      "id": "gpt_5_2025_08_07_inspect",
+      "label": "GPT-5",
+      "date": "2025-08-07",
+      "eci": 150.0,
+      "minutes": 203.012577,
+      "low_minutes": 112.641357,
+      "high_minutes": 405.551565,
+      "scaffolds": [
+        "mtb/start_metr_task,triframe_inspect/triframe_agent",
+        "ai_rd_fix_embedding/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "re_bench_common/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "metr_tasks_swaa/init_solver,generate",
+        "triframe_inspect/triframe_agent"
+      ],
+      "illustrative_minutes": 205.388611,
+      "measured_to_illustrative_ratio": 0.988432
+    },
+    {
+      "id": "gemini_3_pro",
+      "label": "Gemini 3 Pro",
+      "date": "2025-11-18",
+      "eci": 153.01,
+      "minutes": 224.325884,
+      "low_minutes": 139.565157,
+      "high_minutes": 379.235434,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 311.742788,
+      "measured_to_illustrative_ratio": 0.719586
+    },
+    {
+      "id": "claude_opus_4_5_inspect",
+      "label": "Claude Opus 4.5",
+      "date": "2025-11-24",
+      "eci": 150.11,
+      "minutes": 292.994594,
+      "low_minutes": 161.717714,
+      "high_minutes": 623.704698,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 208.544633,
+      "measured_to_illustrative_ratio": 1.404949
+    },
+    {
+      "id": "gpt_5_2",
+      "label": "GPT-5.2",
+      "date": "2025-12-11",
+      "eci": 153.49,
+      "minutes": 352.249302,
+      "low_minutes": 198.067494,
+      "high_minutes": 815.177445,
+      "scaffolds": [
+        "mtb/start_metr_task,triframe_inspect/triframe_agent",
+        "ai_rd_fix_embedding/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "re_bench_common/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "metr_tasks_swaa/init_solver,generate",
+        "triframe_inspect/triframe_agent"
+      ],
+      "illustrative_minutes": 333.192559,
+      "measured_to_illustrative_ratio": 1.057194
+    },
+    {
+      "id": "claude_opus_4_6_inspect",
+      "label": "Claude Opus 4.6",
+      "date": "2026-02-05",
+      "eci": 155.34,
+      "minutes": 718.80683,
+      "low_minutes": 316.685725,
+      "high_minutes": 3633.786163,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 430.602347,
+      "measured_to_illustrative_ratio": 1.669305
+    },
+    {
+      "id": "gpt_5_3_codex",
+      "label": "GPT-5.3 Codex",
+      "date": "2026-02-05",
+      "eci": 156.59,
+      "minutes": 349.530732,
+      "low_minutes": 194.913134,
+      "high_minutes": 816.351994,
+      "scaffolds": [
+        "mtb/start_metr_task,triframe_inspect/triframe_agent",
+        "ai_rd_fix_embedding/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "re_bench_common/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "metr_tasks_swaa/init_solver,generate",
+        "triframe_inspect/triframe_agent"
+      ],
+      "illustrative_minutes": 512.075375,
+      "measured_to_illustrative_ratio": 0.682577
+    },
+    {
+      "id": "gemini_3_1_pro",
+      "label": "Gemini 3.1 Pro",
+      "date": "2026-02-19",
+      "eci": 155.0,
+      "minutes": 384.147435,
+      "low_minutes": 233.50073,
+      "high_minutes": 694.750898,
+      "scaffolds": [
+        "mtb/start_metr_task,triframe_inspect/triframe_agent",
+        "ai_rd_fix_embedding/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "re_bench_common/init_solver,use_tools,triframe_inspect/triframe_agent",
+        "metr_tasks_swaa/init_solver,generate",
+        "triframe_inspect/triframe_agent"
+      ],
+      "illustrative_minutes": 410.777221,
+      "measured_to_illustrative_ratio": 0.935172
+    },
+    {
+      "id": "gpt_5_4",
+      "label": "GPT-5.4",
+      "date": "2026-03-05",
+      "eci": 156.86,
+      "minutes": 341.735276,
+      "low_minutes": 186.581591,
+      "high_minutes": 768.779526,
+      "scaffolds": [
+        "mtb/start_metr_task,metr_agents/react",
+        "ai_rd_fix_embedding/init_solver,use_tools,metr_agents/react",
+        "re_bench_common/init_solver,use_tools,metr_agents/react",
+        "metr_tasks_swaa/init_solver,generate",
+        "metr_agents/react"
+      ],
+      "illustrative_minutes": 531.605556,
+      "measured_to_illustrative_ratio": 0.642836
+    }
+  ]
+}

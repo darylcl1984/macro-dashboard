@@ -9,10 +9,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from sync_etf_flows import desk_snapshot, period_label  # noqa: E402
+from sync_etf_flows import desk_snapshot, period_label, merge_weekly  # noqa: E402
 
 
 class TestEtfMapper(unittest.TestCase):
+    def test_archive_cannot_overwrite_or_extend_canonical_weeks(self):
+        archive = {'archive_through': '2026-05-29', 'weekly': [
+            {'week_ending': '2026-05-29', 'net_flow_musd': 100},
+            {'week_ending': '2026-06-05', 'net_flow_musd': 999},
+            {'week_ending': '2026-06-12', 'net_flow_musd': 999}]}
+        raw = {'weekly': [{'week_ending': '2026-06-05', 'net_flow_musd': -50}]}
+        self.assertEqual(merge_weekly(raw, archive), [archive['weekly'][0], raw['weekly'][0]])
+
     def test_period_same_month(self):
         self.assertEqual(period_label("2026-08-21"), "2026-08-17/21")
         self.assertEqual(period_label("2026-08-28"), "2026-08-24/28")

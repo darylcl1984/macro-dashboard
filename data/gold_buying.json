@@ -1,0 +1,91 @@
+{
+  "source": "World Gold Council · Metals Focus · Refinitiv GFMS",
+  "source_url": "https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q2-2026/central-banks",
+  "published_at": "2026-07-30",
+  "checked_at": "2026-09-10",
+  "unit": "net tonnes",
+  "note": "Limited four-year extract for research commentary from the Q2 2026 publication vintage. Includes revised historical estimates and both reported and estimated unreported demand. Q3/Q4 2026 placeholders excluded.",
+  "points": [
+    {
+      "date": "2022-07-01",
+      "period": "2022-Q3",
+      "value": 456.91
+    },
+    {
+      "date": "2022-10-01",
+      "period": "2022-Q4",
+      "value": 382.1
+    },
+    {
+      "date": "2023-01-01",
+      "period": "2023-Q1",
+      "value": 290.42
+    },
+    {
+      "date": "2023-04-01",
+      "period": "2023-Q2",
+      "value": 176.34
+    },
+    {
+      "date": "2023-07-01",
+      "period": "2023-Q3",
+      "value": 367.26
+    },
+    {
+      "date": "2023-10-01",
+      "period": "2023-Q4",
+      "value": 216.79
+    },
+    {
+      "date": "2024-01-01",
+      "period": "2024-Q1",
+      "value": 313.3
+    },
+    {
+      "date": "2024-04-01",
+      "period": "2024-Q2",
+      "value": 211.52
+    },
+    {
+      "date": "2024-07-01",
+      "period": "2024-Q3",
+      "value": 196.39
+    },
+    {
+      "date": "2024-10-01",
+      "period": "2024-Q4",
+      "value": 365.09
+    },
+    {
+      "date": "2025-01-01",
+      "period": "2025-Q1",
+      "value": 235.87
+    },
+    {
+      "date": "2025-04-01",
+      "period": "2025-Q2",
+      "value": 177.85
+    },
+    {
+      "date": "2025-07-01",
+      "period": "2025-Q3",
+      "value": 226.25
+    },
+    {
+      "date": "2025-10-01",
+      "period": "2025-Q4",
+      "value": 208.19
+    },
+    {
+      "date": "2026-01-01",
+      "period": "2026-Q1",
+      "value": 56.52
+    },
+    {
+      "date": "2026-04-01",
+      "period": "2026-Q2",
+      "value": 288.86
+    }
+  ],
+  "chart_data_url": "https://fsapi.gold.org/api/v12/charts/js/gdt-q2-2026-pmiac/3430"
+}

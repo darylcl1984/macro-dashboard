@@ -1,5 +1,7 @@
 # Python
 __pycache__/
+.pytest_cache/
+.ruff_cache/
 *.py[cod]
 *$py.class
 *.egg-info/
@@ -16,6 +18,7 @@ secrets.json
 
 # Local / agent working scratch (not product data)
 temp/
+.upstream/
 tmp/
 *.tmp
 data/agent_manual_pack_*.json

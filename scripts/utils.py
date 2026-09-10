@@ -1,10 +1,11 @@
 """
 utils.py
-Shared helpers for fetch_prices.py and fetch_macro.py.
+Shared helpers for macro indicators and ETF history updates.
 """
 
 import json
 import re
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -40,10 +41,20 @@ def now_utc():
 
 
 def write_json(path, data):
-    """Write data as indented JSON to path, creating parent dirs as needed."""
+    """Atomically replace valid JSON so readers never see partial writes."""
     path = Path(path)
+    content = json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False) + '\n'
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=path.parent,
+                                         prefix=path.name + '.', suffix='.tmp', delete=False) as handle:
+            temporary = Path(handle.name)
+            handle.write(content)
+        temporary.replace(path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 # ---------------------------------------------------------------------------

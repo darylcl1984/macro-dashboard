@@ -1,129 +1,62 @@
-# Design Contract — Institutional Research Terminal
+# Design contract — three research desks
 
-**Status:** Active (visual overhaul 2026-07-27; sibling-chrome pass 2026-08-26)  
-**Scope:** Look & feel only. No product/domain feature changes.
+Updated 10 September 2026 for the user-authorized redesign. This supersedes the previous path-book and watchpoint layout.
 
-## Mood
+## Structure
 
-Institutional / research terminal. Dark-first. Quiet confidence: hierarchy and data do the work; decoration is sparse. Not consumer fintech candy, not neo-brutal, not glassmorphism.
+1. Technological deflation — capability trajectory followed by professional-task benchmarks.
+2. Fiscal dominance — debt, money and dollar rails.
+3. Hard-money monetization — prices and capital flows.
 
-## Sibling chrome (liquidity-monitor)
+Each section is a visible enclosure: a surface, a numbered heading, a thin accent border and breathing room around it. Charts sit in darker wells inside that enclosure. Do not return to an undifferentiated grid of cards.
 
-Same terminal family as liquidity-monitor: canvas `#141922`, IBM Plex, 2–4px radius, 1px hairlines, sage/amber/coral on **values**, kickers, flattened desks, KPI strips, unboxed status. Rails = command (path book) or alarm (watchpoints when broken) — not a rainbow on every theme. Nested title-strips and card-in-card wells are out.
+The September 10 aesthetics pass places the masthead above the sticky research index. Use the mint title accent and three-bar research mark to connect visually with liquidity-monitor. The framework strip contains three matching, fully bordered node boxes with darker surfaces and directional arrows between them. Keep diagonal link arrows out of the nodes; subject colour appears in role labels and hover/focus borders. Section numbers are unboxed, with fine dividers; reserve stronger colour for data series and small subject accents.
 
-This is **not** a product merge. Macro-dashboard keeps its IA: sticky path clock, A–D path book, four themes, watchpoints. Do not import LM causal 01–05, ticker cards, MSTR, or kill rows.
+A compact Structural thesis strip precedes the charts. Its clickable nodes follow the proposed mechanism: technological deflation → fiscal dominance → hard-money monetization. Connections name pressure to sustain nominal incomes, followed by monetary expansion and reserve diversification. Technology is labelled as an accelerant. The strip, section order and numbered navigation all follow this same sequence. It carries no inferred live status or causal scoring.
 
-Hex values already match. Optional aliases in `:root` map LM names onto MD tokens (no rename of `--bg` / `--green` / `--red`):
+The approved subtitle beneath The Great Transition is: “Technology accelerates a monetary transition already shaped by debt, fiscal commitments and reserve diversification.”
 
-| MD token | LM alias | Value |
-|----------|----------|--------|
-| `--bg` | `--canvas` | `#141922` |
-| `--bg-elevated` | `--canvas-elev` | `#1a2030` |
-| `--border` | `--line` | `rgba(210, 220, 240, 0.12)` |
-| `--border-2` | `--line-strong` | `rgba(210, 220, 240, 0.18)` |
-| `--text-dim` | `--text-2` | `#b0bac9` |
-| `--text-muted` | `--text-3` | `#7d8999` |
-| `--green` | `--sage` | `#6fbf9a` |
-| `--red` | `--coral` | `#e07070` |
+Fiscal layout: full-width US M2, global broad money, and Treasury yields, followed by equal-width debt/GDP and dollar-rails cards. Hard money uses two full-width asset sections: Gold first, with price and central-bank demand side by side; Bitcoin second, with price and ETF flows side by side. Each pair shares a full-width asset heading, with spacing and a fine divider between asset sections. Below 760px, each pair stacks price first, then demand or flows, beneath its asset heading. Keep asset groups free of extra enclosing borders and tinted backgrounds: neutral asset titles and small symbol tiles provide identification. Fear & Greed is a compact, read-only neutral segmented meter with a coloured position marker.
 
-## Tokens (`src/styles.css` `:root`)
+Chart values appear in floating tooltips on pointer, touch or keyboard inspection, with explicit units. Keep the headline observation above the chart. Quarterly observations use quarter labels, and publication/retrieval dates remain distinct from reporting periods. The public methodology link opens `src/methodology.html`, a styled reading page.
 
-| Role | Token | Value |
-|------|--------|--------|
-| Canvas | `--bg` | `#141922` |
-| Elevated | `--bg-elevated` | `#1a2030` |
-| Surface | `--surface` | `#1e2533` |
-| Surface-2 | `--surface-2` | `#262e3e` |
-| Hairline | `--border` | `rgba(210, 220, 240, 0.12)` |
-| Stronger line | `--border-2` | `rgba(210, 220, 240, 0.18)` |
-| Text primary | `--text` | `#f2f5fa` |
-| Text secondary | `--text-dim` | `#b0bac9` |
-| Text tertiary | `--text-muted` | `#7d8999` |
-| Accent | `--blue` / `--accent` | `#6b9fd4` |
-| Accent wash | `--accent-wash` | `rgba(107, 159, 212, 0.12)` |
-| OK / sage | `--green` | `#6fbf9a` |
-| Watch / amber | `--amber` | `#d4a354` |
-| Stress / coral | `--red` | `#e07070` |
-| Soft washes | `--green-wash`, `--amber-wash`, `--red-wash` | ~12% alpha |
+Full-width M2, Treasury and ECI charts use calendar-aligned year ticks, four-digit labels, explicit start/end months and responsive label spacing. Vertical scales use rounded increments with currency/percentage units where applicable. ECI remains a linear points scale, and its bounds include the published confidence intervals.
 
-Legacy aliases (`--green-dim`, etc.) map to wash/border companions so existing class names keep working.
+## Visual family
 
-### Semantic usage
+Use liquidity-monitor's current palette and IBM Plex typography as the family reference. The products keep separate scopes.
 
-- **Sage** = healthy / clear / OK  
-- **Amber** = watch / approaching / elevated  
-- **Coral** = break / kill / hot stress  
-- **Accent blue** = chrome, links, focus rings, neutral series — **not** success  
+| Role | Dark | Light |
+|---|---|---|
+| Canvas | `#0c151b` | `#edf0eb` |
+| Section surface | `#15232d` | `#fcfdf9` |
+| Chart well | `#101c24` | `#f5f7f2` |
+| Primary text | `#eef3f1` | `#1b3338` |
+| Fiscal accent | `#9bd8ca` | `#276e60` |
+| Hard-money accent | `#dfc578` | `#866510` |
+| Technology accent | `#beb1e6` | `#7055a0` |
 
-## Typography
+Colours identify subject matter; they do not signal a trade or a favourable outcome. Negative flows use the negative-series token.
 
-| Role | Spec |
-|------|------|
-| UI | IBM Plex Sans |
-| Numbers / meta / badges | IBM Plex Mono |
-| Base | 13px, line-height 1.5 |
-| Section kickers | 10px / 600, uppercase, tracking ~0.1em, tertiary |
-| Panel titles | ~15px, semibold, slight negative tracking |
-| Big KPIs | mono, tabular-nums, 16–22px (hero up to ~28px) |
-| Numerics | `font-variant-numeric: tabular-nums` on dashboards |
+- IBM Plex Sans for language, IBM Plex Mono with tabular numerals for measurements.
+- Maximum page width 1440px; 48px desktop gutters, reduced on smaller screens.
+- Section radius 16px, chart-well radius 10px; restrained shadows on the outer surfaces.
+- Section titles 23–29px, primary values about 32px, chart titles 16px. Hard-money readings use quieter 24px secondary-text values, with equal sizing for quarterly purchases and the four-quarter average. Key readings sit on softly inset measurement strips; labels and source notes are generally 12px, with 14px explanatory text. Debt/GDP and central-bank purchase reporting quarters belong in the source/date notes, rather than adding a caption beneath only one paired reading.
+- Use translucent neutral borders, stronger dividers sparingly, and separate quiet grid-line tokens in both themes.
+- Sticky section navigation with numbered links and an accessible current-location state.
+- Two-column charts collapse at 760px; yearly ECI cells stack on narrow screens.
+- Retain a usable light theme, visible keyboard focus and reduced-motion support.
 
-## Shape & chrome
+## Data hierarchy
 
-- Radius **2–4px** (almost rectangular)
-- 1px hairlines; **no heavy drop shadows**; no glass/blur on the status lid
-- Desks: surface fill, in-flow titles (no title-strip bars); inner blocks are hairlines, not nested wells
-- **3px left rail** = command (path book, follows active scenario tone) or alarm (watchpoints when broken) — not a rainbow on every theme
-- Alarm: thin mix border + 3px semantic rail (not a 20px glow)
+Lead with the observation and its unit. Follow with context, the chart, its date/source, and a compact method disclosure where needed.
 
-## Layout patterns
+Benchmark task-success bars are on a 0–100% task scale. A professional reference must distinguish measured human results from task acceptance criteria. Never invent a human ECI score or treat a benchmark percentage as the fraction of a whole job automated.
 
-1. **Sticky status strip** — four command KPIs (scenario, M2 YoY, floors, named hot watchpoint), opaque, column-aligned with `main`. Fear & Greed lives on Hard money Private.  
-2. **Page header** — title, horizon, one-line subtitle (not a second LM-style nav/status grid)  
-3. **Section kickers** — 10px / 600 / ~0.1em uppercase between major areas  
-4. **Desk / panel** — titled slab, body, optional KPI strip  
-5. **KPI strip** — mono label · value · meta in a shared elevated well with vertical hairlines  
-6. **Content blocks** — tables, range bars, progress clocks with explicit labels  
-7. **Grids** — top row 2-column (AI | Credit) ≥900px; Money and Hard money span full width; Hard money splits Official | Private; collapse to 1-col below 900px  
+Yearly ECI cards distinguish completed calendar years from year-to-date gains and annualization. Frontier lines are steps: new capability appears at a release date. Moving averages require complete windows; they must not extend into dates without enough history.
 
-Spacing: section gaps ~28–36px, panel padding ~14–18px. Max width **~1360px**, centered. Page gutters ~18px (not LM’s 32px print margin — MD has a sticky bar).
+Keep missing data, old observations, instrument proxies and source revisions visible. Method details belong near their chart, not in a separate warning-heavy product flow.
 
-## Interaction
+## Implementation
 
-- `:focus-visible` — 1px accent outline, offset ~3px  
-- Links — accent; hover → primary text  
-- Disclosures — chevron + show/hide labels  
-- Badges/chips — mono, tiny, uppercase; tone via color  
-
-## Do / Don’t
-
-| Do | Don’t |
-|----|--------|
-| Prefer CSS variables | Invent a second brand / light mode (unless requested) |
-| Elevate existing structure | New product features or IA overhauls |
-| Keep G/A/R meaning consistent | Use accent blue for “success” |
-| Bump SW cache on shell changes | Add MUI/Chakra/Tailwind |
-| Soft effects only when meaningful | Heavy shadows, loud pills, glass spam |
-
-## Scoreboard
-
-| Surface | Pass 1 | Pass 2 (craft) | Notes |
-|---------|--------|----------------|--------|
-| Design tokens + fonts | done | done | Spacing rhythm tokens + bar chrome |
-| Base body / focus / links | done | done | Selection color; reduced-motion |
-| Status bar (sticky KPI) | done | **sibling** | Opaque lid, 1360 column, no glass; safe-area |
-| Page header + kickers | done | **sibling** | 10px/600 kickers; in-flow titles |
-| Pillar desks (4) | done | **sibling** | No rainbow rails; flattened inners; KPI strip on money lead |
-| Range / FG / div bars | done | **polished** | Unified track geometry; class-based dots; band ticks |
-| Watchpoints board | done | **sibling** | Alarm = thin edge + rail; status words clear/watching/broken |
-| Thesis collapsibles | done | **polished** | Quieter ring; title-aligned summaries |
-| Footer | done | **sibling** | Caption in the 1360 column, not an elevated band |
-| app.js hardcodes | done | done | tone/fill classes throughout |
-| PWA theme + SW cache | done | **v50** | Shell cache bump; viewport-fit + safe-area |
-| Consistency | done | **sibling chrome** | Match LM family, not LM page |
-
-## Files of record
-
-- `src/styles.css` — sole token + component system  
-- `src/index.html` — shell structure  
-- `src/app.js` — generated markup (colors via CSS vars/classes)  
-- `src/manifest.json`, `src/sw.js` — PWA chrome / cache version  
+Vanilla HTML/CSS/JS; CSS variables; no bundler or added UI framework. Isolate service-worker storage from sibling dashboards. Serve from the repository root and bump the shell cache for UI changes. No commit or publication without the user's instruction.
