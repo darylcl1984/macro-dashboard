@@ -18,23 +18,23 @@ The approved subtitle beneath The Great Transition is: “Technology accelerates
 
 Fiscal layout: full-width US M2, global broad money, and Treasury yields, followed by equal-width debt/GDP and dollar-rails cards. Hard money uses two full-width asset sections: Gold first, with price and central-bank demand side by side; Bitcoin second, with price and ETF flows side by side. Each pair shares a full-width asset heading, with spacing and a fine divider between asset sections. Below 760px, each pair stacks price first, then demand or flows, beneath its asset heading. Keep asset groups free of extra enclosing borders and tinted backgrounds: neutral asset titles and small symbol tiles provide identification. Fear & Greed is a compact, read-only neutral segmented meter with a coloured position marker.
 
-Chart values appear in floating tooltips on pointer, touch or keyboard inspection, with explicit units. Keep the headline observation above the chart. Quarterly observations use quarter labels, and publication/retrieval dates remain distinct from reporting periods. The public methodology link opens `src/methodology.html`, a styled reading page.
+Chart values use lightly translucent floating tooltips for desktop mouse inspection. At mobile widths, on coarse-pointer devices, or after touch/pen input, place the readout in document flow below the chart, outside its hit area. Keep the selected date after the finger leaves; offer Clear and keyboard Escape. Long ECI details scroll within the readout without obscuring the plot. Retain explicit units, measurement qualifications and keyboard inspection. Keep the headline observation above the chart. Quarterly observations use quarter labels, and publication/retrieval dates remain distinct from reporting periods. The public methodology link opens `src/methodology.html`, a styled reading page.
 
 Full-width M2, Treasury and ECI charts use calendar-aligned year ticks, four-digit labels, explicit start/end months and responsive label spacing. Vertical scales use rounded increments with currency/percentage units where applicable. ECI remains a linear points scale, and its bounds include the published confidence intervals.
 
 ## Visual family
 
-Use liquidity-monitor's current palette and IBM Plex typography as the family reference. The products keep separate scopes.
+Use liquidity-monitor's dark palette and IBM Plex typography as the family reference. Light mode uses neutral white and cool-grey surfaces, slate text and deeper subject accents, without a tinted page glow. The products keep separate scopes.
 
 | Role | Dark | Light |
 |---|---|---|
-| Canvas | `#0c151b` | `#edf0eb` |
-| Section surface | `#15232d` | `#fcfdf9` |
-| Chart well | `#101c24` | `#f5f7f2` |
-| Primary text | `#eef3f1` | `#1b3338` |
-| Fiscal accent | `#9bd8ca` | `#276e60` |
-| Hard-money accent | `#dfc578` | `#866510` |
-| Technology accent | `#beb1e6` | `#7055a0` |
+| Canvas | `#0c151b` | `#f2f4f7` |
+| Section surface | `#15232d` | `#ffffff` |
+| Chart well | `#101c24` | `#f8fafc` |
+| Primary text | `#eef3f1` | `#1d2939` |
+| Fiscal accent | `#9bd8ca` | `#247568` |
+| Hard-money accent | `#dfc578` | `#8b681b` |
+| Technology accent | `#beb1e6` | `#7657a5` |
 
 Colours identify subject matter; they do not signal a trade or a favourable outcome. Negative flows use the negative-series token.
 

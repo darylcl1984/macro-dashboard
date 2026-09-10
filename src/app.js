@@ -1,5 +1,5 @@
-import { chart } from './charts.js?v=91';
-import { finite, utc, monthIndex, ordered, windowYears, m2Metrics, globalMoney, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, estimatedExpertFrontier, expertDurationScale, eciAnnualizedGain, frontier, topDistinctLabs, quarterLabel, periodEnd } from './metrics.js?v=91';
+import { chart } from './charts.js?v=92';
+import { finite, utc, monthIndex, ordered, windowYears, m2Metrics, globalMoney, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, estimatedExpertFrontier, expertDurationScale, eciAnnualizedGain, frontier, topDistinctLabs, quarterLabel, periodEnd } from './metrics.js?v=92';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -204,7 +204,7 @@ function themeLabel() {
   const dark = document.documentElement.dataset.theme === 'dark';
   themeButton.textContent = dark ? 'Light' : 'Dark';
   themeButton.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} theme`);
-  document.querySelector('meta[name="theme-color"]').content = dark ? '#0c151b' : '#edf0eb';
+  document.querySelector('meta[name="theme-color"]').content = dark ? '#0c151b' : '#f2f4f7';
 }
 themeLabel();
 themeButton.addEventListener('click', () => { document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('macro-theme', document.documentElement.dataset.theme); } catch {} themeLabel(); });

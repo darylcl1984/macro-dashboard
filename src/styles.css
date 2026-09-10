@@ -18,29 +18,33 @@
   --blue:#89b8e3;
   --negative:#df9292;
   --positive:#9bd8ca;
+  --tooltip-surface:rgba(21,35,45,.90);
+  --tooltip-shadow:0 8px 28px #00000033;
   --shadow:0 12px 36px #0000001f}
 
 :root[data-theme=light] {
   color-scheme:light;
-  --canvas:#edf0eb;
-  --surface:#fcfdf9;
-  --plot:#f5f7f2;
-  --surface-hover:#e3ebe4;
-  --text:#1b3338;
-  --secondary:#4d666e;
-  --text-muted:#61777e;
-  --border:rgba(38,63,64,.12);
-  --border-strong:rgba(38,63,64,.23);
-  --metric-surface:rgba(38,63,64,.035);
-  --grid:rgba(38,63,64,.10);
-  --accent:#276e60;
-  --gold:#866510;
-  --bitcoin:#a2581c;
-  --technology:#7055a0;
-  --blue:#356e9f;
-  --negative:#ad4049;
-  --positive:#276e60;
-  --shadow:0 12px 36px #1a312b0a}
+  --canvas:#f2f4f7;
+  --surface:#ffffff;
+  --plot:#f8fafc;
+  --surface-hover:#e9eef4;
+  --text:#1d2939;
+  --secondary:#46566b;
+  --text-muted:#606e82;
+  --border:#dbe2e9;
+  --border-strong:#c5d0dc;
+  --metric-surface:#eef2f6;
+  --grid:#dde4eb;
+  --accent:#247568;
+  --gold:#8b681b;
+  --bitcoin:#a45727;
+  --technology:#7657a5;
+  --blue:#326f9c;
+  --negative:#b14b58;
+  --positive:#247568;
+  --tooltip-surface:rgba(255,255,255,.94);
+  --tooltip-shadow:0 8px 28px #24354a1a;
+  --shadow:0 8px 28px #24354a08}
 
 * {
   box-sizing:border-box}
@@ -606,6 +610,7 @@ h2 {
 
 /* Three distinct research desks, with chart wells nested inside each surface. */
 body { background: radial-gradient(ellipse at 85% 0, color-mix(in srgb, var(--accent) 7%, transparent), transparent 650px), var(--canvas); text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+:root[data-theme=light] body { background: var(--canvas); }
 html { scroll-padding-top: 98px; }
 summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 h1 { font-size: clamp(36px, 4.2vw, 58px); font-weight: 600; letter-spacing: -1.9px; line-height: 1.12; }
@@ -730,9 +735,20 @@ main { max-width: 1440px; padding: 38px 48px 24px; }
 .sentiment-scale { display: flex; justify-content: space-between; gap: 6px; font-size: 10px; color: var(--text-muted); }
 .sentiment-block .source-note { margin-bottom: 0; margin-top: 10px; }
 .chart-frame { overflow: visible; padding-top: 0; }
-.chart-tooltip { position: absolute; z-index: 12; pointer-events: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; min-width: 150px; width: max-content; max-width: min(330px, calc(100% - 16px)); box-shadow: 0 8px 28px #00000033; font-size: 12px; }
+.chart-tooltip { position: absolute; z-index: 12; pointer-events: none; background: var(--tooltip-surface); backdrop-filter: blur(5px); border: 1px solid var(--border-strong); border-radius: 8px; padding: 11px 13px; min-width: 150px; width: max-content; max-width: min(330px, calc(100% - 16px)); box-shadow: var(--tooltip-shadow); font-size: 12px; }
 .chart-tooltip[hidden] { display: none; }
-.tooltip-date { color: var(--text-muted); font: 10px 'IBM Plex Mono', monospace; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 8px; }
+.tooltip-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 10px; }
+.tooltip-date { color: var(--secondary); font: 11px 'IBM Plex Mono', monospace; }
+.tooltip-dismiss { display: none; }
+.chart-inspect-hint { color: var(--text-muted); font-size: 12px; line-height: 1.6; margin-top: 10px; }
+.chart-inspect-hint[hidden] { display: none; }
+.chart-tooltip.is-docked { position: relative; z-index: auto; width: 100%; max-width: none; min-width: 0; margin-top: 12px; padding: 12px 14px; pointer-events: auto; box-shadow: none; backdrop-filter: none; }
+.is-docked .tooltip-dismiss { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 6px 12px; border: 1px solid var(--border-strong); border-radius: 6px; background: transparent; font-size: 12px; }
+.is-docked .tooltip-dismiss:hover { background: var(--surface-hover); }
+.is-docked .tooltip-rows { max-height: 220px; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; padding-right: 6px; }
+.is-docked .tooltip-row + .tooltip-row { padding-top: 10px; border-top: 1px solid var(--border); }
+.is-docked .tooltip-name, .is-docked .tooltip-row strong { font-size: 13px; }
+.is-docked .tooltip-detail { font-size: 12px; line-height: 1.6; }
 .tooltip-rows { display: grid; gap: 9px; }
 .tooltip-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 3px 14px; }
 .tooltip-name { color: var(--secondary); overflow-wrap: anywhere; }

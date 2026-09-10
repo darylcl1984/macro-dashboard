@@ -1,4 +1,4 @@
-import { finite, utc, ordered, calendarTicks, numericScale } from './metrics.js?v=91';
+import { finite, utc, ordered, calendarTicks, numericScale } from './metrics.js?v=92';
 
 const NS = 'http://www.w3.org/2000/svg';
 const element = (name, attrs = {}, text = '') => {
@@ -49,14 +49,30 @@ export function chart(host, options) {
   hit.setAttribute('aria-valuemin', '0');
   const tooltip = document.createElement('div'); tooltip.className = 'chart-tooltip';
   tooltip.setAttribute('role', 'tooltip'); tooltip.hidden = true;
+  const tooltipHeading = document.createElement('div'); tooltipHeading.className = 'tooltip-heading';
   const tooltipDate = document.createElement('div'); tooltipDate.className = 'tooltip-date';
+  const dismiss = document.createElement('button'); dismiss.className = 'tooltip-dismiss'; dismiss.type = 'button'; dismiss.textContent = 'Clear';
+  dismiss.setAttribute('aria-label', `Clear selected observation for ${options.title}`);
   const tooltipRows = document.createElement('div'); tooltipRows.className = 'tooltip-rows';
-  tooltip.append(tooltipDate, tooltipRows);
-  frame.append(svg, hit, tooltip); host.append(legend, frame);
+  tooltipHeading.append(tooltipDate, dismiss);
+  tooltip.append(tooltipHeading, tooltipRows);
+  const hint = document.createElement('p'); hint.className = 'chart-inspect-hint'; hint.textContent = 'Tap or slide across the chart. Read the selected date below.';
+  frame.append(svg, hit); host.append(legend, frame, hint, tooltip);
   let dates = [...new Set(all.map(p => utc(p.date)))].sort((a, b) => a - b);
   let selected = dates.length - 1;
   let geometry;
-  let inspecting = false, pointer = null;
+  let inspecting = false, pointer = null, touchInput = false;
+  const docked = () => touchInput || Boolean(globalThis.matchMedia?.('(max-width: 760px), (pointer: coarse)').matches);
+  function positionReadout() {
+    const below = docked();
+    tooltip.classList.toggle('is-docked', below);
+    tooltipRows.tabIndex = below ? 0 : -1;
+    tooltip.setAttribute('role', below ? 'group' : 'tooltip');
+    if (below) tooltip.setAttribute('aria-label', `${options.title} selected observation`);
+    else tooltip.removeAttribute('aria-label');
+    hint.hidden = !below || inspecting;
+    return below;
+  }
   hit.setAttribute('aria-valuemax', dates.length - 1);
   const setSelected = index => {
     selected = Math.max(0, Math.min(dates.length - 1, index));
@@ -101,12 +117,14 @@ export function chart(host, options) {
     const text = `${(options.dateFormat || dateLabel)(new Date(t).toISOString().slice(0, 10))} · ${lines.length ? lines.join(' · ') : 'No visible result on this date'}`;
     tooltipDate.textContent = (options.dateFormat || dateLabel)(new Date(t).toISOString().slice(0, 10));
     tooltip.hidden = !inspecting || !lines.length;
-    if (inspecting) {
+    if (positionReadout()) {
+      tooltip.style.left = ''; tooltip.style.top = '';
+    } else if (inspecting) {
       const x = pointer?.x ?? geometry.x(t);
       const width = tooltip.offsetWidth;
       const desired = x + 18 + width > frame.clientWidth - 8 ? x - width - 18 : x + 18;
-      tooltip.style.left = `${Math.max(8, Math.min(frame.clientWidth - width - 8, desired))}px`;
-      tooltip.style.top = `${Math.max(8, Math.min((pointer?.y ?? 18) + 14, geometry.bottom - tooltip.offsetHeight))}px`;
+      tooltip.style.left = `${frame.offsetLeft + Math.max(8, Math.min(frame.clientWidth - width - 8, desired))}px`;
+      tooltip.style.top = `${frame.offsetTop + Math.max(8, Math.min((pointer?.y ?? 18) + 14, geometry.bottom - tooltip.offsetHeight))}px`;
     }
     hit.setAttribute('aria-valuenow', selected); hit.setAttribute('aria-valuetext', text);
   };
@@ -120,6 +138,7 @@ export function chart(host, options) {
   });
   const inspectPointer = event => {
     if (!geometry) return;
+    touchInput = event.pointerType === 'touch' || event.pointerType === 'pen';
     const rect = frame.getBoundingClientRect();
     const position = event.clientX - rect.left;
     inspecting = true; pointer = { x: position, y: event.clientY - rect.top };
@@ -128,11 +147,14 @@ export function chart(host, options) {
     while (lo < hi) { const mid = Math.floor((lo + hi) / 2); if (dates[mid] < target) lo = mid + 1; else hi = mid; }
     setSelected(lo > 0 && Math.abs(dates[lo - 1] - target) < Math.abs(dates[lo] - target) ? lo - 1 : lo);
   };
-  function hide() { inspecting = false; pointer = null; tooltip.hidden = true; svg.querySelectorAll('.inspect-guide').forEach(el => el.remove()); }
+  function hide() { inspecting = false; pointer = null; tooltip.hidden = true; positionReadout(); svg.querySelectorAll('.inspect-guide').forEach(el => el.remove()); }
+  const clearSelection = () => { hit.focus({ preventScroll: true }); hide(); };
+  dismiss.addEventListener('click', clearSelection);
+  tooltip.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); clearSelection(); } });
   hit.addEventListener('pointermove', inspectPointer);
   hit.addEventListener('pointerdown', inspectPointer);
-  hit.addEventListener('pointerleave', hide);
-  hit.addEventListener('blur', hide);
+  hit.addEventListener('pointerleave', () => { if (!docked()) hide(); });
+  hit.addEventListener('blur', event => { if (!tooltip.contains(event.relatedTarget)) hide(); });
   hit.addEventListener('focus', () => { if (!inspecting) { inspecting = true; pointer = null; setSelected(selected); } });
 
   function draw() {
