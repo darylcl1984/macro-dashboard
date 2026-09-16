@@ -1,4 +1,4 @@
-import { finite, utc, ordered, calendarTicks, numericScale } from './metrics.js?v=92';
+import { finite, utc, ordered, calendarTicks, numericScale } from './metrics.js?v=93';
 
 const NS = 'http://www.w3.org/2000/svg';
 const element = (name, attrs = {}, text = '') => {

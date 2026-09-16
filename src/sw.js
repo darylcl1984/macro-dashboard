@@ -1,4 +1,4 @@
-const CACHE_NAME   = 'macro-dashboard-v92';
+const CACHE_NAME   = 'macro-dashboard-v93';
 const SHELL_VERSION = CACHE_NAME.split('-v').at(-1);
 const SHELL_ASSETS = [
   './index.html',

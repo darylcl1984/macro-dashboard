@@ -1,8 +1,17 @@
-import { chart } from './charts.js?v=92';
-import { finite, utc, monthIndex, ordered, windowYears, m2Metrics, globalMoney, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, estimatedExpertFrontier, expertDurationScale, eciAnnualizedGain, frontier, topDistinctLabs, quarterLabel, periodEnd } from './metrics.js?v=92';
+import { chart } from './charts.js?v=93';
+import { finite, utc, monthIndex, ordered, windowYears, m2Metrics, globalMoney, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, estimatedExpertFrontier, expertDurationScale, eciAnnualizedGain, frontier, topDistinctLabs, quarterLabel, periodEnd } from './metrics.js?v=93';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+function externalLink(url, label) {
+  const text = escape(label);
+  try {
+    const parsed = new URL(url);
+    // Escaping HTML alone does not make javascript: or data: links safe.
+    if (!['https:', 'http:'].includes(parsed.protocol) || parsed.username || parsed.password) return text;
+    return `<a href="${escape(parsed.href)}" target="_blank" rel="noopener noreferrer">${text} ↗</a>`;
+  } catch { return text; }
+}
 const fmt = (n, decimals = 1) => finite(n) ? new Intl.NumberFormat('en', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }).format(n) : '—';
 const pct = n => finite(n) ? `${n > 0 ? '+' : ''}${fmt(n, 2)}%` : '—';
 const date = value => value ? new Date(utc(value)).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }) : 'Date unavailable';
@@ -13,7 +22,7 @@ const details = (title, text) => `<details class="method-note"><summary>${title}
 function source(id, data, lastDate, tolerance = 7, note = '') {
   const host = $(`${id}-source`);
   const outdated = lastDate && (Date.now() - periodEnd(lastDate, data?.frequency)) / 86400000 > tolerance;
-  const link = data?.source_url && /^https?:\/\//.test(data.source_url) ? `<a href="${escape(data.source_url)}" target="_blank" rel="noopener noreferrer">${escape(data.source)} ↗</a>` : escape(data?.source || 'Source unavailable');
+  const link = externalLink(data?.source_url, data?.source || 'Source unavailable');
   const licence = data?.license === 'CC BY 4.0' ? '<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0 ↗</a>' : '';
   const period = data?.frequency === 'quarterly' && lastDate ? quarterLabel(lastDate) : date(lastDate);
   host.innerHTML = `${link}${licence}<span>· ${escape(data?.date_kind || (data?.frequency === 'quarterly' ? 'Period' : 'As of'))} ${escape(period)}</span>${outdated ? '<span class="stale">Reporting lag</span>' : ''}${note ? `<span>· ${escape(note)}</span>` : ''}`;
@@ -68,7 +77,7 @@ function renderBaseline(work) {
       <div class="human-context benchmark-work-context"><span class="context-label">What counts as success</span>${acceptance}</div>
       <table class="baseline-table"><caption>${escape(b.metric)} · task completion rate</caption><thead><tr><th scope="col">Model / setup</th><th scope="col">Success</th></tr></thead><tbody>${top.map((r, i) => `<tr><td><span class="baseline-model"><span class="rank">${i + 1}</span>${escape(r.model)}</span><span class="baseline-setup">${escape(r.creator)} · ${escape(setup(r))}</span>${r.evaluation_date ? `<span class="baseline-setup">Reported ${escape(date(r.evaluation_date))}</span>` : ''}<span class="score-track" aria-hidden="true"><span style="width:${Math.max(0, Math.min(100, r.score))}%"></span></span></td><td class="baseline-score">${fmt(r.score, 1)}%<span class="baseline-setup">${escape(error(r))}</span></td></tr>`).join('')}</tbody></table>
       ${extras.map(r => `<p class="frontier-comparison">${escape(r.model)} · ${fmt(r.score, 1)}%${escape(error(r))}<br><span>${escape(setup(r))} · outside the top three distinct labs</span></p>`).join('')}
-      <p class="small-note">${escape(b.note)}</p><div class="source-note"><a href="${escape(b.source_url)}" target="_blank" rel="noopener noreferrer">${escape(b.source)} ↗</a><a href="${escape(b.license_url)}" target="_blank" rel="noopener noreferrer">${escape(b.license)} ↗</a><span>Checked ${escape(date(work.fetched_at))} · selected and reformatted</span></div></article>`;
+      <p class="small-note">${escape(b.note)}</p><div class="source-note">${externalLink(b.source_url, b.source)}${externalLink(b.license_url, b.license)}<span>Checked ${escape(date(work.fetched_at))} · selected and reformatted</span></div></article>`;
   }).join('');
 }
 
@@ -107,8 +116,8 @@ function render(data) {
     const latest = gm.latest, c = latest.components_local, fx = latest.fx;
     const base = (globalHistory || []).find(r => monthIndex(r.period) === monthIndex(latest.period) - 12)?.components_local || {};
     const regions = [['US · M2', 'US_usd_bn', c.US_usd_bn / 1000, '$', c.US_usd_bn / 1000], ['China · M2', 'CN_cny_tn', c.CN_cny_tn, '¥', c.CN_cny_tn / fx.USDCNY], ['Euro area · M2', 'EZ_eur_tn', c.EZ_eur_tn, '€', c.EZ_eur_tn * fx.EURUSD], ['Japan · M2', 'JP_jpy_tn', c.JP_jpy_tn, '¥', c.JP_jpy_tn / fx.USDJPY], ['UK · M4', 'UK_gbp_bn', c.UK_gbp_bn / 1000, '£', c.UK_gbp_bn / 1000 * fx.GBPUSD]];
-    $('region-rows').innerHTML = regions.map(([name, key, value, symbol, dollars]) => `<tr><td>${name}<span class="region-date">${latest.period}</span></td><td>${symbol}${fmt(value, 2)}T</td><td>$${fmt(dollars, 2)}T</td><td>${base[key] > 0 ? pct((c[key] / base[key] - 1) * 100) : '—'}</td></tr>`).join('');
-    $('region-total').innerHTML = `<tr class="region-total"><td>Global total<span class="region-date">Five blocs · ${latest.period}</span></td><td>—</td><td>$${fmt(gm.headline.at(-1).value, 2)}T</td><td>${pct(gm.yoy)}</td></tr>`;
+    $('region-rows').innerHTML = regions.map(([name, key, value, symbol, dollars]) => `<tr><td>${name}<span class="region-date">${escape(latest.period)}</span></td><td>${symbol}${fmt(value, 2)}T</td><td>$${fmt(dollars, 2)}T</td><td>${base[key] > 0 ? pct((c[key] / base[key] - 1) * 100) : '—'}</td></tr>`).join('');
+    $('region-total').innerHTML = `<tr class="region-total"><td>Global total<span class="region-date">Five blocs · ${escape(latest.period)}</span></td><td>—</td><td>$${fmt(gm.headline.at(-1).value, 2)}T</td><td>${pct(gm.yoy)}</td></tr>`;
     $('region-note').textContent = 'T = trillion. USD equivalents use monthly-average exchange rates. Regional YoY is in local currency; global YoY includes exchange-rate changes. This total covers the five listed blocs.';
   }
   const short = getSeries('us_2y'), long = getSeries('us_30y');
