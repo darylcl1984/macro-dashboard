@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-09-15T23:26:24.695065+00:00",
+      "fetched_at": "2026-09-16T13:23:48.187954+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12586,6 +12586,10 @@
         {
           "date": "2026-09-15",
           "value": 69
+        },
+        {
+          "date": "2026-09-16",
+          "value": 51
         }
       ]
     },
@@ -12593,7 +12597,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-09-15T23:26:24.624156+00:00",
+      "fetched_at": "2026-09-16T13:23:47.662194+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25373,79 +25377,83 @@
         },
         {
           "date": "2026-08-28",
-          "value": 308.882525
+          "value": 308.882482
         },
         {
           "date": "2026-08-29",
-          "value": 308.490344
+          "value": 308.4903
         },
         {
           "date": "2026-08-30",
-          "value": 308.39408
+          "value": 308.394037
         },
         {
           "date": "2026-08-31",
-          "value": 308.560618
+          "value": 308.560575
         },
         {
           "date": "2026-09-01",
-          "value": 308.550132
+          "value": 308.550089
         },
         {
           "date": "2026-09-02",
-          "value": 308.520586
+          "value": 308.520543
         },
         {
           "date": "2026-09-03",
-          "value": 308.801467
+          "value": 308.801424
         },
         {
           "date": "2026-09-04",
-          "value": 309.790303
+          "value": 309.79026
         },
         {
           "date": "2026-09-05",
-          "value": 310.032973
+          "value": 310.032929
         },
         {
           "date": "2026-09-06",
-          "value": 310.094099
+          "value": 310.094056
         },
         {
           "date": "2026-09-07",
-          "value": 310.147515
+          "value": 310.147472
         },
         {
           "date": "2026-09-08",
-          "value": 310.006487
+          "value": 310.006444
         },
         {
           "date": "2026-09-09",
-          "value": 310.259416
+          "value": 310.259372
         },
         {
           "date": "2026-09-10",
-          "value": 310.123894
+          "value": 310.123851
         },
         {
           "date": "2026-09-11",
-          "value": 309.735043
+          "value": 309.735
         },
         {
           "date": "2026-09-12",
-          "value": 309.913762
+          "value": 309.913719
         },
         {
           "date": "2026-09-13",
-          "value": 309.937147
+          "value": 309.937103
         },
         {
           "date": "2026-09-14",
-          "value": 309.762057
+          "value": 309.762014
         },
         {
           "date": "2026-09-15",
           "value": 310.065628
+        },
+        {
+          "date": "2026-09-16",
+          "value": 309.298109
         }
       ]
     },
@@ -25453,12 +25461,8 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-09-15T23:26:24.863635+00:00",
+      "fetched_at": "2026-09-16T13:23:48.529532+00:00",
       "points": [
-        {
-          "date": "2022-09-15",
-          "value": 19703.67
-        },
         {
           "date": "2022-09-16",
           "value": 19801.04
@@ -31298,6 +31302,10 @@
         {
           "date": "2026-09-14",
           "value": 78175.01
+        },
+        {
+          "date": "2026-09-15",
+          "value": 75584.17
         }
       ],
       "instrument": "Coinbase BTC-USD spot"
@@ -31306,12 +31314,8 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-09-15T23:26:24.890759+00:00",
+      "fetched_at": "2026-09-16T13:23:48.360155+00:00",
       "points": [
-        {
-          "date": "2021-09-15",
-          "value": 1794.800049
-        },
         {
           "date": "2021-09-16",
           "value": 1756.699951
@@ -36335,6 +36339,10 @@
         {
           "date": "2026-09-14",
           "value": 4351.899902
+        },
+        {
+          "date": "2026-09-15",
+          "value": 4332.799805
         }
       ],
       "instrument": "Gold futures \u00b7 GC=F",
@@ -36344,7 +36352,7 @@
       "source": "FRED \u00b7 M2SL",
       "source_url": "https://fred.stlouisfed.org/series/M2SL",
       "unit": "USD billions",
-      "fetched_at": "2026-09-15T13:24:59.598676+00:00",
+      "fetched_at": "2026-09-16T13:23:55.508464+00:00",
       "points": [
         {
           "date": "1995-01-01",
@@ -37868,7 +37876,7 @@
       "source": "FRED \u00b7 DGS2",
       "source_url": "https://fred.stlouisfed.org/series/DGS2",
       "unit": "Yield %",
-      "fetched_at": "2026-09-15T13:24:59.607028+00:00",
+      "fetched_at": "2026-09-16T13:23:55.468538+00:00",
       "points": [
         {
           "date": "2015-01-02",
@@ -49569,6 +49577,10 @@
         {
           "date": "2026-09-11",
           "value": 4.63
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.65
         }
       ]
     },
@@ -49576,7 +49588,7 @@
       "source": "FRED \u00b7 GFDEGDQ188S",
       "source_url": "https://fred.stlouisfed.org/series/GFDEGDQ188S",
       "unit": "% of GDP",
-      "fetched_at": "2026-09-15T13:24:59.493409+00:00",
+      "fetched_at": "2026-09-16T13:23:55.429210+00:00",
       "points": [
         {
           "date": "2015-01-01",
@@ -49764,7 +49776,7 @@
       "source": "FRED \u00b7 DGS30",
       "source_url": "https://fred.stlouisfed.org/series/DGS30",
       "unit": "Yield %",
-      "fetched_at": "2026-09-15T13:24:59.492355+00:00",
+      "fetched_at": "2026-09-16T13:23:55.495612+00:00",
       "points": [
         {
           "date": "2015-01-02",
@@ -61465,10 +61477,14 @@
         {
           "date": "2026-09-11",
           "value": 5.35
+        },
+        {
+          "date": "2026-09-14",
+          "value": 5.34
         }
       ]
     }
   },
-  "last_attempt": "2026-09-15T23:26:24.891569+00:00",
+  "last_attempt": "2026-09-16T13:23:55.508938+00:00",
   "fetch_failures": {}
 }
