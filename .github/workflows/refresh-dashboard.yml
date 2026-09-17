@@ -23,13 +23,17 @@ jobs:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
+        id: dashboard_checkout
       - uses: actions/setup-python@v5
+        id: setup_python
         with:
           python-version: "3.12"
       - uses: actions/setup-node@v4
+        id: setup_node
         with:
           node-version: "22"
       - run: pip install -r requirements.txt
+        id: dependencies
 
       - name: Select refresh cadence
         id: cadence
@@ -57,9 +61,10 @@ jobs:
         continue-on-error: true
         env:
           READ_TOKEN: ${{ secrets.LIQUIDITY_MONITOR_READ_TOKEN }}
+          READ_SSH_KEY: ${{ secrets.LIQUIDITY_MONITOR_READ_SSH_KEY }}
         run: |
-          if [ -z "$READ_TOKEN" ]; then
-            echo '::error::Configure LIQUIDITY_MONITOR_READ_TOKEN with read-only Contents access to darylcl1984/liquidity-monitor. Existing ETF data will be retained.'
+          if [ -z "$READ_TOKEN" ] && [ -z "$READ_SSH_KEY" ]; then
+            echo '::error::ETF source access is missing. Configure LIQUIDITY_MONITOR_READ_SSH_KEY with a read-only liquidity-monitor deploy key, or LIQUIDITY_MONITOR_READ_TOKEN with read-only Contents access. Existing ETF data will be retained.'
             exit 1
           fi
 
@@ -73,7 +78,8 @@ jobs:
           ref: master
           path: .upstream/liquidity-monitor
           persist-credentials: false
-          token: ${{ secrets.LIQUIDITY_MONITOR_READ_TOKEN }}
+          ssh-key: ${{ secrets.LIQUIDITY_MONITOR_READ_SSH_KEY }}
+          token: ${{ secrets.LIQUIDITY_MONITOR_READ_TOKEN || github.token }}
 
       - name: Sync ETF weeks and the closed historical archive
         id: etf
@@ -126,6 +132,7 @@ jobs:
         run: python scripts/import_work_benchmarks.py
 
       - name: Validate snapshots and calculations before publication
+        id: validation
         run: |
           python -m unittest discover -s tests -v
           node --test tests/*.mjs
@@ -133,6 +140,7 @@ jobs:
           node --check src/charts.js
 
       - name: Publish successful validated updates
+        id: publication
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
@@ -147,9 +155,5 @@ jobs:
       - name: Report any failed source without discarding other updates
         if: always()
         env:
-          OUTCOMES: ${{ join(steps.*.outcome, ',') }}
-        run: |
-          if [[ ",$OUTCOMES," == *,failure,* ]]; then
-            echo '::error::One or more refresh or validation steps failed. Inspect the failed step; retained snapshots remain available.'
-            exit 1
-          fi
+          STEP_OUTCOMES: ${{ toJSON(steps) }}
+        run: python scripts/report_refresh.py
