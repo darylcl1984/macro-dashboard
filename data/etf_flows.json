@@ -2,7 +2,7 @@
   "source": "liquidity-monitor",
   "canonical_path": "liquidity-monitor/data/etf_flows.json",
   "source_url": "https://farside.co.uk/bitcoin-etf-flow-all-data/",
-  "synced_at": "2026-09-17T00:50:57.954617+00:00",
+  "synced_at": "2026-09-17T13:20:01.764087+00:00",
   "notes": "Derived. Historical backfill from etf_flows_archive.json precedes the canonical series. Do not type current Farside weeks here. Writer: liquidity-monitor/data/etf_flows.json. Run scripts/sync_etf_flows.py after appending a week on Liq.",
   "weekly": [
     {
