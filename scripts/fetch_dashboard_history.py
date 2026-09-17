@@ -5,11 +5,14 @@ import io
 import json
 import math
 import os
+import ssl
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from urllib.parse import urlencode
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode, urlsplit
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,8 +33,22 @@ def get(url, params=None):
     if params:
         url += '?' + urlencode(params)
     request = Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; MacroDashboard/2.0)'})
-    with urlopen(request, timeout=45) as response:
-        return Response(response.read())
+    for attempt in range(3):
+        try:
+            with urlopen(request, timeout=45) as response:
+                return Response(response.read())
+        except HTTPError as error:
+            error.close()
+            if error.code not in {408, 429, 500, 502, 503, 504} or attempt == 2:
+                raise
+            reason = f'HTTP {error.code}'
+        except (URLError, TimeoutError, ConnectionError) as error:
+            if isinstance(getattr(error, 'reason', None), ssl.SSLError) or attempt == 2:
+                raise
+            reason = type(error).__name__
+        # Host and status only: URLs and exception messages can contain API keys.
+        print(f'Retrying {urlsplit(url).hostname} after {reason} (attempt {attempt + 2}/3)', flush=True)
+        time.sleep(2 ** attempt)
 
 
 def series(points, source, url, unit, **extra):

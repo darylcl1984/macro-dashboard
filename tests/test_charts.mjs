@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { eciFixture } from './fixtures/eci-context.mjs';
 import { axisValues, axisPosition, seriesValueText } from '../src/charts.js';
 import { eciHumanContext, estimatedExpertFrontier, expertDurationScale } from '../src/metrics.js';
 
@@ -17,17 +17,17 @@ test('ECI and expert-minutes use independent domains and their own tooltip units
 });
 
 test('The time frontier is a derived line, with no borrowed ECI uncertainty or substituted METR points', () => {
-  const eci = JSON.parse(readFileSync(new URL('../data/technology.json', import.meta.url))).eci;
-  const metr = JSON.parse(readFileSync(new URL('../data/metr_context.json', import.meta.url)));
+  const { eci, metr } = eciFixture();
   const human = eciHumanContext(eci, metr);
   const times = estimatedExpertFrontier(eci, human);
-  const gpt5 = times.find(p => p.label === 'GPT-5');
-  assert.equal(gpt5.estimateKind, 'illustration');
-  assert.notEqual(gpt5.value, human.matches.find(m => m.label === 'GPT-5').minutes);
+  const measured = times.find(p => p.label === 'Measured model');
+  assert.equal(measured.estimateKind, 'illustration');
+  assert.equal(measured.value, 120);
+  assert.notEqual(measured.value, human.matches.find(m => m.label === 'Measured model').minutes);
   const latest = times.at(-1);
-  assert.equal(latest.label, 'GPT-6 Astra');
+  assert.equal(latest.label, 'Future model');
   assert.equal(latest.estimateKind, 'extrapolation');
-  assert.ok(Math.abs(latest.value / 60 - 34.04383779163984) < 1e-10);
+  assert.equal(latest.value, 480);
   assert.ok(times.every(p => !('low' in p) && !('high' in p) && p.value > 0));
   assert.deepEqual(estimatedExpertFrontier(eci, eciHumanContext(eci, null)), []);
 });

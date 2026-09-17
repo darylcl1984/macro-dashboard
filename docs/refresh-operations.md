@@ -30,7 +30,11 @@ On 17 September 2026, the dedicated read-only deploy key `macro-dashboard ETF sy
 
 Source steps run independently so a single unavailable provider does not prevent other fetch attempts. History updates retain each failed series, record its failure, and return a failed step status. Epoch, METR and benchmark imports replace their files only after parsing and validation succeed. METR runs after Epoch so changed ECI fits can be recalibrated in the same run.
 
+The shared history/backfill HTTP reader retries transient connection failures and HTTP 408/429/500/502/503/504 responses up to three attempts, with one- and two-second delays. Authentication and certificate-validation failures are not retried. Retry messages include only the source hostname and error category, never query parameters or credentials. An exhausted retry still fails visibly and retains the previous usable data.
+
 Python and JavaScript checks run before publication. Snapshot checks include every active price/macro history, benchmark scores, ETF week ordering and METR-to-ECI calibration. Validation failure prevents publication of the entire batch. Otherwise successful updates can be published even when another provider failed. The final report names failed steps in the error annotation and job summary, using their original outcome even when `continue-on-error` makes their conclusion appear successful. It never prints step outputs or credentials. GitHub notification delivery depends on the account's notification settings.
+
+Exact numerical ECI/METR unit tests use a small synthetic calibration. Separate snapshot tests validate the current published calibration. This allows legitimate Epoch refits and METR updates without comparing live data against obsolete fixed measurements; stale or mismatched calibrations still fail validation.
 
 Only seven automated snapshots are staged: `dashboard_history`, `macro`, `m2_history`, `etf_flows`, `technology`, `metr_context` and `work_benchmarks`. Reviewed inputs, source archives and local files are excluded. Push conflicts use a normal rebase and fail visibly if unresolved; the workflow never force-pushes.
 

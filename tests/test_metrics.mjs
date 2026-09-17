@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { eciFixture } from './fixtures/eci-context.mjs';
 import { m2Metrics, globalMoney, topDistinctLabs, trailingQuarters, quarterlyAverage, eciPace, eciHumanContext, eciTaskDuration, eciAnnualizedGain, frontier, windowYears, quarterLabel, periodEnd, calendarTicks, numericScale } from '../src/metrics.js';
 
 test('M2 derives its reference from 30 years while plotting a separately anchored ten-year window', () => {
@@ -126,53 +127,59 @@ test('Readable value scales enclose all observations, including ECI uncertainty 
 });
 
 test('Human-duration illustration uses the measured anchor and does not extrapolate beyond checked releases', () => {
-  const points = JSON.parse(readFileSync(new URL('../data/technology.json', import.meta.url))).eci;
-  const context = JSON.parse(readFileSync(new URL('../data/metr_context.json', import.meta.url)));
+  const { eci: points, metr: context } = eciFixture();
   const human = eciHumanContext(points, context);
   assert.equal(human.valid, true);
-  assert.equal(human.matches.length, 17);
-  assert.equal(human.minutesAt(141.17), 60.388937);
-  assert.ok(Math.abs(human.minutesAt(146.17) / human.minutesAt(141.17) - 2) < 1e-12);
-  assert.equal(human.minutesAt(166.57), null);
-  assert.equal(human.minutesAt(100), null);
+  assert.equal(human.matches.length, 3);
+  assert.equal(human.minutesAt(100), 60);
+  assert.equal(human.minutesAt(105), 120);
+  assert.equal(human.minutesAt(115), null);
+  assert.equal(human.minutesAt(95), null);
   assert.equal(human.minutesAt(NaN), null);
-  assert.ok(!human.matches.some(m => /Astra|Fable/.test(m.label)));
-  const gpt5 = human.matches.find(m => m.label === 'GPT-5');
-  assert.equal(gpt5.minutes, 203.012577);
-  assert.notEqual(gpt5.minutes, human.minutesAt(gpt5.eci));
+  assert.ok(!human.matches.some(m => m.label === 'Future model'));
+  const measured = human.matches.find(m => m.label === 'Measured model');
+  assert.equal(measured.minutes, 150);
+  assert.notEqual(measured.minutes, human.minutesAt(measured.eci));
   human.ticks.forEach(t => assert.ok(human.minutesAt(t.value) > 0));
 });
 
 test('An Epoch refit disables stale calibration while retaining separately published METR facts', () => {
-  const points = JSON.parse(readFileSync(new URL('../data/technology.json', import.meta.url))).eci;
-  const context = JSON.parse(readFileSync(new URL('../data/metr_context.json', import.meta.url)));
-  const changed = points.map(p => p.label === 'GPT-5' ? { ...p, value: p.value + 0.01 } : p);
+  const { eci: points, metr: context } = eciFixture();
+  const changed = points.map(p => p.label === 'Measured model' ? { ...p, value: p.value + 0.01 } : p);
   const stale = eciHumanContext(changed, context);
   assert.equal(stale.valid, false);
   assert.deepEqual(stale.ticks, []);
-  assert.equal(stale.minutesAt(141.17), null);
-  assert.equal(stale.matches.find(m => m.label === 'GPT-5').minutes, 203.012577);
+  assert.equal(stale.minutesAt(100), null);
+  assert.equal(stale.matches.find(m => m.label === 'Measured model').minutes, 150);
   assert.equal(eciHumanContext(points, null).valid, false);
   assert.equal(eciHumanContext(points.map(p => ({ ...p, date: '2000-01-01' })), context).matches.length, 0);
 });
 
 test('Frontier tooltips resolve the same measured human-time facts as scatter points', () => {
+  const { eci: points, metr: context } = eciFixture();
+  const human = eciHumanContext(points, context);
+  const measured = frontier(points).find(p => p.label === 'Measured model');
+  assert.ok(measured);
+  const task = eciTaskDuration(measured, human, true);
+  assert.equal(task.kind, 'measured');
+  assert.equal(task.minutes, 150);
+  assert.equal(task.low, 100);
+  assert.equal(task.high, 200);
+  const future = points.find(p => p.label === 'Future model');
+  assert.equal(eciTaskDuration(future, human).kind, 'unavailable');
+  const extrapolation = eciTaskDuration(future, human, true);
+  assert.equal(extrapolation.kind, 'extrapolation');
+  assert.equal(extrapolation.minutes, 480);
+  assert.equal(human.minutesAt(future.value), null); // The chart axis stays bounded.
+});
+
+test('Published ECI and METR snapshots retain a valid calibration after refresh', () => {
   const points = JSON.parse(readFileSync(new URL('../data/technology.json', import.meta.url))).eci;
   const context = JSON.parse(readFileSync(new URL('../data/metr_context.json', import.meta.url)));
   const human = eciHumanContext(points, context);
-  const gpt5 = frontier(points).find(p => p.label === 'GPT-5');
-  assert.ok(gpt5);
-  const task = eciTaskDuration(gpt5, human, true);
-  assert.equal(task.kind, 'measured');
-  assert.equal(task.minutes, 203.012577);
-  assert.equal(task.low, 112.641357);
-  assert.equal(task.high, 405.551565);
-  const astra = points.find(p => p.label === 'GPT-6 Astra');
-  assert.equal(eciTaskDuration(astra, human).kind, 'unavailable');
-  const extrapolation = eciTaskDuration(astra, human, true);
-  assert.equal(extrapolation.kind, 'extrapolation');
-  assert.ok(Math.abs(extrapolation.minutes / 60 - 34.04383779163984) < 1e-10);
-  assert.equal(human.minutesAt(astra.value), null); // The chart axis stays bounded.
+  assert.equal(human.valid, true);
+  assert.equal(human.matches.length, context.points.length);
+  assert.equal(human.minutesAt(human.anchor.eci), human.anchor.minutes);
 });
 
 test('Three-year point pace uses a full calendar window and the frontier available at its start', () => {
