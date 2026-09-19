@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T12:54:05.420207+00:00",
+  "updated_at": "2026-09-19T12:26:48.179311+00:00",
   "indicators": {
     "US_M2": {
       "value": 23218.0,
@@ -84,8 +84,8 @@
       ]
     },
     "US_10Y": {
-      "value": 5.01,
-      "date": "2026-09-16"
+      "value": 4.94,
+      "date": "2026-09-17"
     },
     "USD_INDEX": {
       "value": 118.2126,
@@ -97,9 +97,9 @@
       "unit": "trillions JPY"
     },
     "FEAR_GREED": {
-      "value": 56,
+      "value": 71,
       "classification": "Greed",
-      "date": "2026-09-18"
+      "date": "2026-09-19"
     },
     "EZ_M2": {
       "value": 16.44,
@@ -113,35 +113,35 @@
     },
     "fx": {
       "EURUSD": {
-        "value": 1.1469,
-        "date": "2026-09-18",
+        "value": 1.149,
+        "date": "2026-09-19",
         "source": "yahoo"
       },
       "GBPUSD": {
-        "value": 1.3347,
-        "date": "2026-09-18",
+        "value": 1.3393,
+        "date": "2026-09-19",
         "source": "yahoo"
       },
       "USDCNY": {
-        "value": 6.6883,
-        "date": "2026-09-18",
+        "value": 6.6974,
+        "date": "2026-09-19",
         "source": "yahoo"
       },
       "USDJPY": {
-        "value": 157.765,
-        "date": "2026-09-18",
+        "value": 156.855,
+        "date": "2026-09-19",
         "source": "yahoo"
       }
     },
     "GLOBAL_M2": {
-      "value": 107.85,
+      "value": 107.87,
       "unit": "trillions_usd",
       "components": {
         "US": 23.22,
-        "CN": 53.15,
-        "EZ": 18.86,
-        "JP": 8.22,
-        "UK": 4.4
+        "CN": 53.08,
+        "EZ": 18.89,
+        "JP": 8.26,
+        "UK": 4.42
       },
       "component_dates": {
         "US": "2026-07-01",
@@ -152,7 +152,7 @@
       },
       "data_period": "2026-07",
       "scope": "5bloc",
-      "computed_at": "2026-09-18T12:54:12.396919+00:00",
+      "computed_at": "2026-09-19T12:26:53.229066+00:00",
       "note": "Data vintage 2026-07 · scope 5bloc · flags=['mixed_vintage', 'vintage_min=2026-07']"
     },
     "GLOBAL_M2_YOY": {
@@ -179,7 +179,7 @@
     },
     "HY_OAS": {
       "value": 2.7,
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "unit": "pct"
     },
     "FED_BS": {
@@ -188,8 +188,8 @@
       "unit": "millions_usd"
     },
     "RRP": {
-      "value": 0.276,
-      "date": "2026-09-17",
+      "value": 0.576,
+      "date": "2026-09-18",
       "unit": "billions_usd"
     },
     "TGA": {
@@ -198,19 +198,19 @@
       "unit": "billions_usd"
     },
     "US_NET_LIQ": {
-      "value": 5869.2,
-      "date": "2026-09-17",
+      "value": 5868.9,
+      "date": "2026-09-18",
       "unit": "billions_usd",
       "components": {
         "FED_BS_bn": 6746.5,
-        "RRP_bn": 0.276,
+        "RRP_bn": 0.576,
         "TGA_bn": 877.028
       }
     },
     "STABLECOIN_MCAP": {
-      "value": 310.9,
+      "value": 311.2,
       "unit": "billions_usd",
-      "date": "2026-09-18",
+      "date": "2026-09-19",
       "source": "defillama"
     },
     "MANUAL": {
