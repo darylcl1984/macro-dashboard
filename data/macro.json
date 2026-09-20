@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-19T12:26:48.179311+00:00",
+  "updated_at": "2026-09-20T13:00:24.209235+00:00",
   "indicators": {
     "US_M2": {
       "value": 23218.0,
@@ -99,7 +99,7 @@
     "FEAR_GREED": {
       "value": 71,
       "classification": "Greed",
-      "date": "2026-09-19"
+      "date": "2026-09-20"
     },
     "EZ_M2": {
       "value": 16.44,
@@ -114,22 +114,22 @@
     "fx": {
       "EURUSD": {
         "value": 1.149,
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "source": "yahoo"
       },
       "GBPUSD": {
         "value": 1.3393,
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "source": "yahoo"
       },
       "USDCNY": {
         "value": 6.6974,
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "source": "yahoo"
       },
       "USDJPY": {
         "value": 156.855,
-        "date": "2026-09-19",
+        "date": "2026-09-20",
         "source": "yahoo"
       }
     },
@@ -152,7 +152,7 @@
       },
       "data_period": "2026-07",
       "scope": "5bloc",
-      "computed_at": "2026-09-19T12:26:53.229066+00:00",
+      "computed_at": "2026-09-20T13:00:50.951989+00:00",
       "note": "Data vintage 2026-07 · scope 5bloc · flags=['mixed_vintage', 'vintage_min=2026-07']"
     },
     "GLOBAL_M2_YOY": {
@@ -208,9 +208,9 @@
       }
     },
     "STABLECOIN_MCAP": {
-      "value": 311.2,
+      "value": 311.4,
       "unit": "billions_usd",
-      "date": "2026-09-19",
+      "date": "2026-09-20",
       "source": "defillama"
     },
     "MANUAL": {
