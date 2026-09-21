@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-17T00:51:23.991837+00:00",
+  "fetched_at": "2026-09-21T15:03:52.821596+00:00",
   "benchmarks": [
     {
       "id": "apex",
@@ -253,6 +253,46 @@
           "effort": "xhigh",
           "release_date": "2026-09-02",
           "evaluation_date": null
+        },
+        {
+          "model": "GPT-OSS-120B",
+          "creator": "OpenAI",
+          "score": 4.1,
+          "reported_error": 2.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2025-08-05",
+          "evaluation_date": null
+        },
+        {
+          "model": "Qwen 3.5",
+          "creator": "Alibaba",
+          "score": 24.9,
+          "reported_error": 4.7,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "unspecified",
+          "release_date": "2026-02-16",
+          "evaluation_date": null
+        },
+        {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "score": 59.7,
+          "reported_error": 5.6,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-09-01",
+          "evaluation_date": null
+        },
+        {
+          "model": "Gemini 3.1 Pro",
+          "creator": "Google",
+          "score": 35.3,
+          "reported_error": 5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-02-19",
+          "evaluation_date": null
         }
       ]
     },
@@ -310,6 +350,26 @@
           "trials": 330
         },
         {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "xhigh",
+          "score": 57.88,
+          "reported_error": 3.36,
+          "evaluation_date": "2026-09-01",
+          "trials": 330
+        },
+        {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "high",
+          "score": 54.55,
+          "reported_error": 3.44,
+          "evaluation_date": "2026-09-01",
+          "trials": 330
+        },
+        {
           "model": "GPT-6 Astra",
           "creator": "OpenAI",
           "agent": "Codex",
@@ -317,6 +377,26 @@
           "score": 54.24,
           "reported_error": 2.66,
           "evaluation_date": "2026-09-03",
+          "trials": 330
+        },
+        {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "medium",
+          "score": 53.94,
+          "reported_error": 3.39,
+          "evaluation_date": "2026-09-01",
+          "trials": 330
+        },
+        {
+          "model": "Opus 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "xhigh",
+          "score": 53.94,
+          "reported_error": 3.17,
+          "evaluation_date": "2026-07-24",
           "trials": 330
         },
         {
@@ -340,6 +420,26 @@
           "trials": 330
         },
         {
+          "model": "Opus 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "high",
+          "score": 50.3,
+          "reported_error": 3.73,
+          "evaluation_date": "2026-07-24",
+          "trials": 330
+        },
+        {
+          "model": "Opus 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "medium",
+          "score": 44.85,
+          "reported_error": 3.83,
+          "evaluation_date": "2026-07-24",
+          "trials": 330
+        },
+        {
           "model": "Fable 5",
           "creator": "Anthropic",
           "agent": "Claude Code",
@@ -347,6 +447,16 @@
           "score": 44.55,
           "reported_error": 3.85,
           "evaluation_date": "2026-06-09",
+          "trials": 330
+        },
+        {
+          "model": "Fable 5.1",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "low",
+          "score": 43.33,
+          "reported_error": 3.61,
+          "evaluation_date": "2026-09-01",
           "trials": 330
         },
         {
@@ -367,6 +477,16 @@
           "score": 37.27,
           "reported_error": 3.78,
           "evaluation_date": "2026-06-26",
+          "trials": 330
+        },
+        {
+          "model": "Opus 5",
+          "creator": "Anthropic",
+          "agent": "Claude Code",
+          "effort": "low",
+          "score": 34.85,
+          "reported_error": 3.94,
+          "evaluation_date": "2026-07-24",
           "trials": 330
         },
         {
