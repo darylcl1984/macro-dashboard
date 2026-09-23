@@ -36,7 +36,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-06",
@@ -75,7 +75,7 @@
       "CN": "https://english.www.gov.cn/archive/statistics/202507/14/content_WS6874b9d2c6d0868f4e8f4228.html",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-07",
@@ -88,7 +88,7 @@
       "UK": "2025-07"
     },
     "components_local": {
-      "US_usd_bn": 22025.5,
+      "US_usd_bn": 22025.6,
       "CN_cny_tn": 329.94,
       "EZ_eur_tn": 15.743385,
       "JP_jpy_tn": 1269.6074,
@@ -100,8 +100,8 @@
       "USDCNY": 7.1741,
       "USDJPY": 147.2014
     },
-    "composite_usd": 99.276612,
-    "composite_usd_4bloc_ex_uk": 95.015011,
+    "composite_usd": 99.276712,
+    "composite_usd_4bloc_ex_uk": 95.015111,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -114,7 +114,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-08",
@@ -153,7 +153,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-09",
@@ -192,7 +192,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-10",
@@ -231,7 +231,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-11",
@@ -270,7 +270,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2025-12",
@@ -309,7 +309,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-01",
@@ -348,7 +348,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-02",
@@ -361,7 +361,7 @@
       "UK": "2026-02"
     },
     "components_local": {
-      "US_usd_bn": 22598.9,
+      "US_usd_bn": 22598.7,
       "CN_cny_tn": 349.22,
       "EZ_eur_tn": 16.223483,
       "JP_jpy_tn": 1274.7324,
@@ -373,8 +373,8 @@
       "USDCNY": 6.9064,
       "USDJPY": 155.1016
     },
-    "composite_usd": 104.970525,
-    "composite_usd_4bloc_ex_uk": 100.564933,
+    "composite_usd": 104.970325,
+    "composite_usd_4bloc_ex_uk": 100.564733,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -387,7 +387,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-03",
@@ -400,7 +400,7 @@
       "UK": "2026-03"
     },
     "components_local": {
-      "US_usd_bn": 22640.4,
+      "US_usd_bn": 22640.3,
       "CN_cny_tn": 353.86,
       "EZ_eur_tn": 16.274779,
       "JP_jpy_tn": 1279.5037,
@@ -412,8 +412,8 @@
       "USDCNY": 6.8921,
       "USDJPY": 158.6827
     },
-    "composite_usd": 105.220194,
-    "composite_usd_4bloc_ex_uk": 100.855288,
+    "composite_usd": 105.220094,
+    "composite_usd_4bloc_ex_uk": 100.855188,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -426,7 +426,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-04",
@@ -439,7 +439,7 @@
       "UK": "2026-04"
     },
     "components_local": {
-      "US_usd_bn": 22756.7,
+      "US_usd_bn": 22756.6,
       "CN_cny_tn": 353.04,
       "EZ_eur_tn": 16.303998,
       "JP_jpy_tn": 1295.6204,
@@ -451,8 +451,8 @@
       "USDCNY": 6.8371,
       "USDJPY": 159.1173
     },
-    "composite_usd": 106.011068,
-    "composite_usd_4bloc_ex_uk": 101.605963,
+    "composite_usd": 106.010968,
+    "composite_usd_4bloc_ex_uk": 101.605863,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -465,7 +465,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-05",
@@ -478,7 +478,7 @@
       "UK": "2026-05"
     },
     "components_local": {
-      "US_usd_bn": 23013.9,
+      "US_usd_bn": 23013.7,
       "CN_cny_tn": 353.67,
       "EZ_eur_tn": 16.349833,
       "JP_jpy_tn": 1298.0903,
@@ -490,8 +490,8 @@
       "USDCNY": 6.7996,
       "USDJPY": 158.153
     },
-    "composite_usd": 106.760786,
-    "composite_usd_4bloc_ex_uk": 102.333307,
+    "composite_usd": 106.760586,
+    "composite_usd_4bloc_ex_uk": 102.333107,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -504,7 +504,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-06",
@@ -517,7 +517,7 @@
       "UK": "2026-06"
     },
     "components_local": {
-      "US_usd_bn": 23115.2,
+      "US_usd_bn": 23114.9,
       "CN_cny_tn": 355.51,
       "EZ_eur_tn": 16.416939,
       "JP_jpy_tn": 1296.1165,
@@ -529,8 +529,8 @@
       "USDCNY": 6.7758,
       "USDJPY": 160.77
     },
-    "composite_usd": 106.963042,
-    "composite_usd_4bloc_ex_uk": 102.550482,
+    "composite_usd": 106.962742,
+    "composite_usd_4bloc_ex_uk": 102.550182,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -543,7 +543,7 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   },
   {
     "period": "2026-07",
@@ -556,7 +556,7 @@
       "UK": "2026-07"
     },
     "components_local": {
-      "US_usd_bn": 23218.0,
+      "US_usd_bn": 23217.9,
       "CN_cny_tn": 355.51,
       "EZ_eur_tn": 16.436438,
       "JP_jpy_tn": 1296.6394,
@@ -568,8 +568,8 @@
       "USDCNY": 6.7757,
       "USDJPY": 162.3295
     },
-    "composite_usd": 106.864427,
-    "composite_usd_4bloc_ex_uk": 102.449423,
+    "composite_usd": 106.864327,
+    "composite_usd_4bloc_ex_uk": 102.449323,
     "flags": [
       "same_month_stocks",
       "fx_monthly_avg_FRED"
@@ -582,6 +582,6 @@
       "CN": "PBoC · reviewed monthly stock",
       "FX": "FRED EXUSEU / EXUSUK / EXCHUS / EXJPUS"
     },
-    "checked_at": "2026-09-22"
+    "checked_at": "2026-09-23"
   }
 ]
