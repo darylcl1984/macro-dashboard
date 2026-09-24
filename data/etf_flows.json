@@ -2,7 +2,7 @@
   "source": "liquidity-monitor",
   "canonical_path": "liquidity-monitor/data/etf_flows.json",
   "source_url": "https://farside.co.uk/bitcoin-etf-flow-all-data/",
-  "synced_at": "2026-09-23T13:33:31.421074+00:00",
+  "synced_at": "2026-09-24T13:29:05.858428+00:00",
   "notes": "Derived. Historical backfill from etf_flows_archive.json precedes the canonical series. Do not type current Farside weeks here. Writer: liquidity-monitor/data/etf_flows.json. Run scripts/sync_etf_flows.py after appending a week on Liq.",
   "weekly": [
     {
@@ -236,15 +236,19 @@
     {
       "week_ending": "2026-09-11",
       "net_flow_musd": -462.7
+    },
+    {
+      "week_ending": "2026-09-18",
+      "net_flow_musd": 6.1
     }
   ],
   "desk": {
-    "period": "2026-09-07/11",
-    "net_usd_m": -462.7,
-    "net_usd_bn": -0.463,
-    "streak_weeks_outflow": 1,
-    "updated": "2026-09-23",
+    "period": "2026-09-14/18",
+    "net_usd_m": 6.1,
+    "net_usd_bn": 0.006,
+    "streak_weeks_outflow": 0,
+    "updated": "2026-09-24",
     "source": "Farside Investors (via liquidity-monitor/data/etf_flows.json)",
-    "prior_week_usd_m": 986.7
+    "prior_week_usd_m": -462.7
   }
 }
