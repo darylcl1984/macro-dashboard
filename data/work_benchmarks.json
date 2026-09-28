@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T15:03:52.821596+00:00",
+  "fetched_at": "2026-09-28T16:41:54.724701+00:00",
   "benchmarks": [
     {
       "id": "apex",
@@ -257,15 +257,15 @@
         {
           "model": "GPT-OSS-120B",
           "creator": "OpenAI",
-          "score": 4.1,
-          "reported_error": 2.1,
+          "score": 4.4,
+          "reported_error": 2,
           "agent": "loop_truncated_tools_agent",
           "effort": "high",
           "release_date": "2025-08-05",
           "evaluation_date": null
         },
         {
-          "model": "Qwen 3.5",
+          "model": "Qwen3.5",
           "creator": "Alibaba",
           "score": 24.9,
           "reported_error": 4.7,
@@ -292,6 +292,206 @@
           "agent": "loop_truncated_tools_agent",
           "effort": "high",
           "release_date": "2026-02-19",
+          "evaluation_date": null
+        },
+        {
+          "model": "Inkling",
+          "creator": "Thinking Machines",
+          "score": 33.8,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-07-15",
+          "evaluation_date": null
+        },
+        {
+          "model": "MiniMax-M3",
+          "creator": "MiniMax",
+          "score": 37.7,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "",
+          "evaluation_date": null
+        },
+        {
+          "model": "Kimi K2.7 Code",
+          "creator": "Kimi",
+          "score": 37.6,
+          "reported_error": 4.8,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "",
+          "evaluation_date": null
+        },
+        {
+          "model": "Sonnet 4.6",
+          "creator": "Anthropic",
+          "score": 43,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-02-17",
+          "evaluation_date": null
+        },
+        {
+          "model": "GLM-5.1",
+          "creator": "Zhipu",
+          "score": 40.9,
+          "reported_error": 5.4,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "unspecified",
+          "release_date": "2026-03-27",
+          "evaluation_date": null
+        },
+        {
+          "model": "Grok 4.7",
+          "creator": "xAI",
+          "score": 54.6,
+          "reported_error": 5.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-09-21",
+          "evaluation_date": null
+        },
+        {
+          "model": "DeepSeek-V3.2",
+          "creator": "DeepSeek",
+          "score": 21.3,
+          "reported_error": 4.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "unspecified",
+          "release_date": "2025-12-01",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-5.6 Luna",
+          "creator": "OpenAI",
+          "score": 43,
+          "reported_error": 5.4,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-07-09",
+          "evaluation_date": null
+        },
+        {
+          "model": "DeepSeek-V4-Flash",
+          "creator": "DeepSeek",
+          "score": 55.3,
+          "reported_error": 5.6,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-07-31",
+          "evaluation_date": null
+        },
+        {
+          "model": "GLM-5.2",
+          "creator": "Zhipu",
+          "score": 45.2,
+          "reported_error": 5.7,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-06-16",
+          "evaluation_date": null
+        },
+        {
+          "model": "Qwen3.8-Max",
+          "creator": "Alibaba",
+          "score": 63.3,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-08-02",
+          "evaluation_date": null
+        },
+        {
+          "model": "Nemotron 3 Ultra",
+          "creator": "NVIDIA",
+          "score": 22.7,
+          "reported_error": 4.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-06-04",
+          "evaluation_date": null
+        },
+        {
+          "model": "Opus 5.5",
+          "creator": "Anthropic",
+          "score": 52.5,
+          "reported_error": 5.6,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "medium",
+          "release_date": "2026-09-22",
+          "evaluation_date": null
+        },
+        {
+          "model": "Opus 5.5",
+          "creator": "Anthropic",
+          "score": 73.5,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-09-22",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-6 Luna",
+          "creator": "OpenAI",
+          "score": 44.3,
+          "reported_error": 5.5,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-09-22",
+          "evaluation_date": null
+        },
+        {
+          "model": "GPT-6 Sol",
+          "creator": "OpenAI",
+          "score": 54.3,
+          "reported_error": 5.6,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-09-22",
+          "evaluation_date": null
+        },
+        {
+          "model": "DeepSeek-V4.1-Flash",
+          "creator": "DeepSeek",
+          "score": 39.5,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "max",
+          "release_date": "2026-09-09",
+          "evaluation_date": null
+        },
+        {
+          "model": "Gemini 3.5 Flash Lite",
+          "creator": "Google",
+          "score": 29.3,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "high",
+          "release_date": "2026-08-31",
+          "evaluation_date": null
+        },
+        {
+          "model": "Qwen 3.8 27B",
+          "creator": "Alibaba",
+          "score": 47.5,
+          "reported_error": 4.9,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-08-03",
+          "evaluation_date": null
+        },
+        {
+          "model": "Muse Spark 1.1",
+          "creator": "Meta",
+          "score": 30.3,
+          "reported_error": 5.1,
+          "agent": "loop_truncated_tools_agent",
+          "effort": "xhigh",
+          "release_date": "2026-07-09",
           "evaluation_date": null
         }
       ]
@@ -467,6 +667,16 @@
           "score": 41.82,
           "reported_error": 3.23,
           "evaluation_date": "2026-08-14",
+          "trials": 330
+        },
+        {
+          "model": "Grok 4.7",
+          "creator": "xAI",
+          "agent": "Grok Build",
+          "effort": "xhigh",
+          "score": 37.58,
+          "reported_error": 3.54,
+          "evaluation_date": "2026-09-21",
           "trials": 330
         },
         {

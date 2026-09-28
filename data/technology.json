@@ -2,647 +2,647 @@
   "source": "Epoch AI, AI Benchmarking Hub",
   "source_url": "https://epoch.ai/benchmarks/use-this-data",
   "license": "CC BY 4.0",
-  "fetched_at": "2026-09-21T15:03:51.601378+00:00",
+  "fetched_at": "2026-09-28T16:41:54.063304+00:00",
   "eci": [
     {
       "date": "2023-02-24",
-      "value": 109.94,
+      "value": 109.88,
       "label": "LLaMA-65B",
       "lab": "Meta AI",
-      "low": 102.38,
-      "high": 114.19
+      "low": 99.44,
+      "high": 114.11
     },
     {
       "date": "2023-02-24",
-      "value": 107.14,
+      "value": 107.06,
       "label": "LLaMA-33B",
       "lab": "Meta AI",
-      "low": 99.12,
-      "high": 111.49
+      "low": 95.48,
+      "high": 111.95
     },
     {
       "date": "2023-02-24",
-      "value": 100.2,
+      "value": 100.09,
       "label": "LLaMA-13B",
       "lab": "Meta AI",
-      "low": 90.99,
-      "high": 106.42
+      "low": 86.57,
+      "high": 105.95
     },
     {
       "date": "2023-02-24",
-      "value": 96.25,
+      "value": 96.12,
       "label": "LLaMA-7B",
       "lab": "Meta AI",
-      "low": 86.62,
-      "high": 103.51
+      "low": 81.98,
+      "high": 103.59
     },
     {
       "date": "2023-03-14",
-      "value": 125.89,
+      "value": 125.88,
       "label": "GPT-4 (Mar 2023)",
       "lab": "OpenAI",
-      "low": 120.86,
-      "high": 130.92
+      "low": 119.32,
+      "high": 129.93
     },
     {
       "date": "2023-03-20",
-      "value": 82.57,
+      "value": 82.36,
       "label": "Cerebras-GPT-13B",
       "lab": "Cerebras Systems",
-      "low": 68.78,
-      "high": 91.55
+      "low": 64.73,
+      "high": 91.26
     },
     {
       "date": "2023-04-11",
-      "value": 89.11,
+      "value": 88.94,
       "label": "Dolly 2.0-12b",
       "lab": "Databricks",
-      "low": 74.2,
-      "high": 97.44
+      "low": 71.56,
+      "high": 97.47
     },
     {
       "date": "2023-04-12",
-      "value": 94.19,
+      "value": 94.04,
       "label": "vicuna-13b-v1.1",
       "lab": "",
-      "low": 81.5,
-      "high": 102.35
+      "low": 78.07,
+      "high": 101.89
     },
     {
       "date": "2023-04-19",
-      "value": 54.64,
+      "value": 54.28,
       "label": "stablelm-tuned-alpha-7b",
       "lab": "",
-      "low": 35.01,
-      "high": 70.6
+      "low": 24.31,
+      "high": 69.98
     },
     {
       "date": "2023-04-24",
-      "value": 94.63,
+      "value": 94.49,
       "label": "Falcon-7B",
       "lab": "Technology Innovation Institute",
-      "low": 83.39,
-      "high": 102.26
+      "low": 80.68,
+      "high": 101.87
     },
     {
       "date": "2023-05-04",
-      "value": 89.87,
+      "value": 89.71,
       "label": "RedPajama-INCITE-7B-Base",
       "lab": "",
-      "low": 77.76,
-      "high": 97.7
+      "low": 72.73,
+      "high": 98.39
     },
     {
       "date": "2023-05-05",
-      "value": 94.11,
+      "value": 93.97,
       "label": "MPT-7B",
       "lab": "MosaicML",
-      "low": 82.85,
-      "high": 101.31
+      "low": 78.1,
+      "high": 101.6
     },
     {
       "date": "2023-05-17",
-      "value": 114.88,
+      "value": 114.84,
       "label": "PaLM 2-L",
       "lab": "",
-      "low": 107.94,
-      "high": 128.04
+      "low": 106.58,
+      "high": 128.24
     },
     {
       "date": "2023-05-17",
-      "value": 108.04,
+      "value": 107.96,
       "label": "PaLM 2-M",
       "lab": "",
-      "low": 100.36,
-      "high": 116.54
+      "low": 96.41,
+      "high": 116.8
     },
     {
       "date": "2023-05-17",
-      "value": 105.88,
+      "value": 105.79,
       "label": "PaLM 2-S",
       "lab": "",
-      "low": 96.89,
-      "high": 114.47
+      "low": 94.89,
+      "high": 113.61
     },
     {
       "date": "2023-05-25",
-      "value": 104.13,
+      "value": 104.04,
       "label": "Falcon-40B",
       "lab": "Technology Innovation Institute",
-      "low": 96.13,
-      "high": 109.74
+      "low": 91.84,
+      "high": 109.52
     },
     {
       "date": "2023-06-01",
-      "value": 89.92,
+      "value": 89.77,
       "label": "Baichuan1-7B",
       "lab": "Baichuan",
-      "low": 78.81,
-      "high": 98.42
+      "low": 73.9,
+      "high": 98.57
     },
     {
       "date": "2023-06-07",
-      "value": 91.12,
+      "value": 90.96,
       "label": "open_llama_7b",
       "lab": "",
-      "low": 78.31,
-      "high": 98.94
+      "low": 74.56,
+      "high": 98.49
     },
     {
       "date": "2023-06-13",
       "value": 123.1,
       "label": "GPT-4 (Jun 2023)",
       "lab": "OpenAI",
-      "low": 117.33,
-      "high": 126.96
+      "low": 116.13,
+      "high": 127.04
     },
     {
       "date": "2023-06-13",
-      "value": 113.19,
+      "value": 113.14,
       "label": "GPT-3.5 Turbo (Jun 2023)",
       "lab": "OpenAI",
-      "low": 105.86,
-      "high": 118.59
+      "low": 102.96,
+      "high": 117.98
     },
     {
       "date": "2023-06-22",
-      "value": 100.28,
+      "value": 100.16,
       "label": "MPT-30B",
       "lab": "MosaicML",
-      "low": 91.03,
-      "high": 106.26
+      "low": 87.58,
+      "high": 106.18
     },
     {
       "date": "2023-06-24",
-      "value": 98.53,
+      "value": 98.41,
       "label": "chatglm2-6b",
       "lab": "",
-      "low": 80.7,
-      "high": 105.99
+      "low": 77.28,
+      "high": 105.45
     },
     {
       "date": "2023-06-27",
-      "value": 92.9,
+      "value": 92.75,
       "label": "XGen-7B",
       "lab": "Salesforce",
-      "low": 82.02,
-      "high": 100.1
+      "low": 77.59,
+      "high": 100.67
     },
     {
       "date": "2023-07-05",
-      "value": 102.53,
+      "value": 102.43,
       "label": "internlm-7b",
       "lab": "",
-      "low": 93.35,
-      "high": 108.96
+      "low": 89.15,
+      "high": 109.01
     },
     {
       "date": "2023-07-11",
-      "value": 120.09,
+      "value": 120.08,
       "label": "Claude 2",
       "lab": "Anthropic",
-      "low": 114.65,
-      "high": 123.88
+      "low": 112.47,
+      "high": 123.57
     },
     {
       "date": "2023-07-18",
-      "value": 113.63,
+      "value": 113.59,
       "label": "Llama 2-70B",
       "lab": "Meta AI",
-      "low": 107.1,
-      "high": 117.47
+      "low": 103.8,
+      "high": 117.42
     },
     {
       "date": "2023-07-18",
-      "value": 105.88,
+      "value": 105.8,
       "label": "Llama 2-13B",
       "lab": "Meta AI",
-      "low": 97.93,
-      "high": 111.08
+      "low": 93.55,
+      "high": 110.93
     },
     {
       "date": "2023-07-18",
-      "value": 104.9,
+      "value": 104.81,
       "label": "Llama 2-34B",
       "lab": "Meta AI",
-      "low": 96.63,
-      "high": 110.21
+      "low": 92.31,
+      "high": 110.58
     },
     {
       "date": "2023-07-18",
-      "value": 98.66,
+      "value": 98.54,
       "label": "Llama 2-7B",
       "lab": "Meta AI",
-      "low": 89.15,
-      "high": 104.53
+      "low": 85.88,
+      "high": 105.23
     },
     {
       "date": "2023-07-20",
-      "value": 117.0,
+      "value": 116.97,
       "label": "Stable Beluga 2",
       "lab": "Stability AI",
-      "low": 110.4,
-      "high": 120.04
+      "low": 108.0,
+      "high": 120.19
     },
     {
       "date": "2023-08-09",
       "value": 120.2,
       "label": "Claude Instant",
       "lab": "Anthropic",
-      "low": 114.06,
-      "high": 122.84
+      "low": 111.75,
+      "high": 122.93
     },
     {
       "date": "2023-09-06",
-      "value": 111.94,
+      "value": 111.89,
       "label": "Falcon-180B",
       "lab": "Technology Innovation Institute",
-      "low": 104.28,
-      "high": 118.9
+      "low": 100.79,
+      "high": 118.22
     },
     {
       "date": "2023-09-06",
-      "value": 102.86,
+      "value": 102.76,
       "label": "Baichuan2-13B",
       "lab": "Baichuan",
-      "low": 92.28,
-      "high": 109.77
+      "low": 89.65,
+      "high": 109.73
     },
     {
       "date": "2023-09-11",
-      "value": 90.99,
+      "value": 90.82,
       "label": "Phi-1.5",
       "lab": "Microsoft",
-      "low": 69.51,
-      "high": 100.73
+      "low": 66.25,
+      "high": 100.47
     },
     {
       "date": "2023-09-18",
-      "value": 111.89,
+      "value": 111.84,
       "label": "internlm-20b",
       "lab": "",
-      "low": 104.33,
-      "high": 116.15
+      "low": 100.86,
+      "high": 116.65
     },
     {
       "date": "2023-09-20",
-      "value": 95.88,
+      "value": 95.75,
       "label": "Baichuan 2-7B",
       "lab": "Baichuan",
-      "low": 85.35,
-      "high": 104.45
+      "low": 80.55,
+      "high": 103.68
     },
     {
       "date": "2023-09-24",
-      "value": 112.85,
+      "value": 112.8,
       "label": "Qwen-14B",
       "lab": "Alibaba",
-      "low": 104.94,
-      "high": 117.63
+      "low": 102.22,
+      "high": 117.1
     },
     {
       "date": "2023-09-27",
-      "value": 112.02,
+      "value": 111.97,
       "label": "Mistral 7B v0.1",
       "lab": "Mistral AI",
-      "low": 105.4,
-      "high": 116.2
+      "low": 101.44,
+      "high": 115.92
     },
     {
       "date": "2023-09-28",
-      "value": 106.55,
+      "value": 106.47,
       "label": "Qwen-7B",
       "lab": "Alibaba",
-      "low": 97.18,
-      "high": 112.2
+      "low": 93.35,
+      "high": 112.53
     },
     {
       "date": "2023-11-02",
-      "value": 117.3,
+      "value": 117.28,
       "label": "Yi-34B",
       "lab": "01.AI",
-      "low": 110.2,
-      "high": 120.62
+      "low": 108.06,
+      "high": 120.52
     },
     {
       "date": "2023-11-02",
-      "value": 95.87,
+      "value": 95.74,
       "label": "DeepSeek Coder 33B",
       "lab": "DeepSeek,Peking University",
-      "low": 83.8,
-      "high": 103.31
+      "low": 79.38,
+      "high": 102.87
     },
     {
       "date": "2023-11-02",
-      "value": 89.05,
+      "value": 88.88,
       "label": "DeepSeek Coder 6.7B",
       "lab": "DeepSeek,Peking University",
-      "low": 76.34,
-      "high": 97.47
+      "low": 71.07,
+      "high": 97.62
     },
     {
       "date": "2023-11-02",
-      "value": 62.54,
+      "value": 62.18,
       "label": "DeepSeek Coder 1.3B",
       "lab": "DeepSeek,Peking University",
-      "low": 47.12,
-      "high": 77.27
+      "low": 38.48,
+      "high": 75.96
     },
     {
       "date": "2023-11-06",
-      "value": 118.49,
+      "value": 118.48,
       "label": "GPT-3.5 Turbo (Nov 2023)",
       "lab": "OpenAI",
-      "low": 109.97,
-      "high": 121.66
+      "low": 108.89,
+      "high": 121.46
     },
     {
       "date": "2023-11-21",
       "value": 119.22,
       "label": "Claude 2.1",
       "lab": "Anthropic",
-      "low": 113.09,
-      "high": 122.07
+      "low": 111.18,
+      "high": 122.03
     },
     {
       "date": "2023-11-22",
-      "value": 104.46,
+      "value": 104.37,
       "label": "Yi 6B",
       "lab": "01.AI",
-      "low": 96.4,
-      "high": 109.77
+      "low": 92.49,
+      "high": 110.59
     },
     {
       "date": "2023-11-29",
-      "value": 110.56,
+      "value": 110.54,
       "label": "DeepSeek LLM 67B",
       "lab": "DeepSeek",
-      "low": 94.72,
-      "high": 117.04
+      "low": 93.2,
+      "high": 116.86
     },
     {
       "date": "2023-11-30",
-      "value": 92.43,
+      "value": 92.28,
       "label": "Qwen-1_8B",
       "lab": "",
-      "low": 72.31,
-      "high": 101.42
+      "low": 68.79,
+      "high": 101.69
     },
     {
       "date": "2023-12-11",
-      "value": 118.4,
+      "value": 118.38,
       "label": "Mixtral 8x7B",
       "lab": "Mistral AI",
-      "low": 112.43,
-      "high": 121.19
+      "low": 109.47,
+      "high": 121.09
     },
     {
       "date": "2023-12-12",
-      "value": 107.69,
+      "value": 107.62,
       "label": "Phi-2",
       "lab": "Microsoft",
-      "low": 86.08,
-      "high": 112.67
+      "low": 85.33,
+      "high": 113.3
     },
     {
       "date": "2023-12-13",
       "value": 116.97,
       "label": "Gemini 1.0 Pro",
       "lab": "Google DeepMind",
-      "low": 111.28,
-      "high": 119.91
+      "low": 108.46,
+      "high": 119.71
     },
     {
       "date": "2024-01-25",
-      "value": 126.45,
+      "value": 126.46,
       "label": "GPT-4 Turbo (Nov 2023)",
       "lab": "OpenAI",
-      "low": 122.53,
-      "high": 129.06
+      "low": 120.01,
+      "high": 128.82
     },
     {
       "date": "2024-01-25",
       "value": 115.61,
       "label": "GPT-3.5 Turbo (Jan 2024)",
       "lab": "OpenAI",
-      "low": 109.31,
-      "high": 119.09
+      "low": 106.54,
+      "high": 119.04
     },
     {
       "date": "2024-02-20",
-      "value": 104.7,
+      "value": 104.61,
       "label": "StarCoder 2 15B",
       "lab": "Hugging Face,ServiceNow,NVIDIA,BigCode",
-      "low": 94.66,
-      "high": 111.42
+      "low": 92.54,
+      "high": 111.46
     },
     {
       "date": "2024-02-20",
-      "value": 93.06,
+      "value": 92.92,
       "label": "StarCoder 2 7B",
       "lab": "Hugging Face,ServiceNow,NVIDIA,BigCode",
-      "low": 79.66,
-      "high": 101.53
+      "low": 73.42,
+      "high": 101.15
     },
     {
       "date": "2024-02-21",
-      "value": 111.79,
+      "value": 111.74,
       "label": "Gemma 7B",
       "lab": "Google DeepMind",
-      "low": 104.47,
-      "high": 116.73
+      "low": 100.68,
+      "high": 116.52
     },
     {
       "date": "2024-02-21",
-      "value": 93.72,
+      "value": 93.57,
       "label": "Gemma 2B",
       "lab": "Google DeepMind",
-      "low": 83.4,
-      "high": 100.44
+      "low": 79.07,
+      "high": 101.0
     },
     {
       "date": "2024-02-22",
-      "value": 88.18,
+      "value": 88.01,
       "label": "StarCoder 2 3B",
       "lab": "Hugging Face,ServiceNow,NVIDIA,BigCode",
-      "low": 74.45,
-      "high": 97.14
+      "low": 70.0,
+      "high": 97.26
     },
     {
       "date": "2024-02-26",
       "value": 122.0,
       "label": "Mistral Large",
       "lab": "Mistral AI",
-      "low": 115.45,
-      "high": 124.63
+      "low": 114.11,
+      "high": 124.79
     },
     {
       "date": "2024-02-26",
-      "value": 107.45,
+      "value": 107.38,
       "label": "Nemotron-4 15B",
       "lab": "NVIDIA",
-      "low": 100.02,
-      "high": 113.16
+      "low": 95.64,
+      "high": 113.21
     },
     {
       "date": "2024-02-29",
       "value": 126.91,
       "label": "Claude 3 Opus",
       "lab": "Anthropic",
-      "low": 123.2,
-      "high": 130.09
+      "low": 121.13,
+      "high": 130.25
     },
     {
       "date": "2024-02-29",
-      "value": 120.68,
+      "value": 120.69,
       "label": "Claude 3 Sonnet",
       "lab": "Anthropic",
-      "low": 113.41,
-      "high": 124.15
+      "low": 112.65,
+      "high": 123.51
     },
     {
       "date": "2024-03-01",
-      "value": 107.35,
+      "value": 107.27,
       "label": "Yi-9B",
       "lab": "",
-      "low": 98.96,
-      "high": 115.54
+      "low": 95.37,
+      "high": 115.45
     },
     {
       "date": "2024-03-07",
       "value": 118.3,
       "label": "Claude 3 Haiku",
       "lab": "Anthropic",
-      "low": 112.27,
-      "high": 121.43
+      "low": 109.7,
+      "high": 121.41
     },
     {
       "date": "2024-04-09",
       "value": 127.25,
       "label": "GPT-4 Turbo (Apr 2024)",
       "lab": "OpenAI",
-      "low": 123.32,
-      "high": 128.87
+      "low": 121.31,
+      "high": 128.88
     },
     {
       "date": "2024-04-15",
-      "value": 94.38,
+      "value": 94.24,
       "label": "CodeQwen1.5-7B",
       "lab": "",
-      "low": 80.91,
-      "high": 103.33
+      "low": 76.39,
+      "high": 101.91
     },
     {
       "date": "2024-04-17",
       "value": 122.0,
       "label": "Mixtral 8x22B",
       "lab": "Mistral AI",
-      "low": 115.9,
-      "high": 124.51
+      "low": 113.99,
+      "high": 124.49
     },
     {
       "date": "2024-04-18",
       "value": 122.91,
       "label": "Llama 3-70B",
       "lab": "Meta AI",
-      "low": 118.22,
-      "high": 125.97
+      "low": 116.54,
+      "high": 125.93
     },
     {
       "date": "2024-04-18",
-      "value": 116.35,
+      "value": 116.33,
       "label": "Llama 3-8B",
       "lab": "Meta AI",
-      "low": 109.0,
-      "high": 119.28
+      "low": 106.66,
+      "high": 119.33
     },
     {
       "date": "2024-04-23",
-      "value": 121.8,
+      "value": 121.79,
       "label": "phi-3-small 7.4B",
       "lab": "Microsoft",
-      "low": 116.07,
-      "high": 124.75
+      "low": 113.63,
+      "high": 124.99
     },
     {
       "date": "2024-04-23",
-      "value": 121.19,
+      "value": 121.18,
       "label": "phi-3-medium 14B",
       "lab": "Microsoft",
-      "low": 115.62,
-      "high": 124.27
+      "low": 113.28,
+      "high": 124.4
     },
     {
       "date": "2024-04-23",
-      "value": 117.25,
+      "value": 117.23,
       "label": "phi-3-mini 3.8B",
       "lab": "Microsoft",
-      "low": 108.88,
-      "high": 121.19
+      "low": 106.44,
+      "high": 120.79
     },
     {
       "date": "2024-05-07",
-      "value": 124.77,
+      "value": 124.78,
       "label": "DeepSeek-V2 (MoE-236B, May 2024)",
       "lab": "DeepSeek",
-      "low": 119.95,
-      "high": 127.8
+      "low": 117.84,
+      "high": 128.1
     },
     {
       "date": "2024-05-09",
-      "value": 109.32,
+      "value": 109.25,
       "label": "Falcon 2 11B",
       "lab": "Technology Innovation Institute",
-      "low": 102.33,
-      "high": 115.66
+      "low": 98.82,
+      "high": 115.82
     },
     {
       "date": "2024-05-13",
       "value": 128.97,
       "label": "GPT-4o (May 2024)",
       "lab": "OpenAI",
-      "low": 125.32,
-      "high": 131.55
+      "low": 123.68,
+      "high": 131.51
     },
     {
       "date": "2024-05-14",
       "value": 126.9,
       "label": "Gemini 1.5 Pro (May 2024)",
       "lab": "Google DeepMind",
-      "low": 122.76,
-      "high": 129.18
+      "low": 120.9,
+      "high": 129.3
     },
     {
       "date": "2024-05-23",
       "value": 122.57,
       "label": "Gemini 1.5 Flash (May 2024)",
       "lab": "Google DeepMind",
-      "low": 117.47,
+      "low": 115.46,
       "high": 124.66
     },
     {
       "date": "2024-05-27",
-      "value": 108.78,
+      "value": 108.73,
       "label": "Mistral 7B v0.3",
       "lab": "Mistral AI",
-      "low": 98.81,
-      "high": 112.63
+      "low": 95.92,
+      "high": 112.55
     },
     {
       "date": "2024-06-07",
       "value": 125.27,
       "label": "Qwen2-72B",
       "lab": "Alibaba",
-      "low": 120.23,
-      "high": 126.96
+      "low": 118.75,
+      "high": 126.95
     },
     {
       "date": "2024-06-13",
-      "value": 108.64,
+      "value": 108.57,
       "label": "DeepSeek-Coder-V2-Lite-Base",
       "lab": "",
-      "low": 100.76,
-      "high": 113.71
+      "low": 96.16,
+      "high": 114.23
     },
     {
       "date": "2024-06-20",
@@ -652,162 +652,162 @@
     },
     {
       "date": "2024-06-24",
-      "value": 122.05,
+      "value": 122.06,
       "label": "Gemma 2 27B",
       "lab": "Google DeepMind",
-      "low": 116.0,
-      "high": 124.19
+      "low": 113.96,
+      "high": 124.18
     },
     {
       "date": "2024-06-24",
-      "value": 119.79,
+      "value": 119.78,
       "label": "Gemma 2 9B",
       "lab": "Google DeepMind",
-      "low": 112.51,
-      "high": 122.42
+      "low": 110.65,
+      "high": 122.62
     },
     {
       "date": "2024-07-18",
       "value": 126.56,
       "label": "GPT-4o mini",
       "lab": "OpenAI",
-      "low": 121.04,
-      "high": 128.51
+      "low": 119.65,
+      "high": 128.65
     },
     {
       "date": "2024-07-18",
-      "value": 118.64,
+      "value": 118.63,
       "label": "Mistral NeMo",
       "lab": "Mistral AI",
-      "low": 112.08,
-      "high": 121.77
+      "low": 109.83,
+      "high": 121.46
     },
     {
       "date": "2024-07-23",
-      "value": 128.75,
+      "value": 128.76,
       "label": "Llama 3.1-405B",
       "lab": "Meta AI",
-      "low": 124.83,
-      "high": 130.75
+      "low": 122.99,
+      "high": 130.77
     },
     {
       "date": "2024-07-23",
       "value": 125.91,
       "label": "Llama 3.1-70B",
       "lab": "Meta AI",
-      "low": 121.49,
-      "high": 128.4
+      "low": 119.85,
+      "high": 128.11
     },
     {
       "date": "2024-07-23",
-      "value": 116.5,
+      "value": 116.48,
       "label": "Llama 3.1-8B",
       "lab": "Meta AI",
-      "low": 107.07,
-      "high": 121.8
+      "low": 105.22,
+      "high": 121.48
     },
     {
       "date": "2024-07-24",
       "value": 127.54,
       "label": "Mistral Large 2 (Jul 2024)",
       "lab": "Mistral AI",
-      "low": 123.38,
-      "high": 129.87
+      "low": 121.7,
+      "high": 129.71
     },
     {
       "date": "2024-08-06",
       "value": 128.77,
       "label": "GPT-4o (Aug 2024)",
       "lab": "OpenAI",
-      "low": 124.75,
-      "high": 131.04
+      "low": 122.92,
+      "high": 130.88
     },
     {
       "date": "2024-08-30",
-      "value": 119.25,
+      "value": 119.28,
       "label": "Command R+",
       "lab": "Cohere,Cohere Labs (formerly Cohere for AI)",
-      "low": 111.34,
-      "high": 125.27
+      "low": 109.13,
+      "high": 125.48
     },
     {
       "date": "2024-09-12",
       "value": 135.82,
       "label": "o1-mini",
       "lab": "OpenAI",
-      "low": 132.6,
-      "high": 137.28
+      "low": 131.73,
+      "high": 137.34
     },
     {
       "date": "2024-09-12",
       "value": 134.78,
       "label": "o1-preview",
       "lab": "OpenAI",
-      "low": 131.38,
-      "high": 138.44
+      "low": 130.03,
+      "high": 137.96
     },
     {
       "date": "2024-09-17",
       "value": 128.52,
       "label": "Qwen2.5-32B",
       "lab": "Alibaba",
-      "low": 123.46,
+      "low": 121.96,
       "high": 130.17
     },
     {
       "date": "2024-09-18",
-      "value": 119.42,
+      "value": 119.41,
       "label": "Qwen2.5-Coder-32B",
       "lab": "Alibaba",
-      "low": 110.95,
-      "high": 124.94
+      "low": 109.66,
+      "high": 124.76
     },
     {
       "date": "2024-09-18",
-      "value": 116.28,
+      "value": 116.26,
       "label": "Qwen2.5-Coder-14B",
       "lab": "",
-      "low": 107.63,
-      "high": 122.1
+      "low": 103.76,
+      "high": 122.34
     },
     {
       "date": "2024-09-18",
-      "value": 112.97,
+      "value": 112.93,
       "label": "Qwen2.5-Coder (7B)",
       "lab": "Alibaba",
-      "low": 103.06,
-      "high": 119.27
+      "low": 101.66,
+      "high": 119.0
     },
     {
       "date": "2024-09-18",
-      "value": 107.48,
+      "value": 107.4,
       "label": "Qwen2.5-Coder-3B",
       "lab": "",
-      "low": 94.58,
-      "high": 114.98
+      "low": 92.61,
+      "high": 115.0
     },
     {
       "date": "2024-09-18",
-      "value": 102.66,
+      "value": 102.56,
       "label": "Qwen2.5-Coder (1.5B)",
       "lab": "Alibaba",
-      "low": 87.49,
-      "high": 110.49
+      "low": 85.74,
+      "high": 110.25
     },
     {
       "date": "2024-09-18",
-      "value": 87.56,
+      "value": 87.38,
       "label": "Qwen2.5-Coder-0.5B",
       "lab": "",
-      "low": 63.11,
-      "high": 101.0
+      "low": 60.0,
+      "high": 99.84
     },
     {
       "date": "2024-09-19",
-      "value": 129.0,
+      "value": 129.01,
       "label": "Qwen2.5-72B",
       "lab": "Alibaba",
-      "low": 124.2,
+      "low": 123.03,
       "high": 130.83
     },
     {
@@ -815,576 +815,576 @@
       "value": 118.44,
       "label": "Qwen2.5-7B",
       "lab": "Alibaba",
-      "low": 111.37,
-      "high": 121.21
+      "low": 109.38,
+      "high": 121.31
     },
     {
       "date": "2024-09-24",
       "value": 131.73,
       "label": "Gemini 1.5 Pro (Sept 2024)",
       "lab": "Google DeepMind",
-      "low": 128.47,
-      "high": 133.31
+      "low": 126.4,
+      "high": 133.34
     },
     {
       "date": "2024-09-24",
-      "value": 129.36,
+      "value": 129.37,
       "label": "Gemini 1.5 Flash (Sep 2024)",
       "lab": "Google DeepMind",
-      "low": 124.24,
-      "high": 131.19
+      "low": 122.78,
+      "high": 131.21
     },
     {
       "date": "2024-09-24",
       "value": 125.5,
       "label": "Llama 3.2 90B",
       "lab": "Meta AI",
-      "low": 120.84,
-      "high": 127.41
+      "low": 119.02,
+      "high": 127.36
     },
     {
       "date": "2024-09-24",
-      "value": 102.43,
+      "value": 101.95,
       "label": "Llama 3.2 1B",
       "lab": "Meta AI",
-      "low": 92.05,
-      "high": 113.95
+      "low": 88.84,
+      "high": 112.79
     },
     {
       "date": "2024-10-16",
-      "value": 118.06,
+      "value": 118.08,
       "label": "Ministral 3B",
       "lab": "Mistral AI",
-      "low": 106.88,
-      "high": 121.5
+      "low": 105.84,
+      "high": 121.58
     },
     {
       "date": "2024-10-22",
       "value": 133.55,
       "label": "Claude 3.5 Sonnet (October 2024)",
       "lab": "Anthropic",
-      "low": 129.7,
-      "high": 138.29
+      "low": 128.58,
+      "high": 138.02
     },
     {
       "date": "2024-10-22",
       "value": 127.15,
       "label": "Claude 3.5 Haiku",
       "lab": "Anthropic",
-      "low": 120.88,
-      "high": 129.73
+      "low": 120.4,
+      "high": 129.96
     },
     {
       "date": "2024-11-18",
       "value": 128.52,
       "label": "Mistral Large 2 (Nov 2024)",
       "lab": "Mistral AI",
-      "low": 124.64,
-      "high": 130.68
+      "low": 122.79,
+      "high": 130.53
     },
     {
       "date": "2024-11-20",
       "value": 128.81,
       "label": "GPT-4o (Nov 2024)",
       "lab": "OpenAI",
-      "low": 124.89,
-      "high": 131.18
+      "low": 123.4,
+      "high": 131.0
     },
     {
       "date": "2024-11-29",
-      "value": 100.49,
+      "value": 100.38,
       "label": "INTELLECT-1",
       "lab": "Prime Intellect,Hugging Face,Arcee AI",
-      "low": 90.54,
-      "high": 106.31
+      "low": 87.46,
+      "high": 106.06
     },
     {
       "date": "2024-12-03",
-      "value": 123.77,
+      "value": 123.75,
       "label": "Amazon Nova Pro",
       "lab": "Amazon",
-      "low": 109.93,
-      "high": 126.64
+      "low": 109.68,
+      "high": 126.76
     },
     {
       "date": "2024-12-06",
       "value": 127.32,
       "label": "Llama 3.3 70B",
       "lab": "Meta AI",
-      "low": 123.07,
-      "high": 129.81
+      "low": 121.63,
+      "high": 129.59
     },
     {
       "date": "2024-12-11",
       "value": 134.71,
       "label": "Gemini 2.0 Flash (Dec 2024)",
       "lab": "Google DeepMind,Google",
-      "low": 124.75,
-      "high": 136.67
+      "low": 124.89,
+      "high": 136.53
     },
     {
       "date": "2024-12-12",
       "value": 130.48,
       "label": "Grok-2 (Dec 2024)",
       "lab": "xAI",
-      "low": 126.21,
-      "high": 132.43
+      "low": 125.0,
+      "high": 132.16
     },
     {
       "date": "2024-12-12",
-      "value": 130.42,
+      "value": 130.43,
       "label": "Phi-4",
       "lab": "Microsoft Research",
-      "low": 125.56,
-      "high": 132.22
+      "low": 124.49,
+      "high": 132.3
     },
     {
       "date": "2024-12-17",
-      "value": 141.86,
+      "value": 141.92,
       "label": "o1",
       "lab": "OpenAI",
-      "low": 140.15,
-      "high": 143.11
+      "low": 139.54,
+      "high": 143.26
     },
     {
       "date": "2024-12-26",
-      "value": 132.35,
+      "value": 132.36,
       "label": "DeepSeek-V3",
       "lab": "DeepSeek",
-      "low": 128.55,
-      "high": 135.57
+      "low": 126.39,
+      "high": 135.6
     },
     {
       "date": "2025-01-20",
-      "value": 138.97,
+      "value": 138.98,
       "label": "DeepSeek-R1",
       "lab": "DeepSeek",
-      "low": 136.9,
-      "high": 140.47
+      "low": 135.97,
+      "high": 140.4
     },
     {
       "date": "2025-01-20",
-      "value": 137.42,
+      "value": 137.43,
       "label": "DeepSeek-R1-Distill-Qwen-32B",
       "lab": "DeepSeek",
-      "low": 131.53,
-      "high": 138.84
+      "low": 126.78,
+      "high": 138.85
     },
     {
       "date": "2025-01-20",
       "value": 135.43,
       "label": "DeepSeek-R1-Distill-Qwen-14B",
       "lab": "DeepSeek",
-      "low": 127.32,
-      "high": 138.15
+      "low": 127.56,
+      "high": 138.05
     },
     {
       "date": "2025-01-21",
-      "value": 135.37,
+      "value": 135.36,
       "label": "Gemini 2.0 Flash Thinking (Jan 2025)",
       "lab": "Google DeepMind,Google",
-      "low": 130.54,
-      "high": 138.06
+      "low": 129.63,
+      "high": 137.99
     },
     {
       "date": "2025-01-25",
-      "value": 132.53,
+      "value": 132.54,
       "label": "Qwen2.5-Max",
       "lab": "Alibaba",
-      "low": 129.09,
-      "high": 135.74
+      "low": 127.69,
+      "high": 136.24
     },
     {
       "date": "2025-01-30",
-      "value": 127.07,
+      "value": 127.06,
       "label": "Mistral Small 3",
       "lab": "Mistral AI",
-      "low": 122.77,
-      "high": 129.11
+      "low": 120.92,
+      "high": 128.89
     },
     {
       "date": "2025-01-31",
       "value": 140.35,
       "label": "o3-mini",
       "lab": "OpenAI",
-      "low": 137.21,
-      "high": 141.89
+      "low": 136.72,
+      "high": 141.81
     },
     {
       "date": "2025-02-05",
       "value": 135.06,
       "label": "Gemini 2.0 Pro",
       "lab": "Google DeepMind",
-      "low": 132.0,
-      "high": 136.72
+      "low": 130.73,
+      "high": 136.96
     },
     {
       "date": "2025-02-05",
       "value": 134.69,
       "label": "Gemini 2.0 Flash (Feb 2025)",
       "lab": "Google DeepMind,Google",
-      "low": 132.02,
-      "high": 136.71
+      "low": 130.51,
+      "high": 136.7
     },
     {
       "date": "2025-02-24",
       "value": 141.16,
       "label": "Claude 3.7 Sonnet",
       "lab": "Anthropic",
-      "low": 139.15,
-      "high": 142.7
+      "low": 138.54,
+      "high": 142.79
     },
     {
       "date": "2025-02-27",
-      "value": 136.75,
+      "value": 136.74,
       "label": "GPT-4.5",
       "lab": "OpenAI",
-      "low": 134.26,
-      "high": 138.84
+      "low": 133.44,
+      "high": 138.76
     },
     {
       "date": "2025-03-05",
       "value": 137.6,
       "label": "QwQ-32B",
       "lab": "Alibaba",
-      "low": 132.9,
-      "high": 141.53
+      "low": 131.88,
+      "high": 141.38
     },
     {
       "date": "2025-03-12",
-      "value": 130.03,
+      "value": 130.04,
       "label": "Gemma 3 27B",
       "lab": "Google DeepMind",
-      "low": 125.11,
-      "high": 132.2
+      "low": 123.22,
+      "high": 132.09
     },
     {
       "date": "2025-03-12",
-      "value": 123.46,
+      "value": 123.49,
       "label": "Gemma 3 12B",
       "lab": "Google DeepMind",
-      "low": 115.68,
-      "high": 129.29
+      "low": 115.15,
+      "high": 128.28
     },
     {
       "date": "2025-03-12",
-      "value": 115.97,
+      "value": 116.02,
       "label": "Gemma 3 4B",
       "lab": "Google DeepMind",
-      "low": 97.92,
-      "high": 123.7
+      "low": 96.21,
+      "high": 123.52
     },
     {
       "date": "2025-03-17",
       "value": 127.48,
       "label": "Mistral Small 3.1",
       "lab": "Mistral AI",
-      "low": 123.58,
-      "high": 129.41
+      "low": 121.15,
+      "high": 129.32
     },
     {
       "date": "2025-03-24",
       "value": 135.95,
       "label": "DeepSeek-V3 (Mar 2025)",
       "lab": "DeepSeek",
-      "low": 133.32,
-      "high": 137.9
+      "low": 132.06,
+      "high": 137.96
     },
     {
       "date": "2025-03-31",
       "value": 144.16,
       "label": "Gemini 2.5 Pro (Mar 2025)",
       "lab": "Google DeepMind",
-      "low": 142.19,
-      "high": 147.04
+      "low": 141.86,
+      "high": 147.1
     },
     {
       "date": "2025-04-05",
       "value": 129.64,
       "label": "Llama 4 Scout",
       "lab": "Meta AI",
-      "low": 125.22,
-      "high": 131.37
+      "low": 123.65,
+      "high": 131.49
     },
     {
       "date": "2025-04-06",
       "value": 132.2,
       "label": "Llama 4 Maverick",
       "lab": "Meta AI",
-      "low": 128.7,
-      "high": 134.05
+      "low": 127.5,
+      "high": 133.91
     },
     {
       "date": "2025-04-09",
-      "value": 138.3,
+      "value": 138.34,
       "label": "Grok 3",
       "lab": "xAI",
-      "low": 135.93,
-      "high": 139.83
+      "low": 135.05,
+      "high": 139.68
     },
     {
       "date": "2025-04-14",
-      "value": 136.8,
+      "value": 136.79,
       "label": "GPT-4.1",
       "lab": "OpenAI",
-      "low": 134.37,
-      "high": 138.51
+      "low": 133.38,
+      "high": 138.54
     },
     {
       "date": "2025-04-14",
-      "value": 135.02,
+      "value": 135.01,
       "label": "GPT-4.1 mini",
       "lab": "OpenAI",
-      "low": 131.78,
-      "high": 136.65
+      "low": 130.64,
+      "high": 136.67
     },
     {
       "date": "2025-04-14",
-      "value": 129.63,
+      "value": 129.62,
       "label": "GPT-4.1 nano",
       "lab": "OpenAI",
-      "low": 124.26,
-      "high": 131.97
+      "low": 122.64,
+      "high": 131.72
     },
     {
       "date": "2025-04-16",
-      "value": 146.91,
+      "value": 146.88,
       "label": "o3",
       "lab": "OpenAI",
-      "low": 145.23,
-      "high": 148.66
+      "low": 144.97,
+      "high": 148.48
     },
     {
       "date": "2025-04-16",
-      "value": 145.65,
+      "value": 145.63,
       "label": "o4-mini",
       "lab": "OpenAI",
-      "low": 143.36,
-      "high": 147.36
+      "low": 143.16,
+      "high": 147.29
     },
     {
       "date": "2025-04-17",
-      "value": 139.97,
+      "value": 139.96,
       "label": "Gemini 2.5 Flash (Apr 2025)",
       "lab": "Google DeepMind",
-      "low": 135.94,
-      "high": 142.06
+      "low": 135.72,
+      "high": 142.05
     },
     {
       "date": "2025-04-28",
-      "value": 139.35,
+      "value": 139.36,
       "label": "Qwen3-235B-A22B",
       "lab": "Alibaba",
-      "low": 136.34,
-      "high": 140.95
+      "low": 135.24,
+      "high": 140.8
     },
     {
       "date": "2025-04-28",
-      "value": 136.18,
+      "value": 136.17,
       "label": "Qwen3-8B",
       "lab": "Alibaba",
-      "low": 130.64,
-      "high": 138.29
+      "low": 130.13,
+      "high": 138.04
     },
     {
       "date": "2025-04-29",
       "value": 138.51,
       "label": "Qwen3-32B",
       "lab": "Alibaba",
-      "low": 135.04,
-      "high": 140.45
+      "low": 134.72,
+      "high": 140.47
     },
     {
       "date": "2025-04-29",
-      "value": 138.24,
+      "value": 138.23,
       "label": "Qwen3-14B",
       "lab": "Alibaba",
-      "low": 133.78,
-      "high": 139.91
+      "low": 133.36,
+      "high": 140.06
     },
     {
       "date": "2025-04-29",
-      "value": 136.19,
+      "value": 136.18,
       "label": "Qwen3-30B-A3B",
       "lab": "Alibaba",
-      "low": 130.67,
-      "high": 138.63
+      "low": 130.14,
+      "high": 138.6
     },
     {
       "date": "2025-05-06",
-      "value": 142.47,
+      "value": 142.46,
       "label": "Gemini 2.5 Pro (May 2025)",
       "lab": "Google DeepMind",
-      "low": 139.42,
-      "high": 145.42
+      "low": 138.81,
+      "high": 145.3
     },
     {
       "date": "2025-05-07",
       "value": 134.07,
       "label": "Mistral Medium 3",
       "lab": "Mistral AI",
-      "low": 130.83,
-      "high": 135.56
+      "low": 129.32,
+      "high": 135.44
     },
     {
       "date": "2025-05-20",
       "value": 141.54,
       "label": "Gemini 2.5 Flash (May 2025)",
       "lab": "Google DeepMind",
-      "low": 139.66,
-      "high": 143.04
+      "low": 138.85,
+      "high": 143.09
     },
     {
       "date": "2025-05-22",
-      "value": 142.68,
+      "value": 142.67,
       "label": "Claude Opus 4",
       "lab": "Anthropic",
-      "low": 140.74,
-      "high": 144.27
+      "low": 140.02,
+      "high": 144.31
     },
     {
       "date": "2025-05-22",
       "value": 141.69,
       "label": "Claude Sonnet 4",
       "lab": "Anthropic",
-      "low": 139.18,
-      "high": 143.08
+      "low": 138.67,
+      "high": 143.03
     },
     {
       "date": "2025-05-28",
-      "value": 141.29,
+      "value": 141.3,
       "label": "DeepSeek-R1 (May 2025)",
       "lab": "DeepSeek",
-      "low": 139.31,
-      "high": 142.74
+      "low": 138.76,
+      "high": 143.08
     },
     {
       "date": "2025-06-05",
-      "value": 145.26,
+      "value": 145.32,
       "label": "Gemini 2.5 Pro (Jun 2025)",
       "lab": "Google DeepMind",
-      "low": 143.82,
-      "high": 146.79
+      "low": 143.42,
+      "high": 146.87
     },
     {
       "date": "2025-06-10",
-      "value": 147.45,
+      "value": 147.43,
       "label": "o3-pro",
       "lab": "OpenAI",
-      "low": 145.85,
-      "high": 149.7
+      "low": 145.68,
+      "high": 150.09
     },
     {
       "date": "2025-06-10",
       "value": 133.19,
       "label": "Magistral Small 1.0",
       "lab": "Mistral AI",
-      "low": 130.02,
-      "high": 134.49
+      "low": 128.75,
+      "high": 134.52
     },
     {
       "date": "2025-06-17",
-      "value": 140.53,
+      "value": 140.8,
       "label": "Gemini 2.5 Flash (Jun 2025)",
       "lab": "Google DeepMind",
-      "low": 138.48,
-      "high": 141.94
+      "low": 138.15,
+      "high": 142.35
     },
     {
       "date": "2025-06-17",
       "value": 133.93,
       "label": "Gemini 2.5 Flash-Lite (Jun 2025)",
       "lab": "Google DeepMind",
-      "low": 130.93,
-      "high": 136.34
+      "low": 129.55,
+      "high": 136.27
     },
     {
       "date": "2025-06-20",
-      "value": 131.74,
+      "value": 131.73,
       "label": "Mistral Small 3.2",
       "lab": "Mistral AI",
-      "low": 126.94,
-      "high": 133.88
+      "low": 125.66,
+      "high": 133.92
     },
     {
       "date": "2025-06-24",
       "value": 140.35,
       "label": "Grok-3 mini",
       "lab": "xAI",
-      "low": 138.05,
-      "high": 142.03
+      "low": 137.42,
+      "high": 142.08
     },
     {
       "date": "2025-07-09",
-      "value": 146.45,
+      "value": 146.46,
       "label": "Grok 4",
       "lab": "xAI",
-      "low": 144.62,
-      "high": 148.2
+      "low": 144.38,
+      "high": 148.11
     },
     {
       "date": "2025-07-12",
-      "value": 140.11,
+      "value": 140.13,
       "label": "Kimi K2 (Jul 2025)",
       "lab": "Moonshot",
-      "low": 137.03,
-      "high": 141.99
+      "low": 136.09,
+      "high": 142.22
     },
     {
       "date": "2025-07-25",
-      "value": 143.88,
+      "value": 143.87,
       "label": "Qwen3-235B-A22B-Thinking (Jul 2025)",
       "lab": "Alibaba",
-      "low": 142.1,
-      "high": 145.38
+      "low": 141.75,
+      "high": 145.17
     },
     {
       "date": "2025-07-25",
-      "value": 138.92,
+      "value": 138.93,
       "label": "Qwen3-235B-A22B-Instruct (Jul 2025)",
       "lab": "Alibaba",
-      "low": 135.97,
-      "high": 140.87
+      "low": 135.45,
+      "high": 140.79
     },
     {
       "date": "2025-07-29",
       "value": 137.42,
       "label": "Qwen3-30B-A3B-Instruct (Jul 2025)",
       "lab": "Alibaba",
-      "low": 131.98,
-      "high": 139.5
+      "low": 131.66,
+      "high": 139.45
     },
     {
       "date": "2025-07-30",
-      "value": 139.64,
+      "value": 139.63,
       "label": "Qwen3-30B-A3B-Thinking (Jul 2025)",
       "lab": "Alibaba",
-      "low": 135.51,
-      "high": 141.17
+      "low": 134.94,
+      "high": 141.08
     },
     {
       "date": "2025-08-05",
       "value": 144.11,
       "label": "Claude Opus 4.1",
       "lab": "Anthropic",
-      "low": 142.06,
-      "high": 145.99
+      "low": 141.48,
+      "high": 145.85
     },
     {
       "date": "2025-08-05",
-      "value": 140.1,
+      "value": 139.94,
       "label": "gpt-oss-120b",
       "lab": "OpenAI",
-      "low": 136.28,
-      "high": 142.7
+      "low": 135.35,
+      "high": 142.44
     },
     {
       "date": "2025-08-05",
-      "value": 137.8,
+      "value": 137.81,
       "label": "gpt-oss-20b",
       "lab": "OpenAI",
-      "low": 133.26,
-      "high": 139.73
+      "low": 132.74,
+      "high": 139.64
     },
     {
       "date": "2025-08-07",
@@ -1394,739 +1394,755 @@
     },
     {
       "date": "2025-08-07",
-      "value": 145.52,
+      "value": 145.51,
       "label": "GPT-5 mini",
       "lab": "OpenAI",
-      "low": 143.6,
-      "high": 147.15
+      "low": 143.48,
+      "high": 147.04
     },
     {
       "date": "2025-08-07",
       "value": 139.39,
       "label": "GPT-5 nano",
       "lab": "OpenAI",
-      "low": 135.2,
-      "high": 141.56
+      "low": 134.5,
+      "high": 141.45
     },
     {
       "date": "2025-08-21",
       "value": 139.92,
       "label": "DeepSeek-V3.1",
       "lab": "DeepSeek",
-      "low": 136.28,
-      "high": 143.28
+      "low": 135.27,
+      "high": 143.22
     },
     {
       "date": "2025-09-18",
       "value": 131.41,
       "label": "Magistral Small 1.2",
       "lab": "Mistral AI",
-      "low": 127.11,
-      "high": 133.67
+      "low": 125.58,
+      "high": 133.55
     },
     {
       "date": "2025-09-19",
       "value": 144.21,
       "label": "Grok 4 Fast",
       "lab": "xAI",
-      "low": 142.22,
-      "high": 146.36
+      "low": 141.48,
+      "high": 146.24
     },
     {
       "date": "2025-09-24",
-      "value": 142.43,
+      "value": 142.41,
       "label": "Qwen3-Max",
       "lab": "Alibaba",
-      "low": 140.4,
-      "high": 144.98
+      "low": 139.92,
+      "high": 145.35
     },
     {
       "date": "2025-09-25",
-      "value": 142.99,
+      "value": 143.04,
       "label": "Gemini 2.5 Flash (Sep 2025)",
       "lab": "Google DeepMind",
-      "low": 139.67,
-      "high": 146.63
+      "low": 139.11,
+      "high": 146.41
     },
     {
       "date": "2025-09-29",
       "value": 146.84,
       "label": "Claude Sonnet 4.5",
       "lab": "Anthropic",
-      "low": 145.46,
-      "high": 148.5
+      "low": 144.91,
+      "high": 148.27
     },
     {
       "date": "2025-09-29",
       "value": 145.02,
       "label": "DeepSeek-V3.2-Exp",
       "lab": "DeepSeek",
-      "low": 142.61,
-      "high": 147.24
-    },
-    {
-      "date": "2025-09-30",
-      "value": 140.78,
-      "label": "GLM-4.6",
-      "lab": "Z.ai (Zhipu AI),Tsinghua University",
-      "low": 135.2,
-      "high": 142.57
+      "low": 142.33,
+      "high": 146.93
     },
     {
       "date": "2025-10-07",
-      "value": 150.29,
+      "value": 150.26,
       "label": "GPT-5 Pro",
       "lab": "OpenAI",
-      "low": 148.83,
-      "high": 152.9
+      "low": 148.51,
+      "high": 152.78
     },
     {
       "date": "2025-10-15",
-      "value": 142.37,
+      "value": 142.42,
       "label": "Claude Haiku 4.5",
       "lab": "Anthropic",
-      "low": 139.8,
-      "high": 144.07
+      "low": 139.43,
+      "high": 144.1
     },
     {
       "date": "2025-11-06",
-      "value": 145.76,
+      "value": 146.02,
       "label": "Kimi K2 Thinking",
       "lab": "Moonshot",
-      "low": 143.25,
-      "high": 147.14
+      "low": 142.99,
+      "high": 147.44
     },
     {
       "date": "2025-11-13",
-      "value": 149.64,
+      "value": 149.66,
       "label": "GPT-5.1",
       "lab": "OpenAI",
-      "low": 148.45,
-      "high": 151.03
+      "low": 148.15,
+      "high": 151.04
     },
     {
       "date": "2025-11-18",
-      "value": 153.0,
+      "value": 152.96,
       "label": "Gemini 3 Pro",
       "lab": "Google DeepMind",
-      "low": 151.05,
-      "high": 155.08
+      "low": 150.75,
+      "high": 155.1
     },
     {
       "date": "2025-11-24",
-      "value": 150.11,
+      "value": 150.1,
       "label": "Claude Opus 4.5",
       "lab": "Anthropic",
-      "low": 148.12,
-      "high": 152.85
+      "low": 147.91,
+      "high": 152.74
     },
     {
       "date": "2025-12-01",
-      "value": 146.19,
+      "value": 146.28,
       "label": "DeepSeek-V3.2",
       "lab": "DeepSeek",
-      "low": 144.45,
+      "low": 144.01,
       "high": 147.44
     },
     {
       "date": "2025-12-11",
-      "value": 155.38,
+      "value": 155.41,
       "label": "GPT-5.2 Pro",
       "lab": "OpenAI",
-      "low": 153.18,
-      "high": 158.22
+      "low": 152.84,
+      "high": 158.35
     },
     {
       "date": "2025-12-11",
-      "value": 153.51,
+      "value": 153.45,
       "label": "GPT-5.2",
       "lab": "OpenAI",
-      "low": 151.75,
-      "high": 155.43
+      "low": 151.65,
+      "high": 155.21
     },
     {
       "date": "2025-12-17",
-      "value": 151.84,
+      "value": 151.83,
       "label": "Gemini 3 Flash",
       "lab": "Google DeepMind",
-      "low": 150.57,
-      "high": 153.61
+      "low": 150.35,
+      "high": 153.35
     },
     {
       "date": "2025-12-22",
-      "value": 143.46,
+      "value": 143.53,
       "label": "GLM-4.7",
       "lab": "Z.ai (Zhipu AI)",
-      "low": 141.57,
-      "high": 145.43
+      "low": 141.0,
+      "high": 145.49
     },
     {
       "date": "2026-01-27",
-      "value": 148.01,
+      "value": 148.05,
       "label": "Kimi K2.5",
       "lab": "Moonshot",
-      "low": 146.58,
-      "high": 149.35
+      "low": 146.21,
+      "high": 149.3
     },
     {
       "date": "2026-02-05",
-      "value": 156.58,
+      "value": 156.84,
       "label": "GPT-5.3 Codex",
       "lab": "OpenAI",
-      "low": 153.91,
-      "high": 159.73
+      "low": 153.79,
+      "high": 160.44
     },
     {
       "date": "2026-02-05",
-      "value": 155.34,
+      "value": 155.36,
       "label": "Claude Opus 4.6",
       "lab": "Anthropic",
-      "low": 153.7,
-      "high": 157.21
+      "low": 153.42,
+      "high": 157.1
     },
     {
       "date": "2026-02-11",
-      "value": 145.85,
+      "value": 145.84,
       "label": "GLM-5",
       "lab": "Z.ai (Zhipu AI)",
-      "low": 144.17,
-      "high": 147.76
+      "low": 143.74,
+      "high": 147.68
     },
     {
       "date": "2026-02-12",
-      "value": 146.51,
+      "value": 146.68,
       "label": "MiniMax-M2.5",
       "lab": "MiniMax",
-      "low": 138.67,
-      "high": 147.85
+      "low": 142.72,
+      "high": 147.81
     },
     {
       "date": "2026-02-13",
-      "value": 146.96,
+      "value": 146.64,
       "label": "Qwen3.5 397B-A17B",
       "lab": "Alibaba",
-      "low": 145.43,
-      "high": 148.62
+      "low": 144.77,
+      "high": 148.24
     },
     {
       "date": "2026-02-16",
-      "value": 146.73,
+      "value": 146.79,
       "label": "Qwen 3.5 Plus (hosted 397B-A17B)",
       "lab": "Alibaba",
-      "low": 144.76,
-      "high": 148.09
+      "low": 144.36,
+      "high": 147.95
     },
     {
       "date": "2026-02-17",
       "value": 152.25,
       "label": "Claude Sonnet 4.6",
       "lab": "Anthropic",
-      "low": 149.69,
-      "high": 154.47
+      "low": 149.7,
+      "high": 154.73
     },
     {
       "date": "2026-02-17",
-      "value": 152.03,
+      "value": 152.01,
       "label": "Grok 4.20",
       "lab": "xAI",
-      "low": 149.21,
-      "high": 154.36
+      "low": 149.16,
+      "high": 154.52
     },
     {
       "date": "2026-02-19",
-      "value": 155.0,
+      "value": 154.92,
       "label": "Gemini 3.1 Pro",
       "lab": "Google DeepMind",
-      "low": 152.72,
-      "high": 157.6
+      "low": 152.8,
+      "high": 157.58
     },
     {
       "date": "2026-02-24",
-      "value": 142.53,
+      "value": 142.52,
       "label": "Qwen3.5-35B-A3B",
       "lab": "Alibaba",
-      "low": 140.39,
-      "high": 144.77
+      "low": 140.04,
+      "high": 144.75
     },
     {
       "date": "2026-02-24",
-      "value": 139.44,
+      "value": 139.45,
       "label": "Qwen3.5-9B",
       "lab": "Alibaba",
-      "low": 136.67,
-      "high": 141.53
+      "low": 136.22,
+      "high": 141.25
     },
     {
       "date": "2026-02-25",
-      "value": 144.0,
+      "value": 143.98,
       "label": "Qwen 3.5 Flash (hosted 35B-A3B)",
       "lab": "Alibaba",
-      "low": 142.32,
-      "high": 145.75
+      "low": 141.72,
+      "high": 145.51
     },
     {
       "date": "2026-03-03",
-      "value": 144.49,
+      "value": 144.45,
       "label": "Gemini 3.1 Flash-Lite",
       "lab": "Google",
-      "low": 142.78,
-      "high": 146.17
+      "low": 142.27,
+      "high": 145.94
     },
     {
       "date": "2026-03-05",
-      "value": 158.95,
+      "value": 159.12,
       "label": "GPT-5.4 Pro",
       "lab": "OpenAI",
-      "low": 156.73,
-      "high": 161.7
+      "low": 156.65,
+      "high": 162.44
     },
     {
       "date": "2026-03-05",
-      "value": 156.86,
+      "value": 156.92,
       "label": "GPT-5.4",
       "lab": "OpenAI",
-      "low": 155.21,
-      "high": 159.0
+      "low": 155.07,
+      "high": 159.26
     },
     {
       "date": "2026-03-17",
-      "value": 148.96,
+      "value": 148.83,
       "label": "GPT-5.4 Mini",
       "lab": "OpenAI",
-      "low": 147.33,
-      "high": 150.68
+      "low": 146.9,
+      "high": 150.44
     },
     {
       "date": "2026-03-17",
-      "value": 145.85,
+      "value": 145.78,
       "label": "GPT-5.4 Nano",
       "lab": "OpenAI",
-      "low": 143.7,
-      "high": 147.77
+      "low": 143.44,
+      "high": 147.6
     },
     {
       "date": "2026-03-18",
-      "value": 145.8,
+      "value": 145.84,
       "label": "MiniMax-M2.7",
       "lab": "MiniMax",
-      "low": 138.57,
-      "high": 147.75
+      "low": 138.39,
+      "high": 147.9
     },
     {
       "date": "2026-03-31",
       "value": 147.67,
       "label": "Qwen 3.6 Plus",
       "lab": "Alibaba",
-      "low": 145.74,
-      "high": 149.56
+      "low": 145.18,
+      "high": 149.52
     },
     {
       "date": "2026-04-02",
-      "value": 142.66,
+      "value": 142.74,
       "label": "Gemma 4 31B IT",
       "lab": "Google DeepMind",
-      "low": 140.48,
-      "high": 145.02
+      "low": 139.79,
+      "high": 144.86
     },
     {
       "date": "2026-04-02",
-      "value": 141.86,
+      "value": 141.85,
       "label": "Gemma 4 26B A4B",
       "lab": "Google DeepMind",
-      "low": 138.61,
-      "high": 143.65
+      "low": 138.22,
+      "high": 143.51
     },
     {
       "date": "2026-04-07",
-      "value": 149.71,
+      "value": 149.86,
       "label": "GLM-5.1",
       "lab": "Z.ai (Zhipu AI)",
-      "low": 147.97,
-      "high": 151.41
+      "low": 147.89,
+      "high": 151.58
     },
     {
       "date": "2026-04-08",
-      "value": 152.12,
+      "value": 152.09,
       "label": "Muse Spark",
       "lab": "Meta AI",
-      "low": 150.27,
-      "high": 155.59
+      "low": 149.91,
+      "high": 155.66
     },
     {
       "date": "2026-04-14",
-      "value": 143.86,
+      "value": 143.92,
       "label": "Qwen 3.6 35B-A3B",
       "lab": "Alibaba",
-      "low": 141.79,
-      "high": 146.13
+      "low": 141.17,
+      "high": 146.05
     },
     {
       "date": "2026-04-16",
-      "value": 156.34,
+      "value": 156.39,
       "label": "Claude Opus 4.7",
       "lab": "Anthropic",
-      "low": 154.57,
-      "high": 158.5
+      "low": 154.45,
+      "high": 158.46
     },
     {
       "date": "2026-04-17",
-      "value": 149.17,
+      "value": 149.13,
       "label": "Grok 4.3 Beta",
       "lab": "xAI",
-      "low": 147.78,
-      "high": 150.85
+      "low": 147.48,
+      "high": 150.62
     },
     {
       "date": "2026-04-20",
-      "value": 151.0,
+      "value": 151.03,
       "label": "Kimi K2.6",
       "lab": "Moonshot",
-      "low": 149.14,
-      "high": 152.7
+      "low": 149.15,
+      "high": 152.78
     },
     {
       "date": "2026-04-20",
       "value": 149.27,
       "label": "Qwen 3.6 Max (Preview)",
       "lab": "Alibaba",
-      "low": 147.69,
-      "high": 152.44
+      "low": 147.51,
+      "high": 152.14
     },
     {
       "date": "2026-04-22",
-      "value": 146.49,
+      "value": 146.47,
       "label": "Qwen3.6 27B",
       "lab": "Alibaba",
-      "low": 144.26,
-      "high": 147.95
+      "low": 144.07,
+      "high": 147.78
     },
     {
       "date": "2026-04-23",
-      "value": 162.25,
+      "value": 162.45,
       "label": "GPT-5.5 Pro",
       "lab": "OpenAI",
-      "low": 159.32,
-      "high": 165.76
+      "low": 159.23,
+      "high": 166.64
     },
     {
       "date": "2026-04-23",
-      "value": 159.12,
+      "value": 159.25,
       "label": "GPT-5.5",
       "lab": "OpenAI",
-      "low": 156.91,
-      "high": 161.95
+      "low": 156.96,
+      "high": 162.39
     },
     {
       "date": "2026-04-24",
-      "value": 149.09,
+      "value": 149.14,
       "label": "DeepSeek-V4-Pro",
       "lab": "DeepSeek",
-      "low": 147.52,
-      "high": 150.74
+      "low": 147.47,
+      "high": 150.82
     },
     {
       "date": "2026-04-24",
-      "value": 146.11,
+      "value": 146.1,
       "label": "DeepSeek-V4-Flash",
       "lab": "DeepSeek",
-      "low": 144.22,
-      "high": 148.12
+      "low": 143.44,
+      "high": 147.78
     },
     {
       "date": "2026-04-27",
-      "value": 143.27,
+      "value": 143.26,
       "label": "Qwen 3.6 Flash",
       "lab": "Alibaba",
-      "low": 140.98,
-      "high": 144.97
+      "low": 140.6,
+      "high": 144.69
     },
     {
       "date": "2026-04-28",
-      "value": 141.28,
+      "value": 141.42,
       "label": "Mistral Medium 3.5",
       "lab": "Mistral AI",
-      "low": 139.38,
-      "high": 143.28
+      "low": 138.59,
+      "high": 143.48
     },
     {
       "date": "2026-05-05",
-      "value": 142.5,
+      "value": 142.48,
       "label": "GPT-5.5 Instant",
       "lab": "OpenAI",
-      "low": 140.25,
-      "high": 145.35
+      "low": 139.54,
+      "high": 145.07
     },
     {
       "date": "2026-05-19",
-      "value": 154.69,
+      "value": 154.55,
       "label": "Gemini 3.5 Flash",
       "lab": "Google DeepMind",
-      "low": 152.78,
-      "high": 157.03
+      "low": 152.57,
+      "high": 157.16
     },
     {
       "date": "2026-05-19",
-      "value": 153.73,
+      "value": 153.74,
       "label": "Qwen3.7-Max",
       "lab": "Alibaba",
-      "low": 151.88,
-      "high": 155.88
+      "low": 151.76,
+      "high": 156.09
     },
     {
       "date": "2026-05-28",
       "value": 158.3,
       "label": "Claude Opus 4.8",
       "lab": "Anthropic",
-      "low": 156.43,
-      "high": 160.71
+      "low": 156.27,
+      "high": 161.02
     },
     {
       "date": "2026-06-01",
-      "value": 146.47,
+      "value": 147.0,
       "label": "MiniMax-M3",
       "lab": "MiniMax",
-      "low": 142.57,
-      "high": 149.55
+      "low": 142.93,
+      "high": 149.66
     },
     {
       "date": "2026-06-02",
-      "value": 147.41,
+      "value": 147.39,
       "label": "Qwen3.7-Plus",
       "lab": "Alibaba",
-      "low": 145.92,
-      "high": 148.83
+      "low": 145.53,
+      "high": 148.75
     },
     {
       "date": "2026-06-04",
-      "value": 146.27,
+      "value": 146.2,
       "label": "Nemotron 3 Ultra",
       "lab": "NVIDIA",
-      "low": 144.01,
-      "high": 148.3
+      "low": 143.83,
+      "high": 148.06
     },
     {
       "date": "2026-06-09",
-      "value": 163.27,
+      "value": 163.6,
       "label": "Claude Fable 5",
       "lab": "Anthropic",
-      "low": 160.54,
-      "high": 167.1
+      "low": 160.56,
+      "high": 167.57
     },
     {
       "date": "2026-06-12",
-      "value": 150.07,
+      "value": 150.01,
       "label": "Kimi K2.7 Code",
       "lab": "Moonshot",
-      "low": 148.68,
-      "high": 151.93
+      "low": 148.13,
+      "high": 151.68
     },
     {
       "date": "2026-06-16",
-      "value": 151.86,
+      "value": 151.76,
       "label": "GLM-5.2",
       "lab": "Z.ai (Zhipu AI)",
-      "low": 150.21,
-      "high": 154.16
+      "low": 149.9,
+      "high": 153.62
     },
     {
       "date": "2026-06-30",
-      "value": 156.22,
+      "value": 156.34,
       "label": "Claude Sonnet 5",
       "lab": "Anthropic",
-      "low": 153.63,
-      "high": 158.63
+      "low": 153.45,
+      "high": 159.15
     },
     {
       "date": "2026-07-08",
-      "value": 153.92,
+      "value": 154.02,
       "label": "Grok 4.5",
       "lab": "xAI",
-      "low": 152.49,
-      "high": 156.04
+      "low": 152.27,
+      "high": 156.09
     },
     {
       "date": "2026-07-09",
-      "value": 161.81,
+      "value": 161.99,
       "label": "GPT-5.6 Sol",
       "lab": "OpenAI",
-      "low": 159.57,
-      "high": 165.2
+      "low": 159.64,
+      "high": 165.92
     },
     {
       "date": "2026-07-09",
-      "value": 159.14,
+      "value": 159.31,
       "label": "GPT-5.6 Terra",
       "lab": "OpenAI",
-      "low": 157.01,
-      "high": 161.84
+      "low": 156.74,
+      "high": 162.32
     },
     {
       "date": "2026-07-09",
-      "value": 156.31,
+      "value": 156.32,
       "label": "GPT-5.6 Luna",
       "lab": "OpenAI",
-      "low": 154.06,
+      "low": 153.58,
       "high": 158.86
     },
     {
       "date": "2026-07-09",
-      "value": 154.62,
+      "value": 154.32,
       "label": "Muse Spark 1.1",
       "lab": "Meta AI",
-      "low": 152.58,
-      "high": 157.88
+      "low": 151.63,
+      "high": 157.29
     },
     {
       "date": "2026-07-15",
-      "value": 150.15,
+      "value": 150.13,
       "label": "Inkling-Small",
       "lab": "Thinking Machines",
-      "low": 147.34,
-      "high": 152.09
+      "low": 147.04,
+      "high": 151.88
     },
     {
       "date": "2026-07-15",
-      "value": 148.64,
+      "value": 148.6,
       "label": "Inkling",
       "lab": "Thinking Machines",
-      "low": 145.95,
-      "high": 150.6
+      "low": 145.88,
+      "high": 150.47
     },
     {
       "date": "2026-07-16",
-      "value": 157.63,
+      "value": 157.68,
       "label": "Kimi K3",
       "lab": "Moonshot",
-      "low": 155.38,
-      "high": 160.45
+      "low": 155.12,
+      "high": 160.65
     },
     {
       "date": "2026-07-21",
-      "value": 154.33,
+      "value": 154.36,
       "label": "Gemini 3.6 Flash",
       "lab": "Google DeepMind",
-      "low": 152.86,
-      "high": 156.24
+      "low": 152.66,
+      "high": 156.25
     },
     {
       "date": "2026-07-21",
-      "value": 145.13,
+      "value": 145.12,
       "label": "Gemini 3.5 Flash-Lite",
       "lab": "Google DeepMind",
-      "low": 142.76,
-      "high": 146.76
+      "low": 142.3,
+      "high": 146.71
     },
     {
       "date": "2026-07-24",
-      "value": 162.3,
+      "value": 162.67,
       "label": "Claude Opus 5",
       "lab": "Anthropic",
-      "low": 159.9,
-      "high": 165.74
+      "low": 159.96,
+      "high": 166.52
     },
     {
       "date": "2026-07-27",
-      "value": 144.63,
+      "value": 144.62,
       "label": "Qwen3.7 Flash",
       "lab": "Alibaba",
-      "low": 142.86,
-      "high": 147.57
+      "low": 142.47,
+      "high": 147.29
     },
     {
       "date": "2026-07-31",
-      "value": 154.49,
+      "value": 154.51,
       "label": "DeepSeek V4 Flash 0731",
       "lab": "DeepSeek",
-      "low": 152.4,
-      "high": 156.51
+      "low": 152.11,
+      "high": 156.48
     },
     {
       "date": "2026-08-02",
-      "value": 156.62,
+      "value": 156.69,
       "label": "Qwen 3.8 Max",
       "lab": "Alibaba",
-      "low": 154.85,
-      "high": 158.75
+      "low": 154.56,
+      "high": 158.97
     },
     {
       "date": "2026-08-05",
-      "value": 155.48,
+      "value": 155.18,
       "label": "Muse Spark 1.2",
       "lab": "Meta AI",
-      "low": 153.9,
-      "high": 158.64
+      "low": 153.22,
+      "high": 158.13
     },
     {
       "date": "2026-08-12",
-      "value": 156.35,
+      "value": 156.48,
       "label": "Grok 4.6",
       "lab": "xAI",
-      "low": 154.77,
-      "high": 158.88
+      "low": 154.62,
+      "high": 158.98
     },
     {
       "date": "2026-08-13",
-      "value": 157.44,
+      "value": 157.72,
       "label": "Gemini 3.7 Flash",
       "lab": "Google DeepMind",
-      "low": 155.66,
-      "high": 159.78
+      "low": 155.64,
+      "high": 160.59
     },
     {
       "date": "2026-08-13",
-      "value": 155.47,
+      "value": 155.39,
       "label": "DeepSeek V4 Pro 0813",
       "lab": "DeepSeek",
-      "low": 153.78,
-      "high": 157.83
+      "low": 153.7,
+      "high": 157.31
     },
     {
       "date": "2026-08-14",
-      "value": 155.25,
+      "value": 155.56,
       "label": "GLM-5.3",
       "lab": "Z.ai (Zhipu AI)",
-      "low": 153.18,
-      "high": 157.53
+      "low": 153.6,
+      "high": 157.99
+    },
+    {
+      "date": "2026-08-14",
+      "value": 149.38,
+      "label": "Qwen 3.8 27B",
+      "lab": "Alibaba",
+      "low": 147.43,
+      "high": 151.29
     },
     {
       "date": "2026-08-20",
-      "value": 151.45,
+      "value": 151.9,
       "label": "GLM-5.3-Flash",
       "lab": "Z.ai (Zhipu AI)",
-      "low": 149.28,
-      "high": 153.78
+      "low": 149.61,
+      "high": 154.21
     },
     {
       "date": "2026-09-01",
-      "value": 164.47,
+      "value": 165.0,
       "label": "Claude Fable 5.1",
       "lab": "Anthropic",
-      "low": 161.36,
-      "high": 168.28
+      "low": 161.64,
+      "high": 169.61
     },
     {
       "date": "2026-09-01",
-      "value": 155.22,
+      "value": 155.28,
       "label": "Qwen3.8 Max (0902)",
       "lab": "Alibaba",
-      "low": 153.57,
-      "high": 157.34
+      "low": 153.41,
+      "high": 157.27
     },
     {
       "date": "2026-09-02",
-      "value": 156.54,
+      "value": 157.13,
       "label": "Gemini 3.8 Flash",
       "lab": "Google DeepMind",
-      "low": 154.58,
-      "high": 161.97
+      "low": 154.95,
+      "high": 161.31
+    },
+    {
+      "date": "2026-09-02",
+      "value": 156.89,
+      "label": "Muse Spark 1.3",
+      "lab": "Meta AI",
+      "low": 154.66,
+      "high": 159.44
     },
     {
       "date": "2026-09-03",
-      "value": 166.31,
+      "value": 166.6,
       "label": "GPT-6 Astra",
       "lab": "OpenAI",
       "low": 163.0,
-      "high": 171.88
+      "high": 172.03
+    },
+    {
+      "date": "2026-09-09",
+      "value": 155.01,
+      "label": "DeepSeek V4.1 Flash",
+      "lab": "DeepSeek",
+      "low": 148.52,
+      "high": 157.5
     }
   ]
 }
