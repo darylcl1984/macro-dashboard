@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-09-29T17:46:51.321681+00:00",
+      "fetched_at": "2026-09-30T00:05:24.655183+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12642,6 +12642,10 @@
         {
           "date": "2026-09-29",
           "value": 73
+        },
+        {
+          "date": "2026-09-30",
+          "value": 71
         }
       ]
     },
@@ -12649,7 +12653,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-09-29T17:46:51.136902+00:00",
+      "fetched_at": "2026-09-30T00:05:24.552857+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25565,12 +25569,8 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-09-29T17:46:51.644080+00:00",
+      "fetched_at": "2026-09-30T00:05:24.989824+00:00",
       "points": [
-        {
-          "date": "2022-09-29",
-          "value": 19595.57
-        },
         {
           "date": "2022-09-30",
           "value": 19426.11
@@ -31410,6 +31410,10 @@
         {
           "date": "2026-09-28",
           "value": 83456.74
+        },
+        {
+          "date": "2026-09-29",
+          "value": 83638.42
         }
       ],
       "instrument": "Coinbase BTC-USD spot"
@@ -31418,7 +31422,7 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-09-29T17:46:51.872250+00:00",
+      "fetched_at": "2026-09-30T00:05:25.262664+00:00",
       "points": [
         {
           "date": "2021-09-29",
@@ -36447,6 +36451,10 @@
         {
           "date": "2026-09-28",
           "value": 4168.399902
+        },
+        {
+          "date": "2026-09-29",
+          "value": 4219.200195
         }
       ],
       "instrument": "Gold futures \u00b7 GC=F",
@@ -61665,6 +61673,6 @@
       ]
     }
   },
-  "last_attempt": "2026-09-29T17:46:51.872949+00:00",
+  "last_attempt": "2026-09-30T00:05:25.263450+00:00",
   "fetch_failures": {}
 }
