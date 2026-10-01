@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-09-30T17:42:42.366154+00:00",
+      "fetched_at": "2026-10-01T00:24:04.381387+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12646,6 +12646,10 @@
         {
           "date": "2026-09-30",
           "value": 71
+        },
+        {
+          "date": "2026-10-01",
+          "value": 74
         }
       ]
     },
@@ -12653,7 +12657,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-09-30T17:42:42.420768+00:00",
+      "fetched_at": "2026-10-01T00:24:04.419360+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25573,12 +25577,8 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-09-30T17:42:42.624026+00:00",
+      "fetched_at": "2026-10-01T00:24:04.648645+00:00",
       "points": [
-        {
-          "date": "2022-09-30",
-          "value": 19426.11
-        },
         {
           "date": "2022-10-01",
           "value": 19315.27
@@ -31418,6 +31418,10 @@
         {
           "date": "2026-09-29",
           "value": 83638.42
+        },
+        {
+          "date": "2026-09-30",
+          "value": 83556.14
         }
       ],
       "instrument": "Coinbase BTC-USD spot"
@@ -31426,7 +31430,7 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-09-30T17:42:42.763223+00:00",
+      "fetched_at": "2026-10-01T00:24:04.766596+00:00",
       "points": [
         {
           "date": "2021-09-30",
@@ -61681,6 +61685,6 @@
       ]
     }
   },
-  "last_attempt": "2026-09-30T17:42:42.764002+00:00",
+  "last_attempt": "2026-10-01T00:24:04.767215+00:00",
   "fetch_failures": {}
 }
