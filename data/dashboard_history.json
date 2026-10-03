@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-10-02T17:34:10.774824+00:00",
+      "fetched_at": "2026-10-03T00:11:21.833662+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12654,6 +12654,10 @@
         {
           "date": "2026-10-02",
           "value": 72
+        },
+        {
+          "date": "2026-10-03",
+          "value": 67
         }
       ]
     },
@@ -12661,7 +12665,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-10-02T17:34:10.601570+00:00",
+      "fetched_at": "2026-10-03T00:11:21.362814+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25589,12 +25593,8 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-10-02T17:34:10.797821+00:00",
+      "fetched_at": "2026-10-03T00:11:22.288824+00:00",
       "points": [
-        {
-          "date": "2022-10-02",
-          "value": 19059.17
-        },
         {
           "date": "2022-10-03",
           "value": 19633.46
@@ -31434,6 +31434,10 @@
         {
           "date": "2026-10-01",
           "value": 84848.73
+        },
+        {
+          "date": "2026-10-02",
+          "value": 84504.88
         }
       ],
       "instrument": "Coinbase BTC-USD spot"
@@ -31442,7 +31446,7 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-10-02T17:34:11.171969+00:00",
+      "fetched_at": "2026-10-03T00:11:22.078740+00:00",
       "points": [
         {
           "date": "2021-10-04",
@@ -36471,6 +36475,10 @@
         {
           "date": "2026-10-01",
           "value": 4202.299805
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4172.100098
         }
       ],
       "instrument": "Gold futures \u00b7 GC=F",
@@ -61713,6 +61721,6 @@
       ]
     }
   },
-  "last_attempt": "2026-10-02T17:34:11.172614+00:00",
+  "last_attempt": "2026-10-03T00:11:22.289647+00:00",
   "fetch_failures": {}
 }
