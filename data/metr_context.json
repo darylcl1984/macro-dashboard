@@ -2,19 +2,19 @@
   "source": "METR \u00b7 Time Horizon 1.1",
   "source_url": "https://metr.org/time-horizons/",
   "data_url": "https://metr.org/assets/benchmark_results_1_1.yaml",
-  "fetched_at": "2026-09-28T16:41:54.312215+00:00",
+  "fetched_at": "2026-10-05T17:03:49.297225+00:00",
   "source_sha256": "aae31902b0519a4da73e16643915e5e8aca13cd3315c3aac893ce3d6dfe92ad9",
   "benchmark": "METR-Horizon-v1.1",
   "task_version": "799cc9c4b4483a93fc3445623a49ea1bd74fdeb2",
-  "eci_snapshot": "2026-09-28T16:41:54.063304+00:00",
+  "eci_snapshot": "2026-10-05T17:03:48.782519+00:00",
   "success_rate": 0.5,
   "interval": "95% bootstrap confidence interval",
   "anchor_id": "claude_3_7_sonnet_inspect",
   "points_per_doubling": 5,
   "calibration_source": "https://epoch.ai/data/eci-documentation/faq",
   "axis_eci_range": [
-    125.88,
-    156.92
+    125.89,
+    156.91
   ],
   "reliable_limit_minutes": 960,
   "interpretation": "Model and release-date matches, not identical evaluation scaffolds. The right axis is an anchored historical illustration. METR values are separately published task-horizon estimates, not AI runtime or whole-job equivalence.",
@@ -23,7 +23,7 @@
       "id": "gpt_4",
       "label": "GPT-4 (Mar 2023)",
       "date": "2023-03-14",
-      "eci": 125.88,
+      "eci": 125.89,
       "minutes": 3.987428,
       "low_minutes": 1.93292,
       "high_minutes": 7.995283,
@@ -31,8 +31,8 @@
         "modular-public",
         "null"
       ],
-      "illustrative_minutes": 7.261222,
-      "measured_to_illustrative_ratio": 0.54914
+      "illustrative_minutes": 7.271295,
+      "measured_to_illustrative_ratio": 0.548379
     },
     {
       "id": "gpt_4_turbo_inspect",
@@ -92,7 +92,7 @@
       "id": "claude_3_5_sonnet_20241022_inspect",
       "label": "Claude 3.5 Sonnet (October 2024)",
       "date": "2024-10-22",
-      "eci": 133.55,
+      "eci": 133.54,
       "minutes": 20.522872,
       "low_minutes": 10.144026,
       "high_minutes": 40.82028,
@@ -103,8 +103,8 @@
         "metr_tasks_swaa/init_solver,generate",
         "metr_agents/react"
       ],
-      "illustrative_minutes": 21.027601,
-      "measured_to_illustrative_ratio": 0.975997
+      "illustrative_minutes": 20.998471,
+      "measured_to_illustrative_ratio": 0.977351
     },
     {
       "id": "claude_3_7_sonnet_inspect",
@@ -128,7 +128,7 @@
       "id": "o3_inspect",
       "label": "o3",
       "date": "2025-04-16",
-      "eci": 146.88,
+      "eci": 146.86,
       "minutes": 119.732634,
       "low_minutes": 74.615398,
       "high_minutes": 190.943818,
@@ -139,8 +139,8 @@
         "metr_tasks_swaa/init_solver,generate",
         "triframe_inspect/triframe_agent"
       ],
-      "illustrative_minutes": 133.455261,
-      "measured_to_illustrative_ratio": 0.897174
+      "illustrative_minutes": 133.085757,
+      "measured_to_illustrative_ratio": 0.899665
     },
     {
       "id": "claude_4_opus_inspect",
@@ -200,7 +200,7 @@
       "id": "gemini_3_pro",
       "label": "Gemini 3 Pro",
       "date": "2025-11-18",
-      "eci": 152.96,
+      "eci": 152.95,
       "minutes": 224.325884,
       "low_minutes": 139.565157,
       "high_minutes": 379.235434,
@@ -211,8 +211,8 @@
         "metr_tasks_swaa/init_solver,generate",
         "metr_agents/react"
       ],
-      "illustrative_minutes": 310.018903,
-      "measured_to_illustrative_ratio": 0.723588
+      "illustrative_minutes": 309.589423,
+      "measured_to_illustrative_ratio": 0.724592
     },
     {
       "id": "claude_opus_4_5_inspect",
@@ -236,7 +236,7 @@
       "id": "gpt_5_2",
       "label": "GPT-5.2",
       "date": "2025-12-11",
-      "eci": 153.45,
+      "eci": 153.49,
       "minutes": 352.249302,
       "low_minutes": 198.067494,
       "high_minutes": 815.177445,
@@ -247,14 +247,14 @@
         "metr_tasks_swaa/init_solver,generate",
         "triframe_inspect/triframe_agent"
       ],
-      "illustrative_minutes": 331.809728,
-      "measured_to_illustrative_ratio": 1.0616
+      "illustrative_minutes": 333.654783,
+      "measured_to_illustrative_ratio": 1.05573
     },
     {
       "id": "claude_opus_4_6_inspect",
       "label": "Claude Opus 4.6",
       "date": "2026-02-05",
-      "eci": 155.36,
+      "eci": 155.31,
       "minutes": 718.80683,
       "low_minutes": 316.685725,
       "high_minutes": 3633.786163,
@@ -265,14 +265,14 @@
         "metr_tasks_swaa/init_solver,generate",
         "metr_agents/react"
       ],
-      "illustrative_minutes": 432.396901,
-      "measured_to_illustrative_ratio": 1.662377
+      "illustrative_minutes": 429.410117,
+      "measured_to_illustrative_ratio": 1.67394
     },
     {
       "id": "gpt_5_3_codex",
       "label": "GPT-5.3 Codex",
       "date": "2026-02-05",
-      "eci": 156.84,
+      "eci": 156.82,
       "minutes": 349.530732,
       "low_minutes": 194.913134,
       "high_minutes": 816.351994,
@@ -283,14 +283,14 @@
         "metr_tasks_swaa/init_solver,generate",
         "triframe_inspect/triframe_agent"
       ],
-      "illustrative_minutes": 530.869105,
-      "measured_to_illustrative_ratio": 0.658412
+      "illustrative_minutes": 529.399262,
+      "measured_to_illustrative_ratio": 0.66024
     },
     {
       "id": "gemini_3_1_pro",
       "label": "Gemini 3.1 Pro",
       "date": "2026-02-19",
-      "eci": 154.92,
+      "eci": 154.84,
       "minutes": 384.147435,
       "low_minutes": 233.50073,
       "high_minutes": 694.750898,
@@ -301,14 +301,14 @@
         "metr_tasks_swaa/init_solver,generate",
         "triframe_inspect/triframe_agent"
       ],
-      "illustrative_minutes": 406.810293,
-      "measured_to_illustrative_ratio": 0.944291
+      "illustrative_minutes": 402.323549,
+      "measured_to_illustrative_ratio": 0.954822
     },
     {
       "id": "gpt_5_4",
       "label": "GPT-5.4",
       "date": "2026-03-05",
-      "eci": 156.92,
+      "eci": 156.91,
       "minutes": 341.735276,
       "low_minutes": 186.581591,
       "high_minutes": 768.779526,
@@ -319,8 +319,8 @@
         "metr_tasks_swaa/init_solver,generate",
         "metr_agents/react"
       ],
-      "illustrative_minutes": 536.7894,
-      "measured_to_illustrative_ratio": 0.636628
+      "illustrative_minutes": 536.045768,
+      "measured_to_illustrative_ratio": 0.637511
     }
   ]
 }
