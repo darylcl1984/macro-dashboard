@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-10-05T20:28:04.305544+00:00",
+      "fetched_at": "2026-10-06T01:40:39.864445+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12666,6 +12666,10 @@
         {
           "date": "2026-10-05",
           "value": 70
+        },
+        {
+          "date": "2026-10-06",
+          "value": 73
         }
       ]
     },
@@ -12673,7 +12677,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-10-05T20:28:04.503709+00:00",
+      "fetched_at": "2026-10-06T01:40:39.464493+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25606,6 +25610,10 @@
         {
           "date": "2026-10-05",
           "value": 311.87044
+        },
+        {
+          "date": "2026-10-06",
+          "value": 312.342657
         }
       ]
     },
@@ -25613,12 +25621,8 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-10-05T20:28:04.610858+00:00",
+      "fetched_at": "2026-10-06T01:40:40.594781+00:00",
       "points": [
-        {
-          "date": "2022-10-05",
-          "value": 20161.62
-        },
         {
           "date": "2022-10-06",
           "value": 19965.64
@@ -31458,6 +31462,10 @@
         {
           "date": "2026-10-04",
           "value": 86507.11
+        },
+        {
+          "date": "2026-10-05",
+          "value": 85748.96
         }
       ],
       "instrument": "Coinbase BTC-USD spot"
@@ -31466,7 +31474,7 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-10-05T20:28:05.107675+00:00",
+      "fetched_at": "2026-10-06T01:40:40.048466+00:00",
       "points": [
         {
           "date": "2021-10-05",
@@ -61745,6 +61753,6 @@
       ]
     }
   },
-  "last_attempt": "2026-10-05T20:28:05.108450+00:00",
+  "last_attempt": "2026-10-06T01:40:40.596031+00:00",
   "fetch_failures": {}
 }
