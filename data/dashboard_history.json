@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-10-07T15:27:57.985455+00:00",
+      "fetched_at": "2026-10-07T18:33:31.777411+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12681,7 +12681,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-10-07T15:27:57.534339+00:00",
+      "fetched_at": "2026-10-07T18:33:31.840947+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25629,7 +25629,7 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-10-07T15:27:58.517365+00:00",
+      "fetched_at": "2026-10-07T18:33:32.650527+00:00",
       "points": [
         {
           "date": "2022-10-07",
@@ -31482,7 +31482,7 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-10-07T15:27:58.313092+00:00",
+      "fetched_at": "2026-10-07T18:33:32.536959+00:00",
       "points": [
         {
           "date": "2021-10-07",
@@ -61777,6 +61777,6 @@
       ]
     }
   },
-  "last_attempt": "2026-10-07T15:28:09.026103+00:00",
+  "last_attempt": "2026-10-07T18:33:32.651223+00:00",
   "fetch_failures": {}
 }
