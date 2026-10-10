@@ -5,7 +5,7 @@
       "source": "Alternative.me",
       "source_url": "https://alternative.me/crypto/fear-and-greed-index/",
       "unit": "Index / 100",
-      "fetched_at": "2026-10-10T00:30:45.534257+00:00",
+      "fetched_at": "2026-10-10T14:24:34.617012+00:00",
       "points": [
         {
           "date": "2018-02-01",
@@ -12693,7 +12693,7 @@
       "source": "DefiLlama \u00b7 USD-pegged stablecoins",
       "source_url": "https://defillama.com/stablecoins",
       "unit": "USD billions",
-      "fetched_at": "2026-10-10T00:30:45.226298+00:00",
+      "fetched_at": "2026-10-10T14:24:34.259418+00:00",
       "points": [
         {
           "date": "2017-11-29",
@@ -25642,6 +25642,10 @@
         {
           "date": "2026-10-09",
           "value": 311.397931
+        },
+        {
+          "date": "2026-10-10",
+          "value": 310.765599
         }
       ]
     },
@@ -25649,7 +25653,7 @@
       "source": "Coinbase \u00b7 BTC-USD",
       "source_url": "https://www.coinbase.com/price/bitcoin",
       "unit": "USD / BTC",
-      "fetched_at": "2026-10-10T00:30:45.982290+00:00",
+      "fetched_at": "2026-10-10T14:24:34.885031+00:00",
       "points": [
         {
           "date": "2022-10-10",
@@ -31502,7 +31506,7 @@
       "source": "Yahoo Finance \u00b7 GC=F",
       "source_url": "https://finance.yahoo.com/quote/GC=F/",
       "unit": "USD / troy oz",
-      "fetched_at": "2026-10-10T00:30:46.024720+00:00",
+      "fetched_at": "2026-10-10T14:24:35.023093+00:00",
       "points": [
         {
           "date": "2021-10-11",
@@ -36534,7 +36538,7 @@
         },
         {
           "date": "2026-10-09",
-          "value": 4220.299805
+          "value": 4216.299805
         }
       ],
       "instrument": "Gold futures \u00b7 GC=F",
@@ -36544,7 +36548,7 @@
       "source": "FRED \u00b7 M2SL",
       "source_url": "https://fred.stlouisfed.org/series/M2SL",
       "unit": "USD billions",
-      "fetched_at": "2026-10-09T15:11:57.476200+00:00",
+      "fetched_at": "2026-10-10T14:24:45.419073+00:00",
       "points": [
         {
           "date": "1995-01-01",
@@ -38072,7 +38076,7 @@
       "source": "FRED \u00b7 DGS2",
       "source_url": "https://fred.stlouisfed.org/series/DGS2",
       "unit": "Yield %",
-      "fetched_at": "2026-10-09T15:11:57.500055+00:00",
+      "fetched_at": "2026-10-10T14:24:45.470142+00:00",
       "points": [
         {
           "date": "2015-01-02",
@@ -49845,6 +49849,10 @@
         {
           "date": "2026-10-07",
           "value": 4.77
+        },
+        {
+          "date": "2026-10-08",
+          "value": 4.75
         }
       ]
     },
@@ -49852,7 +49860,7 @@
       "source": "FRED \u00b7 GFDEGDQ188S",
       "source_url": "https://fred.stlouisfed.org/series/GFDEGDQ188S",
       "unit": "% of GDP",
-      "fetched_at": "2026-10-09T15:11:57.490726+00:00",
+      "fetched_at": "2026-10-10T14:24:45.416408+00:00",
       "points": [
         {
           "date": "2015-01-01",
@@ -50040,7 +50048,7 @@
       "source": "FRED \u00b7 DGS30",
       "source_url": "https://fred.stlouisfed.org/series/DGS30",
       "unit": "Yield %",
-      "fetched_at": "2026-10-09T15:11:57.789653+00:00",
+      "fetched_at": "2026-10-10T14:24:45.571956+00:00",
       "points": [
         {
           "date": "2015-01-02",
@@ -61813,10 +61821,14 @@
         {
           "date": "2026-10-07",
           "value": 5.67
+        },
+        {
+          "date": "2026-10-08",
+          "value": 5.6
         }
       ]
     }
   },
-  "last_attempt": "2026-10-10T00:30:46.028282+00:00",
+  "last_attempt": "2026-10-10T14:24:45.573602+00:00",
   "fetch_failures": {}
 }
